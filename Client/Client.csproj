@@ -540,7 +540,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release' ">
+  <Target Name="AfterBuild">
     <ItemGroup>
       <DllFiles Include="..\Dependencies\**\*.dll" />
       <AssetFiles Include="..\resources\**\*" />
