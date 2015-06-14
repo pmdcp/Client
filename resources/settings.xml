@@ -22,6 +22,9 @@
   <ConnectionInfo>
     <Port>4001</Port>
     <IP>localhost</IP>
+    <UpdateLink></UpdateLink>
+    <MusicLink>http://www.pmuniverse.net/game/music/</MusicLink>
+    <SFXLink>http://www.pmuniverse.net/game/SoundFX/</SFXLink>
   </ConnectionInfo>
   <Editor>
     <MapGrid>True</MapGrid>
