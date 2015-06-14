@@ -542,11 +542,10 @@
   </PropertyGroup>
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release' ">
     <ItemGroup>
-      <DllFiles Include="..\Dependencies\Files\*.dll" />
+      <DllFiles Include="..\Dependencies\**\*.dll" />
       <AssetFiles Include="..\resources\**\*" />
     </ItemGroup>
-    <Copy SourceFiles="$(OutputPath)$(TargetFileName)" DestinationFolder="..\Build\" />
-    <Copy SourceFiles="@(DllFiles)" DestinationFolder="..\Build\" />
-    <Copy SourceFiles="@(AssetFiles)" DestinationFolder="..\Build\%(RecursiveDir)" />
+    <Copy SourceFiles="@(DllFiles)" DestinationFolder="$(OutputPath)%(RecursiveDir)" />
+    <Copy SourceFiles="@(AssetFiles)" DestinationFolder="$(OutputPath)%(RecursiveDir)" />
   </Target>
 </Project>

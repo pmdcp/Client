@@ -39,8 +39,8 @@ Custom Audio:
 [www.pmuniverse.net]    IllusDark8
 
 Code:
-[www.pmuniverse.net]    Pikablu
-[www.pmdcommunity.eu]    Sprinko
+[www.pmdcommunity.eu/www.pmuniverse.net]    Pikablu
+[www.pmuniverse.net]    Sprinko
 [www.pmuniverse.net]    Yatterman
 [www.pmuniverse.net]    Andy
 [www.pmuniverse.net]    Rocket
