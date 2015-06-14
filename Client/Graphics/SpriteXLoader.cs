@@ -34,11 +34,14 @@ namespace Client.Logic.Graphics
         public int FrameWidth { get; private set; }
         public int FrameHeight { get; private set; }
 
-        public SpriteXLoader(string path)
+        public SpriteXLoader(string path, bool hasMeta)
         {
             this.path = path;
 
-            LoadMeta();
+            if (hasMeta)
+            {
+                LoadMeta();
+            }
         }
 
         private void LoadMeta()
@@ -192,6 +195,28 @@ namespace Client.Logic.Graphics
                 }
             }
             return formString;
+        }
+
+        public void LoadMugshot(Mugshot sheet, string overrideForm)
+        {
+            string formDirectory = "Forms/" + overrideForm + "/";
+
+            using (ZipFile zipFile = ZipFile.Read(path))
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    string fullImageString = formDirectory + "Portrait.png";
+
+                    if (zipFile.ContainsEntry(fullImageString))
+                    {
+                        zipFile[fullImageString].Extract(ms);
+
+                        ms.Seek(0, SeekOrigin.Begin);
+
+                        sheet.LoadFromData(ms.ToArray());
+                    }
+                }
+            }
         }
 
         public void Load(SpriteSheet sheet, FrameData frameData, string overrideForm)

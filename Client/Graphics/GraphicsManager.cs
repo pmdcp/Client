@@ -175,7 +175,7 @@ namespace Client.Logic.Graphics
                 sheet = new SpriteSheet(num, formString);
                 string changedFormString = formString;
 
-                SpriteXLoader spriteXLoader = new SpriteXLoader(IO.Paths.GfxPath + "Sprites/Sprite" + num + ".zip");
+                SpriteXLoader spriteXLoader = new SpriteXLoader(IO.Paths.GfxPath + "Sprites/Sprite" + num + ".zip", true);
 
                 List<string> forms = spriteXLoader.LoadForms();
 
@@ -291,20 +291,7 @@ namespace Client.Logic.Graphics
 
         public static Mugshot GetMugshot(int num, int form, int shiny, int gender)
         {
-            string formString = "r";
-
-            if (form >= 0)
-            {
-                formString += "-" + form;
-                if (shiny >= 0)
-                {
-                    formString += "-" + shiny;
-                    if (gender >= 0)
-                    {
-                        formString += "-" + gender;
-                    }
-                }
-            }
+            string formString = SpriteXLoader.GetSpriteFormString(form, shiny, gender);
 
             Mugshot sheet = null;
             lock (mugshotCache)
@@ -316,65 +303,37 @@ namespace Client.Logic.Graphics
                 return sheet;
             }
             // If we are still here, that means the sprite wasn't in the cache
-            if (System.IO.File.Exists(IO.Paths.GfxPath + "Mugshots/Portrait" + num + ".portrait"))
+            if (System.IO.File.Exists(IO.Paths.GfxPath + "Mugshots/Portrait" + num + ".zip"))
             {
 
                 sheet = new Mugshot(num, formString);
                 string changedFormString = formString;
 
-                using (FileStream fileStream = File.OpenRead(IO.Paths.GfxPath + "Mugshots/Portrait" + num + ".portrait"))
+                SpriteXLoader spriteXLoader = new SpriteXLoader(IO.Paths.GfxPath + "Mugshots/Portrait" + num + ".zip", false);
+                List<string> forms = spriteXLoader.LoadForms();
+
+                using (FileStream fileStream = File.OpenRead(IO.Paths.GfxPath + "Mugshots/Portrait" + num + ".zip"))
                 {
-                    using (BinaryReader reader = new BinaryReader(fileStream))
+                    while (true)
                     {
-                        int formCount = reader.ReadInt32();
-                        Dictionary<string, int[]> formData = new Dictionary<string, int[]>();
+                        if (mugshotCache.ContainsKey(num + changedFormString))
+                        {//this point will be hit if the first fallback data to be found is already in the cache
+                            //the cache needs to be updated for aliases, but that's it.  No need to load any new data.
 
-                        for (int i = 0; i < formCount; i++)
-                        {
-                            // Read the form name
-                            string formName = reader.ReadString();
+                            sheet = mugshotCache.Get(num + changedFormString);
+                            break;
+                        }
+                        else if (forms.Contains(changedFormString) || changedFormString == "r")
+                        {//we've found a spritesheet in the file, so load it.
+                            spriteXLoader.LoadMugshot(sheet, changedFormString);
 
-                            int[] formIntData = new int[2];
+                            mugshotCache.Add(num + changedFormString, sheet);
 
-                            // Load form position
-                            formIntData[0] = reader.ReadInt32();
-                            // Load form size
-                            formIntData[1] = reader.ReadInt32();
-
-                            // Add form data to collection
-                            formData.Add(formName, formIntData);
+                            break;
                         }
 
-                        while (true)
-                        {
-                            if (mugshotCache.ContainsKey(num + changedFormString))
-                            {//this point will be hit if the first fallback data to be found is already in the cache
-                                //the cache needs to be updated for aliases, but that's it.  No need to load any new data.
-
-                                sheet = mugshotCache.Get(num + changedFormString);
-                                break;
-                            }
-                            else if (formData.ContainsKey(changedFormString) || changedFormString == "r")
-                            {//we've found a spritesheet in the file, so load it.
-                                int[] formInt = formData[changedFormString];
-
-                                // Jump to the correct position
-                                fileStream.Seek(formInt[0], SeekOrigin.Current);
-
-                                int frameCount = reader.ReadInt32();
-                                int size = reader.ReadInt32();
-                                byte[] imgData = reader.ReadBytes(size);
-
-                                sheet.LoadFromData(imgData);
-
-                                mugshotCache.Add(num + changedFormString, sheet);
-
-                                break;
-                            }
-
-                            // If the form specified wasn't found, continually revert to the backup until only "r" is reached
-                            changedFormString = changedFormString.Substring(0, changedFormString.LastIndexOf('-'));
-                        }
+                        // If the form specified wasn't found, continually revert to the backup until only "r" is reached
+                        changedFormString = changedFormString.Substring(0, changedFormString.LastIndexOf('-'));
                     }
                 }
 
