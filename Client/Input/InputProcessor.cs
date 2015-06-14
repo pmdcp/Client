@@ -25,6 +25,7 @@ namespace Client.Logic.Input
     using Client.Logic.Network;
     using System.Drawing;
     using Client.Logic.Windows;
+    using Client.Logic.Graphics.Renderers.Screen;
 
     /// <summary>
     /// Description of InputProcessor.
@@ -255,6 +256,10 @@ namespace Client.Logic.Input
                 MoveRight = false;
             } else if (e.Key == IO.ControlLoader.AttackKey) {
                 Attacking = false;
+            }
+            else if (e.Key == SdlInput.Key.M)
+            {
+                ScreenRenderer.RenderOptions.MinimapVisible = !ScreenRenderer.RenderOptions.MinimapVisible;
             }
             switch (e.Key) {
                 case SdlInput.Key.Escape: {

@@ -38,6 +38,7 @@ namespace Client.Logic.Graphics.Renderers.Screen
         public bool ScreenVisible { get; set; }
         public bool PlayersVisible { get; set; }
         public bool NpcsVisible { get; set; }
+        public bool MinimapVisible { get; set; }
         public Graphics.Effects.Overlays.IOverlay Overlay { get; set; }
         public Graphics.Effects.Overlays.DarknessOverlay Darkness { get; set; }
         public Graphics.Effects.Weather.IWeather Weather { get; set; }
@@ -53,6 +54,8 @@ namespace Client.Logic.Graphics.Renderers.Screen
         public ScreenRenderOptions() {
             ScreenVisible = true;
             screenImageOverlays = new List<Stories.Components.ScreenImageOverlay>();
+
+            MinimapVisible = true;
         }
 
         public void SetWeather(Enums.Weather weather) {

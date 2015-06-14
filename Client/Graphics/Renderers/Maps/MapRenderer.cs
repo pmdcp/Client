@@ -735,6 +735,79 @@ namespace Client.Logic.Graphics.Renderers.Maps
             }
         }
 
+        public static void DrawMiniMap(RendererDestinationData destData, Map activeMap)
+        {
+            int tileRatio = 3;
+            int mapPadding = 20;
+
+            int mapWidth = tileRatio * activeMap.Tile.GetLength(0);
+            int mapHeight = tileRatio * activeMap.Tile.GetLength(1);
+
+            int startX = destData.Location.X + destData.Size.Width - mapWidth - mapPadding;
+            int startY = destData.Location.Y + mapPadding;
+
+            Surface miniMapSurface = new Surface(mapWidth, mapHeight);
+            miniMapSurface.Alpha = 155;
+            miniMapSurface.AlphaBlending = true;
+
+            miniMapSurface.Fill(Color.Gray);
+
+            for (int x = 0; x < activeMap.Tile.GetLength(0); x++)
+            {
+                for (int y = 0; y < activeMap.Tile.GetLength(1); y++)
+                {
+
+                    Tile tile = activeMap.Tile[x, y];
+
+                    if (PlayerManager.MyPlayer.X == x && PlayerManager.MyPlayer.Y == y)
+                    {
+                        miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.LightCyan);
+                        continue;
+                    }
+
+                    if (tile.SeenBySelf)
+                    {
+
+                        switch (tile.Type)
+                        {
+                            case Enums.TileType.Blocked:
+                            case Enums.TileType.MobileBlock:
+                                miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.Black);
+                                break;
+                            case Enums.TileType.RDungeonGoal:
+                                miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.Cyan);
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+
+                }
+            }
+
+            foreach (MapItem item in activeMap.MapItems)
+            {
+                if (item.Num != -1 && activeMap.Tile[item.X, item.Y].SeenBySelf)
+                {
+                    miniMapSurface.Fill(new Rectangle(item.X * tileRatio, item.Y * tileRatio, tileRatio, tileRatio), Color.Yellow);
+                }
+            }
+
+            foreach (MapNpc npc in activeMap.MapNpcs)
+            {
+                if (npc.X >= 0 && npc.X < activeMap.Tile.GetLength(0) && npc.Y >= 0 && npc.Y < activeMap.Tile.GetLength(1))
+                {
+                    if (npc.Sprite != 0 && (npc.ScreenActive) && activeMap.Tile[npc.X, npc.Y].SeenBySelf)
+                    {
+                        miniMapSurface.Fill(new Rectangle(npc.X * tileRatio, npc.Y * tileRatio, tileRatio, tileRatio), Color.Red);
+                    }
+                }
+            }
+
+            destData.Blit(miniMapSurface, new Point(startX, startY));
+        }
+
         public static void DrawAttributes(RendererDestinationData destData, Map activeMap, int cameraX, int cameraX2, int cameraY, int cameraY2) {
             //int (x - cameraX)  = 0;
             //int (y - cameraY)  = 0;

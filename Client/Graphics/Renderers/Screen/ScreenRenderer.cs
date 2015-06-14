@@ -629,6 +629,46 @@ namespace Client.Logic.Graphics.Renderers.Screen
                             }
                         }*/
                         renderOptions.Darkness.Render(destData, Globals.Tick, renderOptions.Darkness.Focus);
+
+                        int darknessRange = renderOptions.Darkness.Range / 2;
+
+                        for (int x = PlayerManager.MyPlayer.X - darknessRange; x < PlayerManager.MyPlayer.X + darknessRange; x++)
+                        {
+                            if (x >= 0 && x < renderOptions.Map.Tile.GetLength(0))
+                            {
+                                for (int y = PlayerManager.MyPlayer.Y - darknessRange; y < PlayerManager.MyPlayer.Y + darknessRange; y++)
+                                {
+                                    if (y >= 0 && y < renderOptions.Map.Tile.GetLength(1))
+                                    {
+                                        renderOptions.Map.Tile[x, y].SeenBySelf = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (renderOptions.Map.Darkness == -1)
+                        {
+                            for (int x = PlayerManager.MyPlayer.X - MaxInfo.MaxMapX; x < PlayerManager.MyPlayer.X + MaxInfo.MaxMapX; x++)
+                            {
+                                if (x >= 0 && x < renderOptions.Map.Tile.GetLength(0))
+                                {
+                                    for (int y = PlayerManager.MyPlayer.Y - MaxInfo.MaxMapY; y < PlayerManager.MyPlayer.Y + MaxInfo.MaxMapY; y++)
+                                    {
+                                        if (y >= 0 && y < renderOptions.Map.Tile.GetLength(1))
+                                        {
+                                            renderOptions.Map.Tile[x, y].SeenBySelf = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (renderOptions.MinimapVisible)
+                    {
+                        MapRenderer.DrawMiniMap(destData, renderOptions.Map);
                     }
 
                     if (renderOptions.DisplayLocation && Windows.WindowSwitcher.GameWindow.inMapEditor == false) {

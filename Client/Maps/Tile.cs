@@ -28,6 +28,8 @@ namespace Client.Logic.Maps
     {
         #region Properties
 
+        public bool SeenBySelf { get; set; }
+
         public TileGraphic AnimGraphic {
             get;
             set;
