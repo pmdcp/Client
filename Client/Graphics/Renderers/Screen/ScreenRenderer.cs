@@ -702,7 +702,7 @@ namespace Client.Logic.Graphics.Renderers.Screen
                     MapRenderer.DrawMapName(destData, renderOptions.Map);
 
                     if (!Windows.WindowSwitcher.GameWindow.inMapEditor) {
-                        //PlayerRenderer.DrawMiniBars(destData);
+                        PlayerRenderer.DrawMiniBars(destData);
                     }
 
                     if (Input.InputProcessor.SelectedMove > -1) {
