@@ -88,7 +88,7 @@ namespace Client.Logic.Stories.Components
             for (int i = 0; i < renderOptions.Length; i++) {
                 renderOptions[i] = new CharRenderOptions(Color.WhiteSmoke);
             }
-            renderOptions = Network.MessageProcessor.ParseText(renderOptions, ref text);
+            renderOptions = Client.Logic.Graphics.StringParser.ParseText(renderOptions, ref text);
             lblText.SetText(text, renderOptions);
         }
 

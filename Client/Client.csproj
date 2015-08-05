@@ -210,6 +210,7 @@
     <Compile Include="Graphics\SpellSheet.cs" />
     <Compile Include="Graphics\SpriteSheet.cs" />
     <Compile Include="Graphics\SpriteXLoader.cs" />
+    <Compile Include="Graphics\StringParser.cs" />
     <Compile Include="Graphics\SurfaceManager.cs" />
     <Compile Include="Graphics\TileCache.cs" />
     <Compile Include="Graphics\TileCollection.cs" />
