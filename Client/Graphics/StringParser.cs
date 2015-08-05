@@ -23,55 +23,64 @@ namespace Client.Logic.Graphics
                     newRenderOptions.Add(new SdlDotNet.Widgets.CharRenderOptions(Color.Black));
                 }
             }
-            //int index = text.IndexOf("[b]");
-            //while (index > -1) {
-            //    text = text.Remove(index, 3);
-            //    newRenderOptions.RemoveRange(index, 3);
-            //    int endIndex = text.IndexOf("[/b]");
-            //    if (endIndex > -1) {
-            //        text = text.Remove(endIndex, 4);
-            //        newRenderOptions.RemoveRange(endIndex, 4);
-            //        for (int i = index; i < endIndex; i++) {
-            //            newRenderOptions[i].Bold = true;
-            //        }
-            //    }
+            int index = text.IndexOf("[b]");
+            while (index > -1)
+            {
+                text = text.Remove(index, 3);
+                newRenderOptions.RemoveRange(index, 3);
+                int endIndex = text.IndexOf("[/b]");
+                if (endIndex > -1)
+                {
+                    text = text.Remove(endIndex, 4);
+                    newRenderOptions.RemoveRange(endIndex, 4);
+                    for (int i = index; i < endIndex; i++)
+                    {
+                        newRenderOptions[i].Bold = true;
+                    }
+                }
 
-            //    index = text.IndexOf("[b]");
-            //}
+                index = text.IndexOf("[b]");
+            }
 
-            //index = text.IndexOf("[i]");
-            //while (index > -1) {
-            //    text = text.Remove(index, 3);
-            //    newRenderOptions.RemoveRange(index, 3);
-            //    int endIndex = text.IndexOf("[/i]");
-            //    if (endIndex > -1) {
-            //        text = text.Remove(endIndex, 4);
-            //        newRenderOptions.RemoveRange(endIndex, 4);
-            //        for (int i = index; i < endIndex; i++) {
-            //            newRenderOptions[i].Italic = true;
-            //        }
-            //    }
+            index = text.IndexOf("[i]");
+            while (index > -1)
+            {
+                text = text.Remove(index, 3);
+                newRenderOptions.RemoveRange(index, 3);
+                int endIndex = text.IndexOf("[/i]");
+                if (endIndex > -1)
+                {
+                    text = text.Remove(endIndex, 4);
+                    newRenderOptions.RemoveRange(endIndex, 4);
+                    for (int i = index; i < endIndex; i++)
+                    {
+                        newRenderOptions[i].Italic = true;
+                    }
+                }
 
-            //    index = text.IndexOf("[i]");
-            //}
+                index = text.IndexOf("[i]");
+            }
 
-            //index = text.IndexOf("[u]");
-            //while (index > -1) {
-            //    text = text.Remove(index, 3);
-            //    newRenderOptions.RemoveRange(index, 3);
-            //    int endIndex = text.IndexOf("[/u]");
-            //    if (endIndex > -1) {
-            //        text = text.Remove(endIndex, 4);
-            //        newRenderOptions.RemoveRange(endIndex, 4);
-            //        for (int i = index; i < endIndex; i++) {
-            //            newRenderOptions[i].Underline = true;
-            //        }
-            //    }
+            index = text.IndexOf("[u]");
+            while (index > -1)
+            {
+                text = text.Remove(index, 3);
+                newRenderOptions.RemoveRange(index, 3);
+                int endIndex = text.IndexOf("[/u]");
+                if (endIndex > -1)
+                {
+                    text = text.Remove(endIndex, 4);
+                    newRenderOptions.RemoveRange(endIndex, 4);
+                    for (int i = index; i < endIndex; i++)
+                    {
+                        newRenderOptions[i].Underline = true;
+                    }
+                }
 
-            //    index = text.IndexOf("[u]");
-            //}
+                index = text.IndexOf("[u]");
+            }
 
-            int index = text.IndexOf("[c]");
+            index = text.IndexOf("[c]");
             while (index > -1)
             {
                 int colorStartIndex = text.IndexOf('[', index + 3);
