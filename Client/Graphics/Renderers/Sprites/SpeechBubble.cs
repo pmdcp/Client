@@ -77,7 +77,7 @@ namespace Client.Logic.Graphics.Renderers.Sprites
             for (int i = 0; i < renderOptions.Length; i++) {
                 renderOptions[i] = new CharRenderOptions(Color.WhiteSmoke);
             }
-            renderOptions = Network.MessageProcessor.ParseText(renderOptions, ref bubbleText);
+            renderOptions = Client.Logic.Graphics.StringParser.ParseText(renderOptions, ref bubbleText);
             if (textSize.Width > 300) {
                 textSurf = SdlDotNet.Widgets.TextRenderer.RenderTextBasic2(font, bubbleText, renderOptions, Color.WhiteSmoke, false, 300, 0, 0, 0);
             } else {

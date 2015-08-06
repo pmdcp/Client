@@ -777,6 +777,9 @@ namespace Client.Logic.Graphics.Renderers.Maps
                             case Enums.TileType.RDungeonGoal:
                                 miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.Cyan);
                                 break;
+                            case Enums.TileType.Road:
+                                miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.DarkGray);
+                                break;
                             default:
                                 break;
                         }
@@ -946,6 +949,9 @@ namespace Client.Logic.Graphics.Renderers.Maps
                             break;
                         case Enums.TileType.DropShop:
                             TextRenderer.DrawText(destData, "DS", Color.Black, ((x - cameraX) * Constants.TILE_WIDTH + 8) - ScreenRenderer.MapXOffset, ((y - cameraY) * Constants.TILE_HEIGHT + 8) - ScreenRenderer.MapYOffset);
+                            break;
+                        case Enums.TileType.Road:
+                            TextRenderer.DrawText(destData, "RD", Color.Black, ((x - cameraX) * Constants.TILE_WIDTH + 8) - ScreenRenderer.MapXOffset, ((y - cameraY) * Constants.TILE_HEIGHT + 8) - ScreenRenderer.MapYOffset);
                             break;
                     }
                 }

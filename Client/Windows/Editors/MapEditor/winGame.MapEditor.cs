@@ -118,6 +118,7 @@ namespace Client.Logic.Windows
         RadioButton optSlippery;
         RadioButton optSlow;
         RadioButton optDropShop;
+        RadioButton optRoad;
         //RadioButton optHouseOwnerBlock;
         Label lblDungeonTileValue;
         NumericUpDown nudDungeonTileValue;
@@ -635,6 +636,13 @@ namespace Client.Logic.Windows
             optDropShop.Text = "DropShop";
             optDropShop.CheckChanged += new EventHandler(optDropShop_CheckChanged);
 
+            optRoad = new RadioButton("optRoad");
+            optRoad.BackColor = Color.Transparent;
+            optRoad.Font = Graphics.FontManager.LoadFont("tahoma", 12);
+            optRoad.Location = new Point(105, 351);
+            optRoad.Size = new System.Drawing.Size(95, 17);
+            optRoad.Text = "Road";
+
             lblDungeonTileValue = new Label("lblDungeonTileValue");
             lblDungeonTileValue.AutoSize = true;
             lblDungeonTileValue.Font = Graphics.FontManager.LoadFont("PMDCP", 18);
@@ -691,6 +699,7 @@ namespace Client.Logic.Windows
             pnlAttributes.AddWidget(optSlippery);
             pnlAttributes.AddWidget(optSlow);
             pnlAttributes.AddWidget(optDropShop);
+            pnlAttributes.AddWidget(optRoad);
             pnlAttributes.AddWidget(lblDungeonTileValue);
             pnlAttributes.AddWidget(nudDungeonTileValue);
 
@@ -1064,6 +1073,7 @@ namespace Client.Logic.Windows
                         optSlippery.Show();
                         optSlow.Show();
                         optDropShop.Show();
+                        optRoad.Show();
                         btnMapProperties.Show();
                         btnHouseProperties.Hide();
                         lblDungeonTileValue.Show();
@@ -1113,6 +1123,7 @@ namespace Client.Logic.Windows
             optSlow.Hide();
             optDropShop.Hide();
             optAmbiguous.Hide();
+            optRoad.Hide();
             lblDungeonTileValue.Hide();
             nudDungeonTileValue.Hide();
         }
@@ -2364,6 +2375,11 @@ namespace Client.Logic.Windows
                                                 hsb3.Value = tile.Data1;
                                             }
                                             break;
+                                        case Enums.TileType.Road:
+                                            {
+                                                optRoad.Checked = true;
+                                            }
+                                            break;
                                     }
                                     nudDungeonTileValue.Value = tile.RDungeonMapValue;
                                 }
@@ -2498,6 +2514,8 @@ namespace Client.Logic.Windows
                 return Enums.TileType.Slow;
             if (optDropShop.Checked)
                 return Enums.TileType.DropShop;
+            if (optRoad.Checked)
+                return Enums.TileType.Road;
             return Enums.TileType.Walkable;
         }
 
@@ -3003,6 +3021,17 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
+                case Enums.TileType.Road:
+                    {
+                        tileType = Enums.TileType.Road;
+                        data1 = 0;
+                        data2 = 0;
+                        data3 = 0;
+                        string1 = "";
+                        string2 = "";
+                        string3 = "";
+                    }
+                    break;
             }
             dungeonValue = nudDungeonTileValue.Value;
             FillAttributes(tileType, data1, data2, data3, string1, string2, string3, dungeonValue);
@@ -3426,6 +3455,17 @@ namespace Client.Logic.Windows
                                 tile.Data3 = hsb2.Value;
                                 tile.Data1 = hsb3.Value;
                                 tile.String2 = txt1.Text;
+                                tile.String3 = "";
+                            }
+                            break;
+                        case Enums.TileType.Road:
+                            {
+                                tile.Type = Enums.TileType.Road;
+                                tile.Data1 = 0;
+                                tile.Data2 = 0;
+                                tile.Data3 = 0;
+                                tile.String1 = "";
+                                tile.String2 = "";
                                 tile.String3 = "";
                             }
                             break;
