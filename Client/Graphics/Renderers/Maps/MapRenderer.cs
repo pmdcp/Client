@@ -771,14 +771,16 @@ namespace Client.Logic.Graphics.Renderers.Maps
                         switch (tile.Type)
                         {
                             case Enums.TileType.Blocked:
-                            case Enums.TileType.MobileBlock:
                                 miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.Black);
+                                break;
+                            case Enums.TileType.MobileBlock:
+                                miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.Brown);
                                 break;
                             case Enums.TileType.RDungeonGoal:
                                 miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.Cyan);
                                 break;
                             case Enums.TileType.Road:
-                                miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.DarkGray);
+                                miniMapSurface.Fill(new Rectangle(x * tileRatio, y * tileRatio, tileRatio, tileRatio), Color.WhiteSmoke);
                                 break;
                             default:
                                 break;
@@ -927,13 +929,13 @@ namespace Client.Logic.Graphics.Renderers.Maps
                             TextRenderer.DrawText(destData, "MB", Color.Gray, ((x - cameraX) * Constants.TILE_WIDTH + 8) - ScreenRenderer.MapXOffset, ((y - cameraY) * Constants.TILE_HEIGHT + 8) - ScreenRenderer.MapYOffset);
                             break;
                         case Enums.TileType.Assembly:
-                            TextRenderer.DrawText(destData, "ASSMBLY", Color.Black, ((x - cameraX) * Constants.TILE_WIDTH + 8) - ScreenRenderer.MapXOffset, ((y - cameraY) * Constants.TILE_HEIGHT + 8) - ScreenRenderer.MapYOffset);
+                            TextRenderer.DrawText(destData, "ASM", Color.Black, ((x - cameraX) * Constants.TILE_WIDTH + 8) - ScreenRenderer.MapXOffset, ((y - cameraY) * Constants.TILE_HEIGHT + 8) - ScreenRenderer.MapYOffset);
                             break;
                         case Enums.TileType.Evolution:
                             TextRenderer.DrawText(destData, "EVO", Color.Yellow, ((x - cameraX) * Constants.TILE_WIDTH + 8) - ScreenRenderer.MapXOffset, ((y - cameraY) * Constants.TILE_HEIGHT + 8) - ScreenRenderer.MapYOffset);
                             break;
                         case Enums.TileType.Story:
-                            TextRenderer.DrawText(destData, "STRY", Color.Yellow, ((x - cameraX) * Constants.TILE_WIDTH + 8) - ScreenRenderer.MapXOffset, ((y - cameraY) * Constants.TILE_HEIGHT + 8) - ScreenRenderer.MapYOffset);
+                            TextRenderer.DrawText(destData, "STR", Color.Yellow, ((x - cameraX) * Constants.TILE_WIDTH + 8) - ScreenRenderer.MapXOffset, ((y - cameraY) * Constants.TILE_HEIGHT + 8) - ScreenRenderer.MapYOffset);
                             break;
                         case Enums.TileType.MissionBoard:
                             TextRenderer.DrawText(destData, "MSN", Color.Purple, ((x - cameraX) * Constants.TILE_WIDTH + 8) - ScreenRenderer.MapXOffset, ((y - cameraY) * Constants.TILE_HEIGHT + 8) - ScreenRenderer.MapYOffset);
