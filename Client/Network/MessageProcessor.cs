@@ -785,7 +785,13 @@ namespace Client.Logic.Network
                 case "floorchangedisplay": {
                         string dungeonName = parse[1];
                         int minDisplayTime = parse[2].ToInt();
-
+                        string[] splitDungeonName = dungeonName.Split(' ');
+                        string name = "";
+                        for (int i = 0; i<splitDungeonName.Length-1; i++)
+                        {
+                            name += splitDungeonName[i];
+                        }
+                        string formattedDungeonName = name + "\n" + splitDungeonName[splitDungeonName.Length - 1];
                         Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.ScreenOverlay = new Logic.Graphics.Effects.Overlays.ScreenOverlays.MapChangeInfoOverlay(dungeonName, minDisplayTime);
                     }
                     break;
