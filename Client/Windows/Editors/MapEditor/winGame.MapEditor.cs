@@ -1084,6 +1084,8 @@ namespace Client.Logic.Windows
                 case Enums.MapEditorLimitTypes.House: {
                         HideAllAttributes();
                         optBlocked.Show();
+                        optRoad.Show();
+                        optMobileBlock.Show();
                         btnMapProperties.Hide();
                         btnHouseProperties.Show();
                     }
