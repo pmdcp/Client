@@ -1715,7 +1715,7 @@ namespace Client.Logic.Windows
                         } else {
                             lbl2.Text = "Item " + hsb2.Value + ": " + Items.ItemHelper.Items[hsb2.Value].Name;
                         }
-                        hsb1.Maximum = 649;
+                        hsb1.Maximum = 718;
                         hsb1.Location = new Point(0, 55);
                         hsb2.Maximum = MaxInfo.MaxItems;
                         hsb2.Minimum = 0;
