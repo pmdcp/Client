@@ -501,13 +501,12 @@ namespace Client.Logic.Network
                                 map.MapNpcs[i].Location = new Point(parse[n + 5].ToInt(), parse[n + 6].ToInt());
                                 map.MapNpcs[i].Direction = (Enums.Direction)parse[n + 7].ToInt();
                                 map.MapNpcs[i].StatusAilment = (Enums.StatusAilment)parse[n + 8].ToInt();
-                                map.MapNpcs[i].Enemy = parse[n +9].ToBool();
-
+                                map.MapNpcs[i].Enemy = parse[n + 9].ToBool();
                                 //if (map.MapNpcs[i].Num > 0) {
                                 //    map.MapNpcs[i].Sprite = Npc.NpcHelper.Npcs[map.MapNpcs[i].Num].Sprite;
                                 //
                                 //}
-                                map.MapNpcs[i].ScreenActive = true;
+                                map.MapNpcs[i].ScreenActive = parse[n + 10].ToBool();
 
                                 n += 10;
                             }
@@ -1225,15 +1224,15 @@ namespace Client.Logic.Network
                         player.Guild = parse[14];
                         player.GuildAccess = (Enums.GuildRank)parse[15].ToInt();
                         player.Status = parse[16];
+                        player.ScreenActive = parse[17].ToBool();
                         //player.Confused = parse[14].ToBool();
-                        player.StatusAilment = (Enums.StatusAilment)parse[18].ToInt();
-                        for (int i = 0; i < parse[19].ToInt(); i++) {
-                            player.VolatileStatus.Add(parse[20 + i].ToInt());
+                        player.StatusAilment = (Enums.StatusAilment)parse[19].ToInt();
+                        for (int i = 0; i < parse[20].ToInt(); i++) {
+                            player.VolatileStatus.Add(parse[21 + i].ToInt());
                         }
                         // Make sure they aren't walking
                         player.MovementSpeed = Enums.MovementSpeed.Standing;
                         player.Offset = new Point();
-                        player.ScreenActive = true;
                         
                         PlayerManager.Players.Add(id, player);
                         Logic.Graphics.Renderers.Screen.ScreenRenderer.DeactivateOffscreenPlayers();
