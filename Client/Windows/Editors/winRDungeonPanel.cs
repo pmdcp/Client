@@ -569,9 +569,9 @@ namespace Client.Logic.Windows.Editors
                 lbxRDungeonList.Location = new Point(10, 10);
                 lbxRDungeonList.Size = new Size(180, 140);
                 for (int i = 0; i < 10; i++) {
-
-                    lbxRDungeonList.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": " + RDungeons.RDungeonHelper.RDungeons[i].Name));
+                    lbxRDungeonList.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": ---"));
                 }
+                RefreshRDungeonList();
 
                 btnBack = new Button("btnBack");
                 btnBack.Location = new Point(10, 160);
