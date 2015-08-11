@@ -82,7 +82,7 @@ namespace Client.Logic.Windows.Editors
                 lbxEmotionList.Location = new Point(10, 10);
                 lbxEmotionList.Size = new Size(180, 140);
                 for (int i = 0; i < 10; i++) {
-                    lbiEmote = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": " + Emotions.EmotionHelper.Emotions[i].Command);
+                    lbiEmote = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": ---");
                     lbxEmotionList.Items.Add(lbiEmote);
                 }
 
