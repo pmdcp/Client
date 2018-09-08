@@ -315,6 +315,7 @@
     <Compile Include="Music\MusicPlayer.cs" />
     <Compile Include="Music\TrackList.cs" />
     <Compile Include="Music\TrackListEntry.cs" />
+    <Compile Include="Music\YouTube\YouTubeAudioPlayer.cs" />
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Network\PacketList.cs" />
     <Compile Include="Npc\Npc.cs" />
