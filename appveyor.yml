@@ -10,7 +10,7 @@ configuration: Release
 build:
   project: Client.sln
 after_build:
-  - 7z a PMDShift.zip %APPVEYOR_BUILD_FOLDER%\Client\bin\Release\
+  - 7z a PMDShift.zip %APPVEYOR_BUILD_FOLDER%\Client\bin\Release\*
 artifacts:
   - path: PMDShift.zip
     name: PMDShift
