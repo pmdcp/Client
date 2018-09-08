@@ -4,6 +4,7 @@ branches:
     - master
 install:
   - git submodule update --init --recursive
+  - nuget restore Client.sln
 configuration: Release
 build:
   project: Client.sln
