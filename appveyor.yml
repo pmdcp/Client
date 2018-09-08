@@ -11,11 +11,14 @@ build:
   project: Client.sln
 after_build:
   - 7z a PMDShift.zip %APPVEYOR_BUILD_FOLDER%\Client\bin\Release\
+artifacts:
+  - path: PMDShift.zip
+    name: PMDShift
 deploy:
-  release: pmdshift-v$(appveyor_build_version)
+  release: v$(appveyor_build_version)
   description: 'Release'
   provider: GitHub
   auth_token: $(github_release_token)
-  artifact: PMDShift.zip
+  artifact: PMDShift
   draft: false
   prerelease: false
