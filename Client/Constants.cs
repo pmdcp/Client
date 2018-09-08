@@ -26,7 +26,7 @@ namespace Client.Logic
     {
         #region Fields
 
-        public const string CLIENT_EDITION = "PMDCPCore";
+        public const string CLIENT_EDITION = "PMDSCore";
         public const int CLIENT_VERSION = 5;
         public const int FRAME_RATE = 30;
         public const int TILE_WIDTH = 32;
@@ -43,8 +43,8 @@ namespace Client.Logic
 
         public static readonly int MovementClusteringFrquency = 10;
 
-        public const string GameName = "Pokemon Mystery Dungeon Community Project";
-        public const string GameNameShort = "PMDCP";
+        public const string GameName = "Pokemon Mystery Dungeon: Shift!";
+        public const string GameNameShort = "PMDS";
         
         #endregion Fields
     }

@@ -1,6 +1,6 @@
-[submodule "Updater"]
-	path = Updater
-	url = https://github.com/pmdcp/Updater.git
 [submodule "framework"]
 	path = framework
-	url = https://github.com/pmdcp/framework.git
+	url = https://github.com/PMDShift/framework.git
+[submodule "Updater"]
+	path = Updater
+	url = https://github.com/PMDShift/Updater.git
