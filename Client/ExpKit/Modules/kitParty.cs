@@ -59,7 +59,7 @@ namespace Client.Logic.ExpKit.Modules
             for (int i = 0; i < PARTY_SIZE; i++) {
                 lblMemberName[i] = new Label("lblMemberName" + i);
                 lblMemberName[i].AutoSize = true;
-                lblMemberName[i].Font = Logic.Graphics.FontManager.LoadFont("PMDCP", 24);
+                lblMemberName[i].Font = Logic.Graphics.FontManager.LoadFont("PMDCP", 32);
                 lblMemberName[i].ForeColor = Color.WhiteSmoke;
 
                 this.AddWidget(lblMemberName[i]);

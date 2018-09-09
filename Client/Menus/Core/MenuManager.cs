@@ -58,7 +58,7 @@ namespace Client.Logic.Menus.Core
             //lblTest = new Label("lblTest");
             //lblTest.Location = new Point(100, 100);
             //lblTest.AutoSize = true;
-            //lblTest.Font = Graphics.FontManager.LoadFont("PMDCP", 24);
+            //lblTest.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             //lblTest.Text = "Test Menu Opened";
 
             //this.AddWidget(lblTest);
