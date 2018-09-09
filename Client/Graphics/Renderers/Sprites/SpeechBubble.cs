@@ -78,8 +78,8 @@ namespace Client.Logic.Graphics.Renderers.Sprites
                 renderOptions[i] = new CharRenderOptions(Color.WhiteSmoke);
             }
             renderOptions = Client.Logic.Graphics.StringParser.ParseText(renderOptions, ref bubbleText);
-            if (textSize.Width > 300) {
-                textSurf = SdlDotNet.Widgets.TextRenderer.RenderTextBasic2(font, bubbleText, renderOptions, Color.WhiteSmoke, false, 300, 0, 0, 0);
+            if (textSize.Width > 150) {
+                textSurf = SdlDotNet.Widgets.TextRenderer.RenderTextBasic2(font, bubbleText, renderOptions, Color.WhiteSmoke, false, 150, 0, 0, 0);
             } else {
                 textSurf = SdlDotNet.Widgets.TextRenderer.RenderTextBasic2(font, bubbleText, renderOptions, Color.WhiteSmoke, false, 0, 0, 0, 0);
             }
@@ -153,7 +153,7 @@ namespace Client.Logic.Graphics.Renderers.Sprites
 
         private void CheckFont() {
             if (font == null) {
-                font = FontManager.LoadFont("PMDCP", 24);
+                font = FontManager.LoadFont("PMDCP", 16);
             }
         }
 

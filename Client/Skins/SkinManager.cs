@@ -25,9 +25,9 @@ namespace Client.Logic.Skins
     using SdlDotNet.Graphics;
     using SdlDotNet.Widgets;
     using System.Drawing;
-    using PMDCP.Compression.Zip;
     using System.IO;
     using System.Xml;
+    using System.IO.Compression;
 
     class SkinManager
     {
@@ -144,27 +144,32 @@ namespace Client.Logic.Skins
 
         public static bool InstallSkin(string skinPackagePath) {
             try {
-                using (ZipFile zip = new ZipFile(skinPackagePath)) {
-                    bool skinValid = false;
-                    foreach (ZipEntry entry in zip.Entries) {
-                        if (entry.FileName == "Configuration/config.xml") {
-                            using (MemoryStream ms = new MemoryStream()) {
-                                entry.Extract(ms);
-                                ms.Seek(0, SeekOrigin.Begin);
-                                skinValid = ValidateSkinConfigEntry(ms);
+                using (var fileStream = new FileStream(skinPackagePath, FileMode.Open)) {
+                    using (var zip = new ZipArchive(fileStream)) {
+                        bool skinValid = false;
+                        foreach (var entry in zip.Entries) {
+                            if (entry.Name == "Configuration/config.xml") {
+                                using (MemoryStream ms = new MemoryStream()) {
+                                    using (var entryStream = entry.Open()) {
+                                        entryStream.CopyTo(ms);
+                                    }
+                                    ms.Seek(0, SeekOrigin.Begin);
+                                    skinValid = ValidateSkinConfigEntry(ms);
+                                }
+                                break;
                             }
-                            break;
                         }
-                    }
-                    if (skinValid) {
-                        string skinDir = IO.Paths.SkinPath + Path.GetFileNameWithoutExtension(skinPackagePath);
-                        if (Directory.Exists(skinDir) == false) {
-                            Directory.CreateDirectory(skinDir);
+                        if (skinValid) {
+                            string skinDir = IO.Paths.SkinPath + Path.GetFileNameWithoutExtension(skinPackagePath);
+                            if (Directory.Exists(skinDir) == false) {
+                                Directory.CreateDirectory(skinDir);
+                            }
+
+                            ZipFile.ExtractToDirectory(skinPackagePath, skinDir);
+                            return true;
+                        } else {
+                            return false;
                         }
-                        zip.ExtractAll(skinDir, ExtractExistingFileAction.OverwriteSilently);
-                        return true;
-                    } else {
-                        return false;
                     }
                 }
             } catch {

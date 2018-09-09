@@ -82,7 +82,7 @@ namespace Client.Logic.Windows.Core
             //lblInfo.Backcolor = Color.Transparent;
             //lblInfo.AntiAlias = false;
 
-            //btnDebug = new Client.Logic.Gui.Button(Logic.Graphics.FontManager.LoadFont("PMDCP", 24));
+            //btnDebug = new Client.Logic.Gui.Button(Logic.Graphics.FontManager.LoadFont("PMDCP", 32));
             //btnDebug.Size = new Size(150, 40);
             //btnDebug.Location = new Point(0, 50);
             //btnDebug.Text = "Show Debug Window";

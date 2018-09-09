@@ -1,21 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{FBA83BC0-C6B7-4455-A23A-3D899E41CE57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMDCP.Compression", "framework\Compression\PMDCP.Compression.csproj", "{496E2A61-21B4-4403-91DB-60B1F7826684}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMDCP.Compression", "framework\Compression\PMDCP.Compression.csproj", "{496E2A61-21B4-4403-91DB-60B1F7826684}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMDCP.Core", "framework\Core\PMDCP.Core.csproj", "{2BD1EB8D-04DB-4C04-9AB8-8965B42E7CF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMDCP.Core", "framework\Core\PMDCP.Core.csproj", "{2BD1EB8D-04DB-4C04-9AB8-8965B42E7CF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMDCP.Net", "framework\Net\PMDCP.Net.csproj", "{1847A683-B574-4236-947E-EA2130C2648A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMDCP.Net", "framework\Net\PMDCP.Net.csproj", "{1847A683-B574-4236-947E-EA2130C2648A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMDCP.Sockets", "framework\Sockets\PMDCP.Sockets.csproj", "{2469E594-4F97-49E4-80CD-DA99D76132BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMDCP.Sockets", "framework\Sockets\PMDCP.Sockets.csproj", "{2469E594-4F97-49E4-80CD-DA99D76132BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater\Updater.csproj", "{A81FCDE3-A996-4BCA-A833-4727A37B4268}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater.Linker", "Updater\UpdaterLinker\Updater.Linker.csproj", "{02277808-CD1A-4E3B-85C0-3D8538D196B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65527B7B-0ABD-411D-99A0-131F6A993EF0}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,5 +107,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D10DB0F-3612-498D-9A01-26894C1BFBFA}
 	EndGlobalSection
 EndGlobal

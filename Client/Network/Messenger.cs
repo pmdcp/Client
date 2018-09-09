@@ -45,7 +45,7 @@ namespace Client.Logic.Network
         /// <param name="password">The password.</param>
         public static void SendLogin(string account, string password) {
             //string hashedPass = Security.Hash.GenerateMD5Hash(password).Trim();
-            string mac = PMDCP.Net.NetTools.GetMacAddress();
+            string mac = "";
             SendPacket(TcpPacket.CreatePacket("login", account, password, Constants.CLIENT_VERSION.ToString(),
                             Constants.SEC_CODE1, Constants.SEC_CODE2, Constants.SEC_CODE3, Constants.SEC_CODE4,
                             System.Environment.OSVersion.VersionString, System.Environment.Version.ToString(), Constants.CLIENT_EDITION,

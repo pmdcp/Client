@@ -25,7 +25,6 @@ using Client.Logic.Skins;
 using SdlDotNet.Widgets;
 using Gfx = Client.Logic.Graphics;
 using System.Threading;
-using PMDCP.Compression.Zip;
 using System.IO;
 using System.Xml;
 

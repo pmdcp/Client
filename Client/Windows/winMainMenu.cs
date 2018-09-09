@@ -66,7 +66,7 @@ namespace Client.Logic.Windows
             this.BackgroundImage = SkinManager.LoadGui("Main Menu");
 
             btnNewAccount = new Button("btnNewAccount");
-            btnNewAccount.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            btnNewAccount.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
             btnNewAccount.Location = new Point(252, 4);
             btnNewAccount.Size = new System.Drawing.Size(134, 32);
             btnNewAccount.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
@@ -78,7 +78,7 @@ namespace Client.Logic.Windows
             btnNewAccount.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnNewAccount_Click);
 
             btnDeleteAccount = new Button("btnDeleteAccount");
-            btnDeleteAccount.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            btnDeleteAccount.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
             btnDeleteAccount.Location = new Point(252, 38);
             btnDeleteAccount.Size = new System.Drawing.Size(134, 32);
             btnDeleteAccount.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
@@ -90,7 +90,7 @@ namespace Client.Logic.Windows
             btnDeleteAccount.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnDeleteAccount_Click);
 
             btnAccountSettings = new Button("btnAccountSettings");
-            btnAccountSettings.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            btnAccountSettings.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
             btnAccountSettings.Location = new Point(252, 72);
             btnAccountSettings.Size = new System.Drawing.Size(134, 32);
             btnAccountSettings.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
@@ -102,7 +102,7 @@ namespace Client.Logic.Windows
             btnAccountSettings.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnAccountSettings_Click);
 
             btnOptions = new Button("btnOptions");
-            btnOptions.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            btnOptions.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
             btnOptions.Location = new Point(252, 106);
             btnOptions.Size = new System.Drawing.Size(134, 32);
             btnOptions.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
@@ -114,7 +114,7 @@ namespace Client.Logic.Windows
             btnOptions.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnOptions_Click);
 
             btnSkins = new Button("btnSkins");
-            btnSkins.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            btnSkins.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
             btnSkins.Location = new Point(252, 140);
             btnSkins.Size = new System.Drawing.Size(134, 32);
             btnSkins.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
@@ -126,7 +126,7 @@ namespace Client.Logic.Windows
             btnSkins.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnSkins_Click);
 
             btnHelp = new Button("btnHelp");
-            btnHelp.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            btnHelp.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
             btnHelp.Location = new Point(252, 174);
             btnHelp.Size = new System.Drawing.Size(134, 32);
             btnHelp.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
@@ -138,7 +138,7 @@ namespace Client.Logic.Windows
             btnHelp.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnHelp_Click);
 
             btnCredits = new Button("btnCredits");
-            btnCredits.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            btnCredits.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
             btnCredits.Location = new Point(252, 208);
             btnCredits.Size = new System.Drawing.Size(134, 32);
             btnCredits.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
@@ -150,7 +150,7 @@ namespace Client.Logic.Windows
             btnCredits.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnCredits_Click);
 
             btnSelectServer = new Button("btnSelectServer");
-            btnSelectServer.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            btnSelectServer.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
             btnSelectServer.Location = new Point(10, 242);
             btnSelectServer.Size = new System.Drawing.Size(134, 32);
             btnSelectServer.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
@@ -181,11 +181,11 @@ namespace Client.Logic.Windows
             lblDebugServer.AutoSize = true;
             lblDebugServer.Text = "Debug Server";
             lblDebugServer.Location = new Point(pixDebugServer.X + pixDebugServer.Width + 5, pixDebugServer.Y + (pixDebugServer.Height / 2) - (pixDebugServer.Height / 2));
-            lblDebugServer.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            lblDebugServer.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
 #endif
 
             btnExit = new Button("btnExit");
-            btnExit.Font = Gfx.FontManager.LoadFont("PMDCP", 24);
+            btnExit.Font = Gfx.FontManager.LoadFont("PMDCP", 32);
             btnExit.Location = new Point(252, 242);
             btnExit.Size = new System.Drawing.Size(134, 32);
             btnExit.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;

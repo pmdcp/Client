@@ -1074,9 +1074,9 @@ namespace Client.Logic.Windows.Editors.MapEditor
 
         void LoadMusic()
         {
-            System.Threading.Thread trackListDownloadThread = new System.Threading.Thread(new System.Threading.ThreadStart(LoadMusicBackground));
-            trackListDownloadThread.IsBackground = true;
-            trackListDownloadThread.Start();
+            //System.Threading.Thread trackListDownloadThread = new System.Threading.Thread(new System.Threading.ThreadStart(LoadMusicBackground));
+            //trackListDownloadThread.IsBackground = true;
+            //trackListDownloadThread.Start();
 
             //SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("PMDCP", 18);
             //string[] musicFiles = System.IO.Directory.GetFiles(IO.Paths.MusicPath);

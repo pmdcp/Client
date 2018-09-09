@@ -20,6 +20,7 @@
     <PlayerStatBars>True</PlayerStatBars>
   </General>
   <ConnectionInfo>
+	<Server><!-- server url goes here --></Server>
     <Port>4001</Port>
     <IP>localhost</IP>
     <UpdateLink></UpdateLink>
