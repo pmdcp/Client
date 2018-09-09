@@ -31,7 +31,7 @@ namespace Client.Logic.Graphics.Renderers.Players
     {
         public static void DrawPlayer(RendererDestinationData destData, IPlayer player, Map activeMap, Enums.MapID targetMapID) {
 
-            if (!player.Hunted && !player.Dead && activeMap.Moral == Enums.MapMoral.None) {// && Ranks.IsDisallowed(player, Enums.Rank.Moniter)
+            if (!player.Hunted && !player.Dead && activeMap.Moral == Enums.MapMoral.None) {// && Ranks.IsDisallowed(player, Enums.Rank.Monitor)
                 int flashIndex = Globals.Tick / 100 % 2;
                 if (flashIndex == 0) {
                     SpriteRenderer.DrawSprite(destData, activeMap, targetMapID, player);

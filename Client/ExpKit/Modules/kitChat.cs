@@ -142,7 +142,7 @@ namespace Client.Logic.ExpKit.Modules
             channelSelector.Items.Add(new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "Local"));
             channelSelector.Items.Add(new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "Global"));
             channelSelector.Items.Add(new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "Guild"));
-            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Moniter)) {
+            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Monitor)) {
                 channelSelector.Items.Add(new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "Staff"));
             }
             if (selectedIndex < channelSelector.Items.Count && selectedIndex > -1) {

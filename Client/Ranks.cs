@@ -38,8 +38,8 @@ namespace Client.Logic
             switch (RankToCheck) {
                 case Enums.Rank.Normal:
                     return true;
-                case Enums.Rank.Moniter:
-                    if (PlayerRank == Enums.Rank.Moniter || PlayerRank == Enums.Rank.Mapper || PlayerRank == Enums.Rank.Developer || PlayerRank == Enums.Rank.Admin || PlayerRank == Enums.Rank.ServerHost || PlayerRank == Enums.Rank.Scriptor) {
+                case Enums.Rank.Monitor:
+                    if (PlayerRank == Enums.Rank.Monitor || PlayerRank == Enums.Rank.Mapper || PlayerRank == Enums.Rank.Developer || PlayerRank == Enums.Rank.Admin || PlayerRank == Enums.Rank.ServerHost || PlayerRank == Enums.Rank.Scriptor) {
                         return true;
                     }
                     break;
@@ -90,19 +90,19 @@ namespace Client.Logic
         public static Color GetRankColor(Enums.Rank rank) {
             switch (rank) {
                 case Enums.Rank.Normal:
-                    return Color.Brown;
-                case Enums.Rank.Moniter:
-                    return Color.FromArgb(255, 254, 150, 46);
+                    return Color.FromArgb(0xff7b7b);
+                case Enums.Rank.Monitor:
+                    return Color.FromArgb(0xffc663);
                 case Enums.Rank.Mapper:
-                    return Color.Cyan;
+					return Color.FromArgb(0xffffff);
                 case Enums.Rank.Developer:
-                    return Color.FromArgb(255, 0, 110, 210);
+                    return Color.FromArgb(0x009cff);
                 case Enums.Rank.Admin:
-                    return Color.Pink;
+                    return Color.FromArgb(0xffcece);
                 case Enums.Rank.ServerHost:
-                    return Color.Yellow;
+                    return Color.FromArgb(0xffff00);
                 case Enums.Rank.Scriptor:
-                    return Color.LightCyan;
+                    return Color.FromArgb(0xffffa5);
                 default:
                     return Color.DarkRed;
             }
