@@ -508,7 +508,7 @@ namespace Client.Logic.Network
                                 //}
                                 map.MapNpcs[i].ScreenActive = parse[n + 10].ToBool();
 
-                                n += 10;
+                                n += 11;
                             }
                         }
                     }
