@@ -52,7 +52,7 @@ namespace Client.Logic.Stories.Components
 
             for (int i = 0; i < options.Length; i++) {
                 lblOptions[i] = new Label("lblOptions" + i);
-                lblOptions[i].Font = Graphics.FontManager.LoadFont("PMDCP", 24);
+                lblOptions[i].Font = Graphics.FontManager.LoadFont("PMDCP", 32);
                 lblOptions[i].Location = new Point(15, i * 26);
                 lblOptions[i].AutoSize = true;
                 lblOptions[i].ForeColor = Color.WhiteSmoke;

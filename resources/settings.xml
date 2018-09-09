@@ -20,6 +20,7 @@
     <PlayerStatBars>True</PlayerStatBars>
   </General>
   <ConnectionInfo>
+	<Server>pmdshift.mooo.com</Server>
     <Port>4001</Port>
     <IP>localhost</IP>
     <UpdateLink></UpdateLink>

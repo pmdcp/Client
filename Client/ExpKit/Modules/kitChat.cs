@@ -50,7 +50,7 @@ namespace Client.Logic.ExpKit.Modules
 
             lblChat = new Label("lblChat");
             //lblChat.Location = new Point(0, 0);
-            //lblChat.Size = new Size(200, this.Height - 20);
+            lblChat.Size = new Size(200, this.Height);
             lblChat.AutoScroll = IO.Options.AutoScroll;
             lblChat.Font = FontManager.LoadFont("PMDCP", 16);
 
