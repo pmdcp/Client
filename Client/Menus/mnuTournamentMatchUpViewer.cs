@@ -84,11 +84,11 @@ namespace Client.Logic.Menus
             pbxPlayerTwoMugshot.Location = new Point(lblVSLabel.X + lblVSLabel.Width + 5, pbxPlayerOneMugshot.Y);
 
             lblPlayerOneName = new Label("lblPlayerOneName");
-            lblPlayerOneName.Font = FontManager.LoadFont("PMDCP", 24);
+            lblPlayerOneName.Font = FontManager.LoadFont("PMDCP", 32);
             lblPlayerOneName.Location = new Point(pbxPlayerOneMugshot.X, pbxPlayerOneMugshot.Y + pbxPlayerOneMugshot.Height + 5);
 
             lblPlayerTwoName = new Label("lblPlayerTwoName");
-            lblPlayerTwoName.Font = FontManager.LoadFont("PMDCP", 24);
+            lblPlayerTwoName.Font = FontManager.LoadFont("PMDCP", 32);
             lblPlayerTwoName.Location = new Point(pbxPlayerTwoMugshot.X, pbxPlayerTwoMugshot.Y + pbxPlayerTwoMugshot.Height + 5);
 
         }

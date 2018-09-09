@@ -186,7 +186,7 @@ namespace Client.Logic.Input
                 }
 
             } else if (e.Key == SdlInput.Key.F1) {
-                if (Ranks.IsAllowed(PlayerManager.MyPlayer, Enums.Rank.Moniter)) {
+                if (Ranks.IsAllowed(PlayerManager.MyPlayer, Enums.Rank.Monitor)) {
                     Windows.Editors.EditorManager.AdminPanel.Show();
                     SdlDotNet.Widgets.WindowManager.BringWindowToFront(Windows.Editors.EditorManager.AdminPanel);
                 }
@@ -222,7 +222,7 @@ namespace Client.Logic.Input
                 */
             }
             //else if (e.Key == SdlInput.Key.F4) {
-            //    if (Ranks.IsAllowed(PlayerManager.MyPlayer, Enums.Rank.Moniter)) {
+            //    if (Ranks.IsAllowed(PlayerManager.MyPlayer, Enums.Rank.Monitor)) {
             //        Windows.Editors.EditorManager.GuildPanel.Show();
             //        SdlDotNet.Widgets.WindowManager.BringWindowToFront(Windows.Editors.EditorManager.GuildPanel);
             //    }

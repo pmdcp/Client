@@ -230,7 +230,7 @@ namespace Client.Logic
         public enum Rank
         {
             Normal = 0,
-            Moniter = 1,
+            Monitor = 1,
             Mapper = 2,
             Developer = 3,
             Admin = 4,

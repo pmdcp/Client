@@ -48,7 +48,7 @@ namespace Client.Logic.Stories.Components
             lblText.BackColor = Color.Transparent;
             lblText.ForeColor = Color.WhiteSmoke;
             lblText.AutoSize = false;
-            lblText.Font = Graphics.FontManager.LoadFont("PMDCP", 24);
+            lblText.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblText.Location = new Point(15, 10);
             lblText.Size = new System.Drawing.Size(this.WidgetPanel.Width - lblText.Location.X, this.WidgetPanel.Height - lblText.Location.Y);
 

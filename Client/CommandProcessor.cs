@@ -96,7 +96,7 @@ namespace Client.Logic
             //    return;
             //}
 
-            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Moniter)) {
+            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Monitor)) {
                 // Global Message
                 if (command.StartsWith("/announce")) {
                     Messenger.GlobalMsg(command.Substring(9));
@@ -124,7 +124,7 @@ namespace Client.Logic
                 }
 
             }
-            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Moniter)) {
+            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Monitor)) {
                 if (command.StartsWith("/loc")) {
                     Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayLocation = !Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayLocation;
                     return;

@@ -49,7 +49,7 @@ namespace Client.Logic.Windows
             this.Location = new Point(DrawingSupport.GetCenter(SdlDotNet.Graphics.Video.Screen.Size, this.Size).X, 5);
 
             lblBack = new Label("lblBack");
-            lblBack.Font = Graphics.FontManager.LoadFont("PMDCP", 24);
+            lblBack.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblBack.Text = "Back to Account Settings";
             lblBack.Location = new Point(45, 300);
             lblBack.AutoSize = true;
