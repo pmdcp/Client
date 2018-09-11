@@ -76,6 +76,8 @@ namespace Client.Logic.Windows.Editors.MapEditor
         TextBox txtNorth;
         TextBox txtSouth;
         TextBox txtWest;
+        Label lblYouTubeMusicID;
+        TextBox txtYouTubeMusicID;
 
         //Label lblNpcSelector;
         //ComboBox cmbNpcSelector;
@@ -371,6 +373,17 @@ namespace Client.Logic.Windows.Editors.MapEditor
             cmbMusic = new ComboBox("cmbMusic");
             cmbMusic.Size = new System.Drawing.Size(375, 30);
             cmbMusic.Location = new Point(25, 200);
+
+            lblYouTubeMusicID = new Label("lblYouTubeMusicID");
+            lblYouTubeMusicID.Font = Logic.Graphics.FontManager.LoadFont("PMDCP", 22);
+            lblYouTubeMusicID.AutoSize = true;
+            lblYouTubeMusicID.Location = new Point(20, 235);
+            lblYouTubeMusicID.Text = "YouTube (Music) Video ID";
+
+            txtYouTubeMusicID = new TextBox("txtYouTubeMusicID");
+            txtYouTubeMusicID.Size = new System.Drawing.Size(375, 30);
+            txtYouTubeMusicID.Location = new Point(25, 260);
+            txtYouTubeMusicID.Text = properties.YouTubeMusicID;
 
             btnPlay = new Button("btnPlay");
             btnPlay.Font = Logic.Graphics.FontManager.LoadFont("PMDCP", 18);
@@ -774,6 +787,8 @@ namespace Client.Logic.Windows.Editors.MapEditor
             pnlGeneral.AddWidget(btnStop);
             pnlGeneral.AddWidget(btnOk);
             pnlGeneral.AddWidget(btnCancel);
+            pnlGeneral.AddWidget(lblYouTubeMusicID);
+            pnlGeneral.AddWidget(txtYouTubeMusicID);
             #endregion
 
             #region NPC
@@ -983,6 +998,7 @@ namespace Client.Logic.Windows.Editors.MapEditor
             properties.Up = string.IsNullOrEmpty(txtNorth.Text) ? properties.Up : txtNorth.Text.ToInt();
             properties.Down = string.IsNullOrEmpty(txtSouth.Text) ? properties.Down : txtSouth.Text.ToInt();
             properties.Music = (cmbMusic.SelectedItem == null || string.IsNullOrEmpty(cmbMusic.SelectedItem.TextIdentifier)) ? properties.Music : cmbMusic.SelectedItem.TextIdentifier;
+            properties.YouTubeMusicID = txtYouTubeMusicID.Text;
             if (!string.IsNullOrEmpty(txtMaxX.Text)) {
                 int oldMaxX = properties.MaxX;
                 properties.MaxX = txtMaxX.Text.ToInt();

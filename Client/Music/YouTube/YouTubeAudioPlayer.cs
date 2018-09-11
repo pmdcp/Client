@@ -9,6 +9,8 @@ namespace Client.Logic.Music.YouTube
 {
     public class YouTubeAudioPlayer
     {
+        public static YouTubeAudioPlayer Instance { get; set; }
+
         Form audioPlayerForm;
         WebBrowser webBrowser;
 
@@ -26,6 +28,7 @@ namespace Client.Logic.Music.YouTube
 
             webBrowser = new WebBrowser();
             audioPlayerForm.Controls.Add(webBrowser);
+            var ptr = audioPlayerForm.Handle;
         }
 
         private string GenerateEmbedUrl(string id, bool loop) {
@@ -42,10 +45,20 @@ namespace Client.Logic.Music.YouTube
             return embedUrlBuilder.ToString();
         }
 
+        private delegate void PlayDelegate(string id);
         public void Play(string id) {
+            if (audioPlayerForm.InvokeRequired) {
+                audioPlayerForm.Invoke(new PlayDelegate(Play), id);
+                return;
+            }
+
             var embedUrl = GenerateEmbedUrl(id, true);
             
             webBrowser.DocumentText = string.Format(page, $"<iframe width=\"100\" height=\"100\" src=\"{embedUrl}\" frameborder=\"0\" allowfullscreen></iframe>");
+        }
+
+        public void Stop() {
+            webBrowser.DocumentText = page;
         }
     }
 }

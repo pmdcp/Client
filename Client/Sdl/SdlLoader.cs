@@ -16,6 +16,7 @@
 // along with Mystery Dungeon eXtended.  If not, see <http://www.gnu.org/licenses/>.
 
 
+using Client.Logic.Music.YouTube;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -43,6 +44,8 @@ namespace Client.Logic.Sdl
             SdlDotNet.Core.Events.TargetFps = Constants.FRAME_RATE;
 
             SdlDotNet.Widgets.WindowManager.SetMainThread();
+
+            YouTubeAudioPlayer.Instance = new YouTubeAudioPlayer();
 
             // Create and run the loading thread
             Thread loadThread = new Thread(new ThreadStart(Loader.LoadData));

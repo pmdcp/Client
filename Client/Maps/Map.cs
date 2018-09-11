@@ -214,6 +214,8 @@ namespace Client.Logic.Maps
             set;
         }
 
+        public string YouTubeMusicID { get; set; }
+
         #endregion Properties
 
         public List<IPlayer> Players {
@@ -243,6 +245,7 @@ namespace Client.Logic.Maps
             Up = properties.Up;
             Down = properties.Down;
             Music = properties.Music;
+            YouTubeMusicID = properties.YouTubeMusicID;
             MaxX = properties.MaxX;
             MaxY = properties.MaxY;
             Moral = properties.Moral;
@@ -289,6 +292,7 @@ namespace Client.Logic.Maps
             properties.Up = Up;
             properties.Down = Down;
             properties.Music = Music;
+            properties.YouTubeMusicID = YouTubeMusicID;
             properties.MaxX = MaxX;
             properties.MaxY = MaxY;
             properties.Moral = Moral;

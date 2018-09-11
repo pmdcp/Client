@@ -29,6 +29,7 @@ namespace Client.Logic.Network
     using PMDCP.Net;
     using Client.Logic.Players;
     using Client.Logic.Players.Parties;
+    using Client.Logic.Music.YouTube;
 
     class MessageProcessor
     {
@@ -622,7 +623,13 @@ namespace Client.Logic.Network
 
                             PlayerManager.MyPlayer.SetCurrentRoom();
                             //Music.Music.AudioPlayer.PlayMusic(Maps.MapHelper.ActiveMap.Music);
-                            ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).FadeToNext(Maps.MapHelper.ActiveMap.Music, 1000);
+                            if (string.IsNullOrEmpty(Maps.MapHelper.ActiveMap.YouTubeMusicID)) {
+                                YouTubeAudioPlayer.Instance.Stop();
+                                ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).FadeToNext(Maps.MapHelper.ActiveMap.Music, 1000);
+                            } else {
+                                ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).StopMusic();
+                                YouTubeAudioPlayer.Instance.Play(Maps.MapHelper.ActiveMap.YouTubeMusicID);
+                            }
 
                             if (Stories.StoryProcessor.ActiveStory != null && Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment].Action == Enums.StoryAction.Warp) {
                                 if (Maps.MapHelper.ActiveMap.MapID == ((Stories.Segments.WarpSegment)Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment]).Map) {

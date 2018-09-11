@@ -30,6 +30,7 @@ namespace Client.Logic.Maps
         public int Up { get; set; }
         public int Down { get; set; }
         public string Music { get; set; }
+        public string YouTubeMusicID { get; set; }
         public int MaxX { get; set; }
         public int MaxY { get; set; }
         public Enums.MapMoral Moral { get; set; }
