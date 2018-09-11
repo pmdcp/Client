@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unosquare.Labs.EmbedIO;
+using Unosquare.Labs.EmbedIO.Constants;
+using Unosquare.Labs.EmbedIO.Modules;
 
 namespace Client.Logic.Music.YouTube
 {
@@ -14,35 +20,21 @@ namespace Client.Logic.Music.YouTube
         Form audioPlayerForm;
         WebBrowser webBrowser;
 
-        const string page = @"<html>
-    <head>
-        <!-- Use latest version of IE -->
-        <meta http-equiv=""X-UA-Compatible"" content=""IE=Edge"" />
-        <title></title>
-    </head>
-    <body>{0}</body>
-</html>";
+        WebServer server;
+
+        int port;
 
         public YouTubeAudioPlayer() {
             this.audioPlayerForm = new Form();
 
             webBrowser = new WebBrowser();
             audioPlayerForm.Controls.Add(webBrowser);
+
+            // Initialize the form and generate the active-x control without displaying the form
+            // Yes, it's a hack
             var ptr = audioPlayerForm.Handle;
-        }
 
-        private string GenerateEmbedUrl(string id, bool loop) {
-            var embedUrlBuilder = new StringBuilder();
-
-            embedUrlBuilder.Append($"https://www.youtube.com/embed/{id}?version=3&autoplay=1");
-
-            if (loop) {
-                embedUrlBuilder.Append("&loop=1");
-                // Workaround for YouTube player bug: https://developers.google.com/youtube/player_parameters
-                embedUrlBuilder.Append($"&playlist={id}");
-            }
-
-            return embedUrlBuilder.ToString();
+            StartWebserver();
         }
 
         private delegate void PlayDelegate(string id);
@@ -57,9 +49,7 @@ namespace Client.Logic.Music.YouTube
                 return;
             }
 
-            var embedUrl = GenerateEmbedUrl(id, true);
-
-            webBrowser.DocumentText = string.Format(page, $"<iframe width=\"100\" height=\"100\" src=\"{embedUrl}\" frameborder=\"0\" allowfullscreen></iframe>");
+            webBrowser.Navigate($"http://localhost:{port}/v/{id}");
         }
 
         private delegate void StopDelegate();
@@ -69,7 +59,23 @@ namespace Client.Logic.Music.YouTube
                 return;
             }
 
-            webBrowser.DocumentText = page;
+            webBrowser.DocumentText = "";
+        }
+
+        private void StartWebserver() {
+            var listener = new TcpListener(IPAddress.Loopback, 0);
+            listener.Start();
+
+            port = ((IPEndPoint)listener.LocalEndpoint).Port;
+
+            listener.Stop();
+
+            server = new WebServer($"http://localhost:{port}/", RoutingStrategy.Regex);
+
+            server.RegisterModule(new WebApiModule());
+            server.Module<WebApiModule>().RegisterController<YouTubeHTMLController>();
+
+            server.RunAsync();
         }
     }
 }

@@ -101,6 +101,12 @@
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unosquare.Labs.EmbedIO, Version=1.16.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmbedIO.1.16.0\lib\net47\Unosquare.Labs.EmbedIO.dll</HintPath>
+    </Reference>
+    <Reference Include="Unosquare.Swan.Lite, Version=0.34.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unosquare.Swan.Lite.0.33.3\lib\net452\Unosquare.Swan.Lite.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\Pathfinder\AStarPathfinder.cs" />
@@ -320,6 +326,7 @@
     <Compile Include="Music\TrackList.cs" />
     <Compile Include="Music\TrackListEntry.cs" />
     <Compile Include="Music\YouTube\YouTubeAudioPlayer.cs" />
+    <Compile Include="Music\YouTube\YouTubeHTMLController.cs" />
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Network\PacketList.cs" />
     <Compile Include="Npc\Npc.cs" />
@@ -485,6 +492,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
     <None Include="Resources\pmuicon.ico" />
     <EmbeddedResource Include="Exceptions\ErrorBox.resx">
       <SubType>Designer</SubType>
