@@ -52,12 +52,23 @@ namespace Client.Logic.Music.YouTube
                 return;
             }
 
+            if (IO.Options.Music == false) {
+                Stop();
+                return;
+            }
+
             var embedUrl = GenerateEmbedUrl(id, true);
-            
+
             webBrowser.DocumentText = string.Format(page, $"<iframe width=\"100\" height=\"100\" src=\"{embedUrl}\" frameborder=\"0\" allowfullscreen></iframe>");
         }
 
+        private delegate void StopDelegate();
         public void Stop() {
+            if (audioPlayerForm.InvokeRequired) {
+                audioPlayerForm.Invoke(new StopDelegate(Stop));
+                return;
+            }
+
             webBrowser.DocumentText = page;
         }
     }
