@@ -24,6 +24,8 @@ namespace Client.Logic.Music.YouTube
 
         int port;
 
+        string playingSongID;
+
         public YouTubeAudioPlayer() {
             this.audioPlayerForm = new Form();
 
@@ -49,6 +51,12 @@ namespace Client.Logic.Music.YouTube
                 return;
             }
 
+            if (string.Equals(id, playingSongID)) {
+                return;
+            }
+
+            playingSongID = id;
+
             webBrowser.Navigate($"http://localhost:{port}/v/{id}");
         }
 
@@ -58,6 +66,8 @@ namespace Client.Logic.Music.YouTube
                 audioPlayerForm.Invoke(new StopDelegate(Stop));
                 return;
             }
+
+            playingSongID = "";
 
             webBrowser.DocumentText = "";
         }
