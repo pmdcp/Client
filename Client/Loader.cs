@@ -32,6 +32,7 @@ namespace Client.Logic
     using System.Text.RegularExpressions;
 using PMDCP.Core;
     using Microsoft.Win32;
+    using SharpRaven;
 
     /// <summary>
     /// Loader that will load the game data.
@@ -39,6 +40,8 @@ using PMDCP.Core;
     public class Loader
     {
         #region Methods
+
+        static RavenClient ravenClient;
 
         /// <summary>
         /// Checks the folders to see if they exist.
@@ -54,6 +57,10 @@ using PMDCP.Core;
         public static void InitLoader(string[] args) {
             Globals.CommandLine = PMDCP.Core.CommandProcessor.ParseCommand(System.Environment.CommandLine);
             Globals.GameLoaded = false;
+
+            if (!string.IsNullOrEmpty(CompileConstants.SentryToken)) {
+                ravenClient = new RavenClient(CompileConstants.SentryToken);
+            }
 
             Logic.Globals.GameScreen = new Client.Logic.Windows.Core.GameScreen();
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -158,6 +165,10 @@ using PMDCP.Core;
         }
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) {
+            if (ravenClient != null) {
+                ravenClient.Capture(new SharpRaven.Data.SentryEvent((Exception)e.ExceptionObject));
+            }
+
             Logic.Exceptions.ErrorBox.ShowDialog("Error", ((Exception)e.ExceptionObject).Message, ((Exception)e.ExceptionObject).ToString());
         }
 
