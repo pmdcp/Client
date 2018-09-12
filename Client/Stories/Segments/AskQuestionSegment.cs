@@ -1,4 +1,11 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using Client.Logic.Menus.Core;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,14 +24,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using Client.Logic.Menus.Core;
-
-    using PMDCP.Core;
-
     class AskQuestionSegment : ISegment
     {
         #region Fields
@@ -41,22 +40,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public AskQuestionSegment(string text, int speaker, int segmentOnYes, int segmentOnNo, string[] options) {
+        public AskQuestionSegment(string text, int speaker, int segmentOnYes, int segmentOnNo, string[] options)
+        {
             Load(text, segmentOnYes, segmentOnNo, speaker, options);
         }
 
-        public AskQuestionSegment() {
+        public AskQuestionSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.AskQuestion; }
         }
 
-        public int SegmentOnNo {
+        public int SegmentOnNo
+        {
             get { return segmentOnNo; }
             set { segmentOnNo = value; }
         }
@@ -66,22 +69,26 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public string Question {
+        public string Question
+        {
             get { return question; }
             set { question = value; }
         }
 
-        public int SegmentOnYes {
+        public int SegmentOnYes
+        {
             get { return segmentOnYes; }
             set { segmentOnYes = value; }
         }
 
-        public int Mugshot {
+        public int Mugshot
+        {
             get { return mugshot; }
             set { mugshot = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -89,7 +96,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(string question, int segmentOnYes, int segmentOnNo, int mugshot, string[] options) {
+        public void Load(string question, int segmentOnYes, int segmentOnNo, int mugshot, string[] options)
+        {
             this.question = question;
             this.segmentOnYes = segmentOnYes;
             this.segmentOnNo = segmentOnNo;
@@ -111,30 +119,34 @@ namespace Client.Logic.Stories.Segments
             //    }
             //    Load(parameters.GetValue("Question"), parameters.GetValue("SegmentOnYes").ToInt(-1), parameters.GetValue("SegmentOnNo").ToInt(-1), parameters.GetValue("Mugshot").ToInt(-1), choices);
             //} else {
-                Load(parameters.GetValue("Question"), parameters.GetValue("SegmentOnYes").ToInt(-1), parameters.GetValue("SegmentOnNo").ToInt(-1), parameters.GetValue("Mugshot").ToInt(-1), new string[] { "Yes", "No" });
+            Load(parameters.GetValue("Question"), parameters.GetValue("SegmentOnYes").ToInt(-1), parameters.GetValue("SegmentOnNo").ToInt(-1), parameters.GetValue("Mugshot").ToInt(-1), new string[] { "Yes", "No" });
             //}
         }
 
-        public void Process(StoryState state) {
+        public void Process(StoryState state)
+        {
             Menus.MenuSwitcher.ShowBlankMenu();
             Components.SpokenTextMenu textMenu;
             IMenu menuToFind = Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("story-spokenTextMenu");
-            if (menuToFind != null) {
+            if (menuToFind != null)
+            {
                 textMenu = (Components.SpokenTextMenu)menuToFind;
-            } else {
+            }
+            else
+            {
                 textMenu = new Components.SpokenTextMenu("story-spokenTextMenu", Windows.WindowSwitcher.GameWindow.MapViewer.Size);
             }
             textMenu.DisplayText(StoryProcessor.ReplaceVariables(question), mugshot);
             Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(textMenu, true);
 
-            Components.OptionSelectionMenu optionMenu = new Components.OptionSelectionMenu("story-optionSelectionMenu", Windows.WindowSwitcher.GameWindow.MapViewer.Size, this.options);
+            Components.OptionSelectionMenu optionMenu = new Components.OptionSelectionMenu("story-optionSelectionMenu", Windows.WindowSwitcher.GameWindow.MapViewer.Size, options);
             optionMenu.OptionSelected += new Components.OptionSelectionMenu.OptionSelectedDelegate(optionMenu_OptionSelected);
             Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(optionMenu, true);
 
             Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu(optionMenu);
             Windows.WindowSwitcher.GameWindow.MenuManager.BlockInput = true;
 
-            this.storyState = state;
+            storyState = state;
 
             state.Pause();
 
@@ -142,24 +154,31 @@ namespace Client.Logic.Stories.Segments
             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(optionMenu);
 
             //if (state.NextSegment == null || !state.NextSegment.UsesSpeechMenu) {
-                Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(textMenu);
+            Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(textMenu);
             //}
         }
 
-        void optionMenu_OptionSelected(string option) {
+        void optionMenu_OptionSelected(string option)
+        {
             bool segmentSet = false;
-            if (option == "Yes") {
-                if (segmentOnYes > -1) {
-                    this.storyState.CurrentSegment = segmentOnYes - 2;
-                    segmentSet = true;
-                }
-            } else if (option == "No") {
-                if (segmentOnNo > -1) {
-                    this.storyState.CurrentSegment = segmentOnNo - 2;
+            if (option == "Yes")
+            {
+                if (segmentOnYes > -1)
+                {
+                    storyState.CurrentSegment = segmentOnYes - 2;
                     segmentSet = true;
                 }
             }
-            if (!segmentSet) {
+            else if (option == "No")
+            {
+                if (segmentOnNo > -1)
+                {
+                    storyState.CurrentSegment = segmentOnNo - 2;
+                    segmentSet = true;
+                }
+            }
+            if (!segmentSet)
+            {
                 Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("questionresult", option));
             }
             storyState.Unpause();

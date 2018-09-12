@@ -35,14 +35,16 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public HideBackgroundSegment() {
+        public HideBackgroundSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.HideBackground; }
         }
 
@@ -51,7 +53,8 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -64,9 +67,11 @@ namespace Client.Logic.Stories.Segments
             this.parameters = parameters;
         }
 
-        public void Process(StoryState state) {
+        public void Process(StoryState state)
+        {
             state.ResetWaitEvent();
-            if (Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.StoryBackground != null) {
+            if (Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.StoryBackground != null)
+            {
                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.StoryBackground = null;
             }
         }

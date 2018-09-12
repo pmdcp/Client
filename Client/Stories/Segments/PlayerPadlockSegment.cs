@@ -35,22 +35,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public PlayerPadlockSegment(Enums.PadlockState state) {
+        public PlayerPadlockSegment(Enums.PadlockState state)
+        {
             Load(state);
         }
 
-        public PlayerPadlockSegment() {
+        public PlayerPadlockSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.PlayerPadlock; }
         }
 
-        public Enums.PadlockState State {
+        public Enums.PadlockState State
+        {
             get { return state; }
             set { state = value; }
         }
@@ -60,7 +64,8 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -68,23 +73,28 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(Enums.PadlockState state) {
+        public void Load(Enums.PadlockState state)
+        {
             this.state = state;
         }
 
         public void LoadFromSegmentData(ListPair<string, string> parameters)
         {
             this.parameters = parameters;
-            this.state = (Enums.PadlockState)Enum.Parse(typeof(Enums.PadlockState), parameters.GetValue("MovementState"));
+            state = (Enums.PadlockState)Enum.Parse(typeof(Enums.PadlockState), parameters.GetValue("MovementState"));
         }
 
-        public void Process(StoryState state) {
-            switch (this.state) {
-                case Enums.PadlockState.Lock: {
+        public void Process(StoryState state)
+        {
+            switch (this.state)
+            {
+                case Enums.PadlockState.Lock:
+                    {
                         Players.PlayerManager.MyPlayer.MovementLocked = true;
                     }
                     break;
-                case Enums.PadlockState.Unlock: {
+                case Enums.PadlockState.Unlock:
+                    {
                         Players.PlayerManager.MyPlayer.MovementLocked = false;
                     }
                     break;

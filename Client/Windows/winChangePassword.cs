@@ -39,7 +39,8 @@ namespace Client.Logic.Windows
         TextBox txtRetypePassword;
 
         public winChangePassword()
-            : base("winChangePassword") {
+            : base("winChangePassword")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "Change Password";
@@ -122,14 +123,18 @@ namespace Client.Logic.Windows
             this.LoadComplete();
         }
 
-        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowSwitcher.ShowAccountSettings();
         }
 
-        void lblChangePassword_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtNewPassword.Text) && !string.IsNullOrEmpty(txtRetypePassword.Text)) {
-                if (txtNewPassword.Text == txtRetypePassword.Text) {
+        void lblChangePassword_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtNewPassword.Text) && !string.IsNullOrEmpty(txtRetypePassword.Text))
+            {
+                if (txtNewPassword.Text == txtRetypePassword.Text)
+                {
                     Network.Messenger.SendPasswordChange(txtName.Text, txtPassword.Text, txtNewPassword.Text);
                 }
             }

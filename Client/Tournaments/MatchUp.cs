@@ -26,6 +26,5 @@ namespace Client.Logic.Tournaments
     {
         int PlayerOneMugshot { get; set; }
         int PlayerTwoMugshot { get; set; }
-
     }
 }

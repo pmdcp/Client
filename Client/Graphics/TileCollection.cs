@@ -47,7 +47,8 @@ namespace Client.Logic.Graphics
         /// <param name="filePath">The path of the full tilesheet</param>
         /// <param name="tileWidth">The width of each tile</param>
         /// <param name="tileHeight">The height of each tile</param>
-        public TileCollection(int tilesetNumber, string filePath, int tileWidth, int tileHeight) {
+        public TileCollection(int tilesetNumber, string filePath, int tileWidth, int tileHeight)
+        {
             this.tilesetNumber = tilesetNumber;
             tiles = new List<Bitmap>();
             using (Bitmap fullSurface = (Bitmap)Image.FromFile(filePath))
@@ -65,7 +66,7 @@ namespace Client.Logic.Graphics
                         }
                         //tile.TransparentColor = transparentColor;
                         //tile.Transparent = true;
-                        this.tiles.Add(tile);
+                        tiles.Add(tile);
                     }
                 }
             }
@@ -75,19 +76,23 @@ namespace Client.Logic.Graphics
 
         #region Properties
 
-        public Size Size {
+        public Size Size
+        {
             get { return size; }
         }
 
-        public int Count {
+        public int Count
+        {
             get { return tiles.Count; }
         }
 
-        public int TilesetNumber {
+        public int TilesetNumber
+        {
             get { return tilesetNumber; }
         }
 
-        public List<Bitmap> Tiles {
+        public List<Bitmap> Tiles
+        {
             get { return tiles; }
         }
 
@@ -98,11 +103,16 @@ namespace Client.Logic.Graphics
         /// <summary>
         /// Gets a tile from this tile collection
         /// </summary>
-        public Bitmap this[int tileNum] {
-            get {
-                if (tileNum > -1 && tileNum < tiles.Count) {
+        public Bitmap this[int tileNum]
+        {
+            get
+            {
+                if (tileNum > -1 && tileNum < tiles.Count)
+                {
                     return tiles[tileNum];
-                } else {
+                }
+                else
+                {
                     return tiles[0];
                 }
             }
@@ -112,13 +122,15 @@ namespace Client.Logic.Graphics
 
         #region Methods
 
-        public void ConvertToPMDCPTile(string destinationPath) {
+        public void ConvertToPMDCPTile(string destinationPath)
+        {
             // File format:
             // [tileset-width(4)][tileset-height(4)][tile-count(4)]
             // [tileposition-1(4)][tilesize-1(4)][tileposition-2(4)][tilesize-2(4)][tileposition-n(n*4)][tilesize-n(n*4)]
             // [tile-1(variable)][tile-2(variable)][tile-n(variable)]
             int position = 0;
-            using (System.IO.FileStream stream = new System.IO.FileStream(destinationPath, System.IO.FileMode.Create, System.IO.FileAccess.Write)) {
+            using (System.IO.FileStream stream = new System.IO.FileStream(destinationPath, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+            {
                 // Write tileset width
                 stream.Write(ByteArray.IntToByteArray(size.Width), 0, 4);
                 position += 4;
@@ -146,7 +158,8 @@ namespace Client.Logic.Graphics
 
                 // Write header information about each tile
                 int tileDataPosition = tileDataStart;
-                for (int i = 0; i < tiles.Count; i++) {
+                for (int i = 0; i < tiles.Count; i++)
+                {
                     int tileSize = GetSurfaceSize(tiles[i]);
                     // Write the position of the tile
                     stream.Write(ByteArray.IntToByteArray(tileDataPosition), 0, 4);
@@ -157,9 +170,12 @@ namespace Client.Logic.Graphics
                 }
 
                 // Now that all header is written, write tile data
-                for (int i = 0; i < tiles.Count; i++) {
-                    using (System.Drawing.Image img = tiles[i]) {
-                        using (System.IO.MemoryStream ms = new System.IO.MemoryStream()) {
+                for (int i = 0; i < tiles.Count; i++)
+                {
+                    using (System.Drawing.Image img = tiles[i])
+                    {
+                        using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                        {
                             img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                             byte[] encryptedBytes = ms.ToArray();
                             stream.Write(encryptedBytes, 0, encryptedBytes.Length);

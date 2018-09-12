@@ -33,7 +33,8 @@ namespace Client.Logic.Editors.Dungeons
 
         public ListPair<int, string> ScriptList { get; set; }
 
-        public EditableDungeon() {
+        public EditableDungeon()
+        {
             StandardMaps = new List<EditableStandardDungeonMap>();
             RandomMaps = new List<EditableRandomDungeonMap>();
             ScriptList = new ListPair<int, string>();

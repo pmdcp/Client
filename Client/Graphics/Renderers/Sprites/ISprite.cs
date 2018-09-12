@@ -42,14 +42,14 @@ namespace Client.Logic.Graphics.Renderers.Sprites
         int LastWalkTime { get; set; }
         int WalkingFrame { get; set; }
         //bool Confused { get; set; }
-        Enums.StatusAilment StatusAilment{ get; set; }
+        Enums.StatusAilment StatusAilment { get; set; }
         List<int> VolatileStatus { get; set; }
         int SleepTimer { get; set; }
         int SleepFrame { get; set; }
         bool Leaving { get; set; }
         bool ScreenActive { get; set; }
-        
-        
+
+
 
         int IdleTimer { get; set; }
         int IdleFrame { get; set; }

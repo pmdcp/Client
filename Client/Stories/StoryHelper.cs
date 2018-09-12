@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.Stories
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class StoryHelper
     {
         #region Fields
@@ -43,7 +42,8 @@ namespace Client.Logic.Stories
             get { return mStories; }
         }
 
-        public static Story CachedStory {
+        public static Story CachedStory
+        {
             get { return cachedStory; }
             set { cachedStory = value; }
         }
@@ -54,14 +54,16 @@ namespace Client.Logic.Stories
 
         public static void InitStoryCollection()
         {
-            mStories = new StoryCollection(MaxInfo.MaxStories+1);
+            mStories = new StoryCollection(MaxInfo.MaxStories + 1);
         }
 
         public static void LoadStoriesFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n = 1;
-                for (int i = 0; i <= MaxInfo.MaxStories; i++) {
+                for (int i = 0; i <= MaxInfo.MaxStories; i++)
+                {
                     dataLoadPercent = System.Math.Min(99, Logic.MathFunctions.CalculatePercent(i, MaxInfo.MaxStories));
                     mStories[i] = new Story();
                     mStories[i].Name = parse[n];
@@ -69,7 +71,9 @@ namespace Client.Logic.Stories
                     ((Windows.winLoading)Windows.WindowSwitcher.FindWindow("winLoading")).UpdateLoadText("Recieving Data... " + DataManager.AverageLoadPercent().ToString() + "%");
                 }
                 dataLoadPercent = 100;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }

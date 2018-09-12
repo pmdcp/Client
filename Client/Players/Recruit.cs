@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,17 +21,13 @@
 
 namespace Client.Logic.Players
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class Recruit
     {
         #region Constructors
 
-        public Recruit() {
+        public Recruit()
+        {
             Loaded = false;
-            
         }
 
         #endregion Constructors
@@ -51,18 +50,21 @@ namespace Client.Logic.Players
             set;
         }
 
-        public bool Loaded {
+        public bool Loaded
+        {
             get;
             set;
         }
 
 
-        public string Name {
+        public string Name
+        {
             get;
             set;
         }
 
-        public int HP {
+        public int HP
+        {
             get;
             set;
         }
@@ -73,7 +75,8 @@ namespace Client.Logic.Players
             set;
         }
 
-        public Enums.Sex Sex{
+        public Enums.Sex Sex
+        {
             get;
             set;
         }
@@ -89,8 +92,6 @@ namespace Client.Logic.Players
         public int ExpPercent { get; set; }
 
         public int Level { get; set; }
-        
-        
 
         #endregion Properties
     }

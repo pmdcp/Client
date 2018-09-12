@@ -1,4 +1,11 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using Client.Logic.Menus.Core;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,14 +25,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using Client.Logic.Menus.Core;
-
-    using PMDCP.Core;
-
     class PauseSegment : ISegment
     {
         #region Fields
@@ -38,22 +37,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public PauseSegment(int length) {
+        public PauseSegment(int length)
+        {
             Load(length);
         }
 
-        public PauseSegment() {
+        public PauseSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.Pause; }
         }
 
-        public int Length {
+        public int Length
+        {
             get { return length; }
             set { length = value; }
         }
@@ -63,7 +66,8 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -71,17 +75,19 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(int length) {
+        public void Load(int length)
+        {
             this.length = length;
         }
 
         public void LoadFromSegmentData(ListPair<string, string> parameters)
         {
             this.parameters = parameters;
-            this.length = parameters.GetValue("Length").ToInt(0);
+            length = parameters.GetValue("Length").ToInt(0);
         }
 
-        public void Process(StoryState state) {
+        public void Process(StoryState state)
+        {
             state.Pause(length);
         }
 

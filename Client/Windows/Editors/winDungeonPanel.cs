@@ -114,8 +114,8 @@ namespace Client.Logic.Windows.Editors
 
         #region Constructors
         public winDungeonPanel()
-            : base("winDungeonPanel") {
-
+            : base("winDungeonPanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -167,7 +167,8 @@ namespace Client.Logic.Windows.Editors
             lbxDungeonList = new ListBox("lbxDungeonList");
             lbxDungeonList.Location = new Point(10, 10);
             lbxDungeonList.Size = new Size(180, 140);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 ListBoxTextItem lbiDungeon = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": ");
                 lbxDungeonList.Items.Add(lbiDungeon);
             }
@@ -328,7 +329,7 @@ namespace Client.Logic.Windows.Editors
             btnLoadScript.Location = new Point(155, 72);
             btnLoadScript.Text = "Load";
             btnLoadScript.Click += new EventHandler<MouseButtonEventArgs>(btnLoadScript_Click);
-            
+
             lbxDungeonScripts = new ListBox("lbxDungeonScripts");
             lbxDungeonScripts.Location = new Point(10, 90);
             lbxDungeonScripts.Size = new Size(pnlDungeonStandardMaps.Size.Width - 20, pnlDungeonStandardMaps.Size.Height - 120);
@@ -412,7 +413,7 @@ namespace Client.Logic.Windows.Editors
             nudRDungeonIndex.Maximum = MaxInfo.MaxRDungeons;
             nudRDungeonIndex.Minimum = 1;
             nudRDungeonIndex.Location = new Point(10, 14);
-            nudRDungeonIndex.ValueChanged +=new EventHandler<ValueChangedEventArgs>(nudRDungeonIndex_ValueChanged);
+            nudRDungeonIndex.ValueChanged += new EventHandler<ValueChangedEventArgs>(nudRDungeonIndex_ValueChanged);
 
             lblRDungeonFloor = new Label("lblRDungeonFloor");
             lblRDungeonFloor.AutoSize = true;
@@ -426,7 +427,7 @@ namespace Client.Logic.Windows.Editors
             nudRDungeonFloor.Maximum = Int32.MaxValue;
             nudRDungeonFloor.Minimum = 1;
             nudRDungeonFloor.Location = new Point(240, 14);
-            nudRDungeonFloor.ValueChanged +=new EventHandler<ValueChangedEventArgs>(nudRDungeonFloor_ValueChanged);
+            nudRDungeonFloor.ValueChanged += new EventHandler<ValueChangedEventArgs>(nudRDungeonFloor_ValueChanged);
 
             lblRDungeonFloorEnd = new Label("lblRDungeonFloorEnd");
             lblRDungeonFloorEnd.AutoSize = true;
@@ -440,7 +441,7 @@ namespace Client.Logic.Windows.Editors
             nudRDungeonFloorEnd.Maximum = Int32.MaxValue;
             nudRDungeonFloorEnd.Minimum = 1;
             nudRDungeonFloorEnd.Location = new Point(240, 48);
-            nudRDungeonFloorEnd.ValueChanged +=new EventHandler<ValueChangedEventArgs>(nudRDungeonFloorEnd_ValueChanged);
+            nudRDungeonFloorEnd.ValueChanged += new EventHandler<ValueChangedEventArgs>(nudRDungeonFloorEnd_ValueChanged);
 
             lblRMapDifficulty = new Label("lblRMapDifficulty");
             lblRMapDifficulty.Font = Graphics.FontManager.LoadFont("tahoma", 10);
@@ -557,19 +558,23 @@ namespace Client.Logic.Windows.Editors
 
 
 
-        
+
         #region Methods
 
         #region Dungeon List
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshDungeonList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen < (MaxInfo.MaxDungeons / 10)) {
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < (MaxInfo.MaxDungeons / 10))
+            {
                 currentTen++;
             }
             RefreshDungeonList();
@@ -601,11 +606,16 @@ namespace Client.Logic.Windows.Editors
             return;
         }
 
-        public void RefreshDungeonList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < MaxInfo.MaxDungeons) {
+        public void RefreshDungeonList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < MaxInfo.MaxDungeons)
+                {
                     ((ListBoxTextItem)lbxDungeonList.Items[i]).Text = (((i + 1) + 10 * currentTen) + ": " + Dungeons.DungeonHelper.Dungeons[(i) + 10 * currentTen].Name);
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxDungeonList.Items[i]).Text = "---";
                 }
             }
@@ -614,7 +624,8 @@ namespace Client.Logic.Windows.Editors
         #endregion
 
         #region Editor
-        public void LoadDungeon(string[] parse) {
+        public void LoadDungeon(string[] parse)
+        {
             this.Size = pnlDungeonEditor.Size;
             pnlDungeonList.Visible = false;
             pnlDungeonEditor.Visible = true;
@@ -632,20 +643,21 @@ namespace Client.Logic.Windows.Editors
             chkRescue.Checked = dungeon.AllowsRescue;
             int scriptCount = parse[4].ToInt();
             int n = 5;
-            for (int i = 0; i < scriptCount; i++) {
+            for (int i = 0; i < scriptCount; i++)
+            {
                 dungeon.ScriptList.Add(parse[n].ToInt(), parse[n + 1]);
 
                 n += 2;
 
                 ListBoxTextItem lbiScript = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), dungeon.ScriptList.KeyByIndex(i) + ": " + dungeon.ScriptList.ValueByIndex(i));
                 lbxDungeonScripts.Items.Add(lbiScript);
-
             }
 
             int mapCount = parse[n].ToInt();
             n++;
-            
-            for (int i = 0; i < mapCount; i++) {
+
+            for (int i = 0; i < mapCount; i++)
+            {
                 Logic.Editors.Dungeons.EditableStandardDungeonMap map = new Logic.Editors.Dungeons.EditableStandardDungeonMap();
                 map.Difficulty = (Enums.JobDifficulty)parse[n].ToInt();
                 map.IsBadGoalMap = parse[n + 1].ToBool();
@@ -654,9 +666,12 @@ namespace Client.Logic.Windows.Editors
                 dungeon.StandardMaps.Add(map);
 
                 string mapText;
-                if (map.IsBadGoalMap) {
+                if (map.IsBadGoalMap)
+                {
                     mapText = (i + 1) + ": (Boss)[" + Missions.MissionManager.DifficultyToString(map.Difficulty) + "] Map #" + map.MapNum;
-                } else {
+                }
+                else
+                {
                     mapText = (i + 1) + ": [" + Missions.MissionManager.DifficultyToString(map.Difficulty) + "] Map #" + map.MapNum;
                 }
                 ListBoxTextItem lbiMap = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), mapText);
@@ -677,9 +692,12 @@ namespace Client.Logic.Windows.Editors
 
                 n += 4;
                 string mapText;
-                if (map.IsBadGoalMap) {
+                if (map.IsBadGoalMap)
+                {
                     mapText = (i + 1) + ": (Boss)[" + Missions.MissionManager.DifficultyToString(map.Difficulty) + "] Dun #" + (map.RDungeonIndex + 1) + " (" + RDungeons.RDungeonHelper.RDungeons[map.RDungeonIndex].Name + ") " + (map.RDungeonFloor + 1) + "F";
-                } else {
+                }
+                else
+                {
                     mapText = (i + 1) + ": [" + Missions.MissionManager.DifficultyToString(map.Difficulty) + "] Dun #" + (map.RDungeonIndex + 1) + " (" + RDungeons.RDungeonHelper.RDungeons[map.RDungeonIndex].Name + ") " + (map.RDungeonFloor + 1) + "F";
                 }
                 ListBoxTextItem lbiMap = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), mapText);
@@ -687,7 +705,7 @@ namespace Client.Logic.Windows.Editors
             }
 
 
-            
+
 
             btnEdit.Text = "Edit";
         }
@@ -742,8 +760,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnScripts_Click(object sender, MouseButtonEventArgs e) {
-            if (!btnScripts.Selected) {
+        void btnScripts_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (!btnScripts.Selected)
+            {
                 btnGeneral.Selected = false;
                 btnStandardMaps.Selected = false;
                 btnRandomMaps.Selected = false;
@@ -775,46 +795,50 @@ namespace Client.Logic.Windows.Editors
             dungeon.Name = txtName.Text;
             dungeon.AllowsRescue = chkRescue.Checked;
             Messenger.SendSaveDungeon(dungeonNum, dungeon);
-            
+
             dungeonNum = -1;
             pnlDungeonEditor.Visible = false;
             pnlDungeonList.Visible = true;
             this.Size = new System.Drawing.Size(pnlDungeonList.Width, pnlDungeonList.Height);
-
         }
 
         #endregion
 
         #region Script
 
-        void btnRemoveScript_Click(object sender, MouseButtonEventArgs e) {
-
-            if (lbxDungeonScripts.SelectedIndex > -1) {
+        void btnRemoveScript_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxDungeonScripts.SelectedIndex > -1)
+            {
                 dungeon.ScriptList.RemoveAt(lbxDungeonScripts.SelectedIndex);
                 lbxDungeonScripts.Items.Clear();
-                for (int scripts = 0; scripts < dungeon.ScriptList.Count; scripts++) {
+                for (int scripts = 0; scripts < dungeon.ScriptList.Count; scripts++)
+                {
                     ListBoxTextItem lbiScript = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), dungeon.ScriptList.KeyByIndex(scripts) + ": " + dungeon.ScriptList.ValueByIndex(scripts));
                     lbxDungeonScripts.Items.Add(lbiScript);
                 }
             }
         }
 
-        void btnAddScript_Click(object sender, MouseButtonEventArgs e) {
-            if (dungeon.ScriptList.ContainsKey(nudScriptNum.Value)) {
+        void btnAddScript_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (dungeon.ScriptList.ContainsKey(nudScriptNum.Value))
+            {
                 dungeon.ScriptList.RemoveAtKey(nudScriptNum.Value);
             }
             dungeon.ScriptList.Add(nudScriptNum.Value, txtScriptParam.Text);
             lbxDungeonScripts.Items.Clear();
-            for (int scripts = 0; scripts < dungeon.ScriptList.Count; scripts++) {
+            for (int scripts = 0; scripts < dungeon.ScriptList.Count; scripts++)
+            {
                 ListBoxTextItem lbiScript = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), dungeon.ScriptList.KeyByIndex(scripts) + ": " + dungeon.ScriptList.ValueByIndex(scripts));
                 lbxDungeonScripts.Items.Add(lbiScript);
             }
-
-
         }
 
-        void btnLoadScript_Click(object sender, MouseButtonEventArgs e) {
-            if (lbxDungeonScripts.SelectedIndex > -1) {
+        void btnLoadScript_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxDungeonScripts.SelectedIndex > -1)
+            {
                 nudScriptNum.Value = dungeon.ScriptList.KeyByIndex(lbxDungeonScripts.SelectedIndex);
                 txtScriptParam.Text = dungeon.ScriptList.ValueByIndex(lbxDungeonScripts.SelectedIndex);
             }
@@ -825,15 +849,19 @@ namespace Client.Logic.Windows.Editors
         #region Standard Map
         void btnRemoveSMap_Click(object sender, MouseButtonEventArgs e)
         {
-            
-            if (lbxDungeonSMaps.SelectedIndex > -1) {
+            if (lbxDungeonSMaps.SelectedIndex > -1)
+            {
                 dungeon.StandardMaps.RemoveAt(lbxDungeonSMaps.SelectedIndex);
                 lbxDungeonSMaps.Items.Clear();
-                for (int maps = 0; maps < dungeon.StandardMaps.Count; maps++) {
+                for (int maps = 0; maps < dungeon.StandardMaps.Count; maps++)
+                {
                     string mapText;
-                    if (dungeon.StandardMaps[maps].IsBadGoalMap) {
+                    if (dungeon.StandardMaps[maps].IsBadGoalMap)
+                    {
                         mapText = (maps + 1) + ": (Boss)[" + Missions.MissionManager.DifficultyToString(dungeon.StandardMaps[maps].Difficulty) + "] Map #" + dungeon.StandardMaps[maps].MapNum;
-                    } else {
+                    }
+                    else
+                    {
                         mapText = (maps + 1) + ": [" + Missions.MissionManager.DifficultyToString(dungeon.StandardMaps[maps].Difficulty) + "] Map #" + dungeon.StandardMaps[maps].MapNum;
                     }
                     ListBoxTextItem lbiMap = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), mapText);
@@ -872,9 +900,12 @@ namespace Client.Logic.Windows.Editors
             dungeon.StandardMaps.Add(map);
 
             string mapText;
-            if (map.IsBadGoalMap) {
+            if (map.IsBadGoalMap)
+            {
                 mapText = (lbxDungeonSMaps.Items.Count + 1) + ": (Boss)[" + Missions.MissionManager.DifficultyToString(map.Difficulty) + "] Map #" + map.MapNum;
-            } else {
+            }
+            else
+            {
                 mapText = (lbxDungeonSMaps.Items.Count + 1) + ": [" + Missions.MissionManager.DifficultyToString(map.Difficulty) + "] Map #" + map.MapNum;
             }
             ListBoxTextItem lbiMap = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), mapText);
@@ -909,16 +940,19 @@ namespace Client.Logic.Windows.Editors
         #region Random Map
         void btnRemoveRMap_Click(object sender, MouseButtonEventArgs e)
         {
-            
-            if (lbxDungeonRMaps.SelectedIndex > -1) {
+            if (lbxDungeonRMaps.SelectedIndex > -1)
+            {
                 dungeon.RandomMaps.RemoveAt(lbxDungeonRMaps.SelectedIndex);
                 lbxDungeonRMaps.Items.Clear();
-                for (int maps = 0; maps < dungeon.RandomMaps.Count; maps++) {
+                for (int maps = 0; maps < dungeon.RandomMaps.Count; maps++)
+                {
                     string mapText;
-                    if (dungeon.RandomMaps[maps].IsBadGoalMap) {
+                    if (dungeon.RandomMaps[maps].IsBadGoalMap)
+                    {
                         mapText = (maps + 1) + ": (Boss)[" + Missions.MissionManager.DifficultyToString(dungeon.RandomMaps[maps].Difficulty) + "] Dun #" + (dungeon.RandomMaps[maps].RDungeonIndex + 1) + " (" + RDungeons.RDungeonHelper.RDungeons[dungeon.RandomMaps[maps].RDungeonIndex].Name + ") " + (dungeon.RandomMaps[maps].RDungeonFloor + 1) + "F";
                     }
-                    else {
+                    else
+                    {
                         mapText = (maps + 1) + ": [" + Missions.MissionManager.DifficultyToString(dungeon.RandomMaps[maps].Difficulty) + "] Dun #" + (dungeon.RandomMaps[maps].RDungeonIndex + 1) + " (" + RDungeons.RDungeonHelper.RDungeons[dungeon.RandomMaps[maps].RDungeonIndex].Name + ") " + (dungeon.RandomMaps[maps].RDungeonFloor + 1) + "F";
                     }
                     ListBoxTextItem lbiMap = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), mapText);
@@ -956,7 +990,6 @@ namespace Client.Logic.Windows.Editors
 
             for (int i = nudRDungeonFloor.Value; i <= nudRDungeonFloorEnd.Value; i++)
             {
-                
                 Logic.Editors.Dungeons.EditableRandomDungeonMap map = new Logic.Editors.Dungeons.EditableRandomDungeonMap();
                 map.RDungeonIndex = nudRDungeonIndex.Value - 1;
                 map.RDungeonFloor = i - 1;

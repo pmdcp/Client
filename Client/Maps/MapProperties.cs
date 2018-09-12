@@ -48,7 +48,8 @@ namespace Client.Logic.Maps
         public int MaxNpcs { get; set; }
         public int NpcSpawnTime { get; set; }
 
-        public MapProperties() {
+        public MapProperties()
+        {
             Npcs = new List<MapNpcSettings>();
         }
     }

@@ -1,4 +1,11 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Security;
+using System.Text;
+using System.IO;
+using SdlDotNet.Graphics;
+using System.Drawing;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,14 +25,6 @@
 
 namespace Client.Logic.Graphics
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Security;
-    using System.Text;
-    using System.IO;
-    using SdlDotNet.Graphics;
-    using System.Drawing;
-
     class SurfaceManager
     {
         #region Fields
@@ -52,8 +51,10 @@ namespace Client.Logic.Graphics
 
         #region Methods
 
-        public static SurfaceSaveType DetermineSaveType(string filePath) {
-            switch (System.IO.Path.GetExtension(filePath)) {
+        public static SurfaceSaveType DetermineSaveType(string filePath)
+        {
+            switch (System.IO.Path.GetExtension(filePath))
+            {
                 case ".png":
                     return SurfaceSaveType.png;
                 case ".gif":
@@ -72,16 +73,21 @@ namespace Client.Logic.Graphics
             }
         }
 
-        public static SdlDotNet.Graphics.Surface LoadSurface(string filePath) {
+        public static SdlDotNet.Graphics.Surface LoadSurface(string filePath)
+        {
             return LoadSurface(filePath, false, false);
         }
 
-        public static SdlDotNet.Graphics.Surface LoadSurface(string filePath, bool convert, bool transparent) {
+        public static SdlDotNet.Graphics.Surface LoadSurface(string filePath, bool convert, bool transparent)
+        {
             filePath = IO.Paths.CreateOSPath(filePath);
             Surface returnSurf;
-            switch (System.IO.Path.GetExtension(filePath)) {
-                case ".pmugfx": {
-                        if (IO.IO.FileExists(filePath)) {
+            switch (System.IO.Path.GetExtension(filePath))
+            {
+                case ".pmugfx":
+                    {
+                        if (IO.IO.FileExists(filePath))
+                        {
                             using (MemoryStream stream = new MemoryStream(DecryptSurface(filePath)))
                             {
                                 Bitmap bitmap = (Bitmap)Image.FromStream(stream);
@@ -98,21 +104,25 @@ namespace Client.Logic.Graphics
                                     return returnSurf;
                                 }
                             }
-                        } else {
+                        }
+                        else
+                        {
                             return null;
                         }
                     }
                 case ".gif":
                 case ".png":
-                default: {
-                        if (IO.IO.FileExists(filePath)) {
+                default:
+                    {
+                        if (IO.IO.FileExists(filePath))
+                        {
                             using (FileStream stream = File.OpenRead(filePath))
                             {
                                 if (transparent)
                                 {
                                     Bitmap bitmap = (Bitmap)Image.FromStream(stream);
                                     Bitmap clone = new Bitmap(bitmap.Width, bitmap.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                                    using (Graphics gr = Graphics.FromImage(clone))
+                                    using (var gr = System.Drawing.Graphics.FromImage(clone))
                                     {
                                         gr.DrawImage(bitmap, new Rectangle(0, 0, clone.Width, clone.Height));
                                     }
@@ -123,7 +133,7 @@ namespace Client.Logic.Graphics
                                     Bitmap bitmap = (Bitmap)Image.FromStream(stream);
                                     returnSurf = new Surface(bitmap);
                                 }
-                                
+
                                 if (convert)
                                 {
                                     Surface returnSurf2 = returnSurf.Convert();
@@ -136,16 +146,20 @@ namespace Client.Logic.Graphics
                                     return returnSurf;
                                 }
                             }
-                        } else {
+                        }
+                        else
+                        {
                             return null;
                         }
                     }
             }
         }
 
-        public static void SaveSurface(SdlDotNet.Graphics.Surface surfaceToSave, string filePath) {
+        public static void SaveSurface(SdlDotNet.Graphics.Surface surfaceToSave, string filePath)
+        {
             System.Drawing.Image img = surfaceToSave.Bitmap;
-            switch (DetermineSaveType(filePath)) {
+            switch (DetermineSaveType(filePath))
+            {
                 case SurfaceSaveType.png:
                     img.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
                     break;
@@ -161,8 +175,10 @@ namespace Client.Logic.Graphics
                 case SurfaceSaveType.ico:
                     img.Save(filePath, System.Drawing.Imaging.ImageFormat.Icon);
                     break;
-                case SurfaceSaveType.pmugfx: {
-                        using (MemoryStream ms = new MemoryStream()) {
+                case SurfaceSaveType.pmugfx:
+                    {
+                        using (MemoryStream ms = new MemoryStream())
+                        {
                             img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                             byte[] encryptedBytes = EncryptSurface(ms.ToArray());
                             System.IO.File.WriteAllBytes(filePath, encryptedBytes);
@@ -173,37 +189,46 @@ namespace Client.Logic.Graphics
             img.Dispose();
         }
 
-        internal static Surface LoadPMUGfx(byte[] imageBytes) {
+        internal static Surface LoadPMUGfx(byte[] imageBytes)
+        {
             return LoadPMUGfx(imageBytes, false);
         }
 
-        internal static Surface LoadPMUGfx(byte[] imageBytes, bool convert) {
+        internal static Surface LoadPMUGfx(byte[] imageBytes, bool convert)
+        {
             Surface returnSurf = new Surface(DecryptSurface(imageBytes));
-            if (convert) {
+            if (convert)
+            {
                 Surface returnSurf2 = returnSurf.Convert();
                 returnSurf2.Transparent = true;
                 returnSurf.Close();
                 return returnSurf2;
-            } else {
+            }
+            else
+            {
                 return returnSurf;
             }
         }
 
-        internal static byte[] DecryptSurface(byte[] imageBytes) {
+        internal static byte[] DecryptSurface(byte[] imageBytes)
+        {
             Security.Encryption encryption = new Security.Encryption(gfxEncryptionKey);
             byte[] decryptedSurface = encryption.DecryptBytes(imageBytes);
             return decryptedSurface;
         }
 
-        internal static byte[] DecryptSurface(string filePath) {
+        internal static byte[] DecryptSurface(string filePath)
+        {
             return DecryptSurface(System.IO.File.ReadAllBytes(filePath));
         }
 
-        internal static byte[] EncryptSurface(string filePath) {
+        internal static byte[] EncryptSurface(string filePath)
+        {
             return EncryptSurface(System.IO.File.ReadAllBytes(filePath));
         }
 
-        internal static byte[] EncryptSurface(byte[] imageBytes) {
+        internal static byte[] EncryptSurface(byte[] imageBytes)
+        {
             Security.Encryption encryption = new Security.Encryption(gfxEncryptionKey);
             byte[] encryptedSurface = encryption.EncryptBytes(imageBytes);
             return encryptedSurface;

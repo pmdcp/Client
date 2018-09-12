@@ -30,7 +30,7 @@ namespace Client.Logic
     using System.IO;
     using System.Threading;
     using System.Text.RegularExpressions;
-using PMDCP.Core;
+    using PMDCP.Core;
     using Microsoft.Win32;
     using SharpRaven;
 
@@ -46,7 +46,8 @@ using PMDCP.Core;
         /// <summary>
         /// Checks the folders to see if they exist.
         /// </summary>
-        public static void CheckFolders() {
+        public static void CheckFolders()
+        {
             IO.IO.CheckFolders();
         }
 
@@ -54,11 +55,13 @@ using PMDCP.Core;
         /// Initializes the loader.
         /// </summary>
         [STAThread]
-        public static void InitLoader(string[] args) {
+        public static void InitLoader(string[] args)
+        {
             Globals.CommandLine = PMDCP.Core.CommandProcessor.ParseCommand(System.Environment.CommandLine);
             Globals.GameLoaded = false;
 
-            if (!string.IsNullOrEmpty(CompileConstants.SentryToken)) {
+            if (!string.IsNullOrEmpty(CompileConstants.SentryToken))
+            {
                 ravenClient = new RavenClient(CompileConstants.SentryToken);
             }
 
@@ -66,20 +69,25 @@ using PMDCP.Core;
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
 #if DEBUG
-            if (Globals.CommandLine.ContainsCommandArg("-debug")) {
+            if (Globals.CommandLine.ContainsCommandArg("-debug"))
+            {
                 Logic.Globals.InDebugMode = true;
             }
 #endif
 
             IO.IO.Init();
-            if (IsRunningUnderMaintenanceMode(Globals.CommandLine)) {
+            if (IsRunningUnderMaintenanceMode(Globals.CommandLine))
+            {
                 RunMaintenanceMode(Globals.CommandLine);
-            } else {
+            }
+            else
+            {
                 RunGame();
             }
         }
 
-        static void RunGame() {
+        static void RunGame()
+        {
 #if !DEBUG
             // Naming a Mutex makes it available computer-wide. Use a name that's
             // unique to your company and application (e.g., include your URL).
@@ -98,42 +106,57 @@ using PMDCP.Core;
 #endif
         }
 
-        private static void InitializeGame() {
+        private static void InitializeGame()
+        {
             // Create filetype associations
             CheckFileAssociations();
 
             Sdl.SdlLoader.InitializeSdl();
         }
 
-        static void CheckFileAssociations() {
+        static void CheckFileAssociations()
+        {
             RegistryKey key = Registry.ClassesRoot.OpenSubKey(".pmdcpskn");
-            if (key == null) {
+            if (key == null)
+            {
                 // The association doesn't exist, restart as admin in maintenance mode
-                if (!Client.Logic.Security.Admin.IsAdmin()) {
-                    if (Client.Logic.Security.Admin.IsVistaOrHigher()) {
+                if (!Client.Logic.Security.Admin.IsAdmin())
+                {
+                    if (Client.Logic.Security.Admin.IsVistaOrHigher())
+                    {
                         Process process = Client.Logic.Security.Admin.StartProcessElevated(PMDCP.Core.Environment.StartupPath, "-createfileassociations");
                         process.WaitForExit();
                     }
-                } else {
+                }
+                else
+                {
                     Process process = Process.Start(PMDCP.Core.Environment.StartupPath, "-createfileassociations");
                     process.WaitForExit();
                 }
             }
         }
 
-        static void RunMaintenanceMode(Command command) {
-            if (command.ContainsCommandArg("-installskin")) {
+        static void RunMaintenanceMode(Command command)
+        {
+            if (command.ContainsCommandArg("-installskin"))
+            {
                 // We are trying to install a new skin
                 string skinPackagePath = command["-installskin"];
-                if (!string.IsNullOrEmpty(skinPackagePath) && File.Exists(skinPackagePath)) {
+                if (!string.IsNullOrEmpty(skinPackagePath) && File.Exists(skinPackagePath))
+                {
                     bool installed = Skins.SkinManager.InstallSkin(skinPackagePath);
-                    if (installed) {
+                    if (installed)
+                    {
                         System.Windows.Forms.MessageBox.Show("The skin has been installed!", "Installation completed!");
-                    } else {
+                    }
+                    else
+                    {
                         System.Windows.Forms.MessageBox.Show("The selected file is not a valid skin package.", "Invalid Package");
                     }
                 }
-            } else if (command.ContainsCommandArg("-createfileassociations")) {
+            }
+            else if (command.ContainsCommandArg("-createfileassociations"))
+            {
                 // Create associations for the skin loader
                 RegistryKey RegKey = Registry.ClassesRoot.CreateSubKey(".pmdcpskn");
                 RegKey.SetValue("", "PMDCP.Skin.Loader");
@@ -154,18 +177,24 @@ using PMDCP.Core;
             }
         }
 
-        static bool IsRunningUnderMaintenanceMode(Command command) {
-            if (command.ContainsCommandArg("-installskin")) {
+        static bool IsRunningUnderMaintenanceMode(Command command)
+        {
+            if (command.ContainsCommandArg("-installskin"))
+            {
                 return true;
-            } else if (command.ContainsCommandArg("-createfileassociations")) {
+            }
+            else if (command.ContainsCommandArg("-createfileassociations"))
+            {
                 return true;
             }
 
             return false;
         }
 
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) {
-            if (ravenClient != null) {
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (ravenClient != null)
+            {
                 ravenClient.Capture(new SharpRaven.Data.SentryEvent((Exception)e.ExceptionObject));
             }
 
@@ -179,8 +208,8 @@ using PMDCP.Core;
         /// <summary>
         /// Loads the game data.
         /// </summary>
-        public static void LoadData() {
-           
+        public static void LoadData()
+        {
             // Load the main font
             Graphics.FontManager.InitFonts();
 
@@ -191,7 +220,8 @@ using PMDCP.Core;
             // Load the initial skin
             Skins.SkinManager.ChangeActiveSkin(IO.Options.ActiveSkin);
 
-            if (Globals.InDebugMode) {
+            if (Globals.InDebugMode)
+            {
                 // Init the debug controls
                 Globals.GameScreen.InitControls();
             }
@@ -213,7 +243,8 @@ using PMDCP.Core;
             DoUpdateCheck();
         }
 
-        private static void DoUpdateCheck() {
+        private static void DoUpdateCheck()
+        {
 #if !DEBUG
             Updater.UpdateEngine updateEngine = new Updater.UpdateEngine("clientpackagekey7wf8ysdch");
             Thread updateCheckThread = new Thread(new ThreadStart(delegate()
@@ -237,7 +268,8 @@ using PMDCP.Core;
 #endif
         }
 
-        private static void PostUpdateLoad() {
+        private static void PostUpdateLoad()
+        {
             Music.Music.Initialize();
             Skins.SkinManager.PlaySkinMusic();
             winLoading winLoading = WindowSwitcher.FindWindow("winLoading") as winLoading;
@@ -258,38 +290,46 @@ using PMDCP.Core;
             Globals.GameLoaded = true;
         }
 
-        private static void DeleteToDeleteFiles() {
+        private static void DeleteToDeleteFiles()
+        {
             string[] files = Directory.GetFiles(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "*ToDelete", SearchOption.TopDirectoryOnly);
-            for (int i = 0; i < files.Length; i++) {
-                try {
+            for (int i = 0; i < files.Length; i++)
+            {
+                try
+                {
                     File.Delete(files[i]);
-                } catch { }
+                }
+                catch { }
             }
         }
 
         /// <summary>
         /// Loads the game graphics.
         /// </summary>
-        public static void LoadGraphics() {
+        public static void LoadGraphics()
+        {
             Graphics.GraphicsManager.Initialize();
 
-            if (IO.IO.FileExists("GFX\\Items\\Items.png")) {
+            if (IO.IO.FileExists("GFX\\Items\\Items.png"))
+            {
                 Graphics.GraphicsManager.Items = Graphics.SurfaceManager.LoadSurface(IO.IO.GetGfxPath("Items\\Items.png"));
                 Graphics.GraphicsManager.Items.Transparent = true;
             }
 
-            for (int i = 0; i < Graphics.GraphicsManager.MAX_TILES; i++) {
-                if (IO.IO.FileExists(IO.Paths.GfxPath + "Tiles\\Tiles" + i.ToString() + ".tile")) {
+            for (int i = 0; i < Graphics.GraphicsManager.MAX_TILES; i++)
+            {
+                if (IO.IO.FileExists(IO.Paths.GfxPath + "Tiles\\Tiles" + i.ToString() + ".tile"))
+                {
                     Graphics.GraphicsManager.LoadTilesheet(i);
                 }
             }
-
         }
-        
+
         /// <summary>
         /// Loads the core GUI's.
         /// </summary>
-        public static void LoadGuis() {
+        public static void LoadGuis()
+        {
             //Graphics.GuiManager.LoadGui(Graphics.GuiManager.Menu.Menu1);
             //Graphics.GuiManager.LoadGui(Graphics.GuiManager.Menu.Menu2);
         }

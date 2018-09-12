@@ -36,8 +36,8 @@ namespace Client.Logic.Windows
         TextBox txtPassword;
 
         public winDeleteAccount()
-            : base("winDeleteAccount") {
-
+            : base("winDeleteAccount")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "Delete Account";
@@ -74,7 +74,7 @@ namespace Client.Logic.Windows
             lblDelete.AutoSize = true;
             lblDelete.ForeColor = Color.Black;
             lblDelete.Text = "Delete Account";
-            lblDelete.Click +=new EventHandler<MouseButtonEventArgs>(lblDelete_Click);
+            lblDelete.Click += new EventHandler<MouseButtonEventArgs>(lblDelete_Click);
 
             txtName = new TextBox("txtName");
             txtName.Size = new System.Drawing.Size(165, 16);
@@ -94,21 +94,26 @@ namespace Client.Logic.Windows
             this.LoadComplete();
         }
 
-        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowSwitcher.ShowMainMenu();
         }
 
-        void lblDelete_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblDelete_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             string account = txtName.Text;
             string password = txtPassword.Text;
 
-            if (NetworkManager.TcpClient.Socket.Connected) {
+            if (NetworkManager.TcpClient.Socket.Connected)
+            {
                 Messenger.SendDeleteAccount(account, password);
                 this.Close();
                 WindowSwitcher.AddWindow(new winLoading());
                 ((Windows.winLoading)WindowManager.FindWindow("winLoading")).UpdateLoadText("Deleting account...");
-            } else {
+            }
+            else
+            {
                 this.Close();
                 WindowSwitcher.ShowMainMenu();
                 SdlDotNet.Widgets.MessageBox.Show("You are not connected to the Server!", "----");

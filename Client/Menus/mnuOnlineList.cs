@@ -30,7 +30,8 @@ namespace Client.Logic.Menus
 {
     class mnuOnlineList : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -47,7 +48,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuOnlineList(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(185, 220);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(10, 40);
@@ -77,7 +79,7 @@ namespace Client.Logic.Menus
             lstOnlinePlayers.Size = new Size(this.Width - lstOnlinePlayers.X * 2, this.Height - lstOnlinePlayers.Y - 10);
             lstOnlinePlayers.BackColor = Color.Transparent;
             lstOnlinePlayers.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
-                       
+
             this.AddWidget(lblOnlineList);
             this.AddWidget(lblLoading);
             this.AddWidget(lblTotal);
@@ -87,10 +89,13 @@ namespace Client.Logic.Menus
         #endregion Constructors
         #region Methods
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.Backspace: {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         // Show the others menu when the backspace key is pressed
                         MenuSwitcher.ShowOthersMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
@@ -99,18 +104,21 @@ namespace Client.Logic.Menus
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
-        public void AddOnlinePlayers(string[] parse) {
+        public void AddOnlinePlayers(string[] parse)
+        {
             lblLoading.Visible = false;
             int count = parse[1].ToInt();
 
             int n = 2;
 
-            for (int i = 0; i < count; i++) {
-                ListBoxTextItem item = new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), parse[i+n]);
+            for (int i = 0; i < count; i++)
+            {
+                ListBoxTextItem item = new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), parse[i + n]);
                 item.ForeColor = Color.WhiteSmoke;
                 lstOnlinePlayers.Items.Add(item);
             }

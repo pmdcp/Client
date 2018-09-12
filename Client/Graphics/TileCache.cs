@@ -27,15 +27,18 @@ namespace Client.Logic.Graphics
     {
         Tileset[] tileSets;
 
-        public TileCache(int maxTileSets) {
+        public TileCache(int maxTileSets)
+        {
             tileSets = new Tileset[maxTileSets];
         }
 
-        public void AddTileset(Tileset tileSet) {
+        public void AddTileset(Tileset tileSet)
+        {
             tileSets[tileSet.TilesetNumber] = tileSet;
         }
 
-        public Tileset this[int index] {
+        public Tileset this[int index]
+        {
             get { return tileSets[index]; }
         }
     }

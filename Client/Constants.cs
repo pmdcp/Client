@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class Constants
     {
         #region Fields
@@ -45,7 +44,7 @@ namespace Client.Logic
 
         public const string GameName = "Pokemon Mystery Dungeon: Shift!";
         public const string GameNameShort = "PMDS";
-        
+
         #endregion Fields
     }
 }

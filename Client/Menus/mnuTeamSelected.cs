@@ -29,12 +29,13 @@ namespace Client.Logic.Menus
 {
     class mnuTeamSelected : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
         int teamSlot;
-        
+
         Label lblSwitch;
         Label lblSendHome;
 
@@ -50,13 +51,14 @@ namespace Client.Logic.Menus
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
         public mnuTeamSelected(string name, int teamSlot)
-            : base(name) {
-
+            : base(name)
+        {
             base.Size = new Size(165, 95);
             base.MenuDirection = Enums.MenuDirection.Horizontal;
             base.Location = new Point(300, 34);
@@ -64,7 +66,7 @@ namespace Client.Logic.Menus
             itemPicker = new Widgets.MenuItemPicker("itemPicker");
             itemPicker.Location = new Point(18, 23);
 
-            
+
 
             lblSwitch = new Label("lblSwitch");
             lblSwitch.Font = FontManager.LoadFont("PMDCP", 32);
@@ -84,7 +86,7 @@ namespace Client.Logic.Menus
             lblSendHome.ForeColor = Color.WhiteSmoke;
             lblSendHome.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(lblSendHome_Click);
 
-            
+
             this.AddWidget(lblSwitch);
             this.AddWidget(lblSendHome);
 
@@ -94,7 +96,7 @@ namespace Client.Logic.Menus
         }
 
 
-        
+
 
         void lblSwitch_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
         {
@@ -162,11 +164,11 @@ namespace Client.Logic.Menus
             switch (itemNum)
             {
                 //case 0:
-                    //{ // Make Leader
-                        //Players.PlayerManager.MyPlayer.LeaderSwap(teamSlot);
-                        //CloseMenu();
-                    //}
-                    //break;
+                //{ // Make Leader
+                //Players.PlayerManager.MyPlayer.LeaderSwap(teamSlot);
+                //CloseMenu();
+                //}
+                //break;
                 case 0:
                     { // Switch
                         Players.PlayerManager.MyPlayer.CharSwap(teamSlot);
@@ -187,6 +189,5 @@ namespace Client.Logic.Menus
             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(this);
             Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuTeam");
         }
-
     }
 }

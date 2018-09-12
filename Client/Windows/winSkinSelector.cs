@@ -41,8 +41,8 @@ namespace Client.Logic.Windows
         Skin loadedSkin;
 
         public winSkinSelector()
-            : base("winSkinSelector") {
-
+            : base("winSkinSelector")
+        {
             this.Windowed = true;
             this.Size = new Size(390, 300);
             this.Location = DrawingSupport.GetCenter(SdlDotNet.Graphics.Video.Screen.Size, this.Size);
@@ -97,34 +97,44 @@ namespace Client.Logic.Windows
             PopulateSkinList();
         }
 
-        void btnFindSkin_Click(object sender, MouseButtonEventArgs e) {
+        void btnFindSkin_Click(object sender, MouseButtonEventArgs e)
+        {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Skin Package|*.pmuskn";
-            if (ofd.ShowDialog() == SdlDotNet.Widgets.DialogResult.OK) {
+            if (ofd.ShowDialog() == SdlDotNet.Widgets.DialogResult.OK)
+            {
                 bool installed = SkinManager.InstallSkin(ofd.FileName);
-                if (installed) {
+                if (installed)
+                {
                     PopulateSkinList();
-                } else {
+                }
+                else
+                {
                     MessageBox.Show("The selected file is not a valid skin package.", "Invalid Package");
                 }
             }
         }
 
-        
 
-        void cmbSkinSelect_ItemSelected(object sender, EventArgs e) {
-            if (loadedSkin != null) {
+
+        void cmbSkinSelect_ItemSelected(object sender, EventArgs e)
+        {
+            if (loadedSkin != null)
+            {
                 loadedSkin.Unload();
             }
             loadedSkin = new Skin();
-            if (cmbSkinSelect.SelectedItem != null) {
+            if (cmbSkinSelect.SelectedItem != null)
+            {
                 loadedSkin.LoadSkin(cmbSkinSelect.SelectedItem.TextIdentifier);
                 picSkinPreview.Image = Logic.Graphics.SurfaceManager.LoadSurface(IO.Paths.SkinPath + loadedSkin.Name + "/Configuration/preview.png");
             }
         }
 
-        void btnSave_Click(object sender, MouseButtonEventArgs e) {
-            if (cmbSkinSelect.SelectedItem != null) {
+        void btnSave_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (cmbSkinSelect.SelectedItem != null)
+            {
                 SkinManager.ChangeActiveSkin(cmbSkinSelect.SelectedItem.TextIdentifier);
                 SkinManager.PlaySkinMusic();
             }
@@ -132,23 +142,28 @@ namespace Client.Logic.Windows
             this.Close();
         }
 
-        void btnCancel_Click(object sender, MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
             WindowSwitcher.ShowMainMenu();
             this.Close();
         }
 
-        void PopulateSkinList() {
+        void PopulateSkinList()
+        {
             Thread thread = new Thread(new ThreadStart(PopulateSkinListBackgroud));
             thread.IsBackground = true;
             thread.Start();
         }
 
-        void PopulateSkinListBackgroud() {
+        void PopulateSkinListBackgroud()
+        {
             cmbSkinSelect.Items.Clear();
             string[] directories = System.IO.Directory.GetDirectories(IO.Paths.SkinPath);
-            foreach (string file in directories) {//System.IO.Directory.EnumerateDirectories(IO.Paths.SkinPath)) {
+            foreach (string file in directories)
+            {//System.IO.Directory.EnumerateDirectories(IO.Paths.SkinPath)) {
                 string name = System.IO.Path.GetFileNameWithoutExtension(file);
-                if (!string.IsNullOrEmpty(name)) {
+                if (!string.IsNullOrEmpty(name))
+                {
                     cmbSkinSelect.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 12), name));
                 }
             }

@@ -35,7 +35,8 @@ namespace Client.Logic.Windows.Editors.MapEditor
         Timer tmrHideInfo;
 
         public winScreenshotOptions()
-            : base("winScreenshotOptions") {
+            : base("winScreenshotOptions")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "Screenshot Options";
@@ -108,32 +109,36 @@ namespace Client.Logic.Windows.Editors.MapEditor
             this.LoadComplete();
         }
 
-        void tmrHideInfo_Elapsed(object sender, EventArgs e) {
+        void tmrHideInfo_Elapsed(object sender, EventArgs e)
+        {
             tmrHideInfo.Stop();
             lblSaved.Visible = false;
         }
 
-        void chkCaptureRegion_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void chkCaptureRegion_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
         }
 
-        void btnTakeScreenshot_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnTakeScreenshot_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "Portable Network Graphic File|*.png|GIF File|*.gif|JPEG File|*.jpg|Bitmap File|*.bmp|Icon File|*.ico";
             sfd.AddExtension = true;
-            if (sfd.ShowDialog() == SdlDotNet.Widgets.DialogResult.OK) {
-                if (WindowSwitcher.GameWindow.MapViewer.ActiveMap != null && WindowSwitcher.GameWindow.MapViewer.ActiveMap.Loaded) {
+            if (sfd.ShowDialog() == SdlDotNet.Widgets.DialogResult.OK)
+            {
+                if (WindowSwitcher.GameWindow.MapViewer.ActiveMap != null && WindowSwitcher.GameWindow.MapViewer.ActiveMap.Loaded)
+                {
                     SdlDotNet.Graphics.Surface surf = WindowSwitcher.GameWindow.MapViewer.CaptureMapImage(chkCaptureRegion.Checked, chkCaptureAttributes.Checked, chkCaptureMapGrid.Checked);
                     Graphics.SurfaceManager.SaveSurface(surf, sfd.FileName);
                     tmrHideInfo.Start();
-                    lblSaved.Visible = true;  
+                    lblSaved.Visible = true;
                 }
             }
-
-
         }
     }
 }

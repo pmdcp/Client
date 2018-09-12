@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,61 +22,66 @@
 
 namespace Client.Logic.Graphics.Renderers.Moves
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
     interface IMoveAnimation
     {
         #region Properties
 
-        bool Active {
+        bool Active
+        {
             get;
             set;
         }
 
-        int AnimationIndex {
+        int AnimationIndex
+        {
             get;
             set;
         }
 
-        int CompletedLoops {
+        int CompletedLoops
+        {
             get;
             set;
         }
 
-        int Frame {
+        int Frame
+        {
             get;
             set;
         }
 
-        int FrameLength {
+        int FrameLength
+        {
             get;
             set;
         }
 
-        int MoveTime {
+        int MoveTime
+        {
             get;
             set;
         }
 
-        int RenderLoops {
+        int RenderLoops
+        {
             get;
             set;
         }
 
-        int StartX {
+        int StartX
+        {
             get;
             set;
         }
 
-        int StartY {
+        int StartY
+        {
             get;
             set;
         }
 
-        Enums.MoveAnimationType AnimType {
+        Enums.MoveAnimationType AnimType
+        {
             get;
         }
 

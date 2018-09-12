@@ -17,17 +17,17 @@
 
 
 using System;
-    using System.Collections.Generic;
-    using System.Text;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Client.Logic.Pokedex
 {
-	/// <summary>
-	/// Description of PokemonCollection.
-	/// </summary>
-	class PokemonCollection
-	{
-		#region Fields
+    /// <summary>
+    /// Description of PokemonCollection.
+    /// </summary>
+    class PokemonCollection
+    {
+        #region Fields
 
         private PMDCP.Core.ListPair<int, Pokemon> mPokemon;
 
@@ -65,5 +65,5 @@ namespace Client.Logic.Pokedex
         }
 
         #endregion Methods
-	}
+    }
 }

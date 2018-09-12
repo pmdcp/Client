@@ -39,7 +39,8 @@ namespace Client.Logic.Widgets
         #region Constructors
 
         public TilesetViewer(string name)
-            : base(name) {
+            : base(name)
+        {
             base.BackColor = Color.White;
 
             vScroll = new VScrollBar("vScroll");
@@ -64,20 +65,23 @@ namespace Client.Logic.Widgets
             base.Paint += new EventHandler(TilesetViewer_Paint);
         }
 
-        
 
-        void TilesetViewer_MouseLeave(object sender, EventArgs e) {
+
+        void TilesetViewer_MouseLeave(object sender, EventArgs e)
+        {
             this.Width = originalWidth;
             RecalculateScrollBars();
             RequestRedraw();
-            if ((selectedTile.X + 1) * 32 > this.Width) {
+            if ((selectedTile.X + 1) * 32 > this.Width)
+            {
                 int value = selectedTile.X - 1;
                 hScroll.Value = value;
             }
         }
 
         int originalWidth;
-        void TilesetViewer_MouseEnter(object sender, EventArgs e) {
+        void TilesetViewer_MouseEnter(object sender, EventArgs e)
+        {
             originalWidth = this.Width;
             this.Size = new Size(this.ActiveTilesetSurface.Size.Width + 32, this.Height);
             //this.Width = this.ActiveTilesetSurface.Size.Width + 32;
@@ -89,18 +93,22 @@ namespace Client.Logic.Widgets
 
         #region Properties
 
-        public Logic.Graphics.Tileset ActiveTilesetSurface {
+        public Logic.Graphics.Tileset ActiveTilesetSurface
+        {
             get { return activeTilesetSurf; }
-            set {
+            set
+            {
                 activeTilesetSurf = value;
                 RecalculateScrollBars();
                 RequestRedraw();
             }
         }
 
-        public Point SelectedTile {
+        public Point SelectedTile
+        {
             get { return selectedTile; }
-            set {
+            set
+            {
                 selectedTile = value;
                 RequestRedraw();
             }
@@ -116,9 +124,11 @@ namespace Client.Logic.Widgets
             }
         }
 
-        private new Size Size {
+        private new Size Size
+        {
             get { return base.Size; }
-            set {
+            set
+            {
                 base.Size = value;
                 RecalculateScrollBars();
                 RequestRedraw();
@@ -129,60 +139,76 @@ namespace Client.Logic.Widgets
 
         #region Methods
 
-        public override void FreeResources() {
+        public override void FreeResources()
+        {
             base.FreeResources();
         }
 
-        public override void OnMouseDown(SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        public override void OnMouseDown(SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             base.OnMouseDown(e);
         }
 
-        public override void OnMouseMotion(SdlDotNet.Input.MouseMotionEventArgs e) {
+        public override void OnMouseMotion(SdlDotNet.Input.MouseMotionEventArgs e)
+        {
             base.OnMouseMotion(e);
         }
 
-        public override void OnMouseUp(SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        public override void OnMouseUp(SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             base.OnMouseUp(e);
         }
 
-        public override void OnTick(SdlDotNet.Core.TickEventArgs e) {
+        public override void OnTick(SdlDotNet.Core.TickEventArgs e)
+        {
             base.OnTick(e);
-            if (vScroll != null) {
+            if (vScroll != null)
+            {
                 vScroll.OnTick(e);
             }
-            if (hScroll != null) {
+            if (hScroll != null)
+            {
                 hScroll.OnTick(e);
             }
         }
 
-        void TilesetViewer_Paint(object sender, EventArgs e) {
-            if (vScroll != null && hScroll != null) {
+        void TilesetViewer_Paint(object sender, EventArgs e)
+        {
+            if (vScroll != null && hScroll != null)
+            {
                 vScroll.BlitToScreen(base.Buffer);
                 hScroll.BlitToScreen(base.Buffer);
                 DrawTiles();
                 SdlDotNet.Graphics.Primitives.Box box = new SdlDotNet.Graphics.Primitives.Box(new Point((selectedTile.X - hScroll.Value) * Constants.TILE_WIDTH, (selectedTile.Y - vScroll.Value) * Constants.TILE_HEIGHT), new Size(Constants.TILE_WIDTH * (1 + endTile.X - selectedTile.X), Constants.TILE_HEIGHT * (1 + endTile.Y - selectedTile.Y)));
                 base.Buffer.Draw(box, Color.Red);
                 base.DrawBorder();
-                if (ParentContainer != null) {
+                if (ParentContainer != null)
+                {
                     ParentContainer.RequestRedraw();
                 }
             }
         }
 
-        private int DetermineTileNumber(int x, int y) {
+        private int DetermineTileNumber(int x, int y)
+        {
             return (y * (activeTilesetSurf.Size.Width / Constants.TILE_WIDTH) + x);
         }
 
-        private void DrawTiles() {
-            if (vScroll != null && hScroll != null & activeTilesetSurf != null) {
+        private void DrawTiles()
+        {
+            if (vScroll != null && hScroll != null & activeTilesetSurf != null)
+            {
                 int maxTilesX = System.Math.Min(activeTilesetSurf.Size.Width, (this.Width - vScroll.Width)) / Constants.TILE_WIDTH;
                 int maxTilesY = System.Math.Min(activeTilesetSurf.Size.Height, (this.Height - hScroll.Height)) / Constants.TILE_HEIGHT;
                 int startX = hScroll.Value;
                 int startY = vScroll.Value;
-                for (int y = startY; y < maxTilesY + startY; y++) {
-                    for (int x = startX; x < maxTilesX + startX; x++) {
+                for (int y = startY; y < maxTilesY + startY; y++)
+                {
+                    for (int x = startX; x < maxTilesX + startX; x++)
+                    {
                         int num = DetermineTileNumber(x, y);
-                        if (num < activeTilesetSurf.TileCount) {
+                        if (num < activeTilesetSurf.TileCount)
+                        {
                             base.Buffer.Blit(activeTilesetSurf[num], new Point((x - startX) * Constants.TILE_WIDTH, (y - startY) * Constants.TILE_HEIGHT));
                         }
                     }
@@ -190,32 +216,42 @@ namespace Client.Logic.Widgets
             }
         }
 
-        private void RecalculateScrollBars() {
+        private void RecalculateScrollBars()
+        {
             vScroll.Size = new System.Drawing.Size(12, this.Height - vScroll.ButtonHeight);
             vScroll.Location = new Point(this.Width - vScroll.Width, 0);
             hScroll.Size = new System.Drawing.Size(this.Width - hScroll.ButtonWidth, 12);
             hScroll.Location = new Point(0, this.Height - hScroll.Height);
-            if (vScroll != null) {
-                if (activeTilesetSurf.Size.Height > this.Height - hScroll.Height) {
+            if (vScroll != null)
+            {
+                if (activeTilesetSurf.Size.Height > this.Height - hScroll.Height)
+                {
                     vScroll.Visible = true;
                     vScroll.Minimum = 0;
-                } else {
+                }
+                else
+                {
                     vScroll.Visible = false;
                 }
                 vScroll.Maximum = System.Math.Max(vScroll.Minimum, (activeTilesetSurf.Size.Height / Constants.TILE_HEIGHT) - (this.Height / Constants.TILE_HEIGHT));
             }
-            if (hScroll != null) {
-                if (activeTilesetSurf.Size.Width > this.Width - vScroll.Width) {
+            if (hScroll != null)
+            {
+                if (activeTilesetSurf.Size.Width > this.Width - vScroll.Width)
+                {
                     hScroll.Visible = true;
                     hScroll.Minimum = 0;
-                } else {
+                }
+                else
+                {
                     hScroll.Visible = false;
                 }
                 hScroll.Maximum = System.Math.Max(hScroll.Minimum, (activeTilesetSurf.Size.Width / Constants.TILE_WIDTH) - (this.Width / Constants.TILE_WIDTH));
             }
         }
 
-        void TilesetViewer_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void TilesetViewer_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //Point location = this.ScreenLocation;
             //Point relPoint = new Point(e.Position.X - location.X, e.Position.Y - location.Y);
             if (e.MouseEventArgs.Button == SdlDotNet.Input.MouseButton.PrimaryButton)
@@ -274,11 +310,13 @@ namespace Client.Logic.Widgets
             }
         }
 
-        void hScroll_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void hScroll_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             RequestRedraw();
         }
 
-        void vScroll_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void vScroll_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             RequestRedraw();
         }
 

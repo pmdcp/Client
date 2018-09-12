@@ -34,7 +34,8 @@ namespace Client.Logic.Widgets
         Label lblStats;
 
         public StatLabel(string name)
-            : base(name) {
+            : base(name)
+        {
             base.BackColor = Color.Transparent;
 
             lblAtk = new Label("lblAtk");
@@ -86,7 +87,7 @@ namespace Client.Logic.Widgets
             lblStats.Text = "Stats";
 
             this.AddWidget(lblStats);
-           // this.AddWidget(lblAtk);
+            // this.AddWidget(lblAtk);
             //this.AddWidget(lblDef);
             //this.AddWidget(lblSpd);
             //this.AddWidget(lblSpclAtk);
@@ -99,7 +100,8 @@ namespace Client.Logic.Widgets
         string currentSpclAtk;
         string currentSpclDef;
 
-        public void SetStats(string atk, string def, string spd, string spclAtk, string spclDef) {
+        public void SetStats(string atk, string def, string spd, string spclAtk, string spclDef)
+        {
             currentAtk = atk;
             currentDef = def;
             currentSpd = spd;
@@ -113,31 +115,36 @@ namespace Client.Logic.Widgets
             //SetSpclDef(spclDef);
         }
 
-        public void SetAtk(string atk) {
+        public void SetAtk(string atk)
+        {
             //lblAtk.Text = "Atk: " + atk;
             //lblAtk.Location = new Point(5, 5);
             SetStats(atk, currentDef, currentSpd, currentSpclAtk, currentSpclDef);
         }
 
-        public void SetDef(string def) {
+        public void SetDef(string def)
+        {
             //lblDef.Text = "Def: " + def;
             //lblDef.Location = new Point(lblAtk.X + lblAtk.Width + 5, 5);
             SetStats(currentAtk, def, currentSpd, currentSpclAtk, currentSpclDef);
         }
 
-        public void SetSpd(string spd) {
+        public void SetSpd(string spd)
+        {
             //lblSpd.Text = "Spd: " + spd;
             //lblSpd.Location = new Point(lblDef.X + lblDef.Width + 5, 5);
             SetStats(currentAtk, currentDef, spd, currentSpclAtk, currentSpclDef);
         }
 
-        public void SetSpclAtk(string spclAtk) {
+        public void SetSpclAtk(string spclAtk)
+        {
             //lblSpclAtk.Text = "Sp. Atk: " + spclAtk;
             //lblSpclAtk.Location = new Point(lblSpd.X + lblSpd.Width + 5, 5);
             SetStats(currentAtk, currentDef, currentSpd, spclAtk, currentSpclDef);
         }
 
-        public void SetSpclDef(string spclDef) {
+        public void SetSpclDef(string spclDef)
+        {
             //lblSpclDef.Text = "Sp. Def: " + spclDef;
             //lblSpclDef.Location = new Point(lblSpclAtk.X + lblSpclAtk.Width + 5, 5);
             SetStats(currentAtk, currentDef, currentSpd, currentSpclAtk, spclDef);

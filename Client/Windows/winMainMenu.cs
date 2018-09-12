@@ -51,8 +51,8 @@ namespace Client.Logic.Windows
         #region Constructors
 
         public winMainMenu()
-            : base("winMainMenu") {
-
+            : base("winMainMenu")
+        {
             //this.BackColor = Color.Transparent;
 
             //this.TitleBar.Text = "Main Menu";
@@ -217,7 +217,8 @@ namespace Client.Logic.Windows
         }
 
 #if DEBUG
-        void pixDebugServer_Click(object sender, MouseButtonEventArgs e) {
+        void pixDebugServer_Click(object sender, MouseButtonEventArgs e)
+        {
             IO.Options.ConnectionIP = "localhost";
             IO.Options.ConnectionPort = 5001;
             IO.Options.SaveXml();
@@ -234,78 +235,90 @@ namespace Client.Logic.Windows
 
         #region Methods
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.F11: {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.F11:
+                    {
                         SdlDotNet.Graphics.Video.SetVideoMode(SdlDotNet.Graphics.Video.Screen.Width, SdlDotNet.Graphics.Video.Screen.Height, false, false, !SdlDotNet.Graphics.Video.Screen.FullScreen);
                     }
                     break;
             }
         }
 
-        void btnNewAccount_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnNewAccount_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowManager.FindWindow("winUpdates").Close();
             WindowManager.FindWindow("winLogin").Close();
             WindowSwitcher.AddWindow(new winNewAccount());
         }
 
-        void btnDeleteAccount_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnDeleteAccount_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowManager.FindWindow("winUpdates").Close();
             WindowManager.FindWindow("winLogin").Close();
             WindowSwitcher.AddWindow(new winDeleteAccount());
         }
 
-        void btnAccountSettings_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnAccountSettings_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowManager.FindWindow("winUpdates").Close();
             WindowManager.FindWindow("winLogin").Close();
             WindowSwitcher.AddWindow(new winAccountSettings());
         }
 
-        void btnOptions_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnOptions_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowManager.FindWindow("winUpdates").Close();
             WindowManager.FindWindow("winLogin").Close();
             WindowSwitcher.AddWindow(new winOptions());
         }
 
-        void btnSkins_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnSkins_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowManager.FindWindow("winUpdates").Close();
             WindowManager.FindWindow("winLogin").Close();
             WindowSwitcher.AddWindow(new winSkinSelector());
         }
 
-        void btnHelp_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnHelp_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
         }
 
-        void btnCredits_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCredits_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowManager.FindWindow("winUpdates").Close();
             WindowManager.FindWindow("winLogin").Close();
             WindowSwitcher.AddWindow(new winCredits());
         }
 
-        void btnSelectServer_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!btnSelectServer.Selected) {
+        void btnSelectServer_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!btnSelectServer.Selected)
+            {
                 btnSelectServer.Selected = true;
                 pnlSelectServer.Visible = true;
-            } else {
+            }
+            else
+            {
                 pnlSelectServer.Visible = false;
                 btnSelectServer.Selected = false;
             }
         }
 
-        void btnExit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnExit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Sdl.SdlCore.QuitApplication();
         }
 
         #endregion Methods
-
-
     }
 }

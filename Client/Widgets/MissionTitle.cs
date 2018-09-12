@@ -33,7 +33,8 @@ namespace Client.Logic.Widgets
         Label lblGoal;
 
         public MissionTitle(string name, int containerWidth)
-            : base(name) {
+            : base(name)
+        {
             base.BackColor = Color.Transparent;
 
             base.Size = new Size(containerWidth - 20, 40);
@@ -61,21 +62,30 @@ namespace Client.Logic.Widgets
             this.AddWidget(lblGoal);
         }
 
-        public void SetJob(Job job) {
-            if (job != null) {
-                if (job.Accepted == Enums.JobStatus.Taken) {
+        public void SetJob(Job job)
+        {
+            if (job != null)
+            {
+                if (job.Accepted == Enums.JobStatus.Taken)
+                {
                     lblJobName.ForeColor = Color.Yellow;
                     lblGoal.ForeColor = Color.Yellow;
                     lblDifficulty.ForeColor = Color.Yellow;
-                } else if (job.Accepted == Enums.JobStatus.Failed) {
+                }
+                else if (job.Accepted == Enums.JobStatus.Failed)
+                {
                     lblJobName.ForeColor = Color.Red;
                     lblGoal.ForeColor = Color.Red;
                     lblDifficulty.ForeColor = Color.Red;
-                } else if (job.Accepted == Enums.JobStatus.Finished) {
+                }
+                else if (job.Accepted == Enums.JobStatus.Finished)
+                {
                     lblJobName.ForeColor = Color.LightGreen;
                     lblGoal.ForeColor = Color.LightGreen;
                     lblDifficulty.ForeColor = Color.LightGreen;
-                } else {
+                }
+                else
+                {
                     lblJobName.ForeColor = Color.WhiteSmoke;
                     lblGoal.ForeColor = Color.WhiteSmoke;
                     lblDifficulty.ForeColor = Color.WhiteSmoke;
@@ -84,7 +94,9 @@ namespace Client.Logic.Widgets
                 lblDifficulty.Text = MissionManager.DifficultyToString(job.Difficulty);
                 lblDifficulty.Location = new Point(this.Width - lblDifficulty.Width - 40, 0);
                 lblGoal.Text = job.GoalName;
-            } else {
+            }
+            else
+            {
                 lblJobName.ForeColor = Color.Gray;
                 lblJobName.Text = "----------";
                 lblDifficulty.Text = "";
@@ -92,7 +104,5 @@ namespace Client.Logic.Widgets
                 lblGoal.Text = "";
             }
         }
-
-
     }
 }

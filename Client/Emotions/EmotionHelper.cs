@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic.Emotions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using PMDCP.Core;
-
     class EmotionHelper
     {
         #region Fields
@@ -55,10 +54,12 @@ namespace Client.Logic.Emotions
 
         public static void LoadEmotionsFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n;
                 n = 1;
-                for (int i = 0; i < MaxInfo.MaxEmoticons; i++) {
+                for (int i = 0; i < MaxInfo.MaxEmoticons; i++)
+                {
                     dataLoadPercent = System.Math.Min(Logic.MathFunctions.CalculatePercent(i, MaxInfo.MaxEmoticons), 99);
                     mEmotions[i] = new Emotion();
                     mEmotions[i].Command = parse[n + 1];
@@ -67,7 +68,9 @@ namespace Client.Logic.Emotions
                     ((Windows.winLoading)Windows.WindowSwitcher.FindWindow("winLoading")).UpdateLoadText("Recieving Data... " + DataManager.AverageLoadPercent().ToString() + "%");
                 }
                 dataLoadPercent = 100;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }

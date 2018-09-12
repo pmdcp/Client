@@ -25,8 +25,10 @@ using Client.Logic.Network;
 using PMDCP.Sockets;
 using PMDCP.Core;
 
-namespace Client.Logic.Windows.Editors {
-    class winMissionPanel : Core.WindowCore {
+namespace Client.Logic.Windows.Editors
+{
+    class winMissionPanel : Core.WindowCore
+    {
         #region Fields
 
         int difficultyNum = 0;
@@ -38,7 +40,7 @@ namespace Client.Logic.Windows.Editors {
 
         #region MissionList
         ListBox lbxMissionList;
-        
+
         Button btnBack;
         Button btnForward;
         Button btnCancel;
@@ -103,8 +105,8 @@ namespace Client.Logic.Windows.Editors {
 
         #region Constructors
         public winMissionPanel()
-            : base("winMissionPanel") {
-
+            : base("winMissionPanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -156,7 +158,8 @@ namespace Client.Logic.Windows.Editors {
             lbxMissionList = new ListBox("lbxMissionList");
             lbxMissionList.Location = new Point(10, 10);
             lbxMissionList.Size = new Size(180, 140);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 ListBoxTextItem lbiMission = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": ");
                 lbxMissionList.Items.Add(lbiMission);
             }
@@ -472,29 +475,36 @@ namespace Client.Logic.Windows.Editors {
         #endregion
 
 
-        
+
 
         #region Methods
 
         #region Dungeon List
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshMissionList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen < (15 / 10)) {
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < (15 / 10))
+            {
                 currentTen++;
             }
             RefreshMissionList();
         }
 
-        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxMissionList.SelectedItems.Count == 1) {
+        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxMissionList.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxMissionList.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     difficultyNum = index[0].ToInt();
                     btnEdit.Text = "Loading...";
 
@@ -504,16 +514,22 @@ namespace Client.Logic.Windows.Editors {
             }
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             return;
         }
 
-        public void RefreshMissionList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < 15) {
-                    ((ListBoxTextItem)lbxMissionList.Items[i]).Text = (((i + 1) + 10 * currentTen) + ": " + ((Enums.JobDifficulty)((i+1) + 10 * currentTen)).ToString());
-                } else {
+        public void RefreshMissionList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < 15)
+                {
+                    ((ListBoxTextItem)lbxMissionList.Items[i]).Text = (((i + 1) + 10 * currentTen) + ": " + ((Enums.JobDifficulty)((i + 1) + 10 * currentTen)).ToString());
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxMissionList.Items[i]).Text = "---";
                 }
             }
@@ -521,17 +537,18 @@ namespace Client.Logic.Windows.Editors {
 
         #endregion
 
-        
+
 
         #region Editor
-        
-        public void LoadMission(string[] parse) {
+
+        public void LoadMission(string[] parse)
+        {
             this.Size = pnlMissionEditor.Size;
             pnlMissionList.Visible = false;
             pnlMissionEditor.Visible = true;
 
 
-            
+
             btnGeneral_Click(null, null);
             lbxMissionRewards.Items.Clear();
             lbxMissionEnemies.Items.Clear();
@@ -541,27 +558,27 @@ namespace Client.Logic.Windows.Editors {
 
             missionPool = new Logic.Editors.Missions.EditableMissionPool();
 
-            
+
             int clientCount = parse[2].ToInt();
             int n = 3;
-            for (int i = 0; i < clientCount; i++) {
+            for (int i = 0; i < clientCount; i++)
+            {
                 Logic.Editors.Missions.EditableMissionClient missionClient = new Logic.Editors.Missions.EditableMissionClient();
                 missionClient.DexNum = parse[n].ToInt();
-                missionClient.FormNum = parse[n+1].ToInt();
+                missionClient.FormNum = parse[n + 1].ToInt();
                 missionPool.Clients.Add(missionClient);
 
                 n += 2;
 
-                ListBoxTextItem lbiClient = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": #" + missionClient.DexNum + " " + Pokedex.PokemonHelper.Pokemon[missionClient.DexNum-1].Name + " (Form: " + missionClient.FormNum + ")");
+                ListBoxTextItem lbiClient = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": #" + missionClient.DexNum + " " + Pokedex.PokemonHelper.Pokemon[missionClient.DexNum - 1].Name + " (Form: " + missionClient.FormNum + ")");
                 lbxMissionClients.Items.Add(lbiClient);
-
             }
 
             int enemyCount = parse[n].ToInt();
             n++;
 
-            for (int i = 0; i < enemyCount; i++) {
-                
+            for (int i = 0; i < enemyCount; i++)
+            {
                 missionPool.Enemies.Add(parse[n].ToInt());
 
                 ListBoxTextItem lbiEnemy = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": NPC #" + missionPool.Enemies[i] + ", " + Npc.NpcHelper.Npcs[missionPool.Enemies[i]].Name);
@@ -573,8 +590,8 @@ namespace Client.Logic.Windows.Editors {
             int rewardCount = parse[n].ToInt();
             n++;
 
-            for (int i = 0; i < rewardCount; i++) {
-
+            for (int i = 0; i < rewardCount; i++)
+            {
                 Logic.Editors.Missions.EditableMissionReward missionReward = new Logic.Editors.Missions.EditableMissionReward();
                 missionReward.ItemNum = parse[n].ToInt();
                 missionReward.ItemAmount = parse[n + 1].ToInt();
@@ -591,8 +608,10 @@ namespace Client.Logic.Windows.Editors {
         }
 
 
-        void btnGeneral_Click(object sender, MouseButtonEventArgs e) {
-            if (!btnGeneral.Selected) {
+        void btnGeneral_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (!btnGeneral.Selected)
+            {
                 btnGeneral.Selected = true;
                 btnClients.Selected = false;
                 btnEnemies.Selected = false;
@@ -605,8 +624,10 @@ namespace Client.Logic.Windows.Editors {
             }
         }
 
-        void btnClients_Click(object sender, MouseButtonEventArgs e) {
-            if (!btnClients.Selected) {
+        void btnClients_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (!btnClients.Selected)
+            {
                 btnGeneral.Selected = false;
                 btnClients.Selected = true;
                 btnEnemies.Selected = false;
@@ -619,8 +640,10 @@ namespace Client.Logic.Windows.Editors {
             }
         }
 
-        void btnEnemies_Click(object sender, MouseButtonEventArgs e) {
-            if (!btnEnemies.Selected) {
+        void btnEnemies_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (!btnEnemies.Selected)
+            {
                 btnGeneral.Selected = false;
                 btnClients.Selected = false;
                 btnEnemies.Selected = true;
@@ -633,8 +656,10 @@ namespace Client.Logic.Windows.Editors {
             }
         }
 
-        void btnRewards_Click(object sender, MouseButtonEventArgs e) {
-            if (!btnRewards.Selected) {
+        void btnRewards_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (!btnRewards.Selected)
+            {
                 btnGeneral.Selected = false;
                 btnClients.Selected = false;
                 btnEnemies.Selected = false;
@@ -649,11 +674,12 @@ namespace Client.Logic.Windows.Editors {
 
         #endregion
 
-        
-        
+
+
         #region General
 
-        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             difficultyNum = -1;
             pnlMissionEditor.Visible = false;
             pnlMissionList.Visible = true;
@@ -662,36 +688,36 @@ namespace Client.Logic.Windows.Editors {
         }
 
 
-        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
-
+        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Messenger.SendSaveMission(difficultyNum, missionPool);
 
             difficultyNum = -1;
             pnlMissionEditor.Visible = false;
             pnlMissionList.Visible = true;
             this.Size = new System.Drawing.Size(pnlMissionList.Width, pnlMissionList.Height);
-
         }
 
         #endregion
-        
+
         #region Enemy
 
-        void btnRemoveEnemy_Click(object sender, MouseButtonEventArgs e) {
-
-            if (lbxMissionEnemies.SelectedIndex > -1) {
+        void btnRemoveEnemy_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxMissionEnemies.SelectedIndex > -1)
+            {
                 missionPool.Enemies.RemoveAt(lbxMissionEnemies.SelectedIndex);
                 lbxMissionEnemies.Items.Clear();
-                for (int enemies = 0; enemies < missionPool.Enemies.Count; enemies++) {
+                for (int enemies = 0; enemies < missionPool.Enemies.Count; enemies++)
+                {
                     ListBoxTextItem lbiEnemy = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), (enemies + 1) + ": NPC #" + missionPool.Enemies[enemies] + ", " + Npc.NpcHelper.Npcs[missionPool.Enemies[enemies]].Name);
                     lbxMissionEnemies.Items.Add(lbiEnemy);
                 }
             }
         }
 
-        void btnAddEnemy_Click(object sender, MouseButtonEventArgs e) {
-            
+        void btnAddEnemy_Click(object sender, MouseButtonEventArgs e)
+        {
             missionPool.Enemies.Add(nudNpcNum.Value);
 
             ListBoxTextItem lbiEnemy = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), missionPool.Enemies.Count + ": NPC #" + missionPool.Enemies[missionPool.Enemies.Count - 1] + ", " + Npc.NpcHelper.Npcs[missionPool.Enemies[missionPool.Enemies.Count - 1]].Name);
@@ -706,27 +732,30 @@ namespace Client.Logic.Windows.Editors {
         //}
 
         #endregion
-        
+
         #region Rewards
 
-        void nudItemNum_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
+        void nudItemNum_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
             lblItemNum.Text = Items.ItemHelper.Items[nudItemNum.Value].Name;
         }
-        
-        void btnRemoveItem_Click(object sender, MouseButtonEventArgs e) {
 
-            if (lbxMissionRewards.SelectedIndex > -1) {
+        void btnRemoveItem_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxMissionRewards.SelectedIndex > -1)
+            {
                 missionPool.Rewards.RemoveAt(lbxMissionRewards.SelectedIndex);
                 lbxMissionRewards.Items.Clear();
-                for (int rewards = 0; rewards < missionPool.Rewards.Count; rewards++) {
+                for (int rewards = 0; rewards < missionPool.Rewards.Count; rewards++)
+                {
                     ListBoxTextItem lbiReward = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), (rewards + 1) + ": " + Items.ItemHelper.Items[missionPool.Rewards[rewards].ItemNum].Name + " x" + missionPool.Rewards[rewards].ItemAmount + " (Tag: " + missionPool.Rewards[rewards].ItemTag + ")");
                     lbxMissionRewards.Items.Add(lbiReward);
                 }
             }
         }
 
-        void btnAddItem_Click(object sender, MouseButtonEventArgs e) {
-            
+        void btnAddItem_Click(object sender, MouseButtonEventArgs e)
+        {
             Logic.Editors.Missions.EditableMissionReward reward = new Logic.Editors.Missions.EditableMissionReward();
             reward.ItemNum = nudItemNum.Value;
             reward.ItemAmount = nudItemAmount.Value;
@@ -738,8 +767,10 @@ namespace Client.Logic.Windows.Editors {
             lbxMissionRewards.Items.Add(lbiReward);
         }
 
-        void btnLoadItem_Click(object sender, MouseButtonEventArgs e) {
-            if (lbxMissionRewards.SelectedIndex > -1) {
+        void btnLoadItem_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxMissionRewards.SelectedIndex > -1)
+            {
                 nudItemNum.Value = missionPool.Rewards[lbxMissionRewards.SelectedIndex].ItemNum;
                 nudItemAmount.Value = missionPool.Rewards[lbxMissionRewards.SelectedIndex].ItemAmount;
                 txtItemTag.Text = missionPool.Rewards[lbxMissionRewards.SelectedIndex].ItemTag;
@@ -747,30 +778,31 @@ namespace Client.Logic.Windows.Editors {
         }
 
         #endregion
-        
-        #region Clients
-        
-        
-        void nudDexNum_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
-            lblDexNum.Text = Pokedex.PokemonHelper.Pokemon[nudDexNum.Value-1].Name;
-        }
-        
-        void btnRemoveMissionClient_Click(object sender, MouseButtonEventArgs e) {
 
-            if (lbxMissionClients.SelectedIndex > -1) {
+        #region Clients
+
+
+        void nudDexNum_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
+            lblDexNum.Text = Pokedex.PokemonHelper.Pokemon[nudDexNum.Value - 1].Name;
+        }
+
+        void btnRemoveMissionClient_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxMissionClients.SelectedIndex > -1)
+            {
                 missionPool.Clients.RemoveAt(lbxMissionClients.SelectedIndex);
                 lbxMissionClients.Items.Clear();
-                for (int clients = 0; clients < missionPool.Clients.Count; clients++) {
-                    
-                    ListBoxTextItem lbiClient = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), (clients + 1) + ": #" + missionPool.Clients[clients].DexNum + " " + Pokedex.PokemonHelper.Pokemon[missionPool.Clients[clients].DexNum-1].Name + " (Form: " + missionPool.Clients[clients].FormNum + ")");
+                for (int clients = 0; clients < missionPool.Clients.Count; clients++)
+                {
+                    ListBoxTextItem lbiClient = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), (clients + 1) + ": #" + missionPool.Clients[clients].DexNum + " " + Pokedex.PokemonHelper.Pokemon[missionPool.Clients[clients].DexNum - 1].Name + " (Form: " + missionPool.Clients[clients].FormNum + ")");
                     lbxMissionClients.Items.Add(lbiClient);
                 }
             }
         }
 
-        void btnAddMissionClient_Click(object sender, MouseButtonEventArgs e) {
-
-
+        void btnAddMissionClient_Click(object sender, MouseButtonEventArgs e)
+        {
             Logic.Editors.Missions.EditableMissionClient client = new Logic.Editors.Missions.EditableMissionClient();
             client.DexNum = nudDexNum.Value;
             client.FormNum = nudFormNum.Value;
@@ -779,20 +811,19 @@ namespace Client.Logic.Windows.Editors {
 
             ListBoxTextItem lbiClient = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), missionPool.Clients.Count + ": #" + client.DexNum + " " + Pokedex.PokemonHelper.Pokemon[client.DexNum - 1].Name + " (Form: " + client.FormNum + ")");
             lbxMissionClients.Items.Add(lbiClient);
-
         }
 
-        void btnLoadMissionClient_Click(object sender, MouseButtonEventArgs e) {
-            if (lbxMissionClients.SelectedIndex > -1) {
+        void btnLoadMissionClient_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxMissionClients.SelectedIndex > -1)
+            {
                 nudDexNum.Value = missionPool.Clients[lbxMissionClients.SelectedIndex].DexNum;
                 nudFormNum.Value = missionPool.Clients[lbxMissionClients.SelectedIndex].FormNum;
             }
         }
 
         #endregion
-        
-        #endregion
 
-        
+        #endregion
     }
 }

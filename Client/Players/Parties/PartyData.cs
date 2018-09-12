@@ -25,15 +25,18 @@ namespace Client.Logic.Players.Parties
     class PartyData
     {
         PartyMember[] members;
-        public PartyMember[] Members {
+        public PartyMember[] Members
+        {
             get { return members; }
         }
 
-        public PartyData() {
+        public PartyData()
+        {
             members = new PartyMember[4];
         }
 
-        public void LoadMember(int slot, string name, int mugshot, int form, Enums.Coloration shiny, Enums.Sex gender, ulong exp, ulong maxExp, int hp, int maxHP) {
+        public void LoadMember(int slot, string name, int mugshot, int form, Enums.Coloration shiny, Enums.Sex gender, ulong exp, ulong maxExp, int hp, int maxHP)
+        {
             members[slot] = new PartyMember();
             members[slot].Name = name;
             members[slot].MugshotNum = mugshot;
@@ -46,7 +49,8 @@ namespace Client.Logic.Players.Parties
             members[slot].MaxHP = maxHP;
         }
 
-        public void ClearSlot(int slot) {
+        public void ClearSlot(int slot)
+        {
             members[slot] = null;
         }
     }

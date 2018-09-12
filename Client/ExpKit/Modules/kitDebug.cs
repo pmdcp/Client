@@ -33,7 +33,8 @@ namespace Client.Logic.ExpKit.Modules
         bool enabled;
 
         public kitDebug(string name)
-            : base(name) {
+            : base(name)
+        {
             enabled = true;
 
             base.BackColor = Color.Transparent;
@@ -60,42 +61,52 @@ namespace Client.Logic.ExpKit.Modules
             this.AddWidget(btnTest);
         }
 
-        void btnTest_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnTest_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             lblFps.Text = "Testing!";
         }
 
-        void tmrUpdate_Elapsed(object sender, EventArgs e) {
+        void tmrUpdate_Elapsed(object sender, EventArgs e)
+        {
             lblFps.Text = "FPS: " + SdlDotNet.Core.Events.Fps.ToString();
         }
 
-        public void SwitchOut() {
+        public void SwitchOut()
+        {
             tmrUpdate.Stop();
         }
 
-        public void Initialize(Size containerSize) {
+        public void Initialize(Size containerSize)
+        {
             tmrUpdate.Start();
         }
 
-        public int ModuleIndex {
+        public int ModuleIndex
+        {
             get { return moduleIndex; }
         }
 
-        public string ModuleName {
+        public string ModuleName
+        {
             get { return "Debug Module"; }
         }
 
-        public void Created(int index) {
+        public void Created(int index)
+        {
             moduleIndex = index;
         }
 
-        public Panel ModulePanel {
+        public Panel ModulePanel
+        {
             get { return this; }
         }
 
 
-        public bool Enabled {
+        public bool Enabled
+        {
             get { return enabled; }
-            set {
+            set
+            {
                 enabled = value;
                 if (EnabledChanged != null)
                     EnabledChanged(this, EventArgs.Empty);
@@ -105,7 +116,8 @@ namespace Client.Logic.ExpKit.Modules
         public event EventHandler EnabledChanged;
 
 
-        public Enums.ExpKitModules ModuleID {
+        public Enums.ExpKitModules ModuleID
+        {
             get { return Enums.ExpKitModules.Debug; }
         }
     }

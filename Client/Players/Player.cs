@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using Client.Logic.Missions;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Players
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Drawing;
-    using Client.Logic.Missions;
-
     //class Player : Logic.Graphics.Renderers.Sprites.ISprite
     //{
     //    #region Fields

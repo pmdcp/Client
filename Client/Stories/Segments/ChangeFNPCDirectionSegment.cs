@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,12 +22,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class ChangeFNPCDirectionSegment : ISegment
     {
         #region Fields
@@ -36,22 +35,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public ChangeFNPCDirectionSegment(string id, Enums.Direction direction) {
+        public ChangeFNPCDirectionSegment(string id, Enums.Direction direction)
+        {
             Load(id, direction);
         }
 
-        public ChangeFNPCDirectionSegment() {
+        public ChangeFNPCDirectionSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.ChangeFNPCDir; }
         }
 
-        public string ID {
+        public string ID
+        {
             get { return id; }
             set { id = value; }
         }
@@ -61,12 +64,14 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public Enums.Direction Direction {
+        public Enums.Direction Direction
+        {
             get { return direction; }
             set { direction = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -74,7 +79,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(string id, Enums.Direction direction) {
+        public void Load(string id, Enums.Direction direction)
+        {
             this.id = id;
             this.direction = direction;
         }
@@ -85,10 +91,13 @@ namespace Client.Logic.Stories.Segments
             Load(parameters.GetValue("ID"), (Enums.Direction)parameters.GetValue("Direction").ToInt());
         }
 
-        public void Process(StoryState state) {
-            this.storyState = state;
-            for (int i = 0; i < state.FNPCs.Count; i++) {
-                if (state.FNPCs[i].ID == id) {
+        public void Process(StoryState state)
+        {
+            storyState = state;
+            for (int i = 0; i < state.FNPCs.Count; i++)
+            {
+                if (state.FNPCs[i].ID == id)
+                {
                     state.FNPCs[i].Direction = direction;
                 }
             }

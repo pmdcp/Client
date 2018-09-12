@@ -26,9 +26,12 @@ using Client.Logic.Graphics;
 using SdlDotNet.Widgets;
 using Client.Logic.Network;
 
-namespace Client.Logic.Menus {
-    class mnuChangeBounds : Widgets.BorderedPanel, Core.IMenu {
-        public bool Modal {
+namespace Client.Logic.Menus
+{
+    class mnuChangeBounds : Widgets.BorderedPanel, Core.IMenu
+    {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -45,10 +48,11 @@ namespace Client.Logic.Menus {
         int currY;
 
         public mnuChangeBounds(string name, int price)
-            : base(name) {
-                this.price = price;
-                currX = Logic.Maps.MapHelper.ActiveMap.MaxX + 1;
-                currY = Logic.Maps.MapHelper.ActiveMap.MaxY + 1;
+            : base(name)
+        {
+            this.price = price;
+            currX = Logic.Maps.MapHelper.ActiveMap.MaxX + 1;
+            currY = Logic.Maps.MapHelper.ActiveMap.MaxY + 1;
 
             this.Size = new Size(250, 250);
             this.MenuDirection = Enums.MenuDirection.Vertical;
@@ -74,7 +78,7 @@ namespace Client.Logic.Menus {
             nudAmountX.Maximum = 50;
             nudAmountX.Minimum = 20;
             nudAmountX.Value = currX;
-            nudAmountX.ValueChanged +=new EventHandler<ValueChangedEventArgs>(nudAmount_ValueChanged);
+            nudAmountX.ValueChanged += new EventHandler<ValueChangedEventArgs>(nudAmount_ValueChanged);
 
             nudAmountY = new NumericUpDown("nudAmountY");
             nudAmountY.Size = new Size(60, 24);
@@ -100,7 +104,7 @@ namespace Client.Logic.Menus {
             btnAccept.Font = FontManager.LoadFont("tahoma", 10);
             Skins.SkinManager.LoadButtonGui(btnAccept);
             btnAccept.Click += new EventHandler<MouseButtonEventArgs>(btnAccept_Click);
-            
+
             btnCancel = new Button("btnCancel");
             btnCancel.Location = new Point(btnAccept.X + btnAccept.Width, lblPrice.Y + lblPrice.Height + 10);
             btnCancel.Size = new Size(80, 30);
@@ -118,25 +122,28 @@ namespace Client.Logic.Menus {
             this.AddWidget(btnCancel);
         }
 
-        void nudAmount_ValueChanged(object sender, ValueChangedEventArgs e) {
-
+        void nudAmount_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             int deltaPrice = ((nudAmountX.Value * nudAmountY.Value - currX * currY) * price);
             if (deltaPrice < 0) deltaPrice = 0;
             lblPrice.Text = "New dimensions will cost " + deltaPrice + " " + Items.ItemHelper.Items[1].Name + ".";
         }
 
-        void btnAccept_Click(object sender, MouseButtonEventArgs e) {
-            Messenger.SendExpansionRequest(nudAmountX.Value-1, nudAmountY.Value-1);
+        void btnAccept_Click(object sender, MouseButtonEventArgs e)
+        {
+            Messenger.SendExpansionRequest(nudAmountX.Value - 1, nudAmountY.Value - 1);
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
         }
 
-        void btnCancel_Click(object sender, MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
     }

@@ -1,4 +1,12 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using Client.Logic.Graphics;
+
+using SdlDotNet.Widgets;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,15 +26,6 @@
 
 namespace Client.Logic.Menus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using Client.Logic.Graphics;
-
-    using SdlDotNet.Widgets;
-
     class mnuBankOptions : Logic.Widgets.BorderedPanel, Core.IMenu
     {
         public bool Modal
@@ -90,7 +89,7 @@ namespace Client.Logic.Menus
             SelectItem(1);
         }
 
-        
+
 
         #endregion Constructors
 
@@ -152,7 +151,8 @@ namespace Client.Logic.Menus
 
         private void SelectItem(int itemNum)
         {
-            switch (itemNum) {
+            switch (itemNum)
+            {
                 case 0:
                     {
                         MenuSwitcher.ShowBankDepositMenu(1);

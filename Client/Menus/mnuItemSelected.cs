@@ -31,7 +31,8 @@ namespace Client.Logic.Menus
 {
     class mnuItemSelected : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -47,31 +48,40 @@ namespace Client.Logic.Menus
         Widgets.MenuItemPicker itemPicker;
         int maxItems;
 
-        public int ItemSlot {
+        public int ItemSlot
+        {
             get { return itemSlot; }
-            set {
+            set
+            {
                 itemSlot = value;
-                if (Players.PlayerManager.MyPlayer.GetActiveRecruit().HeldItemSlot == itemSlot) {
+                if (Players.PlayerManager.MyPlayer.GetActiveRecruit().HeldItemSlot == itemSlot)
+                {
                     lblHold.Text = "Take";
-                } else {
+                }
+                else
+                {
                     lblHold.Text = "Give";
                 }
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
         public mnuItemSelected(string name, int itemSlot)
-            : base(name) {
-
-            if ((int)Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type < 8 || (int)Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type == 15) {
+            : base(name)
+        {
+            if ((int)Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type < 8 || (int)Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type == 15)
+            {
                 //cannot use item
                 base.Size = new Size(165, 165);
                 maxItems = 3;
                 useable = false;
-            } else {
+            }
+            else
+            {
                 //can use item
                 base.Size = new Size(165, 195);
                 maxItems = 4;
@@ -99,7 +109,8 @@ namespace Client.Logic.Menus
             this.AddWidget(lblHold);
             widgetY += 30;
 
-            if (useable) {
+            if (useable)
+            {
                 lblUse = new Label("lblUse");
                 lblUse.Font = FontManager.LoadFont("PMDCP", 32);
                 lblUse.AutoSize = true;
@@ -147,7 +158,8 @@ namespace Client.Logic.Menus
 
             widgetY += 32;
 
-            if (Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].StackCap > 0) {
+            if (Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].StackCap > 0)
+            {
                 lblDrop.Text = "Drop Amount:";
                 nudAmount = new NumericUpDown("nudAmount");
                 nudAmount.Size = new Size(120, 24);
@@ -156,7 +168,9 @@ namespace Client.Logic.Menus
                 nudAmount.Minimum = 1;
 
                 this.AddWidget(nudAmount);
-            } else {
+            }
+            else
+            {
                 lblDrop.Text = "Drop";
             }
 
@@ -169,72 +183,98 @@ namespace Client.Logic.Menus
             this.AddWidget(itemPicker);
 
             this.ItemSlot = itemSlot;
-
         }
 
-        void lblSummary_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (useable) {
+        void lblSummary_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (useable)
+            {
                 SelectItem(3);
-            } else {
+            }
+            else
+            {
                 SelectItem(2);
             }
         }
 
-        void lblThrow_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (useable) {
+        void lblThrow_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (useable)
+            {
                 SelectItem(2);
-            } else {
+            }
+            else
+            {
                 SelectItem(1);
             }
         }
 
-        void lblDrop_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (useable) {
+        void lblDrop_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (useable)
+            {
                 SelectItem(4);
-            } else {
+            }
+            else
+            {
                 SelectItem(3);
             }
         }
 
-        void lblUse_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblUse_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(1);
         }
 
-        void lblHold_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblHold_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(0);
         }
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 23 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == maxItems) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == maxItems)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(maxItems);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         CloseMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                     }
@@ -242,27 +282,35 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void SelectItem(int itemNum) {
-            if (!useable && itemNum != 0) {
+        private void SelectItem(int itemNum)
+        {
+            if (!useable && itemNum != 0)
+            {
                 itemNum++;
             }
 
 
-            switch (itemNum) {
+            switch (itemNum)
+            {
                 case 0://Hold/remove Item
                     {
-                        if (Players.PlayerManager.MyPlayer.GetActiveRecruit().HeldItemSlot == itemSlot) {
+                        if (Players.PlayerManager.MyPlayer.GetActiveRecruit().HeldItemSlot == itemSlot)
+                        {
                             Messenger.SendRemoveItem(itemSlot);
-                        } else {
+                        }
+                        else
+                        {
                             Messenger.SendHoldItem(itemSlot);
                         }
-
                     }
                     break;
-                case 1: { // Use item
-                        if (Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot) > 0) {
-                    		  Messenger.SendUseItem(itemSlot);
-                            switch (Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type) {
+                case 1:
+                    { // Use item
+                        if (Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot) > 0)
+                        {
+                            Messenger.SendUseItem(itemSlot);
+                            switch (Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type)
+                            {
                                 case Enums.ItemType.Key:
                                     CloseMenu();
                                     break;
@@ -270,21 +318,28 @@ namespace Client.Logic.Menus
                         }
                     }
                     break;
-                case 2: { // Throw
-                        if (Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot) > 0) {
+                case 2:
+                    { // Throw
+                        if (Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot) > 0)
+                        {
                             Messenger.SendThrowItem(itemSlot);
                         }
                     }
                     break;
-                case 3: { // View item summary
+                case 3:
+                    { // View item summary
                         MenuSwitcher.ShowItemSummary(Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot), itemSlot, Enums.InvMenuType.Use);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case 4: { // Drop item
-                        if (Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].StackCap > 0) {
+                case 4:
+                    { // Drop item
+                        if (Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(itemSlot)].StackCap > 0)
+                        {
                             Messenger.SendDropItem(itemSlot, nudAmount.Value);
-                        } else {
+                        }
+                        else
+                        {
                             Messenger.SendDropItem(itemSlot, 0);
                         }
                     }
@@ -292,15 +347,14 @@ namespace Client.Logic.Menus
             }
             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(this);
             Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuInventory");
-
         }
-        
-        
 
-        private void CloseMenu() {
+
+
+        private void CloseMenu()
+        {
             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(this);
             Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuInventory");
         }
-
     }
 }

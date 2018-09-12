@@ -62,7 +62,7 @@ namespace Client.Logic.Widgets
             base.Paint += new EventHandler(ItemsetViewer_Paint);
         }
 
-       
+
 
         #endregion Constructors
 
@@ -77,7 +77,7 @@ namespace Client.Logic.Widgets
                 RecalculateScrollBars();
             }
         }
-        
+
         public Point SelectedTile
         {
             get { return selectedTile; }
@@ -135,8 +135,10 @@ namespace Client.Logic.Widgets
             }
         }
 
-        void ItemsetViewer_Paint(object sender, EventArgs e) {
-            if (vScroll != null && hScroll != null) {
+        void ItemsetViewer_Paint(object sender, EventArgs e)
+        {
+            if (vScroll != null && hScroll != null)
+            {
                 vScroll.BlitToScreen(base.Buffer);
                 hScroll.BlitToScreen(base.Buffer);
                 DrawTiles();
@@ -159,7 +161,7 @@ namespace Client.Logic.Widgets
                 int maxTilesY = System.Math.Min(activeItemSurf.Size.Height, (this.Height - hScroll.Height)) / Constants.TILE_HEIGHT;
                 int startX = hScroll.Value;
                 int startY = vScroll.Value;
-                
+
                 for (int y = startY; y < maxTilesY + startY; y++)
                 {
                     for (int x = startX; x < maxTilesX + startX; x++)

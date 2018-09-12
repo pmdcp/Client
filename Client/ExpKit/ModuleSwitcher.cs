@@ -27,24 +27,29 @@ namespace Client.Logic.ExpKit
         List<IKitModule> allKitModules;
         List<IKitModule> availableKitModules;
 
-        public List<IKitModule> AllKitModules {
-            get {
+        public List<IKitModule> AllKitModules
+        {
+            get
+            {
                 return allKitModules;
             }
         }
 
-        public List<IKitModule> AvailableKitModules {
+        public List<IKitModule> AvailableKitModules
+        {
             get { return availableKitModules; }
         }
 
-        public ModuleSwitcher() {
+        public ModuleSwitcher()
+        {
             allKitModules = new List<IKitModule>();
             availableKitModules = new List<IKitModule>();
             LoadKitModules();
             CreateAvailableModulesList();
         }
 
-        public void LoadKitModules() {
+        public void LoadKitModules()
+        {
             ExpKit.Modules.kitDebug kitDebug = new ExpKit.Modules.kitDebug("kitDebug");
             kitDebug.Created(allKitModules.Count);
             kitDebug.EnabledChanged += new EventHandler(module_EnabledChanged);
@@ -76,16 +81,22 @@ namespace Client.Logic.ExpKit
             allKitModules.Add(kitMapReport);
         }
 
-        void module_EnabledChanged(object sender, EventArgs e) {
+        void module_EnabledChanged(object sender, EventArgs e)
+        {
             CreateAvailableModulesList();
         }
 
-        void CreateAvailableModulesList() {
+        void CreateAvailableModulesList()
+        {
             availableKitModules.Clear();
-            for (int i = 0; i < allKitModules.Count; i++) {
-                if (allKitModules[i].Enabled) {
+            for (int i = 0; i < allKitModules.Count; i++)
+            {
+                if (allKitModules[i].Enabled)
+                {
                     availableKitModules.Add(allKitModules[i]);
-                } else {
+                }
+                else
+                {
 #if DEBUG
                     //if (allKitModules[i].ModuleID == Enums.ExpKitModules.Debug) {
                     //    availableKitModules.Add(allKitModules[i]);
@@ -95,8 +106,10 @@ namespace Client.Logic.ExpKit
             }
         }
 
-        public void DisableAllModules() {
-            for (int i = 0; i < allKitModules.Count; i++) {
+        public void DisableAllModules()
+        {
+            for (int i = 0; i < allKitModules.Count; i++)
+            {
                 allKitModules[i].EnabledChanged -= new EventHandler(module_EnabledChanged);
                 allKitModules[i].Enabled = false;
                 allKitModules[i].EnabledChanged += new EventHandler(module_EnabledChanged);
@@ -104,35 +117,48 @@ namespace Client.Logic.ExpKit
             availableKitModules.Clear();
         }
 
-        public IKitModule GetAvailableKitModule(int index) {
-            if (index > availableKitModules.Count - 1) {
+        public IKitModule GetAvailableKitModule(int index)
+        {
+            if (index > availableKitModules.Count - 1)
+            {
                 return availableKitModules[availableKitModules.Count - 1];
-            } else {
+            }
+            else
+            {
                 return availableKitModules[index];
             }
         }
 
-        public IKitModule FindAvailableKitModule(Enums.ExpKitModules module) {
-            for (int i = 0; i < availableKitModules.Count; i++) {
-                if (availableKitModules[i].ModuleID == module) {
+        public IKitModule FindAvailableKitModule(Enums.ExpKitModules module)
+        {
+            for (int i = 0; i < availableKitModules.Count; i++)
+            {
+                if (availableKitModules[i].ModuleID == module)
+                {
                     return availableKitModules[i];
                 }
             }
             return null;
         }
 
-        public bool IsModuleAvailable(Enums.ExpKitModules module) {
-            for (int i = 0; i < availableKitModules.Count; i++) {
-                if (availableKitModules[i].ModuleID == module) {
+        public bool IsModuleAvailable(Enums.ExpKitModules module)
+        {
+            for (int i = 0; i < availableKitModules.Count; i++)
+            {
+                if (availableKitModules[i].ModuleID == module)
+                {
                     return true;
                 }
             }
             return false;
         }
 
-        public IKitModule FindKitModule(Enums.ExpKitModules module) {
-            for (int i = 0; i < allKitModules.Count; i++) {
-                if (allKitModules[i].ModuleID == module) {
+        public IKitModule FindKitModule(Enums.ExpKitModules module)
+        {
+            for (int i = 0; i < allKitModules.Count; i++)
+            {
+                if (allKitModules[i].ModuleID == module)
+                {
                     return allKitModules[i];
                 }
             }

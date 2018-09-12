@@ -27,7 +27,8 @@ namespace Client.Logic.Sdl
         /// <summary>
         /// Quits the application.
         /// </summary>
-        public static void QuitApplication() {
+        public static void QuitApplication()
+        {
             SdlDotNet.Core.Events.Tick -= new EventHandler<SdlDotNet.Core.TickEventArgs>(SdlEventHandler.SdlDotNet_Core_Events_Tick);
             //SdlDotNet.Core.Events.QuitApplication();
 

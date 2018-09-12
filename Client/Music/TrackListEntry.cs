@@ -25,7 +25,8 @@ namespace Client.Logic.Music
     {
         string trackName;
 
-        public string TrackName {
+        public string TrackName
+        {
             get { return trackName; }
             set { trackName = value; }
         }

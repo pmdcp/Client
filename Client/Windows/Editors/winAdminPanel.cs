@@ -75,8 +75,8 @@ namespace Client.Logic.Windows.Editors
         #region Constructors
 
         public winAdminPanel()
-            : base("winAdminPanel") {
-
+            : base("winAdminPanel")
+        {
             //this.Location = Graphics.DrawingSupport.GetCenter(this.Size);
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
@@ -130,16 +130,17 @@ namespace Client.Logic.Windows.Editors
             btnCommands.Text = "Commands";
             btnCommands.Selected = false;
             btnCommands.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnCommands_Click);
-			
-            
-            
+
+
+
             cbWeather = new ComboBox("cbWeather");
             cbWeather.Location = new Point(110, 20);
             cbWeather.Size = new System.Drawing.Size(134, 16);
             cbWeather.BackColor = Color.DarkGray;
-            for (int i =0; i < 13; i++) {
-            	ListBoxTextItem item = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.Weather), i));
-            	cbWeather.Items.Add(item);
+            for (int i = 0; i < 13; i++)
+            {
+                ListBoxTextItem item = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.Weather), i));
+                cbWeather.Items.Add(item);
             }
             cbWeather.SelectItem(0);
 
@@ -151,7 +152,7 @@ namespace Client.Logic.Windows.Editors
             btnApplyWeather.Text = "Apply";
             btnApplyWeather.Click += new EventHandler<MouseButtonEventArgs>(btnApplyWeather_Click);
 
-            
+
 
             btnBanish = new Button("btnBanish");
             btnBanish.Font = Graphics.FontManager.LoadFont("tahoma", 10);
@@ -184,14 +185,15 @@ namespace Client.Logic.Windows.Editors
             btnSetAccess.Visible = true;
             btnSetAccess.Text = "Set Access";
             btnSetAccess.Click += new EventHandler<MouseButtonEventArgs>(btnSetAccess_Click);
-            
+
             cbAccessLevel = new ComboBox("cbAccessLevel");
             cbAccessLevel.Location = new Point(174, 274);
             cbAccessLevel.Size = new System.Drawing.Size(134, 18);
             cbAccessLevel.BackColor = Color.DarkGray;
-            for (int i =0; i < 7; i++) {
-            	ListBoxTextItem item = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.Rank), i));
-            	cbAccessLevel.Items.Add(item);
+            for (int i = 0; i < 7; i++)
+            {
+                ListBoxTextItem item = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.Rank), i));
+                cbAccessLevel.Items.Add(item);
             }
             cbAccessLevel.SelectItem(0);
 
@@ -437,8 +439,10 @@ namespace Client.Logic.Windows.Editors
 
         #region Methods
 
-        void btnWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!btnWeather.Selected) {
+        void btnWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!btnWeather.Selected)
+            {
                 btnWeather.Selected = true;
                 btnPlayerInfo.Selected = false;
                 btnCommands.Selected = false;
@@ -452,8 +456,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnPlayerInfo_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!btnPlayerInfo.Selected) {
+        void btnPlayerInfo_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!btnPlayerInfo.Selected)
+            {
                 btnWeather.Selected = false;
                 btnPlayerInfo.Selected = true;
                 btnCommands.Selected = false;
@@ -467,8 +473,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnCommands_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!btnCommands.Selected) {
+        void btnCommands_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!btnCommands.Selected)
+            {
                 btnWeather.Selected = false;
                 btnPlayerInfo.Selected = false;
                 btnCommands.Selected = true;
@@ -482,140 +490,163 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        
 
-        void btnApplyWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-          
-        	    Messenger.Weather(cbWeather.SelectedIndex);
+
+        void btnApplyWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            Messenger.Weather(cbWeather.SelectedIndex);
         }
 
-        
 
-        void btnBanish_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+
+        void btnBanish_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //Used with txtPlayerName
             Messenger.BanPlayer(txtPlayerName.Text);
         }
 
-        void btnWarpTo_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnWarpTo_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //Used with txtMapNumber
-            if (txtMapNumber.Text.IsNumeric()) {
-            Messenger.WarpTo(txtMapNumber.Text.ToInt());
+            if (txtMapNumber.Text.IsNumeric())
+            {
+                Messenger.WarpTo(txtMapNumber.Text.ToInt());
             }
         }
 
-        void btnKick_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnKick_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //Used with txtPlayerName
             Messenger.KickPlayer(txtPlayerName.Text);
         }
 
-        void btnSetAccess_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnSetAccess_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //To be used with BoxAccessLevel and txtPlayerName
             Messenger.SetAccess(txtPlayerName.Text, cbAccessLevel.SelectedIndex);
         }
 
-        void btnRespawn_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnRespawn_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //null
             Messenger.MapRespawn();
         }
 
-        void btnSetSprite_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnSetSprite_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //something to do with txtSpriteNumber
             Messenger.SetSprite(txtSpriteNumber.Text.ToInt());
         }
 
-        void btnWarpMeTo_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnWarpMeTo_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //Used with txtPlayerName
             Messenger.WarpMeTo(txtPlayerName.Text);
         }
 
-        void btnSetPlayerSprite_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnSetPlayerSprite_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //Used with txtPlayerName and txtSpriteNumber
-            Messenger.SetPlayerSprite(txtPlayerName.Text,txtSpriteNumber.Text.ToInt());
+            Messenger.SetPlayerSprite(txtPlayerName.Text, txtSpriteNumber.Text.ToInt());
         }
 
-        void btnWarpToMe_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnWarpToMe_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //Used with txtPlayerName
             Messenger.WarpToMe(txtPlayerName.Text);
         }
 
-        void btnMapEditor_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnMapEditor_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditmap"));
         }
 
-        void btnMapReport_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnMapReport_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
-            if (WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.IsModuleAvailable(Enums.ExpKitModules.MapReport)) {
+            if (WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.IsModuleAvailable(Enums.ExpKitModules.MapReport))
+            {
                 WindowSwitcher.ExpKit.KitContainer.SetActiveModule(Enums.ExpKitModules.MapReport);
             }
         }
 
-        void btnSpells_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnSpells_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditmove"));
         }
 
-        void btnItems_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnItems_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requestedititem"));
             return;
         }
 
-        void btnShops_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnShops_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditshop"));
             return;
         }
 
-        void btnEvolutions_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEvolutions_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditevo"));
             return;
         }
 
-        void btnStories_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnStories_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditstory"));
             return;
         }
 
-        void btnNPC_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnNPC_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditnpc"));
             return;
         }
 
-        void btnArrows_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnArrows_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditarrow"));
             return;
         }
 
-        void btnEmotion_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEmotion_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditemoticon"));
             return;
         }
 
-        void btnRDungeons_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnRDungeons_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditrdungeon"));
             return;
         }
 
-        void btnDungeons_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnDungeons_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditdungeon"));
             return;
         }
 
-        void btnMissions_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnMissions_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendPacket(TcpPacket.CreatePacket("requesteditmission"));
             return;
         }
 
         #endregion Methods
-
     }
 }

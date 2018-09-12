@@ -1,4 +1,13 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using SdlDotNet.Graphics;
+using Client.Logic.Windows;
+using PMDCP.Core;
+using System.IO;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,16 +27,6 @@
 
 namespace Client.Logic.Graphics
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using SdlDotNet.Graphics;
-    using Client.Logic.Windows;
-    using PMDCP.Core;
-    using System.IO;
-
     /// <summary>
     /// Manages the game graphics.
     /// </summary>
@@ -55,18 +54,21 @@ namespace Client.Logic.Graphics
         #endregion Fields
 
         #region Properties
-        
-        internal static Surface FadeSurface {
+
+        internal static Surface FadeSurface
+        {
             get;
             set;
         }
 
-        internal static Surface Items {
+        internal static Surface Items
+        {
             get;
             set;
         }
 
-        internal static TileCache Tiles {
+        internal static TileCache Tiles
+        {
             get { return tileCache; }
         }
 
@@ -77,7 +79,8 @@ namespace Client.Logic.Graphics
         /// <summary>
         /// Inits this instance.
         /// </summary>
-        public static void Initialize() {
+        public static void Initialize()
+        {
             FadeSurface = new SdlDotNet.Graphics.Surface(SdlDotNet.Graphics.Video.Screen.Size);
 
             spriteCache = new MultiNameLRUCache<string, SpriteSheet>(spriteCacheSize);
@@ -90,7 +93,8 @@ namespace Client.Logic.Graphics
         /// Loads a tilesheet.
         /// </summary>
         /// <param name="index">The index.</param>
-        public static void LoadTilesheet(int index) {
+        public static void LoadTilesheet(int index)
+        {
             Tileset tileSet = new Tileset(index, tileSetCacheSize);
             tileSet.Load(IO.Paths.GfxPath + "Tiles\\Tiles" + index.ToString() + ".tile");
             tileCache.AddTileset(tileSet);
@@ -139,14 +143,15 @@ namespace Client.Logic.Graphics
                     return Enums.Direction.UpLeft;
                 case 6:
                     return Enums.Direction.UpRight;
-                case 7: 
+                case 7:
                     return Enums.Direction.DownRight;
                 default:
                     return Enums.Direction.Down;
             }
         }
 
-        public static SpriteSheet GetSpriteSheet(int num) {
+        public static SpriteSheet GetSpriteSheet(int num)
+        {
             return GetSpriteSheet(num, -1, -1, -1);
         }
 
@@ -171,7 +176,6 @@ namespace Client.Logic.Graphics
             // If we are still here, that means the sprite wasn't in the cache
             if (System.IO.File.Exists(IO.Paths.GfxPath + "Sprites/Sprite" + num + ".zip"))
             {
-
                 sheet = new SpriteSheet(num, formString);
                 string changedFormString = formString;
 
@@ -227,16 +231,21 @@ namespace Client.Logic.Graphics
             }
         }
 
-        public static SpellSheet GetSpellSheet(Enums.StationaryAnimType animType, int num, bool semiTransparent) {
-            lock (spellCache) {
+        public static SpellSheet GetSpellSheet(Enums.StationaryAnimType animType, int num, bool semiTransparent)
+        {
+            lock (spellCache)
+            {
                 if (spellCache.ContainsKey(animType.ToString() + "-" + num + "-" + semiTransparent.ToIntString()))
                 {
                     return spellCache[animType.ToString() + "-" + num + "-" + semiTransparent.ToIntString()];
-                } else {
-                    if (System.IO.File.Exists(IO.Paths.GfxPath + "Spells/" + animType.ToString() + "-" + num + ".png")) {
+                }
+                else
+                {
+                    if (System.IO.File.Exists(IO.Paths.GfxPath + "Spells/" + animType.ToString() + "-" + num + ".png"))
+                    {
                         Surface surf;
-                        
-                        
+
+
                         if (semiTransparent)
                         {
                             surf = SurfaceManager.LoadSurface(IO.Paths.GfxPath + "Spells/" + animType.ToString() + "-" + num + ".png", false, true);
@@ -254,7 +263,9 @@ namespace Client.Logic.Graphics
                         SpellSheet sheet = new SpellSheet(surf, bytesUsed);
                         spellCache.Add(animType.ToString() + "-" + num + "-" + semiTransparent.ToIntString(), sheet);
                         return sheet;
-                    } else {
+                    }
+                    else
+                    {
                         return null;
                     }
                 }
@@ -305,7 +316,6 @@ namespace Client.Logic.Graphics
             // If we are still here, that means the sprite wasn't in the cache
             if (System.IO.File.Exists(IO.Paths.GfxPath + "Mugshots/Portrait" + num + ".zip"))
             {
-
                 sheet = new Mugshot(num, formString);
                 string changedFormString = formString;
 
@@ -353,7 +363,6 @@ namespace Client.Logic.Graphics
             {
                 return null;
             }
-
         }
 
         #endregion Methods

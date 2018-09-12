@@ -25,11 +25,12 @@ using PMDCP.Core;
 using SdlDotNet.Widgets;
 using Client.Logic.Network;
 
-namespace Client.Logic.Menus {
-    class mnuGuildCreate : Widgets.BorderedPanel, Core.IMenu {
-
-
-        public bool Modal {
+namespace Client.Logic.Menus
+{
+    class mnuGuildCreate : Widgets.BorderedPanel, Core.IMenu
+    {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -48,7 +49,8 @@ namespace Client.Logic.Menus {
         #region Constructors
 
         public mnuGuildCreate(string name, string[] parse)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(280, 280);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(180, 80);
@@ -90,7 +92,7 @@ namespace Client.Logic.Menus {
             btnOK.Font = Client.Logic.Graphics.FontManager.LoadFont("PMDCP", 16);
             btnOK.Text = "OK";
             Skins.SkinManager.LoadButtonGui(btnOK);
-            btnOK.Click +=new EventHandler<MouseButtonEventArgs>(btnOK_Click);
+            btnOK.Click += new EventHandler<MouseButtonEventArgs>(btnOK_Click);
 
             btnCancel = new Button("btnCancel");
             btnCancel.Size = new System.Drawing.Size(60, 32);
@@ -99,7 +101,7 @@ namespace Client.Logic.Menus {
             btnCancel.Text = "Cancel";
             Skins.SkinManager.LoadButtonGui(btnCancel);
             btnCancel.Click += new EventHandler<MouseButtonEventArgs>(btnCancel_Click);
-            
+
             this.AddWidget(lblGuild);
             this.AddWidget(lblName);
             this.AddWidget(txtName);
@@ -113,29 +115,32 @@ namespace Client.Logic.Menus {
 
         #endregion Constructors
 
-        void btnOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Messenger.MakeGuild(txtName.Text);
             MenuSwitcher.CloseAllMenus();
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             MenuSwitcher.CloseAllMenus();
         }
 
         #region Methods
 
-        void LoadPartyFromPacket(string[] parse) {
-
+        void LoadPartyFromPacket(string[] parse)
+        {
             int count = parse[1].ToInt();
 
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < count; i++)
+            {
                 ListBoxTextItem lbiName = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), parse[i + 2]);
                 lbxMembers.Items.Add(lbiName);
             }
-
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 

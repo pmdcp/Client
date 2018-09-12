@@ -17,55 +17,54 @@
 
 
 using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Client.Logic.Maps;
+using System.Collections.Generic;
+using System.Text;
+using Client.Logic.Maps;
 
 namespace Client.Logic.Editors.RDungeons
 {
-	/// <summary>
-	/// Description of EditableRDungeonFloor.
-	/// </summary>
-	class EditableRDungeonFloor
-	{
-		
-        public int TrapMin{get; set;}
-        public int TrapMax{get; set;}
-        public int ItemMin{get; set;}
-        public int ItemMax{get; set;}
+    /// <summary>
+    /// Description of EditableRDungeonFloor.
+    /// </summary>
+    class EditableRDungeonFloor
+    {
+        public int TrapMin { get; set; }
+        public int TrapMax { get; set; }
+        public int ItemMin { get; set; }
+        public int ItemMax { get; set; }
         public int Intricacy { get; set; }
-        public int RoomWidthMin{get; set;}
-        public int RoomWidthMax{get; set;}
-        public int RoomLengthMin{get; set;}
-        public int RoomLengthMax{get; set;}
-        public int HallTurnMin{get; set;}
-        public int HallTurnMax{get; set;}
-        public int HallVarMin {get; set;}
-        public int HallVarMax {get; set;}
-        public int WaterFrequency {get; set;}
-        public int Craters {get;set;}
-        public int CraterMinLength {get;set;}
-        public int CraterMaxLength {get;set;}
+        public int RoomWidthMin { get; set; }
+        public int RoomWidthMax { get; set; }
+        public int RoomLengthMin { get; set; }
+        public int RoomLengthMax { get; set; }
+        public int HallTurnMin { get; set; }
+        public int HallTurnMax { get; set; }
+        public int HallVarMin { get; set; }
+        public int HallVarMax { get; set; }
+        public int WaterFrequency { get; set; }
+        public int Craters { get; set; }
+        public int CraterMinLength { get; set; }
+        public int CraterMaxLength { get; set; }
         public bool CraterFuzzy { get; set; }
         public int MinChambers { get; set; }
         public int MaxChambers { get; set; }
         public List<EditableRDungeonChamber> Chambers { get; set; }
-			
-        
+
+
         public int Darkness { get; set; }
 
-        
+
 
         public Enums.RFloorGoalType GoalType { get; set; }
 
         public int GoalMap { get; set; }
         public int GoalX { get; set; }
         public int GoalY { get; set; }
-        
+
         public string Music { get; set; }
-        
-        
-        
+
+
+
         #region Terrain Variables
 
         public int StairsX { get; set; }
@@ -119,12 +118,12 @@ namespace Client.Logic.Editors.RDungeons
         public int mRowCenterSheet { get; set; }
         public int mRowRightX { get; set; }
         public int mRowRightSheet { get; set; }
-        
+
         public int mGroundAltX { get; set; }
         public int mGroundAltSheet { get; set; }
         public int mGroundAlt2X { get; set; }
         public int mGroundAlt2Sheet { get; set; }
-        
+
         public int mTopLeftAltX { get; set; }
         public int mTopLeftAltSheet { get; set; }
         public int mTopCenterAltX { get; set; }
@@ -172,8 +171,8 @@ namespace Client.Logic.Editors.RDungeons
         public int mRowCenterAltSheet { get; set; }
         public int mRowRightAltX { get; set; }
         public int mRowRightAltSheet { get; set; }
-        
-        
+
+
         public int mWaterX { get; set; }
         public int mWaterSheet { get; set; }
         public int mWaterAnimX { get; set; }
@@ -221,7 +220,7 @@ namespace Client.Logic.Editors.RDungeons
         public int mShoreInnerLeftSheet { get; set; }
         public int mShoreSurroundedX { get; set; }
         public int mShoreSurroundedSheet { get; set; }
-        
+
         public int mShoreTopLeftAnimX { get; set; }
         public int mShoreTopLeftAnimSheet { get; set; }
         public int mShoreTopRightAnimX { get; set; }
@@ -275,13 +274,14 @@ namespace Client.Logic.Editors.RDungeons
         public int NpcSpawnTime { get; set; }
         public int NpcMin { get; set; }
         public int NpcMax { get; set; }
-        
-        public List<EditableRDungeonItem> Items { get; set; }
-        public List <MapNpcSettings> Npcs { get; set; }
-        public List<EditableRDungeonTrap> SpecialTiles { get; set; }
-        public List <Enums.Weather> Weather { get; set; }
 
-        public EditableRDungeonFloor() {
+        public List<EditableRDungeonItem> Items { get; set; }
+        public List<MapNpcSettings> Npcs { get; set; }
+        public List<EditableRDungeonTrap> SpecialTiles { get; set; }
+        public List<Enums.Weather> Weather { get; set; }
+
+        public EditableRDungeonFloor()
+        {
             GroundTile = new Tile();
             HallTile = new Tile();
             WaterTile = new Tile();
@@ -292,5 +292,5 @@ namespace Client.Logic.Editors.RDungeons
             Items = new List<EditableRDungeonItem>();
             Chambers = new List<EditableRDungeonChamber>();
         }
-	}
+    }
 }

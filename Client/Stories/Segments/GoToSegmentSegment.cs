@@ -1,4 +1,11 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using Client.Logic.Menus.Core;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,14 +25,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using Client.Logic.Menus.Core;
-
-    using PMDCP.Core;
-
     class GoToSegmentSegment : ISegment
     {
         #region Fields
@@ -38,22 +37,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public GoToSegmentSegment(int segment) {
+        public GoToSegmentSegment(int segment)
+        {
             Load(segment);
         }
 
-        public GoToSegmentSegment() {
+        public GoToSegmentSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.GoToSegment; }
         }
 
-        public int Segment {
+        public int Segment
+        {
             get { return segment; }
             set { segment = value; }
         }
@@ -63,7 +66,8 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -71,7 +75,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(int segment) {
+        public void Load(int segment)
+        {
             this.segment = segment;
         }
 
@@ -81,9 +86,10 @@ namespace Client.Logic.Stories.Segments
             Load(parameters.GetValue("Segment").ToInt());
         }
 
-        public void Process(StoryState state) {
-            this.storyState = state;
-            this.storyState.CurrentSegment = segment - 1;
+        public void Process(StoryState state)
+        {
+            storyState = state;
+            storyState.CurrentSegment = segment - 1;
         }
 
         #endregion Methods

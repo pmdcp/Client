@@ -31,27 +31,33 @@ namespace Client.Logic.Skins
         string version;
         Surface ingameBackground;
 
-        public Surface IngameBackground {
+        public Surface IngameBackground
+        {
             get { return ingameBackground; }
         }
 
-        public string Name {
+        public string Name
+        {
             get { return name; }
         }
 
-        public string Creator {
+        public string Creator
+        {
             get { return creator; }
         }
 
-        public string Version {
+        public string Version
+        {
             get { return version; }
         }
 
-        public void LoadSkin(string name) {
+        public void LoadSkin(string name)
+        {
             this.name = name;
 
             string configPath = IO.Paths.SkinPath + name + "/Configuration/";
-            if (System.IO.Directory.Exists(configPath) == false) {
+            if (System.IO.Directory.Exists(configPath) == false)
+            {
                 System.IO.Directory.CreateDirectory(configPath);
             }
 
@@ -60,19 +66,27 @@ namespace Client.Logic.Skins
             ingameBackground = SkinManager.LoadGui("Game Window");
         }
 
-        private void LoadConfigXml(string fullPath) {
-            if (!IO.IO.FileExists(fullPath)) {
+        private void LoadConfigXml(string fullPath)
+        {
+            if (!IO.IO.FileExists(fullPath))
+            {
                 SaveEmptyConfigFile(fullPath);
             }
-            using (XmlReader reader = XmlReader.Create(fullPath)) {
-                while (reader.Read()) {
-                    if (reader.IsStartElement()) {
-                        switch (reader.Name) {
-                            case "Creator": {
+            using (XmlReader reader = XmlReader.Create(fullPath))
+            {
+                while (reader.Read())
+                {
+                    if (reader.IsStartElement())
+                    {
+                        switch (reader.Name)
+                        {
+                            case "Creator":
+                                {
                                     creator = reader.ReadString();
                                 }
                                 break;
-                            case "Version": {
+                            case "Version":
+                                {
                                     version = reader.ReadString();
                                 }
                                 break;
@@ -82,8 +96,10 @@ namespace Client.Logic.Skins
             }
         }
 
-        private void SaveEmptyConfigFile(string fullPath) {
-            using (XmlWriter writer = XmlWriter.Create(fullPath)) {
+        private void SaveEmptyConfigFile(string fullPath)
+        {
+            using (XmlWriter writer = XmlWriter.Create(fullPath))
+            {
                 writer.WriteStartDocument();
                 writer.WriteStartElement("SkinConfiguration");
 
@@ -99,8 +115,10 @@ namespace Client.Logic.Skins
             }
         }
 
-        public void Unload() {
-            if (ingameBackground != null) {
+        public void Unload()
+        {
+            if (ingameBackground != null)
+            {
                 ingameBackground.Close();
             }
         }

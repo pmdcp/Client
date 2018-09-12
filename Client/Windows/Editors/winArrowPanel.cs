@@ -62,8 +62,8 @@ namespace Client.Logic.Windows.Editors
 
         #region Constructors
         public winArrowPanel()
-            : base("winArrowPanel") {
-
+            : base("winArrowPanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -89,7 +89,8 @@ namespace Client.Logic.Windows.Editors
             lbxArrowList = new ListBox("lbxArrowList");
             lbxArrowList.Location = new Point(10, 10);
             lbxArrowList.Size = new Size(180, 140);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 lbiArrow = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": " + Arrows.ArrowHelper.Arrows[(i + 1) + 10 * currentTen].Name);
                 lbxArrowList.Items.Add(lbiArrow);
             }
@@ -178,7 +179,7 @@ namespace Client.Logic.Windows.Editors
             hsbPic.Maximum = MaxInfo.MAX_ARROWS;
             hsbPic.Location = new Point(10, 90);
             hsbPic.Size = new Size(200, 12);
-            hsbPic.ValueChanged +=new EventHandler<ValueChangedEventArgs>(hsbPic_ValueChanged);
+            hsbPic.ValueChanged += new EventHandler<ValueChangedEventArgs>(hsbPic_ValueChanged);
 
             lblRange = new Label("lblRange");
             lblRange.AutoSize = true;
@@ -233,34 +234,46 @@ namespace Client.Logic.Windows.Editors
 
         #region Methods
 
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshArrowList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-        	if (currentTen < ((MaxInfo.MAX_ARROWS - 1) / 10)) {
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < ((MaxInfo.MAX_ARROWS - 1) / 10))
+            {
                 currentTen++;
             }
             RefreshArrowList();
         }
 
-        public void RefreshArrowList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < MaxInfo.MAX_ARROWS) {
+        public void RefreshArrowList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < MaxInfo.MAX_ARROWS)
+                {
                     ((ListBoxTextItem)lbxArrowList.Items[i]).Text = ((i + 10 * currentTen) + 1 + ": " + Arrows.ArrowHelper.Arrows[i + 10 * currentTen].Name);
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxArrowList.Items[i]).Text = "---";
                 }
             }
         }
 
-        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxArrowList.SelectedItems.Count == 1) {
+        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxArrowList.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxArrowList.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     itemNum = index[0].ToInt() - 1;
                     Messenger.SendEditArrow(itemNum);
                     pnlArrowList.Visible = false;
@@ -268,7 +281,8 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        public void DisplayArrowData() {
+        public void DisplayArrowData()
+        {
             // First, get the arrow instance based on the stored arrow index
             Arrows.Arrow arrow = Arrows.ArrowHelper.Arrows[itemNum];
             // Update the widgets with the arrow data
@@ -281,36 +295,43 @@ namespace Client.Logic.Windows.Editors
             this.Size = new System.Drawing.Size(pnlArrowEditor.Width, pnlArrowEditor.Height);
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             return;
         }
 
-        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             itemNum = -1;
             pnlArrowEditor.Visible = false;
             pnlArrowList.Visible = true;
             this.Size = new System.Drawing.Size(pnlArrowList.Width, pnlArrowList.Height);
-
         }
 
-        void hsbRange_ValueChanged(object sender, ValueChangedEventArgs e) {
-            if (lblRange.Text != "Range: " + e.NewValue.ToString()) {
+        void hsbRange_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            if (lblRange.Text != "Range: " + e.NewValue.ToString())
+            {
                 lblRange.Text = "Range: " + e.NewValue.ToString();
             }
         }
 
-        void hsbAmount_ValueChanged(object sender, ValueChangedEventArgs e) {
-            if (lblAmount.Text != "Amount: " + e.NewValue.ToString()) {
+        void hsbAmount_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            if (lblAmount.Text != "Amount: " + e.NewValue.ToString())
+            {
                 lblAmount.Text = "Amount: " + e.NewValue.ToString();
             }
         }
 
-        void hsbPic_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void hsbPic_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             //pic.Image = Tools.CropImage(Logic.Graphics.GraphicsManager.Arrows, new Rectangle(0, hsbPic.Value * 32, 32, 32));
         }
 
-        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Arrows.Arrow arrowToSend = new Arrows.Arrow();
             arrowToSend.Name = txtName.Text;
             arrowToSend.Pic = hsbPic.Value;
@@ -320,7 +341,6 @@ namespace Client.Logic.Windows.Editors
             pnlArrowEditor.Visible = false;
             pnlArrowList.Visible = true;
             this.Size = new System.Drawing.Size(pnlArrowList.Width, pnlArrowList.Height);
-
         }
         #endregion Methods
     }

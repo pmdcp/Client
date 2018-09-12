@@ -1,4 +1,14 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using SdlDotNet.Widgets;
+using Client.Logic.Maps;
+using PMDCP.Core;
+using System.IO;
+using System.Xml;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,17 +28,6 @@
 
 namespace Client.Logic.Windows.Editors.MapEditor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using SdlDotNet.Widgets;
-    using Client.Logic.Maps;
-    using PMDCP.Core;
-    using System.IO;
-    using System.Xml;
-
     class winProperties : Window
     {
         #region Fields
@@ -92,7 +91,7 @@ namespace Client.Logic.Windows.Editors.MapEditor
         //NumericUpDown nudNpcLevel;
         //Button btnSaveNpc;
         //Button btnClearNpc;
-        
+
         Label lblNpcSpawnTime;
         NumericUpDown nudNpcSpawnTime;
 
@@ -133,7 +132,8 @@ namespace Client.Logic.Windows.Editors.MapEditor
         #region Constructors
 
         public winProperties()
-            : base("winProperties") {
+            : base("winProperties")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "Map Properties";
@@ -661,7 +661,8 @@ namespace Client.Logic.Windows.Editors.MapEditor
             cbNpcStartStatus = new ComboBox("cbNpcStartStatus");
             cbNpcStartStatus.Size = new System.Drawing.Size(80, 20);
             cbNpcStartStatus.Location = new Point(65, 152);
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 6; i++)
+            {
                 cbNpcStartStatus.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("Tahoma", 10), ((Enums.StatusAilment)i).ToString()));
             }
             cbNpcStartStatus.SelectItem(0);
@@ -856,8 +857,8 @@ namespace Client.Logic.Windows.Editors.MapEditor
         //        properties.Npcs[npcIndex].NpcNum = 0;
         //        properties.Npcs[npcIndex].SpawnX = 0;
         //        properties.Npcs[npcIndex].SpawnY = 0;
-                //properties.Npcs[npcIndex].Level = 1;
-        
+        //properties.Npcs[npcIndex].Level = 1;
+
         //        nudNpcNum.Value = 0;
         //        nudNpcSpawnX.Value = 0;
         //        nudNpcSpawnY.Value = 0;
@@ -871,7 +872,7 @@ namespace Client.Logic.Windows.Editors.MapEditor
         //        properties.Npcs[npcIndex].NpcNum = nudNpcNum.Value;
         //        properties.Npcs[npcIndex].SpawnX = nudNpcSpawnX.Value;
         //        properties.Npcs[npcIndex].SpawnY = nudNpcSpawnY.Value;
-                //properties.Npcs[npcIndex].Level = nudNpcLevel.Value;
+        //properties.Npcs[npcIndex].Level = nudNpcLevel.Value;
         //    }
         //}
 
@@ -889,24 +890,20 @@ namespace Client.Logic.Windows.Editors.MapEditor
         //        nudNpcNum.Value = properties.Npcs[npcIndex].NpcNum;
         //        nudNpcSpawnX.Value = properties.Npcs[npcIndex].SpawnX;
         //        nudNpcSpawnY.Value = properties.Npcs[npcIndex].SpawnY;
-                //nudNpcLevel.Value = properties.Npcs[npcIndex].Level;
+        //nudNpcLevel.Value = properties.Npcs[npcIndex].Level;
         //    }
         //}
 
         void nudNpcNum_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
         {
-
             if (nudNpcNum.Value > 0 && nudNpcNum.Value < MaxInfo.MaxNpcs)
             {
-
                 lblNpcNum.Text = Npc.NpcHelper.Npcs[nudNpcNum.Value].Name;
-
             }
             else
             {
                 lblNpcNum.Text = "NPC #";
             }
-
         }
 
         void btnAddNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
@@ -933,7 +930,6 @@ namespace Client.Logic.Windows.Editors.MapEditor
 
         void btnLoadNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
         {
-
             if (lbxNpcs.SelectedIndex > -1)
             {
                 nudNpcNum.Value = properties.Npcs[lbxNpcs.SelectedIndex].NpcNum;
@@ -945,9 +941,7 @@ namespace Client.Logic.Windows.Editors.MapEditor
                 cbNpcStartStatus.SelectItem((int)properties.Npcs[lbxNpcs.SelectedIndex].StartStatus);
                 nudStatusCounter.Value = properties.Npcs[lbxNpcs.SelectedIndex].StartStatusCounter;
                 nudStatusChance.Value = properties.Npcs[lbxNpcs.SelectedIndex].StartStatusChance;
-
             }
-
         }
 
         void btnRemoveNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
@@ -960,37 +954,41 @@ namespace Client.Logic.Windows.Editors.MapEditor
                 lbxNpcs.Items.Clear();
                 for (int npc = 0; npc < properties.Npcs.Count; npc++)
                 {
-
                     lbxNpcs.Items.Add(new ListBoxTextItem(Client.Logic.Graphics.FontManager.LoadFont("tahoma", 10), (npc + 1) + ": "
                     + "(" + properties.Npcs[npc].AppearanceRate + "%) " + "Lv." + properties.Npcs[npc].MinLevel + "-" + properties.Npcs[npc].MaxLevel + " "
                     + Npc.NpcHelper.Npcs[properties.Npcs[npc].NpcNum].Name
                     + " [" + properties.Npcs[npc].StartStatusChance + "% " + properties.Npcs[npc].StartStatus.ToString() + "]"));
                 }
             }
-
         }
 
-        void btnStop_Click(object sender, MouseButtonEventArgs e) {
+        void btnStop_Click(object sender, MouseButtonEventArgs e)
+        {
             // Stop the music
             Music.Music.AudioPlayer.StopMusic();
             // Play the map music
-            if (!string.IsNullOrEmpty(MapHelper.ActiveMap.Music)) {
+            if (!string.IsNullOrEmpty(MapHelper.ActiveMap.Music))
+            {
                 //Music.Music.AudioPlayer.PlayMusic(MapHelper.ActiveMap.Music);
                 ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).FadeToNext(MapHelper.ActiveMap.Music, 1000);
             }
         }
 
-        void btnPlay_Click(object sender, MouseButtonEventArgs e) {
+        void btnPlay_Click(object sender, MouseButtonEventArgs e)
+        {
             string song = null;
-            if (cmbMusic.SelectedIndex > -1) {
+            if (cmbMusic.SelectedIndex > -1)
+            {
                 song = ((ListBoxTextItem)cmbMusic.SelectedItem).Text;
             }
-            if (!string.IsNullOrEmpty(song)) {
+            if (!string.IsNullOrEmpty(song))
+            {
                 Music.Music.AudioPlayer.PlayMusic(song, -1, true, true);
             }
         }
 
-        void btnOk_Click(object sender, MouseButtonEventArgs e) {
+        void btnOk_Click(object sender, MouseButtonEventArgs e)
+        {
             bool maxDimensionsChanged = false;
             properties.Name = string.IsNullOrEmpty(txtMapName.Text) ? properties.Name : txtMapName.Text;
             properties.Right = string.IsNullOrEmpty(txtEast.Text) ? properties.Right : txtEast.Text.ToInt();
@@ -999,29 +997,35 @@ namespace Client.Logic.Windows.Editors.MapEditor
             properties.Down = string.IsNullOrEmpty(txtSouth.Text) ? properties.Down : txtSouth.Text.ToInt();
             properties.Music = (cmbMusic.SelectedItem == null || string.IsNullOrEmpty(cmbMusic.SelectedItem.TextIdentifier)) ? properties.Music : cmbMusic.SelectedItem.TextIdentifier;
             properties.YouTubeMusicID = txtYouTubeMusicID.Text;
-            if (!string.IsNullOrEmpty(txtMaxX.Text)) {
+            if (!string.IsNullOrEmpty(txtMaxX.Text))
+            {
                 int oldMaxX = properties.MaxX;
                 properties.MaxX = txtMaxX.Text.ToInt();
-                if (properties.MaxX != oldMaxX) {
+                if (properties.MaxX != oldMaxX)
+                {
                     maxDimensionsChanged = true;
                 }
             }
-            if (!string.IsNullOrEmpty(txtMaxY.Text)) {
+            if (!string.IsNullOrEmpty(txtMaxY.Text))
+            {
                 int oldMaxY = properties.MaxY;
                 properties.MaxY = txtMaxY.Text.ToInt();
-                if (properties.MaxY != oldMaxY) {
+                if (properties.MaxY != oldMaxY)
+                {
                     maxDimensionsChanged = true;
                 }
             }
-            if (cmbMapMorality.SelectedIndex > -1) {
+            if (cmbMapMorality.SelectedIndex > -1)
+            {
                 properties.Moral = (Enums.MapMoral)cmbMapMorality.SelectedIndex;
             }
-            
+
             properties.Darkness = nudDarkness.Value;
 
             properties.TimeLimit = nudTimeLimit.Value;
-            
-            if (cmbMapWeather.SelectedIndex > -1) {
+
+            if (cmbMapWeather.SelectedIndex > -1)
+            {
                 properties.Weather = (Enums.Weather)cmbMapWeather.SelectedIndex;
             }
             properties.Indoors = chkIndoors.Checked;
@@ -1034,17 +1038,21 @@ namespace Client.Logic.Windows.Editors.MapEditor
             properties.MinNpcs = nudNpcMin.Value;
             properties.MaxNpcs = nudNpcMax.Value;
 
-            if (maxDimensionsChanged) {
+            if (maxDimensionsChanged)
+            {
                 Maps.MapHelper.ActiveMap.LoadFromPropertiesClass(properties);
                 Network.Messenger.SendSaveMap(Maps.MapHelper.ActiveMap);
                 this.Close();
-            } else {
+            }
+            else
+            {
                 Maps.MapHelper.ActiveMap.LoadFromPropertiesClass(properties);
                 this.Close();
             }
         }
 
-        void btnCancel_Click(object sender, MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
             this.Close();
         }
 
@@ -1052,8 +1060,10 @@ namespace Client.Logic.Windows.Editors.MapEditor
 
         #region Methods
 
-        void btnGeneral_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!btnGeneral.Selected) {
+        void btnGeneral_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!btnGeneral.Selected)
+            {
                 btnGeneral.Selected = true;
                 btnNPC.Selected = false;
                 btnScroll.Selected = false;
@@ -1064,8 +1074,10 @@ namespace Client.Logic.Windows.Editors.MapEditor
             }
         }
 
-        void btnNPC_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!btnNPC.Selected) {
+        void btnNPC_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!btnNPC.Selected)
+            {
                 btnGeneral.Selected = false;
                 btnNPC.Selected = true;
                 btnScroll.Selected = false;
@@ -1076,8 +1088,10 @@ namespace Client.Logic.Windows.Editors.MapEditor
             }
         }
 
-        void btnScroll_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!btnScroll.Selected) {
+        void btnScroll_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!btnScroll.Selected)
+            {
                 btnGeneral.Selected = false;
                 btnNPC.Selected = false;
                 btnScroll.Selected = true;
@@ -1103,17 +1117,21 @@ namespace Client.Logic.Windows.Editors.MapEditor
             //cmbMusic.SelectItem(properties.Music);
         }
 
-        void LoadMusicBackground() {
+        void LoadMusicBackground()
+        {
             SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("PMDCP", 18);
             PMDCP.Net.FileDownloader downloader = new PMDCP.Net.FileDownloader();
-            using (MemoryStream musicTrackListXml = new MemoryStream()) {
-                downloader.DownloadFileQuick(IO.Options.MusicAddress+"/TrackList.xml", musicTrackListXml);
+            using (MemoryStream musicTrackListXml = new MemoryStream())
+            {
+                downloader.DownloadFileQuick(IO.Options.MusicAddress + "/TrackList.xml", musicTrackListXml);
                 Music.TrackList trackList = new Music.TrackList();
                 musicTrackListXml.Seek(0, SeekOrigin.Begin);
-                using (XmlReader reader = XmlReader.Create(musicTrackListXml)) {
+                using (XmlReader reader = XmlReader.Create(musicTrackListXml))
+                {
                     trackList.Load(reader);
                 }
-                foreach (Music.TrackListEntry entry in trackList.Entries) {
+                foreach (Music.TrackListEntry entry in trackList.Entries)
+                {
                     cmbMusic.Items.Add(entry.TrackName);
                 }
                 //string[] musicFiles = System.IO.Directory.GetFiles(IO.Paths.MusicPath);

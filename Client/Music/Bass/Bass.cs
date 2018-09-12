@@ -74,6 +74,5 @@ namespace Client.Logic.Music.Bass
 
         [DllImport("bass.dll", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public static extern bool BASS_ChannelSlideAttribute(IntPtr handle, uint attrib, int value, uint time);
-
     }
 }

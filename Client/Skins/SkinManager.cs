@@ -1,4 +1,14 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using SdlDotNet.Graphics;
+using SdlDotNet.Widgets;
+using System.Drawing;
+using System.IO;
+using System.Xml;
+using System.IO.Compression;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,17 +28,6 @@
 
 namespace Client.Logic.Skins
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using SdlDotNet.Graphics;
-    using SdlDotNet.Widgets;
-    using System.Drawing;
-    using System.IO;
-    using System.Xml;
-    using System.IO.Compression;
-
     class SkinManager
     {
         #region Fields
@@ -40,12 +39,14 @@ namespace Client.Logic.Skins
 
         #region Properties
 
-        public static Surface ScreenBackground {
+        public static Surface ScreenBackground
+        {
             get { return screenBackground; }
             set { screenBackground = value; }
         }
 
-        public static Skin ActiveSkin {
+        public static Skin ActiveSkin
+        {
             get { return activeSkin; }
         }
 
@@ -53,19 +54,23 @@ namespace Client.Logic.Skins
 
         #region Methods
 
-        public static void ChangeActiveSkin(string skinName) {
-            if (activeSkin != null) {
+        public static void ChangeActiveSkin(string skinName)
+        {
+            if (activeSkin != null)
+            {
                 activeSkin.Unload();
             }
             activeSkin = new Skin();
             activeSkin.LoadSkin(skinName);
             IO.Options.ActiveSkin = skinName;
-            if (screenBackground != null) {
+            if (screenBackground != null)
+            {
                 screenBackground.Close();
                 screenBackground = null;
             }
             screenBackground = LoadGui("General/Background");
-            if (screenBackground != null) {
+            if (screenBackground != null)
+            {
                 //lock (screenBackground) {
                 //    screenBackground = screenBackground.CreateStretchedSurface(SdlDotNet.Graphics.Video.Screen.Size);
                 //}
@@ -73,7 +78,8 @@ namespace Client.Logic.Skins
             SdlDotNet.Widgets.Widgets.ResourceDirectory = IO.Paths.SkinPath + ActiveSkin.Name + "/Widgets/";
         }
 
-        public static void PlaySkinMusic() {
+        public static void PlaySkinMusic()
+        {
             //Music.Music.AudioPlayer.PlayMusic("Title.ogg");
             //string activeSkinMusicFile = Music.Music.AudioPlayer.FindMusicFile(Skins.SkinManager.GetActiveSkinFolder() + "Music/", "Title");
             //if (!string.IsNullOrEmpty(activeSkinMusicFile)) {
@@ -82,15 +88,20 @@ namespace Client.Logic.Skins
             //    Music.Music.AudioPlayer.PlayMusic("Title.ogg");
             //}
             string activeSkinMusicFile = Music.AudioHelper.FindMusicFile(Skins.SkinManager.GetActiveSkinFolder() + "Music/", "Title");
-            if (!string.IsNullOrEmpty(activeSkinMusicFile)) {
+            if (!string.IsNullOrEmpty(activeSkinMusicFile))
+            {
                 Music.Music.AudioPlayer.PlayMusic(activeSkinMusicFile, -1, false, true);
-            } else {
+            }
+            else
+            {
                 Music.Music.AudioPlayer.PlayMusic("PMD3) Title.ogg");
             }
         }
 
-        public static Surface LoadGui(string guiToLoad) {
-            if (IO.IO.FileExists("Skins/" + ActiveSkin.Name + "/" + guiToLoad + "/gui.png")) {
+        public static Surface LoadGui(string guiToLoad)
+        {
+            if (IO.IO.FileExists("Skins/" + ActiveSkin.Name + "/" + guiToLoad + "/gui.png"))
+            {
                 Surface surf = Logic.Graphics.SurfaceManager.LoadSurface("Skins/" + ActiveSkin.Name + "/" + guiToLoad + "/gui.png");
                 Surface surf2 = surf.Convert();
                 surf2.Transparent = true;
@@ -100,26 +111,33 @@ namespace Client.Logic.Skins
             return null;
         }
 
-        public static Surface LoadGuiElement(string guiToLoad, string elementName) {
+        public static Surface LoadGuiElement(string guiToLoad, string elementName)
+        {
             return LoadGuiElement(guiToLoad, elementName, true);
         }
 
-        public static Surface LoadGuiElement(string guiToLoad, string elementName, bool convert) {
-            if (IO.IO.FileExists("Skins/" + ActiveSkin.Name + "/" + guiToLoad + "/" + elementName)) {
+        public static Surface LoadGuiElement(string guiToLoad, string elementName, bool convert)
+        {
+            if (IO.IO.FileExists("Skins/" + ActiveSkin.Name + "/" + guiToLoad + "/" + elementName))
+            {
                 Surface surf = Logic.Graphics.SurfaceManager.LoadSurface("Skins/" + ActiveSkin.Name + "/" + guiToLoad + "/" + elementName);
-                if (convert) {
+                if (convert)
+                {
                     Surface surf2 = surf.Convert();
                     surf2.Transparent = true;
                     surf.Close();
                     return surf2;
-                } else {
+                }
+                else
+                {
                     return surf;
                 }
             }
             return null;
         }
 
-        public static void LoadButtonGui(SdlDotNet.Widgets.Button button) {
+        public static void LoadButtonGui(SdlDotNet.Widgets.Button button)
+        {
             button.BackColor = Color.Transparent;
             button.BackgroundImageSizeMode = ImageSizeMode.StretchImage;
             button.BorderStyle = BorderStyle.None;
@@ -130,7 +148,8 @@ namespace Client.Logic.Skins
             unstretchedHoverImage.Close();
         }
 
-        public static void LoadTextBoxGui(SdlDotNet.Widgets.TextBox textBox) {
+        public static void LoadTextBoxGui(SdlDotNet.Widgets.TextBox textBox)
+        {
             textBox.BackColor = Color.Transparent;
             textBox.ForeColor = Color.WhiteSmoke;
             textBox.BackgroundImageSizeMode = ImageSizeMode.StretchImage;
@@ -138,19 +157,28 @@ namespace Client.Logic.Skins
             textBox.BackgroundImage = Skins.SkinManager.LoadGuiElement("Game Window", "Widgets/textbox.png");
         }
 
-        public static string GetActiveSkinFolder() {
+        public static string GetActiveSkinFolder()
+        {
             return IO.Paths.SkinPath + ActiveSkin.Name + "/";
         }
 
-        public static bool InstallSkin(string skinPackagePath) {
-            try {
-                using (var fileStream = new FileStream(skinPackagePath, FileMode.Open)) {
-                    using (var zip = new ZipArchive(fileStream)) {
+        public static bool InstallSkin(string skinPackagePath)
+        {
+            try
+            {
+                using (var fileStream = new FileStream(skinPackagePath, FileMode.Open))
+                {
+                    using (var zip = new ZipArchive(fileStream))
+                    {
                         bool skinValid = false;
-                        foreach (var entry in zip.Entries) {
-                            if (entry.Name == "Configuration/config.xml") {
-                                using (MemoryStream ms = new MemoryStream()) {
-                                    using (var entryStream = entry.Open()) {
+                        foreach (var entry in zip.Entries)
+                        {
+                            if (entry.Name == "Configuration/config.xml")
+                            {
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    using (var entryStream = entry.Open())
+                                    {
                                         entryStream.CopyTo(ms);
                                     }
                                     ms.Seek(0, SeekOrigin.Begin);
@@ -159,36 +187,49 @@ namespace Client.Logic.Skins
                                 break;
                             }
                         }
-                        if (skinValid) {
+                        if (skinValid)
+                        {
                             string skinDir = IO.Paths.SkinPath + Path.GetFileNameWithoutExtension(skinPackagePath);
-                            if (Directory.Exists(skinDir) == false) {
+                            if (Directory.Exists(skinDir) == false)
+                            {
                                 Directory.CreateDirectory(skinDir);
                             }
 
                             ZipFile.ExtractToDirectory(skinPackagePath, skinDir);
                             return true;
-                        } else {
+                        }
+                        else
+                        {
                             return false;
                         }
                     }
                 }
-            } catch {
+            }
+            catch
+            {
                 return false;
             }
         }
 
-        private static bool ValidateSkinConfigEntry(MemoryStream configStream) {
+        private static bool ValidateSkinConfigEntry(MemoryStream configStream)
+        {
             string creator = null;
             string version = null;
-            using (XmlReader reader = XmlReader.Create(configStream)) {
-                while (reader.Read()) {
-                    if (reader.IsStartElement()) {
-                        switch (reader.Name) {
-                            case "Creator": {
+            using (XmlReader reader = XmlReader.Create(configStream))
+            {
+                while (reader.Read())
+                {
+                    if (reader.IsStartElement())
+                    {
+                        switch (reader.Name)
+                        {
+                            case "Creator":
+                                {
                                     creator = reader.ReadString();
                                 }
                                 break;
-                            case "Version": {
+                            case "Version":
+                                {
                                     version = reader.ReadString();
                                 }
                                 break;
@@ -196,9 +237,12 @@ namespace Client.Logic.Skins
                     }
                 }
             }
-            if (!string.IsNullOrEmpty(creator) && !string.IsNullOrEmpty(version)) {
+            if (!string.IsNullOrEmpty(creator) && !string.IsNullOrEmpty(version))
+            {
                 return true;
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }

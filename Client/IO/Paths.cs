@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.IO
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class Paths
     {
         #region Fields
@@ -43,39 +42,48 @@ namespace Client.Logic.IO
 
         #region Properties
 
-        public static char DirChar {
+        public static char DirChar
+        {
             get { return dirChar; }
         }
 
-        public static string FontPath {
+        public static string FontPath
+        {
             get { return fontPath; }
         }
 
-        public static string StoryDataPath {
+        public static string StoryDataPath
+        {
             get { return storyDataPath; }
         }
 
-        public static string GfxPath {
+        public static string GfxPath
+        {
             get { return gfxPath; }
         }
 
-        public static string MapPath {
+        public static string MapPath
+        {
             get { return mapPath; }
         }
 
-        public static string MusicPath {
+        public static string MusicPath
+        {
             get { return musicPath; }
         }
 
-        public static string SfxPath {
+        public static string SfxPath
+        {
             get { return sfxPath; }
         }
 
-        public static string SkinPath {
+        public static string SkinPath
+        {
             get { return skinPath; }
         }
 
-        public static string StartupPath {
+        public static string StartupPath
+        {
             get { return startupPath; }
         }
 
@@ -88,15 +96,20 @@ namespace Client.Logic.IO
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns>A file path in the format used by the host OS</returns>
-        public static string CreateOSPath(string fileName) {
-            if (Environment.OSVersion.Platform == PlatformID.Unix) {
+        public static string CreateOSPath(string fileName)
+        {
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
                 if (fileName.Contains("\\"))
                     fileName = fileName.Replace('\\', dirChar);
-            } else if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+            }
+            else if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
                 if (fileName.Contains("/"))
                     fileName = fileName.Replace('/', dirChar);
             }
-            if (fileName.StartsWith(StartupPath) == false) {
+            if (fileName.StartsWith(StartupPath) == false)
+            {
                 fileName = StartupPath + fileName;
             }
             return fileName;
@@ -105,10 +118,12 @@ namespace Client.Logic.IO
         /// <summary>
         /// Initializes this class
         /// </summary>
-        public static void Initialize() {
+        public static void Initialize()
+        {
             Paths.startupPath = System.Windows.Forms.Application.StartupPath;
             //#if DEBUG
-            if (/*Globals.InDebugMode &&*/ Globals.CommandLine.ContainsCommandArg("-overridepath")) {
+            if (/*Globals.InDebugMode &&*/ Globals.CommandLine.ContainsCommandArg("-overridepath"))
+            {
                 int index = Globals.CommandLine.FindCommandArg("-overridepath");
                 Paths.startupPath = Globals.CommandLine.CommandArgs[index + 1];
             }

@@ -33,26 +33,33 @@ namespace Client.Logic.Widgets
 
         SdlDotNet.Graphics.Font font;
 
-        public SdlDotNet.Graphics.Font Font {
-            get {
+        public SdlDotNet.Graphics.Font Font
+        {
+            get
+            {
                 CheckFont();
                 return font;
             }
-            set {
+            set
+            {
                 font = value;
             }
         }
 
         public MenuNumberSelector(string name)
-            : base(name, true) {
-                base.Paint += new EventHandler(MenuNumberSelector_Paint);
+            : base(name, true)
+        {
+            base.Paint += new EventHandler(MenuNumberSelector_Paint);
         }
 
-        void MenuNumberSelector_Paint(object sender, EventArgs e) {
+        void MenuNumberSelector_Paint(object sender, EventArgs e)
+        {
         }
 
-        private void CheckFont() {
-            if (font == null) {
+        private void CheckFont()
+        {
+            if (font == null)
+            {
                 font = new Font(SdlDotNet.Widgets.Widgets.DefaultFontPath, SdlDotNet.Widgets.Widgets.DefaultFontSize);
             }
         }

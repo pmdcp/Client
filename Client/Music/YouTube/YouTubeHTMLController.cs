@@ -22,7 +22,8 @@ namespace Client.Logic.Music.YouTube
 </html>";
 
         [WebApiHandler(HttpVerbs.Get, "/v/{id}")]
-        public async Task<bool> GetThing(WebServer server, HttpListenerContext context, string id) {
+        public async Task<bool> GetThing(WebServer server, HttpListenerContext context, string id)
+        {
             var embedUrl = GenerateEmbedUrl(id, true);
             var result = string.Format(page, $"<iframe width=\"500\" height=\"500\" src=\"{embedUrl}\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>");
 
@@ -30,12 +31,14 @@ namespace Client.Logic.Music.YouTube
             return true;
         }
 
-        private string GenerateEmbedUrl(string id, bool loop) {
+        private string GenerateEmbedUrl(string id, bool loop)
+        {
             var embedUrlBuilder = new StringBuilder();
 
             embedUrlBuilder.Append($"https://www.youtube.com/embed/{id}?autoplay=1");
 
-            if (loop) {
+            if (loop)
+            {
                 embedUrlBuilder.Append("&loop=1");
                 // Workaround for YouTube player bug: https://developers.google.com/youtube/player_parameters
                 embedUrlBuilder.Append($"&playlist={id}");

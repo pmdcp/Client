@@ -35,14 +35,16 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public StopMusicSegment() {
+        public StopMusicSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.StopMusic; }
         }
 
@@ -53,7 +55,8 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -66,7 +69,8 @@ namespace Client.Logic.Stories.Segments
             this.parameters = parameters;
         }
 
-        public void Process(StoryState state) {
+        public void Process(StoryState state)
+        {
             state.ResetWaitEvent();
             Music.Music.AudioPlayer.StopMusic();
         }

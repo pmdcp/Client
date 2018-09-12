@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.Npc
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class NpcCollection
     {
         #region Fields
@@ -43,8 +42,8 @@ namespace Client.Logic.Npc
 
         public Npc this[int index]
         {
-            get { return mNpcArray[index-1]; }
-            set { mNpcArray[index-1] = value; }
+            get { return mNpcArray[index - 1]; }
+            set { mNpcArray[index - 1] = value; }
         }
 
         #endregion Indexers
@@ -57,7 +56,8 @@ namespace Client.Logic.Npc
             npc.AttackSay = "";
             npc.Behavior = Enums.NpcBehavior.AttackOnSight;
             npc.ShinyChance = 0;
-            for (int a = 0; a < MaxInfo.MAX_NPC_DROPS; a++) {
+            for (int a = 0; a < MaxInfo.MAX_NPC_DROPS; a++)
+            {
                 npc.ItemDrops[a] = new NpcDrop();
                 npc.ItemDrops[a].Chance = 0;
                 npc.ItemDrops[a].ItemNum = 0;

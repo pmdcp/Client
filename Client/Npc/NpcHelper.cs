@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,12 +22,6 @@
 
 namespace Client.Logic.Npc
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class NpcHelper
     {
         #region Fields
@@ -55,12 +54,15 @@ namespace Client.Logic.Npc
 
         public static void LoadNpcsFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n, temp;
                 n = 1;
-                for (int i = 1; i <= MaxInfo.MaxNpcs; i++) {
-                    temp = Logic.MathFunctions.CalculatePercent(i, MaxInfo.MaxNpcs+1);
-                    if (temp >= 100) {
+                for (int i = 1; i <= MaxInfo.MaxNpcs; i++)
+                {
+                    temp = Logic.MathFunctions.CalculatePercent(i, MaxInfo.MaxNpcs + 1);
+                    if (temp >= 100)
+                    {
                         temp = 99;
                     }
                     dataLoadPercent = temp;
@@ -72,7 +74,9 @@ namespace Client.Logic.Npc
                     ((Windows.winLoading)Windows.WindowSwitcher.FindWindow("winLoading")).UpdateLoadText("Recieving Data... " + DataManager.AverageLoadPercent().ToString() + "%");
                 }
                 dataLoadPercent = 100;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }

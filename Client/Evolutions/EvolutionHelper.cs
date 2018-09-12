@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,12 +22,6 @@
 
 namespace Client.Logic.Evolutions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class EvolutionHelper
     {
         #region Fields
@@ -55,9 +54,11 @@ namespace Client.Logic.Evolutions
 
         public static void LoadEvosFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n = 1;
-                for (int i = 0; i <= MaxInfo.MaxEvolutions; i++) {
+                for (int i = 0; i <= MaxInfo.MaxEvolutions; i++)
+                {
                     dataLoadPercent = System.Math.Min(99, Logic.MathFunctions.CalculatePercent(i, MaxInfo.MaxEvolutions));
                     mEvos[i] = new Evolution();
                     mEvos[i].Name = parse[n + 1];
@@ -65,7 +66,9 @@ namespace Client.Logic.Evolutions
                     ((Windows.winLoading)Windows.WindowSwitcher.FindWindow("winLoading")).UpdateLoadText("Recieving Data... " + DataManager.AverageLoadPercent().ToString() + "%");
                 }
                 dataLoadPercent = 100;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }

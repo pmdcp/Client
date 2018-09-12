@@ -31,7 +31,8 @@ namespace Client.Logic.Menus
 {
     class mnuBankItemSelected : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -45,9 +46,11 @@ namespace Client.Logic.Menus
         Widgets.MenuItemPicker itemPicker;
         const int MAX_ITEMS = 1;
 
-        public int ItemNum {
+        public int ItemNum
+        {
             get { return itemNum; }
-            set {
+            set
+            {
                 itemNum = value;
 
                 if (transaction == Enums.InvMenuType.Store)
@@ -56,7 +59,9 @@ namespace Client.Logic.Menus
                     {
                         lblMove.Text = "Store Amount:";
                         nudAmount.Visible = true;
-                    } else {
+                    }
+                    else
+                    {
                         lblMove.Text = "Store";
                         nudAmount.Visible = false;
                     }
@@ -67,29 +72,33 @@ namespace Client.Logic.Menus
                     {
                         lblMove.Text = "Take Amount:";
                         nudAmount.Visible = true;
-                    } else {
+                    }
+                    else
+                    {
                         lblMove.Text = "Take";
                         nudAmount.Visible = false;
                     }
-
                 }
             }
-
         }
 
-        public int ItemSlot {
+        public int ItemSlot
+        {
             get { return itemSlot; }
-            set {
+            set
+            {
                 itemSlot = value;
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
         public mnuBankItemSelected(string name, int itemNum, int amount, int itemSlot, Enums.InvMenuType transactionType)
-            : base(name) {
+            : base(name)
+        {
             transaction = transactionType;
 
 
@@ -134,46 +143,61 @@ namespace Client.Logic.Menus
             this.ItemNum = itemNum;
         }
 
-        void lblSummary_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblSummary_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(1);
         }
 
 
-        void lblMove_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblMove_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(0);
         }
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 23 + (50 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
-            			Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         CloseMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                     }
@@ -181,7 +205,7 @@ namespace Client.Logic.Menus
             }
         }
 
-        
+
         private void SelectItem(int selectedItem)
         {
             switch (selectedItem)
@@ -203,7 +227,9 @@ namespace Client.Logic.Menus
                                         //say you must store a number of items greater than 0.
                                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                                     }
-                                } else {
+                                }
+                                else
+                                {
                                     Messenger.BankDeposit(itemSlot, 0);
                                 }
                             }
@@ -220,7 +246,9 @@ namespace Client.Logic.Menus
                                         //say you must take a number of items greater than 0.
                                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                                     }
-                                } else {
+                                }
+                                else
+                                {
                                     Messenger.BankWithdraw(itemSlot + 1, 0);
                                 }
                             }
@@ -230,7 +258,6 @@ namespace Client.Logic.Menus
                     break;
                 case 1:
                     { // View item summary
-                        
                         MenuSwitcher.ShowItemSummary(itemNum, itemSlot, transaction);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
@@ -238,7 +265,8 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void CloseMenu() {
+        private void CloseMenu()
+        {
             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(this);
             if (transaction == Enums.InvMenuType.Store)
             {
@@ -249,6 +277,5 @@ namespace Client.Logic.Menus
                 Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuBank");
             }
         }
-
     }
 }

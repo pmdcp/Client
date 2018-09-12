@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.Items
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class Item
     {
         #region Properties
@@ -58,10 +57,11 @@ namespace Client.Logic.Items
         public int RecruitBonus { get; set; }
 
         #endregion Properties
-        
-        public Item() {
-        	Name = "";
-        	Desc = "";
+
+        public Item()
+        {
+            Name = "";
+            Desc = "";
         }
     }
 }

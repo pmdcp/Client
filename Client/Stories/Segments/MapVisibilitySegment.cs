@@ -1,4 +1,11 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using Client.Logic.Menus.Core;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,14 +25,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using Client.Logic.Menus.Core;
-
-    using PMDCP.Core;
-
     class MapVisibilitySegment : ISegment
     {
         #region Fields
@@ -38,22 +37,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public MapVisibilitySegment(bool visible) {
+        public MapVisibilitySegment(bool visible)
+        {
             Load(visible);
         }
 
-        public MapVisibilitySegment() {
+        public MapVisibilitySegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.MapVisibility; }
         }
 
-        public bool Visible {
+        public bool Visible
+        {
             get { return visible; }
             set { visible = value; }
         }
@@ -63,7 +66,8 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -71,18 +75,20 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(bool visible) {
+        public void Load(bool visible)
+        {
             this.visible = visible;
         }
 
         public void LoadFromSegmentData(ListPair<string, string> parameters)
         {
             this.parameters = parameters;
-            this.visible = parameters.GetValue("Visible").ToBool();
+            visible = parameters.GetValue("Visible").ToBool();
         }
 
-        public void Process(StoryState state) {
-           Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.ScreenVisible = this.visible;
+        public void Process(StoryState state)
+        {
+            Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.ScreenVisible = visible;
         }
 
         #endregion Methods

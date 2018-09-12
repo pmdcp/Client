@@ -84,8 +84,8 @@ namespace Client.Logic.Windows.Editors
 
         #region Constructors
         public winEvolutionPanel()
-            : base("winEvolutionPanel") {
-
+            : base("winEvolutionPanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -111,8 +111,8 @@ namespace Client.Logic.Windows.Editors
             lbxEvoList = new ListBox("lbxEvoList");
             lbxEvoList.Location = new Point(10, 10);
             lbxEvoList.Size = new Size(180, 140);
-            for (int i = 0; i < 10; i++) {
-
+            for (int i = 0; i < 10; i++)
+            {
                 lbxEvoList.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": " + Evolutions.EvolutionHelper.Evolutions[i].Name));
             }
             lbxEvoList.SelectItem(0);
@@ -405,22 +405,20 @@ namespace Client.Logic.Windows.Editors
             this.LoadComplete();
 
             #endregion
-
-
         }
 
         #endregion
 
         #region Methods
 
-        public void LoadEvo(string[] parse) {
-
-
+        public void LoadEvo(string[] parse)
+        {
             evolution = new Evolutions.Evolution();
             evolution.Name = parse[1];
             evolution.Species = parse[2].ToInt();
 
-            for (int i = 0; i < parse[3].ToInt(); i++) {
+            for (int i = 0; i < parse[3].ToInt(); i++)
+            {
                 evolution.Branches.Add(new Evolutions.EvolutionBranch());
                 evolution.Branches[i].Name = parse[4 + i * 6];
                 evolution.Branches[i].NewSpecies = parse[5 + i * 6].ToInt();
@@ -428,7 +426,6 @@ namespace Client.Logic.Windows.Editors
                 evolution.Branches[i].Data1 = parse[7 + i * 6].ToInt();
                 evolution.Branches[i].Data2 = parse[8 + i * 6].ToInt();
                 evolution.Branches[i].Data3 = parse[9 + i * 6].ToInt();
-
             }
 
             pnlEvoList.Visible = false;
@@ -441,64 +438,72 @@ namespace Client.Logic.Windows.Editors
 
 
             btnEdit.Text = "Edit";
-
-
-
         }
 
 
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshEvoList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen < (MaxInfo.MaxEvolutions / 10)) {
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < (MaxInfo.MaxEvolutions / 10))
+            {
                 currentTen++;
             }
             RefreshEvoList();
         }
 
-        public void RefreshEvoList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < MaxInfo.MaxEvolutions) {
+        public void RefreshEvoList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < MaxInfo.MaxEvolutions)
+                {
                     ((ListBoxTextItem)lbxEvoList.Items[i]).Text = (((i + 1) + 10 * currentTen) + ": " + Evolutions.EvolutionHelper.Evolutions[i + 10 * currentTen].Name);
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxEvoList.Items[i]).Text = "---";
                 }
             }
         }
 
-        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             string[] index = ((ListBoxTextItem)lbxEvoList.SelectedItems[0]).Text.Split(':');
-            if (index[0].IsNumeric()) {
-
+            if (index[0].IsNumeric())
+            {
                 evoNum = index[0].ToInt() - 1;
                 btnEdit.Text = "Loading...";
 
 
                 Messenger.SendEditEvo(index[0].ToInt() - 1);
-
             }
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             return;
         }
 
-        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             evoNum = -1;
             evolution = null;
             pnlEvoEditor.Visible = false;
             pnlEvoList.Visible = true;
             this.Size = new System.Drawing.Size(pnlEvoList.Width, pnlEvoList.Height);
-
         }
 
-        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             evolution.Name = txtName.Text;
             evolution.Species = nudSpecies.Value;
 
@@ -511,16 +516,18 @@ namespace Client.Logic.Windows.Editors
             this.Size = new System.Drawing.Size(pnlEvoList.Width, pnlEvoList.Height);
         }
 
-        void btnEvoBranchLoad_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEvoBranchLoad_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //if evo num is higher than max branches
-            if (nudEvoNum.Value > nudMaxBranchEvos.Value) {
+            if (nudEvoNum.Value > nudMaxBranchEvos.Value)
+            {
                 lblSaveLoadMessage.Text = "Cannot load branch higher than maximum!";
                 return;
-
             }
 
             //if stored evo count is lower than max branches
-            for (int i = evolution.Branches.Count; i < nudMaxBranchEvos.Value; i++) {
+            for (int i = evolution.Branches.Count; i < nudMaxBranchEvos.Value; i++)
+            {
                 evolution.Branches.Add(new Evolutions.EvolutionBranch());
             }
 
@@ -534,13 +541,16 @@ namespace Client.Logic.Windows.Editors
             lblSaveLoadMessage.Text = "Branch loaded.";
         }
 
-        void btnEvoBranchSave_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (nudEvoNum.Value > nudMaxBranchEvos.Value) {
+        void btnEvoBranchSave_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (nudEvoNum.Value > nudMaxBranchEvos.Value)
+            {
                 lblSaveLoadMessage.Text = "Cannot save branch higher than maximum.";
                 return;
             }
 
-            for (int i = evolution.Branches.Count; i < nudMaxBranchEvos.Value; i++) {
+            for (int i = evolution.Branches.Count; i < nudMaxBranchEvos.Value; i++)
+            {
                 evolution.Branches.Add(new Evolutions.EvolutionBranch());
             }
 
@@ -554,7 +564,8 @@ namespace Client.Logic.Windows.Editors
             lblSaveLoadMessage.Text = "Branch saved.";
         }
 
-        void nudSpecies_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
+        void nudSpecies_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
             Surface sprite = GraphicsManager.GetSpriteSheet(nudSpecies.Value).GetSheet(FrameType.Idle, Enums.Direction.Down);
             picSprite.X = 175 - sprite.Width / 14;
             picSprite.Y = 120 - sprite.Height / 2;
@@ -568,7 +579,8 @@ namespace Client.Logic.Windows.Editors
             //picSprite.Image = Tools.CropImage(sprite, new Rectangle(new Point(3 * picSprite.Width / 14, 0), picSprite.Size));
         }
 
-        void nudNewSpecies_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
+        void nudNewSpecies_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
             Surface sprite = GraphicsManager.GetSpriteSheet(nudSpecies.Value).GetSheet(FrameType.Idle, Enums.Direction.Down);
             picNewSprite.X = 185;
             picNewSprite.Y = 120 - sprite.Height / 2;

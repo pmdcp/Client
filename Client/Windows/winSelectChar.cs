@@ -38,8 +38,8 @@ namespace Client.Logic.Windows
         Label lblUseCharacter;
 
         public winSelectChar()
-            : base("winSelectChar") {
-
+            : base("winSelectChar")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "Login";
@@ -120,123 +120,169 @@ namespace Client.Logic.Windows
             this.AddWidget(lblLoginScreen);
         }
 
-        public void SetCharName(Button button, string charName) {
-            if (!string.IsNullOrEmpty(charName)) {
+        public void SetCharName(Button button, string charName)
+        {
+            if (!string.IsNullOrEmpty(charName))
+            {
                 button.Text = charName;
-            } else {
+            }
+            else
+            {
                 button.Text = "[Empty Character Slot]";
             }
         }
 
-        void btnChar3_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnChar3_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             btnChar3.Selected = true;
             btnChar2.Selected = false;
             btnChar1.Selected = false;
         }
 
-        void btnChar2_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnChar2_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             btnChar3.Selected = false;
             btnChar2.Selected = true;
             btnChar1.Selected = false;
         }
 
-        void btnChar1_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnChar1_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             btnChar3.Selected = false;
             btnChar2.Selected = false;
             btnChar1.Selected = true;
         }
 
-        void lblLoginScreen_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblLoginScreen_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             NetworkManager.Disconnect();
             NetworkManager.Connect();
             WindowSwitcher.ShowMainMenu();
         }
 
-        void lblUseCharacter_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblUseCharacter_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             bool charSelected = false;
-            if (btnChar1.Selected) {
+            if (btnChar1.Selected)
+            {
                 WindowSwitcher.GameWindow = new winGame();
                 Messenger.SendUseChar(1);
                 charSelected = true;
-            } else if (btnChar2.Selected) {
+            }
+            else if (btnChar2.Selected)
+            {
                 WindowSwitcher.GameWindow = new winGame();
                 Messenger.SendUseChar(2);
                 charSelected = true;
-            } else if (btnChar3.Selected) {
+            }
+            else if (btnChar3.Selected)
+            {
                 WindowSwitcher.GameWindow = new winGame();
                 Messenger.SendUseChar(3);
                 charSelected = true;
             }
-            if (charSelected) {
+            if (charSelected)
+            {
                 this.Close();
                 WindowManager.AddWindow(new winLoading());
                 ((winLoading)WindowSwitcher.FindWindow("winLoading")).UpdateLoadText("Logging in...");
             }
         }
 
-        void lblNewCharacter_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblNewCharacter_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             int charNum = -1;
-            if (btnChar1.Selected) {
-                if (btnChar1.Text == "[Empty Character Slot]") {
+            if (btnChar1.Selected)
+            {
+                if (btnChar1.Text == "[Empty Character Slot]")
+                {
                     charNum = 1;
-                } else {
-                    MessageBox.Show("There is already a character in this slot!", "Error!");
                 }
-            } else if (btnChar2.Selected) {
-                if (btnChar2.Text == "[Empty Character Slot]") {
-                    charNum = 2;
-                } else {
-                    MessageBox.Show("There is already a character in this slot!", "Error!");
-                }
-            } else if (btnChar3.Selected) {
-                if (btnChar3.Text == "[Empty Character Slot]") {
-                    charNum = 3;
-                } else {
+                else
+                {
                     MessageBox.Show("There is already a character in this slot!", "Error!");
                 }
             }
-            if (charNum != -1) {
+            else if (btnChar2.Selected)
+            {
+                if (btnChar2.Text == "[Empty Character Slot]")
+                {
+                    charNum = 2;
+                }
+                else
+                {
+                    MessageBox.Show("There is already a character in this slot!", "Error!");
+                }
+            }
+            else if (btnChar3.Selected)
+            {
+                if (btnChar3.Text == "[Empty Character Slot]")
+                {
+                    charNum = 3;
+                }
+                else
+                {
+                    MessageBox.Show("There is already a character in this slot!", "Error!");
+                }
+            }
+            if (charNum != -1)
+            {
                 WindowManager.AddWindow(new winNewCharacter(charNum));
                 this.Close();
             }
         }
 
-        void lblDeleteCharacter_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblDeleteCharacter_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             //SdlDotNet.Widgets.MessageBox.Show("Delete?", "Are you sure you wish to delete this character?");
-            if (MessageBox.Show("Are you sure you wish to delete this character?", "Delete Character?", MessageBoxButtons.YesNo) == SdlDotNet.Widgets.DialogResult.Yes) {
+            if (MessageBox.Show("Are you sure you wish to delete this character?", "Delete Character?", MessageBoxButtons.YesNo) == SdlDotNet.Widgets.DialogResult.Yes)
+            {
                 int charNum = -1;
-                if (btnChar1.Selected) {
+                if (btnChar1.Selected)
+                {
                     charNum = 1;
-                } else if (btnChar2.Selected) {
+                }
+                else if (btnChar2.Selected)
+                {
                     charNum = 2;
-                } else if (btnChar3.Selected) {
+                }
+                else if (btnChar3.Selected)
+                {
                     charNum = 3;
                 }
-                switch (charNum) {
-                    case 1: {
-                            if (btnChar1.Text == "[Empty Character Slot]") {
+                switch (charNum)
+                {
+                    case 1:
+                        {
+                            if (btnChar1.Text == "[Empty Character Slot]")
+                            {
                                 charNum = -1;
                                 MessageBox.Show("There is no character in this slot!", "Character Slot Empty!");
                             }
                         }
                         break;
-                    case 2: {
-                            if (btnChar2.Text == "[Empty Character Slot]") {
+                    case 2:
+                        {
+                            if (btnChar2.Text == "[Empty Character Slot]")
+                            {
                                 charNum = -1;
                                 MessageBox.Show("There is no character in this slot!", "Character Slot Empty!");
                             }
                         }
                         break;
-                    case 3: {
-                            if (btnChar3.Text == "[Empty Character Slot]") {
+                    case 3:
+                        {
+                            if (btnChar3.Text == "[Empty Character Slot]")
+                            {
                                 charNum = -1;
                                 MessageBox.Show("There is no character in this slot!", "Character Slot Empty!");
                             }
                         }
                         break;
                 }
-                if (charNum != -1) {
+                if (charNum != -1)
+                {
                     this.Close();
                     WindowManager.AddWindow(new winLoading());
                     ((Windows.winLoading)WindowManager.FindWindow("winLoading")).UpdateLoadText("Deleting Character...");

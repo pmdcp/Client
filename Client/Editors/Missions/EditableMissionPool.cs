@@ -21,14 +21,16 @@ using System.Collections.Generic;
 using System.Text;
 using PMDCP.Core;
 
-namespace Client.Logic.Editors.Missions {
-    class EditableMissionPool {
-
+namespace Client.Logic.Editors.Missions
+{
+    class EditableMissionPool
+    {
         public List<EditableMissionReward> Rewards { get; set; }
         public List<int> Enemies { get; set; }
         public List<EditableMissionClient> Clients { get; set; }
 
-        public EditableMissionPool() {
+        public EditableMissionPool()
+        {
             Rewards = new List<EditableMissionReward>();
             Clients = new List<EditableMissionClient>();
             Enemies = new List<int>();

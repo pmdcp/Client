@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class ChangePlayerDirectionSegment : ISegment
     {
         #region Fields
@@ -36,18 +35,21 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public ChangePlayerDirectionSegment(Enums.Direction direction) {
+        public ChangePlayerDirectionSegment(Enums.Direction direction)
+        {
             Load(direction);
         }
 
-        public ChangePlayerDirectionSegment() {
+        public ChangePlayerDirectionSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.ChangePlayerDir; }
         }
 
@@ -56,12 +58,14 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public Enums.Direction Direction {
+        public Enums.Direction Direction
+        {
             get { return direction; }
             set { direction = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -69,7 +73,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(Enums.Direction direction) {
+        public void Load(Enums.Direction direction)
+        {
             this.direction = direction;
         }
 
@@ -79,8 +84,9 @@ namespace Client.Logic.Stories.Segments
             Load((Enums.Direction)parameters.GetValue("Direction").ToInt());
         }
 
-        public void Process(StoryState state) {
-            this.storyState = state;
+        public void Process(StoryState state)
+        {
+            storyState = state;
             Players.PlayerManager.MyPlayer.Direction = direction;
             Network.Messenger.SendPlayerDir();
         }

@@ -1,4 +1,12 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+using Client.Logic.Players;
+using Client.Logic.Windows;
+using Client.Logic.Network;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,15 +26,6 @@
 
 namespace Client.Logic.Maps
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-    using Client.Logic.Players;
-    using Client.Logic.Windows;
-    using Client.Logic.Network;
-
     class MapHelper
     {
         #region Fields
@@ -37,22 +36,27 @@ namespace Client.Logic.Maps
 
         #region Methods
 
-        public static void InitMapHelper() {
+        public static void InitMapHelper()
+        {
             mMaps = new MapCollection();
         }
 
-        public static void LoadMapFromFile(int mapNum) {
+        public static void LoadMapFromFile(int mapNum)
+        {
             Map loadedMap = LoadMapFromFile(IO.Paths.MapPath + "Map" + mapNum.ToString() + ".dat");
-            if (loadedMap != null) {
+            if (loadedMap != null)
+            {
                 loadedMap.MapID = "s" + mapNum;
                 mMaps[Enums.MapID.TempActive] = loadedMap;
             }
         }
 
-        public static Map LoadMapFromFile(string filePath) {
+        public static Map LoadMapFromFile(string filePath)
+        {
             filePath = IO.Paths.CreateOSPath(filePath);
 
-            if (System.IO.File.Exists(filePath) == false) {
+            if (System.IO.File.Exists(filePath) == false)
+            {
                 return null;
             }
 
@@ -62,23 +66,32 @@ namespace Client.Logic.Maps
 
             Map map = new Map("?");
             string[] parse;
-            using (System.IO.StringReader reader = new System.IO.StringReader(new string(System.Text.Encoding.Unicode.GetChars(Globals.Encryption.DecryptBytes(System.IO.File.ReadAllBytes(filePath)))))) {
-                do {
-                    if (headerFound == false && lineNum > 1) {
+            using (System.IO.StringReader reader = new System.IO.StringReader(new string(System.Text.Encoding.Unicode.GetChars(Globals.Encryption.DecryptBytes(System.IO.File.ReadAllBytes(filePath))))))
+            {
+                do
+                {
+                    if (headerFound == false && lineNum > 1)
+                    {
                         System.IO.File.Delete(filePath);
                         break;
                     }
                     line = reader.ReadLine();
-                    if (line == null) {
+                    if (line == null)
+                    {
                         break;
-                    } else {
+                    }
+                    else
+                    {
                         parse = line.Split('|');
                     }
 
-                    switch (parse[0].ToLower()) {
-                        case "mapdata": {
+                    switch (parse[0].ToLower())
+                    {
+                        case "mapdata":
+                            {
                                 headerFound = true;
-                                if (parse[1].ToLower() != "v10") {
+                                if (parse[1].ToLower() != "v10")
+                                {
                                     System.IO.File.Delete(filePath);
                                     return null;
                                 }
@@ -95,7 +108,8 @@ namespace Client.Logic.Maps
                                 map.OriginalTiles = new Tile[map.MaxX + 1, map.MaxY + 1];
                             }
                             break;
-                        case "data": {
+                        case "data":
+                            {
                                 map.Name = parse[1];
                                 map.Moral = (Enums.MapMoral)parse[2].ToInt();
                                 map.Up = parse[3].ToInt();
@@ -119,7 +133,8 @@ namespace Client.Logic.Maps
                                 map.YouTubeMusicID = parse[21];
                             }
                             break;
-                        case "npcsettings": {
+                        case "npcsettings":
+                            {
                                 int npcSlot = parse[1].ToInt();
                                 map.Npc.Add(new MapNpcSettings());
                                 map.Npc[npcSlot].NpcNum = parse[2].ToInt();
@@ -157,7 +172,8 @@ namespace Client.Logic.Maps
                         //    }
                         //}
                         //break;
-                        case "tile": {
+                        case "tile":
+                            {
                                 Tile tile = map.Tile[parse[1].ToInt(), parse[2].ToInt()] = new Tile();
                                 tile.Ground = parse[3].ToInt();
                                 tile.GroundAnim = parse[4].ToInt();
@@ -210,7 +226,8 @@ namespace Client.Logic.Maps
             return map;
         }
 
-        public static void LoadMapFromPacket(string[] parse) {
+        public static void LoadMapFromPacket(string[] parse)
+        {
             string mapID = parse[2];
             Maps.Map map = new Client.Logic.Maps.Map(mapID);
 
@@ -252,8 +269,10 @@ namespace Client.Logic.Maps
 
             n += 24;
 
-            for (int y = 0; y <= map.MaxY; y++) {
-                for (int x = 0; x <= map.MaxX; x++) {
+            for (int y = 0; y <= map.MaxY; y++)
+            {
+                for (int x = 0; x <= map.MaxX; x++)
+                {
                     Maps.Tile tile = new Client.Logic.Maps.Tile();
                     tile.Ground = parse[n].ToInt();
                     tile.GroundAnim = parse[n + 1].ToInt();
@@ -305,7 +324,8 @@ namespace Client.Logic.Maps
 
             n++;
 
-            for (int i = 0; i < npcs; i++) {
+            for (int i = 0; i < npcs; i++)
+            {
                 map.Npc.Add(new MapNpcSettings());
                 map.Npc[i].NpcNum = parse[n].ToInt();
                 map.Npc[i].SpawnX = parse[n + 1].ToInt();
@@ -323,12 +343,15 @@ namespace Client.Logic.Maps
 
             map.MapID = mapID;
 
-            if (map.Cacheable && !temp && (mapID.StartsWith("s") || mapID.StartsWith("h"))) {
+            if (map.Cacheable && !temp && (mapID.StartsWith("s") || mapID.StartsWith("h")))
+            {
                 mMaps[mapType] = map;
                 SaveLocalMap(mapType);
                 //mMaps[Enums.MapID.TempActive] = map;
                 //SaveLocalMap(Enums.MapID.TempActive);
-            } else {
+            }
+            else
+            {
                 mMaps[mapType] = map;
                 //mMaps[Enums.MapID.TempActive] = map;
                 //				TODO: Random dungeon loading info hiding
@@ -340,7 +363,8 @@ namespace Client.Logic.Maps
                 //				End If
             }
 
-            if (mapType == Enums.MapID.TempActive) {
+            if (mapType == Enums.MapID.TempActive)
+            {
                 PlayerManager.MyPlayer.MapID = mapID;
 
                 // Close editors [Map + House editor]
@@ -374,7 +398,8 @@ namespace Client.Logic.Maps
             Globals.SavingMap = false;
         }
 
-        public static void UpdateTile(string[] parse) {
+        public static void UpdateTile(string[] parse)
+        {
             int n = 3;
 
 
@@ -413,17 +438,21 @@ namespace Client.Logic.Maps
             Windows.WindowSwitcher.GameWindow.MapViewer.ActiveMap = mMaps[Enums.MapID.Active];
         }
 
-        public static Map ActiveMap {
-            get {
+        public static Map ActiveMap
+        {
+            get
+            {
                 return mMaps[Enums.MapID.Active];
             }
         }
 
-        public static void SaveLocalMap(Enums.MapID mapID) {
+        public static void SaveLocalMap(Enums.MapID mapID)
+        {
             SaveLocalMap(mMaps[mapID]);
         }
 
-        public static void SaveLocalMap(Map map) {
+        public static void SaveLocalMap(Map map)
+        {
             string filePath = IO.Paths.CreateOSPath(IO.Paths.MapPath + "Map-" + map.MapID.ToString() + ".dat");
             StringBuilder writer = new StringBuilder();
 
@@ -436,7 +465,8 @@ namespace Client.Logic.Maps
             //string npcData = "NpcData|";
             //string spawnXData = "SpawnX|";
             //string spawnYData = "SpawnY|";
-            for (int i = 0; i < map.Npc.Count; i++) {
+            for (int i = 0; i < map.Npc.Count; i++)
+            {
                 writer.AppendLine("NpcSettings|" + i.ToString() + "|" + map.Npc[i].NpcNum + "|" + map.Npc[i].SpawnX + "|" + map.Npc[i].SpawnY + "|"
                                 + map.Npc[i].MinLevel + "|" + map.Npc[i].MaxLevel + "|" + map.Npc[i].AppearanceRate + "|"
                                 + (int)map.Npc[i].StartStatus + "|" + map.Npc[i].StartStatusCounter + "|" + map.Npc[i].StartStatusChance + "|");
@@ -444,8 +474,10 @@ namespace Client.Logic.Maps
             //writer.AppendLine(npcData);
             //writer.AppendLine(spawnXData);
             //writer.AppendLine(spawnYData);
-            for (int x = 0; x <= map.MaxX; x++) {
-                for (int y = 0; y <= map.MaxY; y++) {
+            for (int x = 0; x <= map.MaxX; x++)
+            {
+                for (int y = 0; y <= map.MaxY; y++)
+                {
                     Tile tile = map.Tile[x, y];
                     writer.AppendLine("Tile|" + x + "|" + y + "|" + tile.Ground + "|" + tile.GroundAnim + "|" + tile.Mask + "|" + tile.Anim + "|" + tile.Mask2 + "|" + tile.M2Anim + "|" + tile.Fringe + "|" + tile.FAnim + "|" + tile.Fringe2 + "|" + tile.F2Anim + "|" + ((int)tile.Type).ToString() + "|" + tile.Data1 + "|" + tile.Data2 + "|" + tile.Data3 + "|" + tile.String1 + "|" + tile.String2 + "|" + tile.String3 + "|" + tile.RDungeonMapValue + "|" + tile.GroundSet + "|" + tile.GroundAnimSet + "|" + tile.MaskSet + "|" + tile.AnimSet + "|" + tile.Mask2Set + "|" + tile.M2AnimSet + "|" + tile.FringeSet + "|" + tile.FAnimSet + "|" + tile.Fringe2Set + "|" + tile.F2AnimSet + "|");
                 }
@@ -457,18 +489,23 @@ namespace Client.Logic.Maps
 
         #endregion Methods
 
-        public static MapCollection Maps {
+        public static MapCollection Maps
+        {
             get { return mMaps; }
         }
 
-        public static void HandleMapDone() {
+        public static void HandleMapDone()
+        {
             WindowSwitcher.GameWindow.MapViewer.ActiveMap = ActiveMap;
 
             PlayerManager.MyPlayer.MapID = ActiveMap.MapID;
             ActiveMap.DoOverlayChecks();
-            if (PlayerManager.MyPlayer.Darkness > -2) {
+            if (PlayerManager.MyPlayer.Darkness > -2)
+            {
                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(PlayerManager.MyPlayer.Darkness);
-            } else {
+            }
+            else
+            {
                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(ActiveMap.Darkness);
             }
             Logic.Graphics.Renderers.Screen.ScreenRenderer.DeactivateOffscreenSprites();
@@ -477,8 +514,10 @@ namespace Client.Logic.Maps
             //Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetWea(Maps.MapHelper.ActiveMap.Weather);
 
             Logic.Graphics.Effects.Overlays.ScreenOverlays.MapChangeInfoOverlay infoOverlay = Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.ScreenOverlay as Logic.Graphics.Effects.Overlays.ScreenOverlays.MapChangeInfoOverlay;
-            if (infoOverlay != null) {
-                if (infoOverlay.MinTimePassed) {
+            if (infoOverlay != null)
+            {
+                if (infoOverlay.MinTimePassed)
+                {
                     Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.ScreenOverlay = null;
                 }
             }
@@ -486,9 +525,12 @@ namespace Client.Logic.Maps
             //Music.Music.AudioPlayer.PlayMusic(ActiveMap.Music);
             ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).FadeToNext(ActiveMap.Music, 1000);
 
-            if (Stories.StoryProcessor.ActiveStory != null && Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment].Action == Enums.StoryAction.Warp) {
-                if (ActiveMap.MapID == ((Stories.Segments.WarpSegment)Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment]).Map) {
-                    if (Stories.StoryProcessor.ActiveStory.State.StoryPaused) {
+            if (Stories.StoryProcessor.ActiveStory != null && Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment].Action == Enums.StoryAction.Warp)
+            {
+                if (ActiveMap.MapID == ((Stories.Segments.WarpSegment)Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment]).Map)
+                {
+                    if (Stories.StoryProcessor.ActiveStory.State.StoryPaused)
+                    {
                         Stories.StoryProcessor.ActiveStory.State.Unpause();
                         Stories.StoryProcessor.ActiveStory.State.StoryPaused = false;
                     }
@@ -499,7 +541,5 @@ namespace Client.Logic.Maps
 
             Messenger.SendMapLoaded();
         }
-
-
     }
 }

@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,15 +20,12 @@
 
 namespace Client.Logic
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class MathFunctions
     {
         static Random random = new Random();
 
-        public static Random Random {
+        public static Random Random
+        {
             get { return random; }
         }
 
@@ -33,15 +33,17 @@ namespace Client.Logic
 
         public static int CalculatePercent(int currentValue, int maxValue)
         {
-            if (maxValue == 0) {
+            if (maxValue == 0)
+            {
                 return 0;
             }
             return currentValue * 100 / maxValue;
         }
-        
+
         public static ulong CalculatePercent(ulong currentValue, ulong maxValue)
         {
-            if (maxValue == 0) {
+            if (maxValue == 0)
+            {
                 return 0;
             }
             return currentValue * 100 / maxValue;

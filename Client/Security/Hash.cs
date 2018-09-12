@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic.Security
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Security.Cryptography;
-    using System.Text;
-
     /// <summary>
     /// Class that creates MD5 hashes
     /// </summary>
@@ -35,7 +34,8 @@ namespace Client.Logic.Security
         /// </summary>
         /// <param name="SourceText">The text to hash.</param>
         /// <returns>The hashed text as a Base64 string.</returns>
-        public static string GenerateMD5Hash(string SourceText) {
+        public static string GenerateMD5Hash(string SourceText)
+        {
             SourceText = SourceText + "SALT";
             //Create a salted hash so its harder to use hashtables on it
             //Create an encoding object to ensure the encoding standard for the source text
@@ -50,7 +50,8 @@ namespace Client.Logic.Security
             return Convert.ToBase64String(ByteHash);
         }
 
-        public static string GenerateSHA1Hash(string SourceText) {
+        public static string GenerateSHA1Hash(string SourceText)
+        {
             SourceText = SourceText + "SALT";
             //Create a salted hash so its harder to use hashtables on it
             //Create an encoding object to ensure the encoding standard for the source text

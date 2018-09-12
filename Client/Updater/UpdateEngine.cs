@@ -33,19 +33,23 @@ namespace Client.Logic.Updater
 
         public readonly string UpdateURL = IO.Options.UpdateAddress;
 
-        public UpdateClient Updater {
+        public UpdateClient Updater
+        {
             get { return updater; }
         }
 
-        public IUpdateCheckResult LastCheckResult {
+        public IUpdateCheckResult LastCheckResult
+        {
             get { return lastCheckResult; }
         }
 
-        public UpdateEngine(string packageListKey) {
+        public UpdateEngine(string packageListKey)
+        {
             updater = new UpdateClient(packageListKey, System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\");//System.Windows.Forms.Application.StartupPath + "\\");
         }
 
-        public bool CheckForUpdates() {
+        public bool CheckForUpdates()
+        {
             //if (NetTools.IsConnected()) {
             // Load the installed package list
             updater.LoadInstalledPackageList();
@@ -57,13 +61,16 @@ namespace Client.Logic.Updater
             //}
         }
 
-        public void PerformUpdate(IUpdateCheckResult result) {
-            if (result.PackagesToUpdate.Count != 0) {
+        public void PerformUpdate(IUpdateCheckResult result)
+        {
+            if (result.PackagesToUpdate.Count != 0)
+            {
                 updater.PerformUpdate(result);
             }
         }
 
-        void updater_InstallationComplete(object sender, EventArgs e) {
+        void updater_InstallationComplete(object sender, EventArgs e)
+        {
             //System.Windows.Forms.MessageBox.Show("Update complete!");
             //Environment.Exit(0);
         }

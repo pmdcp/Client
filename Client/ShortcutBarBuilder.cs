@@ -36,7 +36,8 @@ namespace Client.Logic
         /// Adds the 'Show Menu' button to the specified ShortcutBar
         /// </summary>
         /// <param name="shortcutBar">The ShortcutBar to add the button to</param>
-        public static void AddShowMenuButtonToBar(Widgets.ShortcutBar shortcutBar) {
+        public static void AddShowMenuButtonToBar(Widgets.ShortcutBar shortcutBar)
+        {
             Widgets.ShortcutButton button = new Widgets.ShortcutButton("menuButton");
             button.BackColor = Color.Transparent;
             button.Image = Skins.SkinManager.LoadGuiElement("Game Window/ShortcutBar", "showmenu.png");
@@ -45,8 +46,10 @@ namespace Client.Logic
             shortcutBar.AddButton(button);
         }
 
-        static void menuButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (Menus.MenuSwitcher.CanShowMenu()) {
+        static void menuButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (Menus.MenuSwitcher.CanShowMenu())
+            {
                 Menus.MenuSwitcher.ShowMainMenu();
                 Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                 //if (!Windows.WindowSwitcher.GameWindow.MenuManager.Visible) {
@@ -65,7 +68,8 @@ namespace Client.Logic
         /// Adds the 'Show Inventory' button to the specified ShortcutBar
         /// </summary>
         /// <param name="shortcutBar">The ShortcutBar to add the button to</param>
-        public static void AddShowInvButtonToBar(Widgets.ShortcutBar shortcutBar) {
+        public static void AddShowInvButtonToBar(Widgets.ShortcutBar shortcutBar)
+        {
             Widgets.ShortcutButton button = new Widgets.ShortcutButton("invButton");
             button.BackColor = Color.Transparent;
             button.Image = Skins.SkinManager.LoadGuiElement("Game Window/ShortcutBar", "showinv.png");
@@ -74,7 +78,8 @@ namespace Client.Logic
             shortcutBar.AddButton(button);
         }
 
-        static void invButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        static void invButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Menus.MenuSwitcher.ShowInventoryMenu(1);
             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
         }
@@ -83,7 +88,8 @@ namespace Client.Logic
         /// Adds the 'Show Moves' button to the specified ShortcutBar
         /// </summary>
         /// <param name="shortcutBar">The ShortcutBar to add the button to</param>
-        public static void AddShowMovesButtonToBar(Widgets.ShortcutBar shortcutBar) {
+        public static void AddShowMovesButtonToBar(Widgets.ShortcutBar shortcutBar)
+        {
             Widgets.ShortcutButton button = new Widgets.ShortcutButton("showMovesButton");
             button.BackColor = Color.Transparent;
             button.Image = Skins.SkinManager.LoadGuiElement("Game Window/ShortcutBar", "showmoves.png");
@@ -92,7 +98,8 @@ namespace Client.Logic
             shortcutBar.AddButton(button);
         }
 
-        static void showMovesButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        static void showMovesButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Menus.MenuSwitcher.ShowMovesMenu();
             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
         }
@@ -101,7 +108,8 @@ namespace Client.Logic
         /// Adds the 'Use Recovery Item' button to the specified ShortcutBar
         /// </summary>
         /// <param name="shortcutBar">The ShortcutBar to add the button to</param>
-        public static void AddUseRecoveryItemButtonToBar(Widgets.ShortcutBar shortcutBar) {
+        public static void AddUseRecoveryItemButtonToBar(Widgets.ShortcutBar shortcutBar)
+        {
             Widgets.ShortcutButton button = new Widgets.ShortcutButton("useRecoveryItemButton");
             button.BackColor = Color.Transparent;
             button.Image = Skins.SkinManager.LoadGuiElement("Game Window/ShortcutBar", "userecoveryitem.png");
@@ -110,19 +118,20 @@ namespace Client.Logic
             shortcutBar.AddButton(button);
         }
 
-        static void useRecoveryItemButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        static void useRecoveryItemButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Players.Inventory inv = Players.PlayerManager.MyPlayer.Inventory;
             //for (int i = 1; i <= inv.Length; i++) {
-                //if (inv[i].Num > 0) {
-                    //if (Items.ItemHelper.Items[inv[i].Num].Type == Enums.ItemType.PotionAddHP) {
-                        //ExpKit.Modules.kitChat chat = (ExpKit.Modules.kitChat)Windows.WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.FindKitModule(Enums.ExpKitModules.Chat);
-                        //if (chat != null) {
-                        //    chat.AppendChat("You have used a " + Items.ItemHelper.Items[inv[i].Num].Name + "!", Color.Yellow);
-                        //}
-                        //Messenger.SendUseItem(i);
-                        //break;
-                    //}
-                //}
+            //if (inv[i].Num > 0) {
+            //if (Items.ItemHelper.Items[inv[i].Num].Type == Enums.ItemType.PotionAddHP) {
+            //ExpKit.Modules.kitChat chat = (ExpKit.Modules.kitChat)Windows.WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.FindKitModule(Enums.ExpKitModules.Chat);
+            //if (chat != null) {
+            //    chat.AppendChat("You have used a " + Items.ItemHelper.Items[inv[i].Num].Name + "!", Color.Yellow);
+            //}
+            //Messenger.SendUseItem(i);
+            //break;
+            //}
+            //}
             //}
         }
 
@@ -130,7 +139,8 @@ namespace Client.Logic
         /// Adds the 'Show Online List' button to the specified ShortcutBar
         /// </summary>
         /// <param name="shortcutBar">The ShortcutBar to add the button to</param>
-        public static void AddShowOnlineListButtonToBar(Widgets.ShortcutBar shortcutBar) {
+        public static void AddShowOnlineListButtonToBar(Widgets.ShortcutBar shortcutBar)
+        {
             Widgets.ShortcutButton button = new Widgets.ShortcutButton("showOnlineListButton");
             button.BackColor = Color.Transparent;
             button.Image = Skins.SkinManager.LoadGuiElement("Game Window/ShortcutBar", "showonline.png");
@@ -139,7 +149,8 @@ namespace Client.Logic
             shortcutBar.AddButton(button);
         }
 
-        static void showOnlineListButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        static void showOnlineListButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Menus.MenuSwitcher.ShowMenu(new Menus.mnuOnlineList("mnuOnlineList"));
             Network.Messenger.SendOnlineListRequest();
         }
@@ -148,7 +159,8 @@ namespace Client.Logic
         /// Adds the 'Show Options' button to the specified ShortcutBar
         /// </summary>
         /// <param name="shortcutBar">The ShortcutBar to add the button to</param>
-        public static void AddShowOptionsButtonToBar(Widgets.ShortcutBar shortcutBar) {
+        public static void AddShowOptionsButtonToBar(Widgets.ShortcutBar shortcutBar)
+        {
             Widgets.ShortcutButton button = new Widgets.ShortcutButton("showOptionsButton");
             button.BackColor = Color.Transparent;
             button.Image = Skins.SkinManager.LoadGuiElement("Game Window/ShortcutBar", "showoptions.png");
@@ -157,7 +169,8 @@ namespace Client.Logic
             shortcutBar.AddButton(button);
         }
 
-        static void showOptionsButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        static void showOptionsButton_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Menus.MenuSwitcher.ShowMenu(new Menus.mnuOptions("mnuOptions"));
         }
 
@@ -165,7 +178,8 @@ namespace Client.Logic
         /// Adds all buttons to the shortcut bar
         /// </summary>
         /// <param name="shortcutBar">The ShortcutBar to add the buttons to</param>
-        public static void AssembleShortcutBarButtons(Widgets.ShortcutBar shortcutBar) {
+        public static void AssembleShortcutBarButtons(Widgets.ShortcutBar shortcutBar)
+        {
             AddShowMenuButtonToBar(shortcutBar);
             AddShowInvButtonToBar(shortcutBar);
             AddShowMovesButtonToBar(shortcutBar);

@@ -32,7 +32,6 @@ namespace Client.Logic.Windows.Editors
     /// </summary>
     class winShopPanel : Core.WindowCore
     {
-
         int shopNum = -1;
         int currentTen = 0;
 
@@ -70,7 +69,8 @@ namespace Client.Logic.Windows.Editors
         ListPair<int, Shops.ShopItem> shopItemList;
 
         public winShopPanel()
-            : base("winShopPanel") {
+            : base("winShopPanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -96,7 +96,8 @@ namespace Client.Logic.Windows.Editors
             lbxShopList = new ListBox("lbxShopList");
             lbxShopList.Location = new Point(10, 10);
             lbxShopList.Size = new Size(180, 140);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": " + Shops.ShopHelper.Shops[(i + 1) + 10 * currentTen].Name);
                 lbxShopList.Items.Add(lbiItem);
             }
@@ -190,7 +191,8 @@ namespace Client.Logic.Windows.Editors
             lbxShopItems.Size = new Size(220, 240);
             lbxShopItems.ItemSelected += new EventHandler(lbxShopItems_ItemSelected);
 
-            for (int i = 0; i < MaxInfo.MAX_TRADES; i++) {
+            for (int i = 0; i < MaxInfo.MAX_TRADES; i++)
+            {
                 lbiShopItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": ---");
 
                 lbxShopItems.Items.Add(lbiShopItem);
@@ -296,8 +298,8 @@ namespace Client.Logic.Windows.Editors
             this.AddWidget(pnlShopEditor);
         }
 
-        public void LoadShop(string[] parse) {
-
+        public void LoadShop(string[] parse)
+        {
             pnlShopList.Visible = false;
             pnlShopEditor.Visible = true;
             this.Size = new System.Drawing.Size(pnlShopEditor.Width, pnlShopEditor.Height);
@@ -309,7 +311,8 @@ namespace Client.Logic.Windows.Editors
 
             shopItemList = new ListPair<int, Client.Logic.Shops.ShopItem>();
 
-            for (int i = 0; i < MaxInfo.MAX_TRADES; i++) {
+            for (int i = 0; i < MaxInfo.MAX_TRADES; i++)
+            {
                 Shops.ShopItem shopItem = new Shops.ShopItem();
                 shopItem.GiveItem = parse[5 + i * 3].ToInt();
                 shopItem.GiveValue = parse[6 + i * 3].ToInt();
@@ -331,44 +334,61 @@ namespace Client.Logic.Windows.Editors
             btnEdit.Text = "Edit";
         }
 
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshShopList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen < (MaxInfo.MaxShops / 10)) {
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < (MaxInfo.MaxShops / 10))
+            {
                 currentTen++;
             }
             RefreshShopList();
         }
 
-        public void RefreshShopList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < MaxInfo.MaxShops) {
+        public void RefreshShopList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < MaxInfo.MaxShops)
+                {
                     ((ListBoxTextItem)lbxShopList.Items[i]).Text = (((i + 1) + 10 * currentTen) + ": " + Shops.ShopHelper.Shops[(i + 1) + 10 * currentTen].Name);
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxShopList.Items[i]).Text = "---";
                 }
             }
         }
 
-        void RefreshShopItemList() {
-            for (int i = 0; i < MaxInfo.MAX_TRADES; i++) {
-                if (shopItemList[i].GiveItem > 0 && shopItemList[i].GiveValue > 0 && shopItemList[i].GetItem > 0) {
+        void RefreshShopItemList()
+        {
+            for (int i = 0; i < MaxInfo.MAX_TRADES; i++)
+            {
+                if (shopItemList[i].GiveItem > 0 && shopItemList[i].GiveValue > 0 && shopItemList[i].GetItem > 0)
+                {
                     ((ListBoxTextItem)lbxShopItems.Items[i]).Text = ((i + 1) + ": " + shopItemList[i].GiveValue.ToString() + " " + Items.ItemHelper.Items[shopItemList[i].GiveItem].Name + " for " + Items.ItemHelper.Items[shopItemList[i].GetItem].Name);
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxShopItems.Items[i]).Text = (i + 1) + ": ---";
                 }
             }
         }
 
-        void RefreshTransactionData() {
-            if (lbxShopItems.SelectedItems.Count == 1) { 
+        void RefreshTransactionData()
+        {
+            if (lbxShopItems.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxShopItems.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     int itemNum = index[0].ToInt() - 1;
                     nudGiveItem.Value = shopItemList[itemNum].GiveItem;
                     nudGiveAmount.Value = shopItemList[itemNum].GiveValue;
@@ -377,9 +397,11 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             string[] index = ((ListBoxTextItem)lbxShopList.SelectedItems[0]).Text.Split(':');
-            if (index[0].IsNumeric()) {
+            if (index[0].IsNumeric())
+            {
                 shopNum = index[0].ToInt();
                 btnEdit.Text = "Loading...";
             }
@@ -387,49 +409,66 @@ namespace Client.Logic.Windows.Editors
             Messenger.SendEditShop(shopNum);
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
         }
 
-        void lbxShopItems_ItemSelected(object sender, EventArgs e) {
+        void lbxShopItems_ItemSelected(object sender, EventArgs e)
+        {
             RefreshTransactionData();
         }
 
-        void btnShiftUp_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {//change, then shift up
+        void btnShiftUp_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {//change, then shift up
             bool validInput = true;
 
-            if (nudGiveItem.Value < 0 || nudGiveItem.Value >= MaxInfo.MaxItems) {
+            if (nudGiveItem.Value < 0 || nudGiveItem.Value >= MaxInfo.MaxItems)
+            {
                 validInput = false;
                 lblGiveItem.ForeColor = Color.Red;
-            } else {
+            }
+            else
+            {
                 lblGiveItem.ForeColor = Color.Black;
             }
 
-            if (nudGiveAmount.Value < 0) {
+            if (nudGiveAmount.Value < 0)
+            {
                 validInput = false;
                 lblGiveAmount.ForeColor = Color.Red;
-            } else {
+            }
+            else
+            {
                 lblGiveAmount.ForeColor = Color.Black;
             }
 
-            if (nudGetItem.Value < 0 || nudGetItem.Value >= MaxInfo.MaxItems) {
+            if (nudGetItem.Value < 0 || nudGetItem.Value >= MaxInfo.MaxItems)
+            {
                 validInput = false;
                 lblGetItem.ForeColor = Color.Red;
-            } else {
+            }
+            else
+            {
                 lblGetItem.ForeColor = Color.Black;
             }
 
-            if (validInput && lbxShopItems.SelectedItems.Count == 1) {
+            if (validInput && lbxShopItems.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxShopItems.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     int itemNum = index[0].ToInt() - 1;
-                    if (itemNum <= 0) {
+                    if (itemNum <= 0)
+                    {
                         shopItemList[itemNum].GiveItem = nudGiveItem.Value;
                         shopItemList[itemNum].GiveValue = nudGiveAmount.Value;
                         shopItemList[itemNum].GetItem = nudGetItem.Value;
                         //lbxShopItems.SelectItem(itemNum);
                         RefreshShopItemList();
-                    } else {
+                    }
+                    else
+                    {
                         shopItemList[itemNum].GiveItem = shopItemList[itemNum - 1].GiveItem;
                         shopItemList[itemNum].GiveValue = shopItemList[itemNum - 1].GiveValue;
                         shopItemList[itemNum].GetItem = shopItemList[itemNum - 1].GetItem;
@@ -441,37 +480,48 @@ namespace Client.Logic.Windows.Editors
                         RefreshShopItemList();
                     }
                 }
-
             }
         }
 
-        void btnChange_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnChange_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             bool validInput = true;
 
-            if (nudGiveItem.Value < 0 || nudGiveItem.Value >= MaxInfo.MaxItems) {
+            if (nudGiveItem.Value < 0 || nudGiveItem.Value >= MaxInfo.MaxItems)
+            {
                 validInput = false;
                 lblGiveItem.ForeColor = Color.Red;
-            } else {
+            }
+            else
+            {
                 lblGiveItem.ForeColor = Color.Black;
             }
 
-            if (nudGiveAmount.Value < 0) {
+            if (nudGiveAmount.Value < 0)
+            {
                 validInput = false;
                 lblGiveAmount.ForeColor = Color.Red;
-            } else {
+            }
+            else
+            {
                 lblGiveAmount.ForeColor = Color.Black;
             }
 
-            if (nudGetItem.Value < 0 || nudGetItem.Value >= MaxInfo.MaxItems) {
+            if (nudGetItem.Value < 0 || nudGetItem.Value >= MaxInfo.MaxItems)
+            {
                 validInput = false;
                 lblGetItem.ForeColor = Color.Red;
-            } else {
+            }
+            else
+            {
                 lblGetItem.ForeColor = Color.Black;
             }
 
-            if (validInput && lbxShopItems.SelectedItems.Count == 1) {
+            if (validInput && lbxShopItems.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxShopItems.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     int itemNum = index[0].ToInt() - 1;
                     shopItemList[itemNum].GiveItem = nudGiveItem.Value;
                     shopItemList[itemNum].GiveValue = nudGiveAmount.Value;
@@ -483,40 +533,55 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnShiftDown_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {//change, then shift down
+        void btnShiftDown_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {//change, then shift down
             bool validInput = true;
 
-            if (nudGiveItem.Value < 0 || nudGiveItem.Value >= MaxInfo.MaxItems) {
+            if (nudGiveItem.Value < 0 || nudGiveItem.Value >= MaxInfo.MaxItems)
+            {
                 validInput = false;
                 lblGiveItem.ForeColor = Color.Red;
-            } else {
+            }
+            else
+            {
                 lblGiveItem.ForeColor = Color.Black;
             }
 
-            if (nudGiveAmount.Value < 0) {
+            if (nudGiveAmount.Value < 0)
+            {
                 validInput = false;
                 lblGiveAmount.ForeColor = Color.Red;
-            } else {
+            }
+            else
+            {
                 lblGiveAmount.ForeColor = Color.Black;
             }
 
-            if (nudGetItem.Value < 0 || nudGetItem.Value >= MaxInfo.MaxItems) {
+            if (nudGetItem.Value < 0 || nudGetItem.Value >= MaxInfo.MaxItems)
+            {
                 validInput = false;
                 lblGetItem.ForeColor = Color.Red;
-            } else {
+            }
+            else
+            {
                 lblGetItem.ForeColor = Color.Black;
             }
-            if (validInput && lbxShopItems.SelectedItems.Count == 1) {
+            if (validInput && lbxShopItems.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxShopItems.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     int itemNum = index[0].ToInt() - 1;
-                    if (itemNum >= MaxInfo.MAX_TRADES - 1) {
+                    if (itemNum >= MaxInfo.MAX_TRADES - 1)
+                    {
                         shopItemList[itemNum].GiveItem = nudGiveItem.Value;
                         shopItemList[itemNum].GiveValue = nudGiveAmount.Value;
                         shopItemList[itemNum].GetItem = nudGetItem.Value;
                         //lbxShopItems.SelectItem(itemNum);
                         RefreshShopItemList();
-                    } else {
+                    }
+                    else
+                    {
                         shopItemList[itemNum].GiveItem = shopItemList[itemNum + 1].GiveItem;
                         shopItemList[itemNum].GiveValue = shopItemList[itemNum + 1].GiveValue;
                         shopItemList[itemNum].GetItem = shopItemList[itemNum + 1].GetItem;
@@ -528,46 +593,53 @@ namespace Client.Logic.Windows.Editors
                         RefreshShopItemList();
                     }
                 }
-
             }
         }
 
-        void nudGiveItem_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
-            if (nudGiveItem.Value > 0 && nudGiveItem.Value < MaxInfo.MaxItems) {
+        void nudGiveItem_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
+            if (nudGiveItem.Value > 0 && nudGiveItem.Value < MaxInfo.MaxItems)
+            {
                 lblGiveItem.Text = "Item Paid (" + Items.ItemHelper.Items[nudGiveItem.Value].Name + "):";
-            } else {
+            }
+            else
+            {
                 lblGiveItem.Text = "Item Paid [---]:";
             }
-
         }
 
 
 
-        void nudGetItem_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
-            if (nudGetItem.Value > 0 && nudGetItem.Value < MaxInfo.MaxItems) {
+        void nudGetItem_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
+            if (nudGetItem.Value > 0 && nudGetItem.Value < MaxInfo.MaxItems)
+            {
                 lblGetItem.Text = "Item Bought (" + Items.ItemHelper.Items[nudGetItem.Value].Name + "):";
-            } else {
+            }
+            else
+            {
                 lblGetItem.Text = "Item Bought [---]:";
             }
-
         }
 
-        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             shopNum = -1;
             pnlShopEditor.Visible = false;
             pnlShopList.Visible = true;
             this.Size = new System.Drawing.Size(pnlShopList.Width, pnlShopList.Height);
-
         }
 
-        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Shops.Shop shopToSend = new Shops.Shop();
 
             shopToSend.Name = txtName.Text;
             shopToSend.JoinSay = txtJoinSay.Text;
             shopToSend.LeaveSay = txtLeaveSay.Text;
 
-            for (int j = 0; j < MaxInfo.MAX_TRADES; j++) {
+            for (int j = 0; j < MaxInfo.MAX_TRADES; j++)
+            {
                 shopToSend.Items[j].GiveItem = shopItemList[j].GiveItem;
                 shopToSend.Items[j].GiveValue = shopItemList[j].GiveValue;
                 shopToSend.Items[j].GetItem = shopItemList[j].GetItem;
@@ -579,7 +651,6 @@ namespace Client.Logic.Windows.Editors
             pnlShopEditor.Visible = false;
             pnlShopList.Visible = true;
             this.Size = new System.Drawing.Size(pnlShopList.Width, pnlShopList.Height);
-
         }
     }
 }

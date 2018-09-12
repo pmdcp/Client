@@ -29,7 +29,8 @@ namespace Client.Logic.Menus
 {
     class mnuOthers : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -51,7 +52,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuOthers(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(185, 230);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(10, 40);
@@ -123,23 +125,28 @@ namespace Client.Logic.Menus
 
 
 
-        void lblOptions_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblOptions_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(0);
         }
 
-        void lblOnlineList_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblOnlineList_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(1);
         }
 
-        void lblBattleLog_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblBattleLog_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(2);
         }
 
-        void lblAdventureLog_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblAdventureLog_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(3);
         }
 
-        void lblHelp_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblHelp_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(4);
         }
 
@@ -147,37 +154,50 @@ namespace Client.Logic.Menus
 
         #region Methods
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 63 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
-            			Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         // Show the main menu when the backspace key is pressed
                         MenuSwitcher.ShowMainMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
@@ -186,38 +206,46 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void SelectItem(int itemNum) {
-            switch (itemNum) {
-                case 0: {
+        private void SelectItem(int itemNum)
+        {
+            switch (itemNum)
+            {
+                case 0:
+                    {
                         Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
                         Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuOptions("mnuOptions"));
                         Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuOptions");
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case 1: {
+                case 1:
+                    {
                         MenuSwitcher.ShowMenu(new Menus.mnuOnlineList("mnuOnlineList"));
                         Network.Messenger.SendOnlineListRequest();
                     }
                     break;
-                case 2: {
+                case 2:
+                    {
                         Menus.MenuSwitcher.ShowMenu(new Menus.mnuBattleLog("mnuBattleLog"));
                     }
                     break;
-                case 3: {
+                case 3:
+                    {
                         MenuSwitcher.ShowMenu(new Menus.mnuAdventureLog("mnuAdventureLog"));
                         Network.Messenger.SendAdventureLogRequest();
                     }
                     break;
-                case 4: { // Help menu
-                    MenuSwitcher.ShowHelpMenu();
-                    Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
+                case 4:
+                    { // Help menu
+                        MenuSwitcher.ShowHelpMenu();
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 

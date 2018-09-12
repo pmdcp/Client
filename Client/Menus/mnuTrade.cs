@@ -29,7 +29,8 @@ namespace Client.Logic.Menus
 {
     class mnuTrade : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -52,7 +53,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuTrade(string name, string tradePartner)
-            : base(name) {
+            : base(name)
+        {
             this.tradePartner = tradePartner;
 
             this.Size = new Size(330, 350);
@@ -137,21 +139,29 @@ namespace Client.Logic.Menus
 
         #region Methods
 
-        void LoadInventory() {
+        void LoadInventory()
+        {
             SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("tahoma", 10);
             lstInv.Items.Clear();
-            for (int i = 1; i < Players.PlayerManager.MyPlayer.Inventory.Length; i++) {
-                if (Players.PlayerManager.MyPlayer.Inventory[i].Num > 0) {
+            for (int i = 1; i < Players.PlayerManager.MyPlayer.Inventory.Length; i++)
+            {
+                if (Players.PlayerManager.MyPlayer.Inventory[i].Num > 0)
+                {
                     string itemName = Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.Inventory[i].Num].Name;
-                    if (Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.Inventory[i].Num].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.Inventory[i].Num].StackCap > 0) {
+                    if (Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.Inventory[i].Num].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.Inventory[i].Num].StackCap > 0)
+                    {
                         itemName += " (" + Players.PlayerManager.MyPlayer.Inventory[i].Value + ")";
                     }
-                    if (!string.IsNullOrEmpty(itemName)) {
-                        if (lstInv.Items.Count <= i - 1) {
+                    if (!string.IsNullOrEmpty(itemName))
+                    {
+                        if (lstInv.Items.Count <= i - 1)
+                        {
                             ListBoxTextItem item = new ListBoxTextItem(font, itemName);
                             item.Tag = i;
                             lstInv.Items.Add(item);
-                        } else {
+                        }
+                        else
+                        {
                             ((ListBoxTextItem)lstInv.Items[i - 1]).Text = itemName;
                         }
                     }
@@ -159,30 +169,41 @@ namespace Client.Logic.Menus
             }
         }
 
-        void lstInv_ItemSelected(object sender, EventArgs e) {
+        void lstInv_ItemSelected(object sender, EventArgs e)
+        {
             int itemNum = Players.PlayerManager.MyPlayer.GetInvItemNum((int)lstInv.SelectedItems[0].Tag);
-            if (Items.ItemHelper.Items[itemNum].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[itemNum].StackCap > 0) {
+            if (Items.ItemHelper.Items[itemNum].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[itemNum].StackCap > 0)
+            {
                 lblAmount.Visible = true;
                 nudAmount.Visible = true;
                 nudAmount.Value = 1;
-            } else {
+            }
+            else
+            {
                 lblAmount.Visible = false;
                 nudAmount.Visible = false;
             }
         }
 
-        void btnItemSet_Click(object sender, MouseButtonEventArgs e) {
-            if (itemSet == false) {
-                if (lstInv.SelectedItems.Count == 1) {
+        void btnItemSet_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (itemSet == false)
+            {
+                if (lstInv.SelectedItems.Count == 1)
+                {
                     Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("settradeitem", (int)lstInv.SelectedItems[0].Tag, nudAmount.Value));
                     //lblMyItem.Text = "My Item: " + Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.Inventory[(int)lstInv.SelectedItems[0].Tag].Num].Name;
                     itemSet = true;
                     //btnItemSet.Text = "Unset Item";
                     Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
-                } else {
+                }
+                else
+                {
                     //TODO: Allow Empty Trading
                 }
-            } else {
+            }
+            else
+            {
                 Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("settradeitem", "-1", "0"));
                 //lblMyItem.Text = "My Item: No item offered yet";
                 //itemSet = false;
@@ -191,66 +212,83 @@ namespace Client.Logic.Menus
             }
         }
 
-        void btnConfirm_Click(object sender, MouseButtonEventArgs e) {
-            if (itemSet && partnerItemSet) {
+        void btnConfirm_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (itemSet && partnerItemSet)
+            {
                 Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("readytotrade"));
                 btnConfirm.Selected = true;
                 Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
             }
         }
 
-        void btnCancel_Click(object sender, MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
             Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("endplayertrade"));
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
         }
 
-        public void UpdateSetItem(int itemNum, int amount) {
-            if (itemNum > -1) {
-        			lblMyItem.Text = "My Item: " + Items.ItemHelper.Items[itemNum].Name;
-                    if (Items.ItemHelper.Items[itemNum].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[itemNum].StackCap > 0) {
-                        lblMyItem.Text += " (" + amount + ")";
-                    }
+        public void UpdateSetItem(int itemNum, int amount)
+        {
+            if (itemNum > -1)
+            {
+                lblMyItem.Text = "My Item: " + Items.ItemHelper.Items[itemNum].Name;
+                if (Items.ItemHelper.Items[itemNum].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[itemNum].StackCap > 0)
+                {
+                    lblMyItem.Text += " (" + amount + ")";
+                }
                 itemSet = true;
                 btnItemSet.Text = "Unset Item";
-            } else {
+            }
+            else
+            {
                 lblMyItem.Text = "My Item:";
                 itemSet = false;
                 btnItemSet.Text = "Set Item";
             }
         }
 
-        public void UpdatePartnersSetItem(int itemNum, int amount) {
-            if (itemNum > -1) {
+        public void UpdatePartnersSetItem(int itemNum, int amount)
+        {
+            if (itemNum > -1)
+            {
                 lblClientItem.Text = "Trader's Item: " + Items.ItemHelper.Items[itemNum].Name;
-                if (Items.ItemHelper.Items[itemNum].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[itemNum].StackCap > 0) {
+                if (Items.ItemHelper.Items[itemNum].Type == Enums.ItemType.Currency || Items.ItemHelper.Items[itemNum].StackCap > 0)
+                {
                     lblClientItem.Text += " (" + amount + ")";
                 }
                 partnerItemSet = true;
-            } else {
+            }
+            else
+            {
                 lblClientItem.Text = "Trader's Item:";
                 partnerItemSet = false;
             }
         }
 
-        public void UnconfirmTrade() {
+        public void UnconfirmTrade()
+        {
             btnConfirm.Selected = false;
         }
 
-        public void ResetTradeData() {
+        public void ResetTradeData()
+        {
             lblMyItem.Text = "My Item:";
             itemSet = false;
             lblClientItem.Text = "Trader's Item:";
             partnerItemSet = false;
             btnItemSet.Text = "Set Item";
             UnconfirmTrade();
-            if (lstInv.SelectedItems.Count == 1) {
+            if (lstInv.SelectedItems.Count == 1)
+            {
                 lstInv.SelectedItems.Remove(lstInv.SelectedItems[0]);
             }
             LoadInventory();
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
         #endregion Methods

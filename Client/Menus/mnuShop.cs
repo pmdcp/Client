@@ -32,7 +32,8 @@ namespace Client.Logic.Menus
     /// </summary>
     class mnuShop : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -46,20 +47,22 @@ namespace Client.Logic.Menus
         PictureBox picPreview;
         public int currentTen;
         Label lblItemNum;
-        public List<Shops.ShopItem> ShopItems {
-
+        public List<Shops.ShopItem> ShopItems
+        {
             get;
             set;
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
 
 
         public mnuShop(string name, int itemSelected)
-            : base(name) {
+            : base(name)
+        {
             base.Size = new Size(421, 360);
             base.MenuDirection = Enums.MenuDirection.Vertical;
             base.Location = new Point(10, 40);
@@ -95,7 +98,8 @@ namespace Client.Logic.Menus
 
             lblVisibleItems = new Label[10];
             lblVisiblePrices = new Label[10];
-            for (int i = 0; i < lblVisibleItems.Length; i++) {
+            for (int i = 0; i < lblVisibleItems.Length; i++)
+            {
                 lblVisibleItems[i] = new Label("lblVisibleItems" + i);
                 //lblVisibleItems[i].AutoSize = true;
                 lblVisibleItems[i].Size = new Size(200, 32);
@@ -130,14 +134,14 @@ namespace Client.Logic.Menus
             //UpdateSelectedItemInfo();
             //loaded = true;
             lblVisibleItems[0].Text = "Loading...";
-
-
         }
 
-        public void LoadShopItems(string[] parse) {
+        public void LoadShopItems(string[] parse)
+        {
             ShopItems = new List<Shops.ShopItem>();
 
-            if (parse[3].ToInt() <= 0) {
+            if (parse[3].ToInt() <= 0)
+            {
                 lblVisibleItems[0].Text = "Nothing";
                 return;
             }
@@ -146,7 +150,8 @@ namespace Client.Logic.Menus
             int amount = parse[3].ToInt();
             int n = 4;
 
-            for (int i = 0; i < amount; i++) {
+            for (int i = 0; i < amount; i++)
+            {
                 Shops.ShopItem shopItem = new Shops.ShopItem();
                 shopItem.GiveItem = parse[n].ToInt();
                 shopItem.GiveValue = parse[n + 1].ToInt();
@@ -176,13 +181,17 @@ namespace Client.Logic.Menus
             loaded = true;
         }
 
-        void shopPrice_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (loaded) {
-                if (ShopItems[currentTen * 10 + Array.IndexOf(lblVisiblePrices, sender)].GetItem > 0) {
+        void shopPrice_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (loaded)
+            {
+                if (ShopItems[currentTen * 10 + Array.IndexOf(lblVisiblePrices, sender)].GetItem > 0)
+                {
                     ChangeSelected(Array.IndexOf(lblVisiblePrices, sender));
 
                     mnuShopItemSelected selectedMenu = (mnuShopItemSelected)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuShopItemSelected");
-                    if (selectedMenu != null) {
+                    if (selectedMenu != null)
+                    {
                         Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(selectedMenu);
                         //selectedMenu.ItemSlot = GetSelectedItemSlot();
                         //selectedMenu.ItemNum = BankItems[GetSelectedItemSlot()].Num;
@@ -194,16 +203,19 @@ namespace Client.Logic.Menus
                     Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                 }
             }
-
         }
 
-        void shopItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (loaded) {
-                if (ShopItems[currentTen * 10 + Array.IndexOf(lblVisibleItems, sender)].GetItem > 0) {
+        void shopItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (loaded)
+            {
+                if (ShopItems[currentTen * 10 + Array.IndexOf(lblVisibleItems, sender)].GetItem > 0)
+                {
                     ChangeSelected(Array.IndexOf(lblVisibleItems, sender));
 
                     mnuShopItemSelected selectedMenu = (mnuShopItemSelected)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuShopItemSelected");
-                    if (selectedMenu != null) {
+                    if (selectedMenu != null)
+                    {
                         Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(selectedMenu);
                         //selectedMenu.ItemSlot = GetSelectedItemSlot();
                         //selectedMenu.ItemNum = BankItems[GetSelectedItemSlot()].Num;
@@ -218,59 +230,71 @@ namespace Client.Logic.Menus
         }
 
         private delegate void DisplayItemsDelegate(int startNum);
-        public void DisplayItems(int startNum) {
+        public void DisplayItems(int startNum)
+        {
             //if (!InvokeRequired) {
             //    Invoke(new DisplayItemsDelegate(DisplayItems), startNum);
             //} else { 
-                for (int i = 0; i < lblVisibleItems.Length; i++) {
+            for (int i = 0; i < lblVisibleItems.Length; i++)
+            {
+                //shop menu; lists items and their prices
+                if (startNum + i >= ShopItems.Count)
+                {
+                    lblVisibleItems[i].Text = "";
+                    lblVisiblePrices[i].Text = "";
+                }
+                else if (ShopItems[startNum + i].GetItem > 0)
+                {
+                    string getItem = Items.ItemHelper.Items[ShopItems[startNum + i].GetItem].Name;
 
-                    //shop menu; lists items and their prices
-                    if (startNum + i >= ShopItems.Count) {
-                        lblVisibleItems[i].Text = "";
-                        lblVisiblePrices[i].Text = "";
-                    } else if (ShopItems[startNum + i].GetItem > 0) {
-                        string getItem = Items.ItemHelper.Items[ShopItems[startNum + i].GetItem].Name;
-
-                        string giveItem = Items.ItemHelper.Items[ShopItems[startNum + i].GiveItem].Name + "x" + ShopItems[startNum + i].GiveValue.ToString();
-                        if (!string.IsNullOrEmpty(getItem)) {
-
-                            lblVisibleItems[i].Text = getItem;
-                            lblVisiblePrices[i].Text = giveItem;
-                        } else {
-                            lblVisibleItems[i].Text = "----";
-                            lblVisiblePrices[i].Text = "";
-                        }
-
-                    } else {
+                    string giveItem = Items.ItemHelper.Items[ShopItems[startNum + i].GiveItem].Name + "x" + ShopItems[startNum + i].GiveValue.ToString();
+                    if (!string.IsNullOrEmpty(getItem))
+                    {
+                        lblVisibleItems[i].Text = getItem;
+                        lblVisiblePrices[i].Text = giveItem;
+                    }
+                    else
+                    {
                         lblVisibleItems[i].Text = "----";
                         lblVisiblePrices[i].Text = "";
                     }
-
                 }
+                else
+                {
+                    lblVisibleItems[i].Text = "----";
+                    lblVisiblePrices[i].Text = "";
+                }
+            }
             //}
-                RequestRedraw();
+            RequestRedraw();
         }
 
-        public void UpdateVisibleItems() {//appears to be unused
+        public void UpdateVisibleItems()
+        {//appears to be unused
             DisplayItems(currentTen * 10);
         }
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 63 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
-
         }
 
-        private int GetSelectedItemSlot() {
+        private int GetSelectedItemSlot()
+        {
             return itemPicker.SelectedItem + currentTen * 10;
         }
 
-        private void UpdateSelectedItemInfo() {
+        private void UpdateSelectedItemInfo()
+        {
             //withdraw; shows bank item
-            if (ShopItems[GetSelectedItemSlot()].GetItem > 0) {
+            if (ShopItems[GetSelectedItemSlot()].GetItem > 0)
+            {
                 picPreview.Visible = true;
                 picPreview.Image = Tools.CropImage(GraphicsManager.Items, new Rectangle((Items.ItemHelper.Items[ShopItems[GetSelectedItemSlot()].GetItem].Pic - (int)(Items.ItemHelper.Items[ShopItems[GetSelectedItemSlot()].GetItem].Pic / 6) * 6) * Constants.TILE_WIDTH, (int)(Items.ItemHelper.Items[ShopItems[GetSelectedItemSlot()].GetItem].Pic / 6) * Constants.TILE_WIDTH, Constants.TILE_WIDTH, Constants.TILE_HEIGHT));
-            } else {
+            }
+            else
+            {
                 picPreview.Visible = false;
             }
 
@@ -278,20 +302,27 @@ namespace Client.Logic.Menus
             lblItemNum.Text = (currentTen + 1) + "/" + ((ShopItems.Count - 1) / 10 + 1);
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
-            if (ShopItems != null && ShopItems.Count == 0 && e.Key == SdlDotNet.Input.Key.Backspace) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
+            if (ShopItems != null && ShopItems.Count == 0 && e.Key == SdlDotNet.Input.Key.Backspace)
+            {
                 Menus.MenuSwitcher.OpenShopOptions();
                 Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
             }
-            if (loaded) {
+            if (loaded)
+            {
                 base.OnKeyboardDown(e);
-                switch (e.Key) {
-                    case SdlDotNet.Input.Key.DownArrow: {
-                            if (itemPicker.SelectedItem >= 9 || currentTen * 10 + itemPicker.SelectedItem >= ShopItems.Count - 1) {
+                switch (e.Key)
+                {
+                    case SdlDotNet.Input.Key.DownArrow:
+                        {
+                            if (itemPicker.SelectedItem >= 9 || currentTen * 10 + itemPicker.SelectedItem >= ShopItems.Count - 1)
+                            {
                                 ChangeSelected(0);
                                 //DisplayItems(1);
-                            } else {
-
+                            }
+                            else
+                            {
                                 ChangeSelected(itemPicker.SelectedItem + 1);
                             }
 
@@ -299,27 +330,37 @@ namespace Client.Logic.Menus
                             Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                         }
                         break;
-                    case SdlDotNet.Input.Key.UpArrow: {
-                            if (itemPicker.SelectedItem <= 0) {
+                    case SdlDotNet.Input.Key.UpArrow:
+                        {
+                            if (itemPicker.SelectedItem <= 0)
+                            {
                                 ChangeSelected(9);
-                            } else {
+                            }
+                            else
+                            {
                                 ChangeSelected(itemPicker.SelectedItem - 1);
                             }
-                            if (currentTen * 10 + itemPicker.SelectedItem > ShopItems.Count) {
+                            if (currentTen * 10 + itemPicker.SelectedItem > ShopItems.Count)
+                            {
                                 ChangeSelected(ShopItems.Count - currentTen * 10 - 1);
                             }
                             UpdateSelectedItemInfo();
                             Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                         }
                         break;
-                    case SdlDotNet.Input.Key.LeftArrow: {
+                    case SdlDotNet.Input.Key.LeftArrow:
+                        {
                             //int itemSlot = (currentTen + 1) - 10;//System.Math.Max(1, GetSelectedItemSlot() - (11 - itemPicker.SelectedItem));
-                            if (currentTen <= 0) {
+                            if (currentTen <= 0)
+                            {
                                 currentTen = ((ShopItems.Count - 1) / 10);
-                            } else {
+                            }
+                            else
+                            {
                                 currentTen--;
                             }
-                            if (currentTen * 10 + itemPicker.SelectedItem >= ShopItems.Count) {
+                            if (currentTen * 10 + itemPicker.SelectedItem >= ShopItems.Count)
+                            {
                                 ChangeSelected(ShopItems.Count - currentTen * 10 - 1);
                             }
                             DisplayItems(currentTen * 10);
@@ -327,14 +368,19 @@ namespace Client.Logic.Menus
                             Music.Music.AudioPlayer.PlaySoundEffect("beep4.wav");
                         }
                         break;
-                    case SdlDotNet.Input.Key.RightArrow: {
+                    case SdlDotNet.Input.Key.RightArrow:
+                        {
                             //int itemSlot = currentTen + 1 + 10;
-                            if (currentTen >= ((ShopItems.Count - 1) / 10)) {
+                            if (currentTen >= ((ShopItems.Count - 1) / 10))
+                            {
                                 currentTen = 0;
-                            } else {
+                            }
+                            else
+                            {
                                 currentTen++;
                             }
-                            if (currentTen * 10 + itemPicker.SelectedItem >= ShopItems.Count) {
+                            if (currentTen * 10 + itemPicker.SelectedItem >= ShopItems.Count)
+                            {
                                 ChangeSelected(ShopItems.Count - currentTen * 10 - 1);
                             }
                             DisplayItems(currentTen * 10);
@@ -342,15 +388,18 @@ namespace Client.Logic.Menus
                             Music.Music.AudioPlayer.PlaySoundEffect("beep4.wav");
                         }
                         break;
-                    case SdlDotNet.Input.Key.Return: {
-                            if (ShopItems[GetSelectedItemSlot()].GetItem > 0) {
+                    case SdlDotNet.Input.Key.Return:
+                        {
+                            if (ShopItems[GetSelectedItemSlot()].GetItem > 0)
+                            {
                                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuShopItemSelected("mnuShopItemSelected", ShopItems[GetSelectedItemSlot()].GetItem, GetSelectedItemSlot(), Enums.InvMenuType.Buy));
                                 Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuShopItemSelected");
                                 Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                             }
                         }
                         break;
-                    case SdlDotNet.Input.Key.Backspace: {
+                    case SdlDotNet.Input.Key.Backspace:
+                        {
                             Menus.MenuSwitcher.OpenShopOptions();
                             Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                         }

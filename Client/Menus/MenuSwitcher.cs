@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,16 +21,14 @@
 
 namespace Client.Logic.Menus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class MenuSwitcher
     {
         #region Methods
 
-        public static void ShowMainMenu() {
-            if (CanShowMenu()) {
+        public static void ShowMainMenu()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -39,8 +40,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowInventoryMenu(int itemSlot) {
-            if (CanShowMenu()) {
+        public static void ShowInventoryMenu(int itemSlot)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -50,8 +53,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowItemSummary(int itemNum, int itemSlot, Enums.InvMenuType originalMenu) {
-            if (CanShowMenu()) {
+        public static void ShowItemSummary(int itemNum, int itemSlot, Enums.InvMenuType originalMenu)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -61,8 +66,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowMovesMenu() {
-            if (CanShowMenu()) {
+        public static void ShowMovesMenu()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -72,8 +79,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowTeamMenu() {
-            if (CanShowMenu()) {
+        public static void ShowTeamMenu()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -83,8 +92,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowGuildMenu() {
-            if (CanShowMenu()) {
+        public static void ShowGuildMenu()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -94,8 +105,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowJobListMenu() {
-            if (CanShowMenu()) {
+        public static void ShowJobListMenu()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -105,8 +118,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowJobSummary(Missions.Job job) {
-            if (CanShowMenu()) {
+        public static void ShowJobSummary(Missions.Job job)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -117,8 +132,10 @@ namespace Client.Logic.Menus
         }
 
 
-        public static void ShowOthersMenu() {
-            if (CanShowMenu()) {
+        public static void ShowOthersMenu()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -128,8 +145,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowHouseSelectionMenu() {
-            if (CanShowMenu()) {
+        public static void ShowHouseSelectionMenu()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuVisitHouse("mnuVisitHouse"));
@@ -137,8 +156,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowHouseWeatherMenu(int price) {
-            if (CanShowMenu()) {
+        public static void ShowHouseWeatherMenu(int price)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuChangeWeather("mnuChangeWeather", price));
@@ -146,8 +167,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowHouseDarknessMenu(int price) {
-            if (CanShowMenu()) {
+        public static void ShowHouseDarknessMenu(int price)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuChangeDarkness("mnuChangeDarkness", price));
@@ -155,8 +178,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowHouseBoundsMenu(int price) {
-            if (CanShowMenu()) {
+        public static void ShowHouseBoundsMenu(int price)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuChangeBounds("mnuChangeBounds", price));
@@ -164,8 +189,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowHouseShopMenu(int price) {
-            if (CanShowMenu()) {
+        public static void ShowHouseShopMenu(int price)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuAddShop("mnuAddShop", price));
@@ -173,8 +200,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowHouseSoundMenu(int price) {
-            if (CanShowMenu()) {
+        public static void ShowHouseSoundMenu(int price)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuAddSound("mnuAddSound", price));
@@ -182,8 +211,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowHouseNoticeMenu(int price, int wordPrice) {
-            if (CanShowMenu()) {
+        public static void ShowHouseNoticeMenu(int price, int wordPrice)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuAddNotice("mnuAddNotice", price, wordPrice));
@@ -191,8 +222,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowHouseSignMenu(int price) {
-            if (CanShowMenu()) {
+        public static void ShowHouseSignMenu(int price)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuAddSign("mnuAddSign", price));
@@ -201,8 +234,10 @@ namespace Client.Logic.Menus
         }
 
 
-        public static void ShowTournamentListingMenu(Tournaments.TournamentListing[] listings, Enums.TournamentListingMode mode) {
-            if (CanShowMenu()) {
+        public static void ShowTournamentListingMenu(Tournaments.TournamentListing[] listings, Enums.TournamentListingMode mode)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -212,8 +247,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowTournamentRulesEditorMenu(Tournaments.TournamentRules rules) {
-            if (CanShowMenu()) {
+        public static void ShowTournamentRulesEditorMenu(Tournaments.TournamentRules rules)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -223,8 +260,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowTournamentRulesViewerMenu(Tournaments.TournamentRules rules) {
-            if (CanShowMenu()) {
+        public static void ShowTournamentRulesViewerMenu(Tournaments.TournamentRules rules)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -234,8 +273,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void OpenMissionBoard(string[] parse) {
-            if (CanShowMenu()) {
+        public static void OpenMissionBoard(string[] parse)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -245,8 +286,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowAssembly(string[] parse) {
-            if (CanShowMenu()) {
+        public static void ShowAssembly(string[] parse)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -256,8 +299,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowGuildCreate(string[] parse) {
-            if (CanShowMenu()) {
+        public static void ShowGuildCreate(string[] parse)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -267,8 +312,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowGuildManage(string[] parse) {
-            if (CanShowMenu()) {
+        public static void ShowGuildManage(string[] parse)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -278,8 +325,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void OpenBankOptions() {
-            if (CanShowMenu()) {
+        public static void OpenBankOptions()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -289,8 +338,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowBankDepositMenu(int itemSlot) {
-            if (CanShowMenu()) {
+        public static void ShowBankDepositMenu(int itemSlot)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -300,8 +351,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowBankWithdrawMenu(int itemSlot) {
-            if (CanShowMenu()) {
+        public static void ShowBankWithdrawMenu(int itemSlot)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -312,8 +365,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void OpenShopOptions() {
-            if (CanShowMenu()) {
+        public static void OpenShopOptions()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -323,11 +378,14 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowShopBuyMenu(int itemSlot) {
-            if (CanShowMenu()) {
+        public static void ShowShopBuyMenu(int itemSlot)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Menus.mnuShopOptions menu = ((Menus.mnuShopOptions)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuShopOptions"));
-                if (menu != null) {
+                if (menu != null)
+                {
                     menu.Close(false);
                     Windows.WindowSwitcher.GameWindow.MenuManager.RemoveWidget("mnuShopOptions");
                     Windows.WindowSwitcher.GameWindow.MenuManager.RemoveWidget(menu.GroupedWidget.Name);
@@ -342,12 +400,15 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowShopSellMenu(int itemSlot) {
-            if (CanShowMenu()) {
+        public static void ShowShopSellMenu(int itemSlot)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
 
                 Menus.mnuShopOptions menu = ((Menus.mnuShopOptions)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuShopOptions"));
-                if (menu != null) {
+                if (menu != null)
+                {
                     menu.Close(false);
                     Windows.WindowSwitcher.GameWindow.MenuManager.RemoveWidget("mnuShopOptions");
                     Windows.WindowSwitcher.GameWindow.MenuManager.OpenMenus.RemoveAt(Windows.WindowSwitcher.GameWindow.MenuManager.OpenMenus.IndexOf(menu));
@@ -358,12 +419,13 @@ namespace Client.Logic.Menus
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuInventory("mnuInventory", Enums.InvMenuType.Sell, itemSlot));
 
                 Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuInventory");
-
             }
         }
 
-        public static void LinkShopRecallMenu() {
-            if (CanShowMenu()) {
+        public static void LinkShopRecallMenu()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -373,16 +435,20 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void ShowHelpMenu() {
+        public static void ShowHelpMenu()
+        {
             ShowMenu(new mnuHelpTopics("mnuHelpTopics"));
         }
 
-        public static void ShowHelpPage(string topic, int pageNumber) {
+        public static void ShowHelpPage(string topic, int pageNumber)
+        {
             ShowMenu(new mnuHelpPage("mnuHelpPage", topic, pageNumber));
         }
 
-        public static void ShowMenu(Menus.Core.IMenu menu) {
-            if (CanShowMenu()) {
+        public static void ShowMenu(Menus.Core.IMenu menu)
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
 
@@ -392,9 +458,12 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void CloseAllMenus() {
-            if (Windows.WindowSwitcher.GameWindow.MenuManager.Visible) {
-                if (!Windows.WindowSwitcher.GameWindow.MenuManager.HasModalMenu) {
+        public static void CloseAllMenus()
+        {
+            if (Windows.WindowSwitcher.GameWindow.MenuManager.Visible)
+            {
+                if (!Windows.WindowSwitcher.GameWindow.MenuManager.HasModalMenu)
+                {
                     Windows.WindowSwitcher.GameWindow.MapViewer.Focus();
                     Windows.WindowSwitcher.GameWindow.MenuManager.Visible = false;
                     Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
@@ -402,32 +471,41 @@ namespace Client.Logic.Menus
             }
         }
 
-        public static void HideMenuManager() {
-            if (Windows.WindowSwitcher.GameWindow.MenuManager.Visible) {
-                if (!Windows.WindowSwitcher.GameWindow.MenuManager.HasModalMenu) {
+        public static void HideMenuManager()
+        {
+            if (Windows.WindowSwitcher.GameWindow.MenuManager.Visible)
+            {
+                if (!Windows.WindowSwitcher.GameWindow.MenuManager.HasModalMenu)
+                {
                     Windows.WindowSwitcher.GameWindow.MapViewer.Focus();
                     Windows.WindowSwitcher.GameWindow.MenuManager.Visible = false;
                 }
             }
         }
 
-        private static void EnableMenuManager() {
-            if (!Windows.WindowSwitcher.GameWindow.MenuManager.Visible) {
+        private static void EnableMenuManager()
+        {
+            if (!Windows.WindowSwitcher.GameWindow.MenuManager.Visible)
+            {
                 Windows.WindowSwitcher.GameWindow.MenuManager.Visible = true;
                 Windows.WindowSwitcher.GameWindow.MenuManager.Focus();
             }
         }
 
-        public static bool CanShowMenu() {
-            if (Windows.WindowSwitcher.GameWindow.MenuManager.HasModalMenu) {
+        public static bool CanShowMenu()
+        {
+            if (Windows.WindowSwitcher.GameWindow.MenuManager.HasModalMenu)
+            {
                 return false;
             }
 
             return true;
         }
 
-        public static void ShowBlankMenu() {
-            if (CanShowMenu()) {
+        public static void ShowBlankMenu()
+        {
+            if (CanShowMenu())
+            {
                 EnableMenuManager();
                 Windows.WindowSwitcher.GameWindow.MenuManager.CloseOpenMenus();
             }

@@ -26,14 +26,16 @@ using PMDCP.Core;
 using SdlDotNet.Widgets;
 using Client.Logic.Network;
 
-namespace Client.Logic.Menus {
-    class mnuGuildManage : Widgets.BorderedPanel, Core.IMenu {
-
+namespace Client.Logic.Menus
+{
+    class mnuGuildManage : Widgets.BorderedPanel, Core.IMenu
+    {
         public const int RECRUIT_PRICE = 1000;
         public const int PROMOTE_PRICE = 10000;
         public const int CREATE_PRICE = 100000;
 
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -59,7 +61,8 @@ namespace Client.Logic.Menus {
         #region Constructors
 
         public mnuGuildManage(string name, string[] parse)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(380, 400);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(130, 50);
@@ -82,8 +85,8 @@ namespace Client.Logic.Menus {
             btnStepDown.Location = new Point(260, 56);
             btnStepDown.Font = Client.Logic.Graphics.FontManager.LoadFont("PMDCP", 16);
             Skins.SkinManager.LoadButtonGui(btnStepDown);
-            btnStepDown.Click +=new EventHandler<MouseButtonEventArgs>(btnStepDown_Click);
-            
+            btnStepDown.Click += new EventHandler<MouseButtonEventArgs>(btnStepDown_Click);
+
             lblMembers = new Label("lblMembers");
             lblMembers.Location = new Point(20, 76);
             lblMembers.AutoSize = true;
@@ -95,7 +98,7 @@ namespace Client.Logic.Menus {
             lbxMembers.Location = new Point(20, 96);
             lbxMembers.Size = new Size(330, 140);
             lbxMembers.BackColor = Color.Transparent;
-            lbxMembers.ItemSelected +=new EventHandler(lbxMembers_ItemSelected);
+            lbxMembers.ItemSelected += new EventHandler(lbxMembers_ItemSelected);
 
             lblPromotePrice = new Label("lblPromotePrice");
             lblPromotePrice.Location = new Point(20, 240);
@@ -160,57 +163,67 @@ namespace Client.Logic.Menus {
             this.AddWidget(btnCancel);
 
             LoadGuildFromPacket(parse);
-            
         }
 
         #endregion Constructors
 
 
-        void btnStepDown_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnStepDown_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Messenger.GuildStepDown();
             MenuSwitcher.CloseAllMenus();
         }
 
-        void btnPromote_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnPromote_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Messenger.GuildPromote(lbxMembers.SelectedIndex);
             //MenuSwitcher.CloseAllMenus();
         }
 
-        void btnDemote_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (ranks[lbxMembers.SelectedIndex] > Enums.GuildRank.Member) {
+        void btnDemote_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (ranks[lbxMembers.SelectedIndex] > Enums.GuildRank.Member)
+            {
                 Messenger.GuildDemote(lbxMembers.SelectedIndex);
-            } else {
+            }
+            else
+            {
                 Messenger.GuildDisown(lbxMembers.SelectedIndex);
             }
             //MenuSwitcher.CloseAllMenus();
         }
 
-        void btnOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Messenger.MakeGuildMember(txtName.Text);
             //MenuSwitcher.CloseAllMenus();
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             MenuSwitcher.CloseAllMenus();
         }
 
-        void lbxMembers_ItemSelected(object sender, EventArgs e) {
+        void lbxMembers_ItemSelected(object sender, EventArgs e)
+        {
             UpdateOptions();
         }
 
         #region Methods
 
-        public void LoadGuildFromPacket(string[] parse) {
-            
+        public void LoadGuildFromPacket(string[] parse)
+        {
             ranks = new List<Enums.GuildRank>();
             lbxMembers.Items.Clear();
 
             int count = parse[1].ToInt();
 
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < count; i++)
+            {
                 Enums.GuildRank rank = (Enums.GuildRank)parse[2 + i * 3 + 1].ToInt();
                 Color color;
-                switch (rank) {
+                switch (rank)
+                {
                     case Enums.GuildRank.Member:
                         color = Color.LightSkyBlue;
                         break;
@@ -232,7 +245,8 @@ namespace Client.Logic.Menus {
             Refresh();
         }
 
-        public void AddMember(string name) {
+        public void AddMember(string name)
+        {
             Color color = Color.LightSkyBlue;
             ListBoxTextItem lbiName = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), "[" + Enums.GuildRank.Member + "] " + name + " (NEW)");
             ranks.Add(Enums.GuildRank.Member);
@@ -242,16 +256,19 @@ namespace Client.Logic.Menus {
             Refresh();
         }
 
-        public void RemoveMember(int index) {
+        public void RemoveMember(int index)
+        {
             ranks.RemoveAt(index);
             lbxMembers.Items.RemoveAt(index);
 
             Refresh();
         }
 
-        public void UpdateMember(int index, Enums.GuildRank rank) {
+        public void UpdateMember(int index, Enums.GuildRank rank)
+        {
             Color color;
-            switch (rank) {
+            switch (rank)
+            {
                 case Enums.GuildRank.Member:
                     color = Color.LightSkyBlue;
                     break;
@@ -274,8 +291,8 @@ namespace Client.Logic.Menus {
             Refresh();
         }
 
-        public void Refresh() {
-            
+        public void Refresh()
+        {
             lblYourName.Text = Players.PlayerManager.MyPlayer.Name + " (" + Players.PlayerManager.MyPlayer.GuildAccess + ")";
 
             UpdateOptions();
@@ -283,8 +300,10 @@ namespace Client.Logic.Menus {
             int memberCount = 0;
             int adminCount = 0;
 
-            foreach (Enums.GuildRank rank in ranks) {
-                if (rank > Enums.GuildRank.Member) {
+            foreach (Enums.GuildRank rank in ranks)
+            {
+                if (rank > Enums.GuildRank.Member)
+                {
                     adminCount++;
                 }
                 memberCount++;
@@ -292,65 +311,88 @@ namespace Client.Logic.Menus {
 
             lblPromotePrice.Text = "Promote member: (" + PROMOTE_PRICE * adminCount + " " + Items.ItemHelper.Items[1].Name + ")";
             lblName.Text = "Add member: (" + RECRUIT_PRICE * memberCount + " " + Items.ItemHelper.Items[1].Name + ")";
-            
         }
 
-        public void UpdateOptions() {
-            if (Players.PlayerManager.MyPlayer.GuildAccess > Enums.GuildRank.Member) {
+        public void UpdateOptions()
+        {
+            if (Players.PlayerManager.MyPlayer.GuildAccess > Enums.GuildRank.Member)
+            {
                 btnStepDown.Text = "Step Down";
-            } else {
+            }
+            else
+            {
                 btnStepDown.Text = "Leave Guild";
             }
-            if (lbxMembers.SelectedIndex > -1) {
+            if (lbxMembers.SelectedIndex > -1)
+            {
                 Enums.GuildRank rank = ranks[lbxMembers.SelectedIndex];
-                if (Players.PlayerManager.MyPlayer.GuildAccess == Enums.GuildRank.Founder) {
-                    if (rank == Enums.GuildRank.Founder) {
+                if (Players.PlayerManager.MyPlayer.GuildAccess == Enums.GuildRank.Founder)
+                {
+                    if (rank == Enums.GuildRank.Founder)
+                    {
                         lblPromotePrice.Visible = false;
                         btnPromote.Visible = false;
                         btnDemote.Visible = false;
-                    } else if (rank == Enums.GuildRank.Admin) {
+                    }
+                    else if (rank == Enums.GuildRank.Admin)
+                    {
                         lblPromotePrice.Visible = false;
                         btnPromote.Visible = false;
                         btnDemote.Visible = true;
                         btnDemote.Text = "Demote";
-                    } else {
+                    }
+                    else
+                    {
                         lblPromotePrice.Visible = true;
                         btnPromote.Visible = true;
                         btnDemote.Visible = true;
                         btnDemote.Text = "Remove";
                     }
-                } else if (Players.PlayerManager.MyPlayer.GuildAccess == Enums.GuildRank.Admin) {
-                    if (rank <= Enums.GuildRank.Member) {
+                }
+                else if (Players.PlayerManager.MyPlayer.GuildAccess == Enums.GuildRank.Admin)
+                {
+                    if (rank <= Enums.GuildRank.Member)
+                    {
                         btnDemote.Visible = true;
                         btnDemote.Text = "Remove";
-                    } else {
+                    }
+                    else
+                    {
                         lblPromotePrice.Visible = false;
                         btnPromote.Visible = false;
                         btnDemote.Visible = false;
                     }
-                } else {
+                }
+                else
+                {
                     lblPromotePrice.Visible = false;
                     btnPromote.Visible = false;
                     btnDemote.Visible = false;
                 }
-            } else {
+            }
+            else
+            {
                 lblPromotePrice.Visible = false;
                 btnPromote.Visible = false;
                 btnDemote.Visible = false;
             }
 
-            if (Players.PlayerManager.MyPlayer.GuildAccess >= Enums.GuildRank.Admin) {
+            if (Players.PlayerManager.MyPlayer.GuildAccess >= Enums.GuildRank.Admin)
+            {
                 lblName.Visible = true;
                 txtName.Visible = true;
                 btnOKAdd.Visible = true;
-            } else {
+            }
+            else
+            {
                 lblName.Visible = false;
                 txtName.Visible = false;
                 btnOKAdd.Visible = false;
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 

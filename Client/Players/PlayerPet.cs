@@ -26,7 +26,8 @@ namespace Client.Logic.Players
 {
     class PlayerPet : ISprite
     {
-        public Logic.Graphics.SpriteSheet SpriteSheet {
+        public Logic.Graphics.SpriteSheet SpriteSheet
+        {
             get;
             set;
         }
@@ -38,7 +39,8 @@ namespace Client.Logic.Players
         public int LastWalkTime { get; set; }
         public int WalkingFrame { get; set; }
 
-        public int Sprite {
+        public int Sprite
+        {
             get;
             set;
         }
@@ -47,49 +49,58 @@ namespace Client.Logic.Players
         public Enums.Coloration Shiny { get; set; }
         public Enums.Sex Sex { get; set; }
 
-        public Enums.Direction Direction {
+        public Enums.Direction Direction
+        {
             get;
             set;
         }
 
-        public bool Attacking {
+        public bool Attacking
+        {
             get;
             set;
         }
 
-        public System.Drawing.Point Offset {
+        public System.Drawing.Point Offset
+        {
             get;
             set;
         }
 
-        public System.Drawing.Point Location {
+        public System.Drawing.Point Location
+        {
             get;
             set;
         }
 
-        public int AttackTimer {
+        public int AttackTimer
+        {
             get;
             set;
         }
 
         public int TotalAttackTime { get; set; }
 
-        public int X {
+        public int X
+        {
             get { return Location.X; }
             set { Location = new Point(value, Location.Y); }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return Location.Y; }
             set { Location = new Point(Location.X, value); }
         }
 
-        public Enums.MovementSpeed MovementSpeed {
+        public Enums.MovementSpeed MovementSpeed
+        {
             get;
             set;
         }
 
-        public Enums.StatusAilment StatusAilment {
+        public Enums.StatusAilment StatusAilment
+        {
             get;
             set;
         }
@@ -104,17 +115,20 @@ namespace Client.Logic.Players
 
         public bool ScreenActive { get; set; }
 
-        public int SleepTimer {
+        public int SleepTimer
+        {
             get;
             set;
         }
 
-        public int SleepFrame {
+        public int SleepFrame
+        {
             get;
             set;
         }
 
-        public IPlayer Player {
+        public IPlayer Player
+        {
             get;
             set;
         }
@@ -126,7 +140,8 @@ namespace Client.Logic.Players
 
         public Graphics.Renderers.Sprites.Emoticon CurrentEmote { get; set; }
 
-        public PlayerPet(int slot, IPlayer player) {
+        public PlayerPet(int slot, IPlayer player)
+        {
             this.Slot = slot;
             this.Player = player;
 
@@ -136,33 +151,42 @@ namespace Client.Logic.Players
             VolatileStatus = new List<int>();
         }
 
-        public void Update() {
-            if (Player.X != LastPlayerX) {
+        public void Update()
+        {
+            if (Player.X != LastPlayerX)
+            {
                 MovementSpeed = Player.MovementSpeed;
-                if (GetHorizDistanceFromPlayer() >= Slot) {
+                if (GetHorizDistanceFromPlayer() >= Slot)
+                {
                     X = GetXBehindPlayer(Slot);
                     LastPlayerX = Player.X;
                 }
             }
-            if (Player.Y != LastPlayerY) {
+            if (Player.Y != LastPlayerY)
+            {
                 MovementSpeed = Player.MovementSpeed;
-                if (GetVertDistanceFromPlayer() >= Slot) {
+                if (GetVertDistanceFromPlayer() >= Slot)
+                {
                     Y = GetYBehindPlayer(Slot);
                     LastPlayerY = Player.Y;
                 }
             }
-            if (Direction != Player.Direction) {
+            if (Direction != Player.Direction)
+            {
                 Offset = new Point(0, 0);
                 Direction = Player.Direction;
             }
         }
 
-        public int GetHorizDistanceFromPlayer() {
+        public int GetHorizDistanceFromPlayer()
+        {
             return Player.X - X;
         }
 
-        public int GetXBehindPlayer(int distance) {
-            switch (Player.Direction) {
+        public int GetXBehindPlayer(int distance)
+        {
+            switch (Player.Direction)
+            {
                 case Enums.Direction.Left:
                     Offset = new Point(Constants.TILE_WIDTH, Offset.Y);
                     return Player.X + distance;
@@ -177,17 +201,20 @@ namespace Client.Logic.Players
             }
         }
 
-        public int GetVertDistanceFromPlayer() {
+        public int GetVertDistanceFromPlayer()
+        {
             return System.Math.Abs(Player.Y - Y);
         }
 
-        public int GetYBehindPlayer(int distance) {
-            switch (Player.Direction) {
+        public int GetYBehindPlayer(int distance)
+        {
+            switch (Player.Direction)
+            {
                 case Enums.Direction.Down:
                     Offset = new Point(Offset.X, Constants.TILE_HEIGHT);
                     return Player.Y - distance;
                 case Enums.Direction.Up:
-                      Offset = new Point(Offset.X, Constants.TILE_HEIGHT * -1);
+                    Offset = new Point(Offset.X, Constants.TILE_HEIGHT * -1);
                     return Player.Y + distance;
                 case Enums.Direction.Right:
                 case Enums.Direction.Left:
@@ -196,6 +223,5 @@ namespace Client.Logic.Players
                     return Player.Y;
             }
         }
-
     }
 }

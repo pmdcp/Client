@@ -1,4 +1,11 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using SdlDotNet.Widgets;
+using Client.Logic.Graphics;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,14 +25,6 @@
 
 namespace Client.Logic.Menus.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using SdlDotNet.Widgets;
-    using Client.Logic.Graphics;
-
     class MenuBase : Panel
     {
         #region Fields
@@ -37,7 +36,8 @@ namespace Client.Logic.Menus.Core
         #region Constructors
 
         public MenuBase(string name)
-            : base(name) {
+            : base(name)
+        {
             this.BackColor = Color.Transparent;
             //this.BackgroundImageSizeMode = ImageSizeMode.StretchImage;
             this.PreventFocus = true;
@@ -47,21 +47,27 @@ namespace Client.Logic.Menus.Core
 
         #region Properties
 
-        public bool ReadyToConfigure {
+        public bool ReadyToConfigure
+        {
             get;
             set;
         }
 
-        public Enums.MenuDirection MenuDirection {
+        public Enums.MenuDirection MenuDirection
+        {
             get { return menuDirection; }
-            set {
+            set
+            {
                 menuDirection = value;
-                switch (menuDirection) {
-                    case Enums.MenuDirection.Horizontal: {
+                switch (menuDirection)
+                {
+                    case Enums.MenuDirection.Horizontal:
+                        {
                             this.BackgroundImage = GraphicsCache.MenuHorizontal.CreateStretchedSurface(this.Size);
                         }
                         break;
-                    case Enums.MenuDirection.Vertical: {
+                    case Enums.MenuDirection.Vertical:
+                        {
                             this.BackgroundImage = GraphicsCache.MenuVertical.CreateStretchedSurface(this.Size);
                         }
                         break;
@@ -73,7 +79,8 @@ namespace Client.Logic.Menus.Core
 
         #region Methods
 
-        public virtual void Close() {
+        public virtual void Close()
+        {
             base.FreeResources();
         }
 

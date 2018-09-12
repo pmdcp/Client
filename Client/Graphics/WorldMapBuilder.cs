@@ -25,8 +25,5 @@ namespace Client.Logic.Graphics
     class WorldMapBuilder
     {
         public static bool BuildingWorldMap { get; set; }
-
-
-
     }
 }

@@ -1,4 +1,12 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using Client.Logic.Graphics;
+
+using SdlDotNet.Widgets;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -19,18 +27,10 @@
 
 namespace Client.Logic.Menus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using Client.Logic.Graphics;
-
-    using SdlDotNet.Widgets;
-
     class mnuShopOptions : Logic.Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -45,7 +45,8 @@ namespace Client.Logic.Menus
         #endregion Fields
 
         public mnuShopOptions(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(155, 88);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(10, 40);
@@ -77,64 +78,82 @@ namespace Client.Logic.Menus
             this.AddWidget(lblSell);
         }
 
-        void lblBuy_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblBuy_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(0);
         }
 
-        void lblSell_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblSell_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(1);
         }
 
 
-        public Logic.Widgets.BorderedPanel MenuPanel {
+        public Logic.Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
 
         #region Methods
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 23 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
-
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                     }
                     break;
             }
         }
 
-        private void SelectItem(int itemNum) {
-            switch (itemNum) {
-                case 0: {
+        private void SelectItem(int itemNum)
+        {
+            switch (itemNum)
+            {
+                case 0:
+                    {
                         MenuSwitcher.ShowShopBuyMenu(0);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case 1: {
+                case 1:
+                    {
                         MenuSwitcher.ShowShopSellMenu(1);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
@@ -142,15 +161,20 @@ namespace Client.Logic.Menus
             }
         }
 
-        public void Close(bool message) {
-            if (message) {
+        public void Close(bool message)
+        {
+            if (message)
+            {
                 this.Close();
-            } else {
+            }
+            else
+            {
                 base.Close();
             }
         }
 
-        public override void Close() {
+        public override void Close()
+        {
             Network.Messenger.LeaveShop();
             base.Close();
         }

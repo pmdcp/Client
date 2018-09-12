@@ -26,8 +26,9 @@ namespace Client.Logic.Music.YouTube
 
         string playingSongID;
 
-        public YouTubeAudioPlayer() {
-            this.audioPlayerForm = new Form();
+        public YouTubeAudioPlayer()
+        {
+            audioPlayerForm = new Form();
 
             webBrowser = new WebBrowser();
             audioPlayerForm.Controls.Add(webBrowser);
@@ -40,18 +41,22 @@ namespace Client.Logic.Music.YouTube
         }
 
         private delegate void PlayDelegate(string id);
-        public void Play(string id) {
-            if (audioPlayerForm.InvokeRequired) {
+        public void Play(string id)
+        {
+            if (audioPlayerForm.InvokeRequired)
+            {
                 audioPlayerForm.Invoke(new PlayDelegate(Play), id);
                 return;
             }
 
-            if (IO.Options.Music == false) {
+            if (IO.Options.Music == false)
+            {
                 Stop();
                 return;
             }
 
-            if (string.Equals(id, playingSongID)) {
+            if (string.Equals(id, playingSongID))
+            {
                 return;
             }
 
@@ -61,8 +66,10 @@ namespace Client.Logic.Music.YouTube
         }
 
         private delegate void StopDelegate();
-        public void Stop() {
-            if (audioPlayerForm.InvokeRequired) {
+        public void Stop()
+        {
+            if (audioPlayerForm.InvokeRequired)
+            {
                 audioPlayerForm.Invoke(new StopDelegate(Stop));
                 return;
             }
@@ -72,7 +79,8 @@ namespace Client.Logic.Music.YouTube
             webBrowser.DocumentText = "";
         }
 
-        private void StartWebserver() {
+        private void StartWebserver()
+        {
             var listener = new TcpListener(IPAddress.Loopback, 0);
             listener.Start();
 

@@ -21,7 +21,6 @@
 /*
  * Created by SharpDevelop.
  * User: Pikachu
- * Date: 29/09/2009
  * Time: 8:48 PM
  *
  */
@@ -43,50 +42,67 @@ namespace Client.Logic
     {
         #region Methods
 
-        public static void ProcessCommand(string command, Enums.ChatChannel chatChannel) {
-            if (string.IsNullOrEmpty(command)) {
+        public static void ProcessCommand(string command, Enums.ChatChannel chatChannel)
+        {
+            if (string.IsNullOrEmpty(command))
+            {
                 return;
             }
 
-            if (Players.PlayerManager.MyPlayer.TempMuteTimer > Globals.Tick) {
+            if (Players.PlayerManager.MyPlayer.TempMuteTimer > Globals.Tick)
+            {
                 return;
-            } else if (Players.PlayerManager.MyPlayer.TalkTimer > Globals.Tick + 6000) {
+            }
+            else if (Players.PlayerManager.MyPlayer.TalkTimer > Globals.Tick + 6000)
+            {
                 Players.PlayerManager.MyPlayer.TempMuteTimer = Globals.Tick + 8000;
                 ExpKit.Modules.kitChat chat = (ExpKit.Modules.kitChat)Windows.WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.FindKitModule(Enums.ExpKitModules.Chat);
                 chat.AppendChat("You stop to catch your breath.\n", new SdlDotNet.Widgets.CharRenderOptions(Color.Violet));
                 return;
-            } else if (Players.PlayerManager.MyPlayer.TalkTimer < Globals.Tick) {
+            }
+            else if (Players.PlayerManager.MyPlayer.TalkTimer < Globals.Tick)
+            {
                 Players.PlayerManager.MyPlayer.TalkTimer = Globals.Tick + 3000;
-            } else {
+            }
+            else
+            {
                 Players.PlayerManager.MyPlayer.TalkTimer += 3000;
             }
 
             // Broadcast Message
-            if ((command.StartsWith("'") || chatChannel == Enums.ChatChannel.Global) && (command.StartsWith("/") == false && command.StartsWith("!") == false && command.StartsWith("=") == false)) {
+            if ((command.StartsWith("'") || chatChannel == Enums.ChatChannel.Global) && (command.StartsWith("/") == false && command.StartsWith("!") == false && command.StartsWith("=") == false))
+            {
                 string message = command;
-                if (command.StartsWith("'")) {
+                if (command.StartsWith("'"))
+                {
                     message = command.Substring(1);
-                } else if (chatChannel == Enums.ChatChannel.Global) {
+                }
+                else if (chatChannel == Enums.ChatChannel.Global)
+                {
                     message = command;
                 }
                 Messenger.BroadcastMsg(message);
                 return;
             }
 
-            if (command.StartsWith("!")) {
+            if (command.StartsWith("!"))
+            {
                 PMDCP.Core.Command com = PMDCP.Core.CommandProcessor.ParseCommand(command);
-                if (com.CommandArgs.Count == 2) {
+                if (com.CommandArgs.Count == 2)
+                {
                     Messenger.PlayerMsg(com[0].Substring(1), com[1]);
                 }
                 return;
             }
 
-            if (command.StartsWith("/edithouse")) {
+            if (command.StartsWith("/edithouse"))
+            {
                 Messenger.SendPacket(TcpPacket.CreatePacket("requestedithouse"));
                 return;
             }
 
-            if (command.StartsWith("/refresh")) {
+            if (command.StartsWith("/refresh"))
+            {
                 Messenger.SendRefresh();
                 return;
             }
@@ -96,19 +112,25 @@ namespace Client.Logic
             //    return;
             //}
 
-            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Monitor)) {
+            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Monitor))
+            {
                 // Global Message
-                if (command.StartsWith("/announce")) {
+                if (command.StartsWith("/announce"))
+                {
                     Messenger.GlobalMsg(command.Substring(9));
                     return;
                 }
 
                 // Admin Message
-                if ((command.StartsWith("=") || chatChannel == Enums.ChatChannel.Staff) && (command.StartsWith("/") == false)) {
+                if ((command.StartsWith("=") || chatChannel == Enums.ChatChannel.Staff) && (command.StartsWith("/") == false))
+                {
                     string message = command;
-                    if (command.StartsWith("=")) {
+                    if (command.StartsWith("="))
+                    {
                         message = command.Substring(1);
-                    } else if (chatChannel == Enums.ChatChannel.Staff) {
+                    }
+                    else if (chatChannel == Enums.ChatChannel.Staff)
+                    {
                         message = command;
                     }
                     Messenger.AdminMsg(message);
@@ -116,35 +138,42 @@ namespace Client.Logic
                 }
             }
 
-            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Mapper)) {
+            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Mapper))
+            {
                 // Map Editor
-                if (command.StartsWith("/editmap")) {
+                if (command.StartsWith("/editmap"))
+                {
                     Messenger.SendPacket(TcpPacket.CreatePacket("requesteditmap"));
                     return;
                 }
-
             }
-            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Monitor)) {
-                if (command.StartsWith("/loc")) {
+            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Monitor))
+            {
+                if (command.StartsWith("/loc"))
+                {
                     Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayLocation = !Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayLocation;
                     return;
                 }
             }
 
-            if (command.StartsWith("/ping")) {
+            if (command.StartsWith("/ping"))
+            {
                 IO.Options.Ping = !IO.Options.Ping;
                 return;
             }
 
-            if (command.StartsWith("/fps")) {
+            if (command.StartsWith("/fps"))
+            {
                 IO.Options.FPS = !IO.Options.FPS;
                 return;
             }
 
-            
 
-            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Scriptor)) {
-                if (command == "/editscript") {
+
+            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Scriptor))
+            {
+                if (command == "/editscript")
+                {
                     bool syntaxFileExists = System.IO.File.Exists(IO.Paths.StartupPath + "Script/CSharp.syn");
                     Messenger.SendPacket(TcpPacket.CreatePacket("requesteditscript", syntaxFileExists.ToIntString()));
                 }
@@ -152,8 +181,10 @@ namespace Client.Logic
 
 #if DEBUG
             // Just a small test of the music player
-            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Scriptor)) {
-                if (command == "/test") {
+            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Scriptor))
+            {
+                if (command == "/test")
+                {
                     // TODO: Re-enabletest command
                     //Music.Music.AudioPlayer.RunTest();
                 }
@@ -174,12 +205,14 @@ namespace Client.Logic
                 return;
             }
 
-            if (chatChannel == Enums.ChatChannel.Local) {
+            if (chatChannel == Enums.ChatChannel.Local)
+            {
                 Messenger.SendMapMsg(command);
-            } else if (chatChannel == Enums.ChatChannel.Guild) {
+            }
+            else if (chatChannel == Enums.ChatChannel.Guild)
+            {
                 Messenger.SendPacket(TcpPacket.CreatePacket("checkcommands", "/g " + command));
             }
-
         }
 
         #endregion Methods

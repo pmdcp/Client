@@ -1,4 +1,11 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using Client.Logic.Menus.Core;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,14 +25,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using Client.Logic.Menus.Core;
-
-    using PMDCP.Core;
-
     class SaySegment : ISegment
     {
         #region Fields
@@ -41,22 +40,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public SaySegment(string text, int speaker, int speed, int pauseLocation) {
+        public SaySegment(string text, int speaker, int speed, int pauseLocation)
+        {
             Load(text, speaker, speed, pauseLocation);
         }
 
-        public SaySegment() {
+        public SaySegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.Say; }
         }
 
-        public int PauseLocation {
+        public int PauseLocation
+        {
             get { return pauseLocation; }
             set { pauseLocation = value; }
         }
@@ -67,22 +70,26 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public int Speaker {
+        public int Speaker
+        {
             get { return speaker; }
             set { speaker = value; }
         }
 
-        public int Speed {
+        public int Speed
+        {
             get { return speed; }
             set { speed = value; }
         }
 
-        public string Text {
+        public string Text
+        {
             get { return text; }
             set { text = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return true; }
         }
 
@@ -90,7 +97,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(string text, int speaker, int speed, int pauseLocation) {
+        public void Load(string text, int speaker, int speed, int pauseLocation)
+        {
             this.text = text;
             this.speaker = speaker;
             this.speed = speed;
@@ -103,13 +111,17 @@ namespace Client.Logic.Stories.Segments
             Load(parameters.GetValue("Text"), parameters.GetValue("Mugshot").ToInt(-1), parameters.GetValue("Speed").ToInt(1), parameters.GetValue("PauseLocation").ToInt(-1));
         }
 
-        public void Process(StoryState state) {
+        public void Process(StoryState state)
+        {
             Menus.MenuSwitcher.ShowBlankMenu();
             Components.SpokenTextMenu textMenu;
             IMenu menuToFind = Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("story-spokenTextMenu");
-            if (menuToFind != null) {
+            if (menuToFind != null)
+            {
                 textMenu = (Components.SpokenTextMenu)menuToFind;
-            } else {
+            }
+            else
+            {
                 textMenu = new Components.SpokenTextMenu("story-spokenTextMenu", Windows.WindowSwitcher.GameWindow.MapViewer.Size);
             }
             textMenu.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(textMenu_Click);
@@ -118,9 +130,10 @@ namespace Client.Logic.Stories.Segments
             Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(textMenu, true);
             Windows.WindowSwitcher.GameWindow.MenuManager.BlockInput = false;
 
-            this.storyState = state;
+            storyState = state;
 
-            if (Windows.WindowSwitcher.GameWindow.BattleLog.Visible) {
+            if (Windows.WindowSwitcher.GameWindow.BattleLog.Visible)
+            {
                 Windows.WindowSwitcher.GameWindow.BattleLog.Hide();
             }
 
@@ -129,18 +142,22 @@ namespace Client.Logic.Stories.Segments
             textMenu.Click -= new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(textMenu_Click);
             textMenu.KeyDown -= new EventHandler<SdlDotNet.Input.KeyboardEventArgs>(textMenu_KeyDown);
 
-            if (state.NextSegment == null || !state.NextSegment.UsesSpeechMenu) {
+            if (state.NextSegment == null || !state.NextSegment.UsesSpeechMenu)
+            {
                 Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(textMenu);
             }
         }
 
-        void textMenu_KeyDown(object sender, SdlDotNet.Input.KeyboardEventArgs e) {
-            if (e.Key == SdlDotNet.Input.Key.Return) {
+        void textMenu_KeyDown(object sender, SdlDotNet.Input.KeyboardEventArgs e)
+        {
+            if (e.Key == SdlDotNet.Input.Key.Return)
+            {
                 storyState.Unpause();
             }
         }
 
-        void textMenu_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void textMenu_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             storyState.Unpause();
         }
 

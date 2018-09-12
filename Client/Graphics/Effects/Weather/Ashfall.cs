@@ -39,10 +39,12 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Constructors
 
-        public Ashfall() {
+        public Ashfall()
+        {
             disposed = false;
 
-            for (int i = 0; i < 40; i++) {
+            for (int i = 0; i < 40; i++)
+            {
                 ashes.Add(new Ash());
             }
         }
@@ -51,7 +53,8 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Properties
 
-        public bool Disposed {
+        public bool Disposed
+        {
             get { return disposed; }
         }
 
@@ -59,16 +62,20 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Methods
 
-        public void FreeResources() {
+        public void FreeResources()
+        {
             disposed = true;
-            for (int i = ashes.Count - 1; i >= 0; i--) {
+            for (int i = ashes.Count - 1; i >= 0; i--)
+            {
                 ashes[i].Dispose();
                 ashes.RemoveAt(i);
             }
         }
 
-        public void Render(Renderers.RendererDestinationData destData, int tick) {
-            for (int i = 0; i < ashes.Count; i++) {
+        public void Render(Renderers.RendererDestinationData destData, int tick)
+        {
+            for (int i = 0; i < ashes.Count; i++)
+            {
                 ashes[i].UpdateLocation();
                 destData.Blit(ashes[i], new Point(ashes[i].X, ashes[i].Y));
             }
@@ -76,7 +83,8 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #endregion Methods
 
-        public Enums.Weather ID {
+        public Enums.Weather ID
+        {
             get { return Enums.Weather.Ashfall; }
         }
     }

@@ -39,10 +39,12 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Constructors
 
-        public Snowstorm() {
+        public Snowstorm()
+        {
             disposed = false;
 
-            for (int i = 0; i < 120; i++) {
+            for (int i = 0; i < 120; i++)
+            {
                 snowflakes.Add(new Snowflake());
             }
         }
@@ -51,7 +53,8 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Properties
 
-        public bool Disposed {
+        public bool Disposed
+        {
             get { return disposed; }
         }
 
@@ -59,16 +62,20 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Methods
 
-        public void FreeResources() {
+        public void FreeResources()
+        {
             disposed = true;
-            for (int i = snowflakes.Count - 1; i >= 0; i--) {
+            for (int i = snowflakes.Count - 1; i >= 0; i--)
+            {
                 snowflakes[i].Dispose();
                 snowflakes.RemoveAt(i);
             }
         }
 
-        public void Render(Renderers.RendererDestinationData destData, int tick) {
-            for (int i = 0; i < snowflakes.Count; i++) {
+        public void Render(Renderers.RendererDestinationData destData, int tick)
+        {
+            for (int i = 0; i < snowflakes.Count; i++)
+            {
                 snowflakes[i].UpdateLocation(5);
                 destData.Blit(snowflakes[i], new Point(snowflakes[i].X, snowflakes[i].Y));
             }
@@ -76,7 +83,8 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #endregion Methods
 
-        public Enums.Weather ID {
+        public Enums.Weather ID
+        {
             get { return Enums.Weather.Snowstorm; }
         }
     }

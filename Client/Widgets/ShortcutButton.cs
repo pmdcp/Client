@@ -27,8 +27,9 @@ namespace Client.Logic.Widgets
     class ShortcutButton : PictureBox
     {
         public ShortcutButton(string name)
-            : base(name) {
-                this.Size = new Size(50, 50);
+            : base(name)
+        {
+            this.Size = new Size(50, 50);
         }
     }
 }

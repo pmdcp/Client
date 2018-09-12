@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Pokemon Mystery Dungeon Community Project")]
 [assembly: AssemblyProduct("PMDCP Core Client")]
-[assembly: AssemblyCopyright("Copyright © Pokemon Mystery Dungeon Community Project 2015")]
+[assembly: AssemblyCopyright("Copyright \u00A9 Pokemon Mystery Dungeon Community Project 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

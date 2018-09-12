@@ -39,12 +39,14 @@ namespace Client.Logic.ExpKit.Modules
         const int PARTY_SIZE = 4;
 
         public kitParty(string name)
-            : base(name) {
+            : base(name)
+        {
             enabled = true;
 
             base.BackColor = Color.Transparent;
             picMemberMugshot = new PictureBox[PARTY_SIZE];
-            for (int i = 0; i < PARTY_SIZE; i++) {
+            for (int i = 0; i < PARTY_SIZE; i++)
+            {
                 picMemberMugshot[i] = new PictureBox("picMemberMugshot" + i);
                 picMemberMugshot[i].Size = new Size(40, 40);
                 picMemberMugshot[i].BorderStyle = SdlDotNet.Widgets.BorderStyle.FixedSingle;
@@ -56,7 +58,8 @@ namespace Client.Logic.ExpKit.Modules
                 this.AddWidget(picMemberMugshot[i]);
             }
             lblMemberName = new Label[PARTY_SIZE];
-            for (int i = 0; i < PARTY_SIZE; i++) {
+            for (int i = 0; i < PARTY_SIZE; i++)
+            {
                 lblMemberName[i] = new Label("lblMemberName" + i);
                 lblMemberName[i].AutoSize = true;
                 lblMemberName[i].Font = Logic.Graphics.FontManager.LoadFont("PMDCP", 32);
@@ -66,7 +69,8 @@ namespace Client.Logic.ExpKit.Modules
             }
             pgbMemberHP = new ProgressBar[PARTY_SIZE];
             pgbMemberExp = new ProgressBar[PARTY_SIZE];
-            for (int i = 0; i < PARTY_SIZE; i++) {
+            for (int i = 0; i < PARTY_SIZE; i++)
+            {
                 pgbMemberHP[i] = new ProgressBar("pgbMemberHP" + i);
                 pgbMemberExp[i] = new ProgressBar("pgbMemberExp" + i);
 
@@ -81,25 +85,30 @@ namespace Client.Logic.ExpKit.Modules
             }
         }
 
-        public void Created(int index) {
+        public void Created(int index)
+        {
             moduleIndex = index;
         }
 
-        public void SwitchOut() {
-
+        public void SwitchOut()
+        {
         }
 
-        public void Initialize(Size containerSize) {
+        public void Initialize(Size containerSize)
+        {
             this.containerSize = containerSize;
             RecalculatePositions();
-            for (int i = 0; i < picMemberMugshot.Length; i++) {
+            for (int i = 0; i < picMemberMugshot.Length; i++)
+            {
                 DisplayPartyMemberData(i);
             }
             this.RequestRedraw();
         }
 
-        private void RecalculatePositions() {
-            for (int i = 0; i < PARTY_SIZE; i++) {
+        private void RecalculatePositions()
+        {
+            for (int i = 0; i < PARTY_SIZE; i++)
+            {
                 picMemberMugshot[i].Visible = false;
                 lblMemberName[i].Visible = false;
                 pgbMemberHP[i].Visible = false;
@@ -110,16 +119,19 @@ namespace Client.Logic.ExpKit.Modules
                 pgbMemberHP[i].Location = new Point(picMemberMugshot[i].X + 45, 80 * i + 32);
                 pgbMemberExp[i].Location = new Point(picMemberMugshot[i].X + 45, 80 * i + 52);
 
-                pgbMemberHP[i].Size = new Size(this.containerSize.Width - picMemberMugshot[i].X - picMemberMugshot[i].Width - 10, 15);
-                pgbMemberExp[i].Size = new Size(this.containerSize.Width - picMemberMugshot[i].X - picMemberMugshot[i].Width - 10, 15);
+                pgbMemberHP[i].Size = new Size(containerSize.Width - picMemberMugshot[i].X - picMemberMugshot[i].Width - 10, 15);
+                pgbMemberExp[i].Size = new Size(containerSize.Width - picMemberMugshot[i].X - picMemberMugshot[i].Width - 10, 15);
             }
         }
 
-        public void DisplayPartyMemberData(int slot) {
+        public void DisplayPartyMemberData(int slot)
+        {
             PartyData party = Players.PlayerManager.MyPlayer.Party;
-            if (party != null) {
+            if (party != null)
+            {
                 PartyMember member = party.Members[slot];
-                if (member != null) {
+                if (member != null)
+                {
                     picMemberMugshot[slot].Image = Logic.Graphics.GraphicsManager.GetMugshot(member.MugshotNum, member.MugshotForm, (int)member.MugshotShiny, (int)member.MugshotGender).GetEmote(0);//Tools.CropImage(Logic.Graphics.GraphicsManager.Speakers, new Rectangle(((member.Mugshot - 1) % 15) * 40, ((member.Mugshot - 1) / 15) * 40, 40, 40));
                     lblMemberName[slot].Text = member.Name;
 
@@ -129,45 +141,60 @@ namespace Client.Logic.ExpKit.Modules
                     pgbMemberHP[slot].Text = "HP: " + member.HP + "/" + member.MaxHP;
                     pgbMemberExp[slot].Text = "Exp: " + pgbMemberExp[slot].Percent + "%";
 
-                    if (member.HP < member.MaxHP / 5) {
+                    if (member.HP < member.MaxHP / 5)
+                    {
                         pgbMemberHP[slot].BarColor = Color.Red;
-                    } else if (member.HP < member.MaxHP / 2) {
+                    }
+                    else if (member.HP < member.MaxHP / 2)
+                    {
                         pgbMemberHP[slot].BarColor = Color.Yellow;
-                    } else {
+                    }
+                    else
+                    {
                         pgbMemberHP[slot].BarColor = Color.Green;
                     }
 
                     ChangeSlotVisibility(slot, true);
-                } else {
+                }
+                else
+                {
                     ChangeSlotVisibility(slot, false);
                 }
-            } else {
+            }
+            else
+            {
                 ChangeSlotVisibility(slot, false);
             }
         }
 
-        public void ChangeSlotVisibility(int slot, bool visible) {
+        public void ChangeSlotVisibility(int slot, bool visible)
+        {
             picMemberMugshot[slot].Visible = visible;
             lblMemberName[slot].Visible = visible;
             pgbMemberHP[slot].Visible = visible;
             pgbMemberExp[slot].Visible = visible;
         }
 
-        public int ModuleIndex {
+        public int ModuleIndex
+        {
             get { return moduleIndex; }
         }
 
-        public string ModuleName {
+        public string ModuleName
+        {
             get { return "Party"; }
         }
 
-        public Panel ModulePanel {
+        public Panel ModulePanel
+        {
             get { return this; }
         }
 
-        public bool Enabled {
+        public bool Enabled
+        {
             get { return enabled; }
-            set {
+            set
+            {
                 enabled = value;
                 if (EnabledChanged != null)
                     EnabledChanged(this, EventArgs.Empty);
@@ -178,7 +205,8 @@ namespace Client.Logic.ExpKit.Modules
         public event EventHandler EnabledChanged;
 
 
-        public Enums.ExpKitModules ModuleID {
+        public Enums.ExpKitModules ModuleID
+        {
             get { return Enums.ExpKitModules.Party; }
         }
     }

@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,18 +21,14 @@
 
 namespace Client.Logic
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     public class Enums
     {
         #region Enumerations
 
         public enum ChatChannel
         {
-            Local, 
-            Global, 
+            Local,
+            Global,
             Guild,
             Staff
         }
@@ -53,7 +52,8 @@ namespace Client.Logic
             NineStar = 15
         }
 
-        public enum JobStatus {
+        public enum JobStatus
+        {
             Obtained = 0,
             Taken = 1,
             Suspended = 2,
@@ -120,7 +120,7 @@ namespace Client.Logic
             UpLeft = 6,
             DownRight = 7
         }
-        
+
         public enum RFloorGoalType
         {
             NextFloor,
@@ -239,13 +239,14 @@ namespace Client.Logic
         }
 
 
-        public enum GuildRank {
+        public enum GuildRank
+        {
             None = 0,
             Member = 1,
             Admin = 2,
             Founder = 3
         }
-        
+
         public enum ExplorerRank
         {
             Normal = 0,
@@ -353,7 +354,7 @@ namespace Client.Logic
 
         public enum Weather
         {
-        		Ambiguous = 0,
+            Ambiguous = 0,
             None = 1,
             Raining = 2,
             Snowing = 3,
@@ -419,7 +420,8 @@ namespace Client.Logic
             Water
         }
 
-        public enum Coloration {
+        public enum Coloration
+        {
             Normal = 0,
             Shiny = 1
         }
@@ -449,7 +451,7 @@ namespace Client.Logic
             AllAlliesButUser = 6,//N,Y,N
             NoOne = 7            //N,N,N
         }
-        
+
         public enum MoveCategory
         {
             Physical = 0,
@@ -458,7 +460,8 @@ namespace Client.Logic
         }
 
 
-        public enum MoveAnimationType {
+        public enum MoveAnimationType
+        {
             Normal,
             Arrow,
             Throw,
@@ -469,7 +472,8 @@ namespace Client.Logic
             ItemThrow
         }
 
-        public enum StationaryAnimType {
+        public enum StationaryAnimType
+        {
             Spell,
             Arrow,
             Beam
@@ -483,7 +487,6 @@ namespace Client.Logic
             Paralyze,
             Poison,
             Sleep
-
         }
 
         public enum PadlockState
@@ -491,15 +494,15 @@ namespace Client.Logic
             Lock,
             Unlock
         }
-        
-        public enum InvMenuType {
+
+        public enum InvMenuType
+        {
             Use,
             Store,
             Take,
             Sell,
             Buy,
             Recycle
-            
         }
 
         public enum TournamentListingMode

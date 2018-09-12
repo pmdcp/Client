@@ -30,8 +30,8 @@ namespace Client.Logic.Menus
 {
     class mnuGuild : Widgets.BorderedPanel, Core.IMenu
     {
-
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -52,7 +52,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuGuild(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(280, 206);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(10, 40);
@@ -115,8 +116,6 @@ namespace Client.Logic.Menus
             this.AddWidget(lblMakeTrainee);
             this.AddWidget(lblMakeMember);
             this.AddWidget(lblDisown);
-
-
         }
 
         #endregion Constructors
@@ -138,39 +137,51 @@ namespace Client.Logic.Menus
 
         #region Methods
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 111 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
-            				Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                     }
                     break;
                 case SdlDotNet.Input.Key.Backspace:
                     {
-                    	//if (txtName.
+                        //if (txtName.
                         MenuSwitcher.ShowMainMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                     }
@@ -178,7 +189,8 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void SelectItem(int itemNum) {
+        private void SelectItem(int itemNum)
+        {
             //switch (itemNum) {
             //    case 0: {
             //            Messenger.MakeTrainee(txtName.Text);
@@ -192,11 +204,12 @@ namespace Client.Logic.Menus
             //            Messenger.Disown(txtName.Text);
             //        }
             //        break;
-                
+
             //}
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 

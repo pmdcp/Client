@@ -62,7 +62,7 @@ namespace Client.Logic.Menus
 
             this.originalMenu = originalMenu;
             this.itemSlot = itemSlot;
-            
+
             picPreview = new PictureBox("picPreview");
             picPreview.Size = new Size(32, 32);
             picPreview.BackColor = Color.Transparent;
@@ -75,7 +75,7 @@ namespace Client.Logic.Menus
             lblItem.Font = FontManager.LoadFont("PMDCP", 32);
             lblItem.Text = Items.ItemHelper.Items[itemNum].Name;
             lblItem.ForeColor = Color.WhiteSmoke;
-            
+
             lblRarity = new Label("lblRarity");
             lblRarity.Location = new Point(20, 42);
             lblRarity.AutoSize = true;
@@ -89,14 +89,18 @@ namespace Client.Logic.Menus
             lblPrice.Location = new Point(20, y);
             lblPrice.AutoSize = true;
             lblPrice.Font = FontManager.LoadFont("PMDCP", 16);
-            if (Items.ItemHelper.Items[itemNum].Price > 0) {
+            if (Items.ItemHelper.Items[itemNum].Price > 0)
+            {
                 lblPrice.Text = "Sell Price: " + Items.ItemHelper.Items[itemNum].Price;
-            } else {
+            }
+            else
+            {
                 lblPrice.Text = "Cannot be sold.";
             }
             lblPrice.ForeColor = Color.WhiteSmoke;
 
-            if (Items.ItemHelper.Items[itemNum].Bound) {
+            if (Items.ItemHelper.Items[itemNum].Bound)
+            {
                 y += 20;
                 lblDroppable = new Label("lblDroppable");
                 lblDroppable.Location = new Point(20, y);
@@ -106,7 +110,8 @@ namespace Client.Logic.Menus
                 lblDroppable.ForeColor = Color.WhiteSmoke;
             }
 
-            if (Items.ItemHelper.Items[itemNum].Bound) {
+            if (Items.ItemHelper.Items[itemNum].Bound)
+            {
                 y += 20;
                 lblLoseable = new Label("lblLoseable");
                 lblLoseable.Location = new Point(20, y);
@@ -124,7 +129,7 @@ namespace Client.Logic.Menus
             lblDescription.Font = FontManager.LoadFont("PMDCP", 16);
             lblDescription.Text = Items.ItemHelper.Items[itemNum].Desc;
             lblDescription.ForeColor = Color.WhiteSmoke;
-            
+
             this.AddWidget(picPreview);
             this.AddWidget(lblItem);
             this.AddWidget(lblRarity);
@@ -134,14 +139,13 @@ namespace Client.Logic.Menus
             this.AddWidget(lblDescription);
         }
 
-        
+
 
         public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
         {
             base.OnKeyboardDown(e);
             switch (e.Key)
             {
-                
                 case SdlDotNet.Input.Key.Return:
                     {
                         MenuBack();
@@ -158,43 +162,46 @@ namespace Client.Logic.Menus
 
         private void MenuBack()
         {
-        	
-        	switch (originalMenu) {
-        			case Enums.InvMenuType.Use: {
-        					MenuSwitcher.ShowInventoryMenu(itemSlot);
-        					Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
-        			}
-        				break;
-        				case Enums.InvMenuType.Store:{
-        					MenuSwitcher.ShowBankDepositMenu(itemSlot);
-        					Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
-        				}
-        				break;
-        				case Enums.InvMenuType.Take: {
-        					MenuSwitcher.ShowBankWithdrawMenu(itemSlot);
-        					Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
-        				}
-        				break;
-        				case Enums.InvMenuType.Sell:{
-        					MenuSwitcher.ShowShopSellMenu(itemSlot);
-        					Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
-        				}
-        				
-        				break;
-        				case Enums.InvMenuType.Buy:{
-        					MenuSwitcher.ShowShopBuyMenu(itemSlot);
-        					Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
-        				}
-        				
-        				break;
-        				case Enums.InvMenuType.Recycle:{
-        					
-        				}
-        				
-        				break;
-        	}
+            switch (originalMenu)
+            {
+                case Enums.InvMenuType.Use:
+                    {
+                        MenuSwitcher.ShowInventoryMenu(itemSlot);
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
+                    }
+                    break;
+                case Enums.InvMenuType.Store:
+                    {
+                        MenuSwitcher.ShowBankDepositMenu(itemSlot);
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
+                    }
+                    break;
+                case Enums.InvMenuType.Take:
+                    {
+                        MenuSwitcher.ShowBankWithdrawMenu(itemSlot);
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
+                    }
+                    break;
+                case Enums.InvMenuType.Sell:
+                    {
+                        MenuSwitcher.ShowShopSellMenu(itemSlot);
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
+                    }
 
+                    break;
+                case Enums.InvMenuType.Buy:
+                    {
+                        MenuSwitcher.ShowShopBuyMenu(itemSlot);
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
+                    }
+
+                    break;
+                case Enums.InvMenuType.Recycle:
+                    {
+                    }
+
+                    break;
+            }
         }
-
     }
 }

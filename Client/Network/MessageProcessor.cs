@@ -1,4 +1,16 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+using Client.Logic.Core;
+using Client.Logic.Windows;
+using PMDCP.Core;
+using PMDCP.Sockets;
+using PMDCP.Net;
+using Client.Logic.Players;
+using Client.Logic.Players.Parties;
+using Client.Logic.Music.YouTube;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,59 +30,59 @@
 
 namespace Client.Logic.Network
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-    using Client.Logic.Core;
-    using Client.Logic.Windows;
-    using PMDCP.Core;
-    using PMDCP.Sockets;
-    using PMDCP.Net;
-    using Client.Logic.Players;
-    using Client.Logic.Players.Parties;
-    using Client.Logic.Music.YouTube;
-
     class MessageProcessor
     {
         public static System.Diagnostics.Stopwatch PingStopwatch = new System.Diagnostics.Stopwatch();
         #region Methods
 
-        public static void HandleData(string data) {
+        public static void HandleData(string data)
+        {
             string[] parse = data.Split(Convert.ToChar(TcpPacket.SEP_CHAR));
-            switch (parse[0].ToLower()) {
-                case "cryptkey": {
-                        if (parse[1].StartsWith("----") == false) {
+            switch (parse[0].ToLower())
+            {
+                case "cryptkey":
+                    {
+                        if (parse[1].StartsWith("----") == false)
+                        {
                             NetworkManager.packetModifiers.SetKey(parse[1]);
-                        } else {
+                        }
+                        else
+                        {
                             // Encryption is disabled
                             NetworkManager.packetModifiers.SetKey(null);
                         }
                     }
                     break;
-                case "news": {
+                case "news":
+                    {
                         SdlDotNet.Widgets.Window winUpdates = WindowSwitcher.FindWindow("winUpdates");
-                        if (winUpdates != null) {
+                        if (winUpdates != null)
+                        {
                             ((winUpdates)winUpdates).DisplayNews(parse[1]);
                         }
                     }
                     break;
-                case "foolsmode": {
+                case "foolsmode":
+                    {
                         Globals.FoolsMode = parse[1].ToBool();
-                        for (int i = 0; i < 4; i++) {
+                        for (int i = 0; i < 4; i++)
+                        {
                             WindowSwitcher.GameWindow.ActiveTeam.DisplayRecruitData(i);
                         }
                     }
                     break;
                 #region Log in
-                case "allchars": {
+                case "allchars":
+                    {
                         SdlDotNet.Widgets.Window winLoading = WindowSwitcher.FindWindow("winLoading");
-                        if (winLoading != null) {
+                        if (winLoading != null)
+                        {
                             winLoading.Close();
                         }
 
                         Windows.winSelectChar charWindow = WindowSwitcher.FindWindow("winSelectChar") as Windows.winSelectChar;
-                        if (charWindow == null) {
+                        if (charWindow == null)
+                        {
                             charWindow = new winSelectChar();
                             WindowSwitcher.AddWindow(charWindow);
                         }
@@ -81,7 +93,8 @@ namespace Client.Logic.Network
                     }
                     break;
 
-                case "maxinfo": {
+                case "maxinfo":
+                    {
                         MaxInfo.GameName = parse[1].Trim();
                         MaxInfo.MaxItems = parse[2].ToInt();
                         MaxInfo.MaxNpcs = parse[3].ToInt();
@@ -113,7 +126,8 @@ namespace Client.Logic.Network
                         Maps.MapHelper.InitMapHelper();
                     }
                     break;
-                case "myconid": {
+                case "myconid":
+                    {
                         PlayerManager.Players.Add(parse[1], new MyPlayer());
                         PlayerManager.MyConnectionID = parse[1];
                         PlayerManager.MyPlayer.ID = parse[1];
@@ -126,56 +140,68 @@ namespace Client.Logic.Network
                         WindowSwitcher.AddWindow(expKitWindow);
                     }
                     break;
-                case "allitemsdata": {
+                case "allitemsdata":
+                    {
                         Items.ItemHelper.LoadItemsFromPacket(parse);
                     }
                     break;
-                case "allemoticonsdata": {
+                case "allemoticonsdata":
+                    {
                         Emotions.EmotionHelper.LoadEmotionsFromPacket(parse);
                     }
                     break;
-                case "allarrowsdata": {
+                case "allarrowsdata":
+                    {
                         //Arrows.ArrowHelper.LoadArrowsFromPacket(parse);
                     }
                     break;
-                case "allnpcsdata": {
+                case "allnpcsdata":
+                    {
                         Npc.NpcHelper.LoadNpcsFromPacket(parse);
                     }
                     break;
-                case "allshopsdata": {
+                case "allshopsdata":
+                    {
                         Shops.ShopHelper.LoadShopsFromPacket(parse);
                     }
                     break;
-                case "allspellsdata": {
+                case "allspellsdata":
+                    {
                         Moves.MoveHelper.LoadMovesFromPacket(parse);
                     }
                     break;
-                case "allevosdata": {
+                case "allevosdata":
+                    {
                         Evolutions.EvolutionHelper.LoadEvosFromPacket(parse);
                     }
                     break;
-                case "allstoriesdata": {
+                case "allstoriesdata":
+                    {
                         Stories.StoryHelper.LoadStoriesFromPacket(parse);
                     }
                     break;
-                    //no more preset missions
+                //no more preset missions
                 //case "allmissions": {
                 //        Missions.MissionHelper.LoadMissionsFromPacket(parse);
                 //    }
                 //    break;
-                case "allrdungeons": {
+                case "allrdungeons":
+                    {
                         RDungeons.RDungeonHelper.LoadRDungeonsFromPacket(parse);
                     }
                     break;
-                case "alldungeons": {
+                case "alldungeons":
+                    {
                         Dungeons.DungeonHelper.LoadDungeonsFromPacket(parse);
                     }
                     break;
-                case "allpokemon": {
+                case "allpokemon":
+                    {
                         Pokedex.PokemonHelper.LoadPokemonFromPacket(parse);
                     }
                     break;
-                case "ingame": {
+                case "ingame":
+                    {
                         WindowSwitcher.FindWindow("winLoading").Close();
                         WindowSwitcher.GameWindow.ShowWidgets();
                         //WindowSwitcher.AddWindow(WindowSwitcher.GameWindow);
@@ -186,11 +212,14 @@ namespace Client.Logic.Network
                     break;
                 #endregion
                 #region Recruitment
-                case "activeteam": {
+                case "activeteam":
+                    {
                         int n = 1;
-                        for (int i = 0; i < MaxInfo.MAX_ACTIVETEAM; i++) {
+                        for (int i = 0; i < MaxInfo.MAX_ACTIVETEAM; i++)
+                        {
                             PlayerManager.MyPlayer.Team[i] = new Recruit();
-                            if (parse[n].ToLower() != "notloaded") {
+                            if (parse[n].ToLower() != "notloaded")
+                            {
                                 Recruit recruit = PlayerManager.MyPlayer.Team[i];
                                 recruit.Name = parse[n];
                                 recruit.Num = parse[n + 1].ToInt();
@@ -205,26 +234,29 @@ namespace Client.Logic.Network
                                 recruit.HeldItemSlot = parse[n + 10].ToInt();
                                 recruit.Loaded = true;
                                 n += 11;
-                            } else {
+                            }
+                            else
+                            {
                                 n += 1;
                             }
                             WindowSwitcher.GameWindow.ActiveTeam.DisplayRecruitData(i);
                         }
                     }
                     break;
-                case "playerhelditem": {
-                        for (int i = 0; i < 4; i++) {
-                            if (PlayerManager.MyPlayer.Team[i] != null && PlayerManager.MyPlayer.Team[i].Loaded) {
+                case "playerhelditem":
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (PlayerManager.MyPlayer.Team[i] != null && PlayerManager.MyPlayer.Team[i].Loaded)
+                            {
                                 PlayerManager.MyPlayer.Team[i].HeldItemSlot = parse[i + 1].ToInt();
                                 WindowSwitcher.GameWindow.ActiveTeam.DisplayRecruitHeldItem(i);
                             }
-
-
                         }
 
-                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuInventory") != null) {
+                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuInventory") != null)
+                        {
                             ((Menus.mnuInventory)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuInventory")).DisplayItems(((Menus.mnuInventory)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuInventory")).currentTen * 10 + 1);
-
                         }
                         //PlayerManager.MyPlayer.ArmorSlot = parse[1].ToInt();
                         //PlayerManager.MyPlayer.WeaponSlot = parse[2].ToInt();
@@ -236,27 +268,31 @@ namespace Client.Logic.Network
 
                     }
                     break;
-                case "teamstatus": {
-                        for (int i = 0; i < 4; i++) {
-                            if (PlayerManager.MyPlayer.Team[i] != null) {
+                case "teamstatus":
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (PlayerManager.MyPlayer.Team[i] != null)
+                            {
                                 PlayerManager.MyPlayer.Team[i].StatusAilment = (Enums.StatusAilment)parse[i + 1].ToInt();
                                 WindowSwitcher.GameWindow.ActiveTeam.DisplayRecruitStatusAilment(i);
                             }
-
                         }
-
                     }
                     break;
-                case "activecharswap": {
+                case "activecharswap":
+                    {
                         PlayerManager.MyPlayer.ActiveTeamNum = parse[1].ToInt();
                         Music.Music.AudioPlayer.PlaySoundEffect("magic165.wav");
                     }
                     break;
-                case "activeteamnum": {
+                case "activeteamnum":
+                    {
                         PlayerManager.MyPlayer.ActiveTeamNum = parse[1].ToInt();
                     }
                     break;
-                case "allrecruits": {
+                case "allrecruits":
+                    {
                         //PlayerManager.MyPlayer.MovementLocked = false;
                         Menus.MenuSwitcher.ShowAssembly(parse);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
@@ -264,31 +300,34 @@ namespace Client.Logic.Network
                     break;
                 #endregion
                 #region Stats
-                case "playerhp": {
-                        if (PlayerManager.MyPlayer != null) {
+                case "playerhp":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.Team[parse[1].ToInt()].MaxHP = parse[2].ToInt();
                             PlayerManager.MyPlayer.Team[parse[1].ToInt()].HP = parse[3].ToInt();
                             //PlayerManager.MyPlayer.Team[PlayerManager.MyPlayer.ActiveTeamNum].HPPercent = MathFunctions.CalculatePercent(PlayerManager.MyPlayer.HP, PlayerManager.MyPlayer.MaxHP);
-                            if (PlayerManager.MyPlayer.Team[parse[1].ToInt()].MaxHP > 0) {
+                            if (PlayerManager.MyPlayer.Team[parse[1].ToInt()].MaxHP > 0)
+                            {
                                 WindowSwitcher.GameWindow.ActiveTeam.DisplayRecruitHP(parse[1].ToInt());
                             }
                         }
                     }
                     break;
-                case "playerexp": {
+                case "playerexp":
+                    {
                         PlayerManager.MyPlayer.MaxExp = parse[1].ToUlng();
                         PlayerManager.MyPlayer.Exp = parse[2].ToUlng();
                         PlayerManager.MyPlayer.GetActiveRecruit().ExpPercent = (int)MathFunctions.CalculatePercent(PlayerManager.MyPlayer.Exp, PlayerManager.MyPlayer.MaxExp);
 
                         WindowSwitcher.GameWindow.ActiveTeam.DisplayRecruitExp(PlayerManager.MyPlayer.ActiveTeamNum);
-
                     }
                     break;
-                case "playerstatspacket": {
-
-
+                case "playerstatspacket":
+                    {
                         WindowSwitcher.GameWindow.StatLabel.SetStats(parse[1], parse[2], parse[3], parse[4], parse[5]);
-                        if (PlayerManager.MyPlayer != null) {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.MaxExp = parse[6].ToUlng();
                             PlayerManager.MyPlayer.Exp = parse[7].ToUlng();
                             PlayerManager.MyPlayer.Level = parse[8].ToInt();
@@ -299,36 +338,44 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "recruitbelly": {
+                case "recruitbelly":
+                    {
                         PlayerManager.MyPlayer.Belly = parse[1].ToInt();
                         PlayerManager.MyPlayer.MaxBelly = parse[2].ToInt();
                     }
                     break;
                 #endregion
                 #region Chat
-                case "msg": {
+                case "msg":
+                    {
                         ChatReceived(parse);
                         break;
                     }
-                case "battlemsg": {
+                case "battlemsg":
+                    {
                         WindowSwitcher.GameWindow.AddToBattleLog(parse[1], Color.FromArgb(parse[2].ToInt()));
                     }
                     break;
-                case "multibattlemsg": {
-                        for (int i = 1; i < parse.Length; i++) {
+                case "multibattlemsg":
+                    {
+                        for (int i = 1; i < parse.Length; i++)
+                        {
                             WindowSwitcher.GameWindow.AddToBattleLog(parse[i * 2 - 1], Color.FromArgb(parse[i * 2].ToInt()));
                         }
                     }
                     break;
-                case "battledivider": {
+                case "battledivider":
+                    {
                         WindowSwitcher.GameWindow.AddToBattleLog("--------------------------------", Color.WhiteSmoke);
                     }
                     break;
-                case "speechbubble": {
+                case "speechbubble":
+                    {
                         string text = parse[1];
                         string conID = parse[2];
                         IPlayer player = PlayerManager.Players[conID];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             Logic.Graphics.Renderers.Sprites.SpeechBubble bubble = new Logic.Graphics.Renderers.Sprites.SpeechBubble();
                             bubble.SetBubbleText(text);
                             bubble.BubbleDisplayStart = Globals.Tick;
@@ -338,7 +385,8 @@ namespace Client.Logic.Network
                     break;
                 #endregion
                 #region Maps
-                case "checkformap": {
+                case "checkformap":
+                    {
                         // Erase all players except self
                         //for (int i = 0; i < PlayerManager.Players.Count; i++) {
                         //    if (PlayerManager.Players.GetPlayerFromIndex(i).ID != PlayerManager.MyConnectionID) {
@@ -351,15 +399,19 @@ namespace Client.Logic.Network
                         int[] revisions = new int[9];
                         bool[] tempChanges = new bool[9];
                         int n = 1;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             mapIDs[i] = parse[n];
 
-                            if (mapIDs[i] == "nm-1") {
+                            if (mapIDs[i] == "nm-1")
+                            {
                                 // No map
                                 revisions[i] = -1;
                                 tempChanges[i] = false;
                                 n += 1;
-                            } else {
+                            }
+                            else
+                            {
                                 // A map is specified
                                 revisions[i] = parse[n + 1].ToInt();
                                 tempChanges[i] = parse[n + 2].ToBool();
@@ -374,20 +426,28 @@ namespace Client.Logic.Network
                         Enums.MapID[] mapIDEnums = new Enums.MapID[9] { Enums.MapID.TempActive, Enums.MapID.TempUp, Enums.MapID.TempDown, Enums.MapID.TempLeft, Enums.MapID.TempRight,
                                                                         Enums.MapID.TempTopLeft, Enums.MapID.TempBottomLeft, Enums.MapID.TempTopRight, Enums.MapID.TempBottomRight };
 
-                        for (int i = 0; i < mapIDs.Length; i++) {
-                            if (revisions[i] == -1) {
+                        for (int i = 0; i < mapIDs.Length; i++)
+                        {
+                            if (revisions[i] == -1)
+                            {
                                 Maps.MapHelper.Maps[mapIDEnums[i]] = null;
                                 mapResults[i] = false;
-                            } else if (!tempChanges[i] && IO.IO.FileExists(IO.Paths.MapPath + "Map-" + mapIDs[i] + ".dat")) {
+                            }
+                            else if (!tempChanges[i] && IO.IO.FileExists(IO.Paths.MapPath + "Map-" + mapIDs[i] + ".dat"))
+                            {
                                 Maps.Map mapToTest = Maps.MapHelper.LoadMapFromFile(IO.Paths.MapPath + "Map-" + mapIDs[i] + ".dat");
-                                if (mapToTest != null && mapToTest.Revision == revisions[i]) {
+                                if (mapToTest != null && mapToTest.Revision == revisions[i])
+                                {
                                     mapResults[i] = true;
                                     mapToTest.MapID = mapIDs[i];
                                     Maps.MapHelper.Maps[mapIDEnums[i]] = mapToTest;
-                                    if (i == 0) {
+                                    if (i == 0)
+                                    {
                                         //PlayerManager.MyPlayer.MapID = mapIDs[i];
                                     }
-                                } else {
+                                }
+                                else
+                                {
                                     mapResults[i] = false;
                                 }
                             }
@@ -441,15 +501,18 @@ namespace Client.Logic.Network
                         //Messenger.SendNeedMapResponse(true);
                     }
                     break;
-                case "mapdata": {
+                case "mapdata":
+                    {
                         Maps.MapHelper.LoadMapFromPacket(parse);
                     }
                     break;
-                case "tiledata": {
+                case "tiledata":
+                    {
                         Maps.MapHelper.UpdateTile(parse);
                     }
                     break;
-                case "mapitemdata": {
+                case "mapitemdata":
+                    {
                         int n = 3;
 
                         Maps.Map map = null;
@@ -460,14 +523,18 @@ namespace Client.Logic.Network
                         //} else {
                         //    //map = Maps.MapHelper.Maps[Enums.MapID.TempActive];
                         //}
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                             }
                         }
-                        if (map != null) {
-                            for (int i = 0; i < MaxInfo.MaxMapItems; i++) {
+                        if (map != null)
+                        {
+                            for (int i = 0; i < MaxInfo.MaxMapItems; i++)
+                            {
                                 map.MapItems[i] = new Client.Logic.Maps.MapItem();
                                 map.MapItems[i].Num = parse[n].ToInt();
                                 map.MapItems[i].Value = parse[n + 1].ToInt();
@@ -479,26 +546,31 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "mapnpcdata": {
+                case "mapnpcdata":
+                    {
                         int n = 3;
 
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         if (parse[2].ToBool()) mapSearchCounter += 9;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                             }
                         }
-                        if (map != null) {
-                            for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++) {
+                        if (map != null)
+                        {
+                            for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++)
+                            {
                                 map.MapNpcs[i] = new Client.Logic.Maps.MapNpc();
                                 map.MapNpcs[i].Num = parse[n].ToInt();
                                 map.MapNpcs[i].Sprite = parse[n + 1].ToInt();
-                                map.MapNpcs[i].Form = parse[n+2].ToInt();
-                                map.MapNpcs[i].Shiny = (Enums.Coloration)parse[n+3].ToInt();
-                                map.MapNpcs[i].Sex = (Enums.Sex)parse[n+4].ToInt();
+                                map.MapNpcs[i].Form = parse[n + 2].ToInt();
+                                map.MapNpcs[i].Shiny = (Enums.Coloration)parse[n + 3].ToInt();
+                                map.MapNpcs[i].Sex = (Enums.Sex)parse[n + 4].ToInt();
                                 map.MapNpcs[i].Location = new Point(parse[n + 5].ToInt(), parse[n + 6].ToInt());
                                 map.MapNpcs[i].Direction = (Enums.Direction)parse[n + 7].ToInt();
                                 map.MapNpcs[i].StatusAilment = (Enums.StatusAilment)parse[n + 8].ToInt();
@@ -514,16 +586,19 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "seamlessmapchange": {
+                case "seamlessmapchange":
+                    {
                         PlayerManager.MyPlayer.SwitchingSeamlessMaps = true;
                     }
                     break;
-                case "mapdone": {
-                        if (!(Maps.MapHelper.Maps[Enums.MapID.TempActive] != null && PlayerManager.MyPlayer.MapID == Maps.MapHelper.Maps[Enums.MapID.TempActive].MapID)) {
+                case "mapdone":
+                    {
+                        if (!(Maps.MapHelper.Maps[Enums.MapID.TempActive] != null && PlayerManager.MyPlayer.MapID == Maps.MapHelper.Maps[Enums.MapID.TempActive].MapID))
+                        {
                             return;
                         }
-                        
-                        
+
+
                         //lock (PlayerManager.Players.Players) {
                         //    for (int i = 0; i < PlayerManager.Players.Players.Count; i++) {
                         //        if (PlayerManager.Players.Players.ValueByIndex(i).MapID != Maps.MapHelper.Maps[Enums.MapID.TempActive].MapID) {
@@ -533,49 +608,68 @@ namespace Client.Logic.Network
                         //}
 
                         bool isSameMap = false;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map tempMap = Maps.MapHelper.Maps[(Enums.MapID)(i + 9)];
-                            if (tempMap != null) {
+                            if (tempMap != null)
+                            {
                                 tempMap.Loaded = true;
                             }
-                            if (i == 0) {
-                                if (Maps.MapHelper.Maps[Enums.MapID.Active] == Maps.MapHelper.Maps[Enums.MapID.TempActive]) {
+                            if (i == 0)
+                            {
+                                if (Maps.MapHelper.Maps[Enums.MapID.Active] == Maps.MapHelper.Maps[Enums.MapID.TempActive])
+                                {
                                     isSameMap = true;
                                 }
                             }
                             //if (i != 0) {
-                            if ((i == 0 && !PlayerManager.MyPlayer.SwitchingSeamlessMaps) || (!PlayerManager.MyPlayer.SwitchingSeamlessMaps) || tempMap == null || Maps.MapHelper.ActiveMap == null) {
+                            if ((i == 0 && !PlayerManager.MyPlayer.SwitchingSeamlessMaps) || (!PlayerManager.MyPlayer.SwitchingSeamlessMaps) || tempMap == null || Maps.MapHelper.ActiveMap == null)
+                            {
                                 Maps.MapHelper.Maps[(Enums.MapID)(i)] = tempMap;
-                            } else if (i == 0 && PlayerManager.MyPlayer.SwitchingSeamlessMaps) {
+                            }
+                            else if (i == 0 && PlayerManager.MyPlayer.SwitchingSeamlessMaps)
+                            {
                                 // Do nothing...
-                            } else {
+                            }
+                            else
+                            {
                                 Maps.Map activeMap = Maps.MapHelper.ActiveMap;
-                                switch ((Enums.MapID)i) {
-                                    case Enums.MapID.Up: {
-                                            if (tempMap.MapID == ("s" + activeMap.Up.ToString())) {
+                                switch ((Enums.MapID)i)
+                                {
+                                    case Enums.MapID.Up:
+                                        {
+                                            if (tempMap.MapID == ("s" + activeMap.Up.ToString()))
+                                            {
                                                 Maps.MapHelper.Maps[(Enums.MapID)(i)] = tempMap;
                                             }
                                         }
                                         break;
-                                    case Enums.MapID.Down: {
-                                            if (tempMap.MapID == ("s" + activeMap.Down.ToString())) {
+                                    case Enums.MapID.Down:
+                                        {
+                                            if (tempMap.MapID == ("s" + activeMap.Down.ToString()))
+                                            {
                                                 Maps.MapHelper.Maps[(Enums.MapID)(i)] = tempMap;
                                             }
                                         }
                                         break;
-                                    case Enums.MapID.Left: {
-                                            if (tempMap.MapID == ("s" + activeMap.Left.ToString())) {
+                                    case Enums.MapID.Left:
+                                        {
+                                            if (tempMap.MapID == ("s" + activeMap.Left.ToString()))
+                                            {
                                                 Maps.MapHelper.Maps[(Enums.MapID)(i)] = tempMap;
                                             }
                                         }
                                         break;
-                                    case Enums.MapID.Right: {
-                                            if (tempMap.MapID == ("s" + activeMap.Right.ToString())) {
+                                    case Enums.MapID.Right:
+                                        {
+                                            if (tempMap.MapID == ("s" + activeMap.Right.ToString()))
+                                            {
                                                 Maps.MapHelper.Maps[(Enums.MapID)(i)] = tempMap;
                                             }
                                         }
                                         break;
-                                    default: {
+                                    default:
+                                        {
                                             Maps.MapHelper.Maps[(Enums.MapID)(i)] = tempMap;
                                         }
                                         break;
@@ -594,25 +688,32 @@ namespace Client.Logic.Network
                             //Maps.MapHelper.Maps[(Enums.MapID)(i + 9)] = null;
                         }
 
-                        if (!isSameMap) {
+                        if (!isSameMap)
+                        {
                             //PlayerManager.MyPlayer.MapID = Maps.MapHelper.Maps[Enums.MapID.Active].MapID;
                         }
 
                         Maps.MapHelper.ActiveMap.DoOverlayChecks();
 
                         Logic.Graphics.Effects.Overlays.ScreenOverlays.MapChangeInfoOverlay infoOverlay = Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.ScreenOverlay as Logic.Graphics.Effects.Overlays.ScreenOverlays.MapChangeInfoOverlay;
-                        if (infoOverlay != null) {
-                            if (infoOverlay.MinTimePassed) {
+                        if (infoOverlay != null)
+                        {
+                            if (infoOverlay.MinTimePassed)
+                            {
                                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.ScreenOverlay = null;
                             }
                         }
 
                         PlayerManager.MyPlayer.SwitchingSeamlessMaps = false;
-                        if (!isSameMap) {
+                        if (!isSameMap)
+                        {
                             WindowSwitcher.GameWindow.MapViewer.ActiveMap = Maps.MapHelper.ActiveMap;
-                            if (PlayerManager.MyPlayer.Darkness > -2) {
+                            if (PlayerManager.MyPlayer.Darkness > -2)
+                            {
                                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(PlayerManager.MyPlayer.Darkness);
-                            } else {
+                            }
+                            else
+                            {
                                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(Maps.MapHelper.ActiveMap.Darkness);
                             }
                             Logic.Graphics.Renderers.Screen.ScreenRenderer.DeactivateOffscreenSprites();
@@ -623,17 +724,23 @@ namespace Client.Logic.Network
 
                             PlayerManager.MyPlayer.SetCurrentRoom();
                             //Music.Music.AudioPlayer.PlayMusic(Maps.MapHelper.ActiveMap.Music);
-                            if (string.IsNullOrEmpty(Maps.MapHelper.ActiveMap.YouTubeMusicID)) {
+                            if (string.IsNullOrEmpty(Maps.MapHelper.ActiveMap.YouTubeMusicID))
+                            {
                                 YouTubeAudioPlayer.Instance.Stop();
                                 ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).FadeToNext(Maps.MapHelper.ActiveMap.Music, 1000);
-                            } else {
+                            }
+                            else
+                            {
                                 ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).StopMusic();
                                 YouTubeAudioPlayer.Instance.Play(Maps.MapHelper.ActiveMap.YouTubeMusicID);
                             }
 
-                            if (Stories.StoryProcessor.ActiveStory != null && Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment].Action == Enums.StoryAction.Warp) {
-                                if (Maps.MapHelper.ActiveMap.MapID == ((Stories.Segments.WarpSegment)Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment]).Map) {
-                                    if (Stories.StoryProcessor.ActiveStory.State.StoryPaused) {
+                            if (Stories.StoryProcessor.ActiveStory != null && Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment].Action == Enums.StoryAction.Warp)
+                            {
+                                if (Maps.MapHelper.ActiveMap.MapID == ((Stories.Segments.WarpSegment)Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment]).Map)
+                                {
+                                    if (Stories.StoryProcessor.ActiveStory.State.StoryPaused)
+                                    {
                                         Stories.StoryProcessor.ActiveStory.State.Unpause();
                                         Stories.StoryProcessor.ActiveStory.State.StoryPaused = false;
                                     }
@@ -648,115 +755,142 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "weather": {
+                case "weather":
+                    {
                         Enums.Weather weather = (Enums.Weather)parse[1].ToInt();
-                        if (Globals.ActiveWeather != weather) {
-                            switch (weather) {
+                        if (Globals.ActiveWeather != weather)
+                        {
+                            switch (weather)
+                            {
                                 case Enums.Weather.Ambiguous:
-                                case Enums.Weather.None: {
-                                        switch (Globals.ActiveWeather) {
+                                case Enums.Weather.None:
+                                    {
+                                        switch (Globals.ActiveWeather)
+                                        {
                                             case Enums.Weather.Thunder:
-                                            case Enums.Weather.Raining: {
-
+                                            case Enums.Weather.Raining:
+                                                {
                                                     WindowSwitcher.GameWindow.AddToBattleLog("The rain stopped.", Color.LightCyan);
-
                                                 }
                                                 break;
                                             case Enums.Weather.Snowing:
-                                            case Enums.Weather.Snowstorm: {
+                                            case Enums.Weather.Snowstorm:
+                                                {
                                                     WindowSwitcher.GameWindow.AddToBattleLog("It stopped snowing.", Color.LightCyan);
                                                 }
                                                 break;
-                                            case Enums.Weather.Hail: {
+                                            case Enums.Weather.Hail:
+                                                {
                                                     WindowSwitcher.GameWindow.AddToBattleLog("The hail stopped.", Color.LightCyan);
                                                 }
                                                 break;
-                                            case Enums.Weather.DiamondDust: {
+                                            case Enums.Weather.DiamondDust:
+                                                {
                                                     WindowSwitcher.GameWindow.AddToBattleLog("The sky returned to normal.", Color.LightCyan);
                                                 }
                                                 break;
-                                            case Enums.Weather.Cloudy: {
+                                            case Enums.Weather.Cloudy:
+                                                {
                                                     WindowSwitcher.GameWindow.AddToBattleLog("The sky cleared up.", Color.LightCyan);
                                                 }
                                                 break;
-                                            case Enums.Weather.Fog: {
+                                            case Enums.Weather.Fog:
+                                                {
                                                     WindowSwitcher.GameWindow.AddToBattleLog("The fog cleared!", Color.LightCyan);
                                                 }
                                                 break;
-                                            case Enums.Weather.Sunny: {
+                                            case Enums.Weather.Sunny:
+                                                {
                                                     WindowSwitcher.GameWindow.AddToBattleLog("The sunlight faded.", Color.LightCyan);
                                                 }
                                                 break;
-                                            case Enums.Weather.Sandstorm: {
+                                            case Enums.Weather.Sandstorm:
+                                                {
                                                     WindowSwitcher.GameWindow.AddToBattleLog("The sandstorm subsided.", Color.LightCyan);
                                                 }
                                                 break;
-                                            case Enums.Weather.Ashfall: {
+                                            case Enums.Weather.Ashfall:
+                                                {
                                                     WindowSwitcher.GameWindow.AddToBattleLog("The ashes settled down.", Color.LightCyan);
                                                 }
                                                 break;
                                         }
                                     }
                                     break;
-                                case Enums.Weather.Raining: {
-                                        if (Globals.ActiveWeather != Enums.Weather.Thunder) {
+                                case Enums.Weather.Raining:
+                                    {
+                                        if (Globals.ActiveWeather != Enums.Weather.Thunder)
+                                        {
                                             WindowSwitcher.GameWindow.AddToBattleLog("It started to rain!", Color.LightCyan);
                                             Music.Music.AudioPlayer.PlaySoundEffect("magic617.wav");
                                         }
                                     }
                                     break;
-                                case Enums.Weather.Snowing: {
-                                        if (Globals.ActiveWeather != Enums.Weather.Snowstorm) {
+                                case Enums.Weather.Snowing:
+                                    {
+                                        if (Globals.ActiveWeather != Enums.Weather.Snowstorm)
+                                        {
                                             WindowSwitcher.GameWindow.AddToBattleLog("It started to snow!", Color.LightCyan);
                                             Music.Music.AudioPlayer.PlaySoundEffect("magic585.wav");
                                         }
                                     }
                                     break;
-                                case Enums.Weather.Thunder: {
-                                        if (Globals.ActiveWeather != Enums.Weather.Raining) {
+                                case Enums.Weather.Thunder:
+                                    {
+                                        if (Globals.ActiveWeather != Enums.Weather.Raining)
+                                        {
                                             WindowSwitcher.GameWindow.AddToBattleLog("It started to rain!", Color.LightCyan);
                                             Music.Music.AudioPlayer.PlaySoundEffect("magic617.wav");
                                         }
                                     }
                                     break;
-                                case Enums.Weather.Hail: {
+                                case Enums.Weather.Hail:
+                                    {
                                         WindowSwitcher.GameWindow.AddToBattleLog("It started to hail!", Color.LightCyan);
                                         Music.Music.AudioPlayer.PlaySoundEffect("magic639.wav");
                                     }
                                     break;
-                                case Enums.Weather.DiamondDust: {
+                                case Enums.Weather.DiamondDust:
+                                    {
                                         WindowSwitcher.GameWindow.AddToBattleLog("The sky began to sparkle!", Color.LightCyan);
                                         Music.Music.AudioPlayer.PlaySoundEffect("magic805.wav");
                                     }
                                     break;
-                                case Enums.Weather.Cloudy: {
+                                case Enums.Weather.Cloudy:
+                                    {
                                         WindowSwitcher.GameWindow.AddToBattleLog("The sky became cloudy...", Color.LightCyan);
                                         Music.Music.AudioPlayer.PlaySoundEffect("magic213.wav");
                                     }
                                     break;
-                                case Enums.Weather.Fog: {
+                                case Enums.Weather.Fog:
+                                    {
                                         WindowSwitcher.GameWindow.AddToBattleLog("The fog is deep...", Color.LightCyan);
                                         Music.Music.AudioPlayer.PlaySoundEffect("magic214.wav");
                                     }
                                     break;
-                                case Enums.Weather.Sunny: {
+                                case Enums.Weather.Sunny:
+                                    {
                                         WindowSwitcher.GameWindow.AddToBattleLog("The sunlight turned harsh!", Color.LightCyan);
                                         Music.Music.AudioPlayer.PlaySoundEffect("magic636.wav");
                                     }
                                     break;
-                                case Enums.Weather.Sandstorm: {
+                                case Enums.Weather.Sandstorm:
+                                    {
                                         WindowSwitcher.GameWindow.AddToBattleLog("A sandstorm brewed!", Color.LightCyan);
                                         Music.Music.AudioPlayer.PlaySoundEffect("magic618.wav");
                                     }
                                     break;
-                                case Enums.Weather.Snowstorm: {
-                                        if (Globals.ActiveWeather != Enums.Weather.Snowing) {
+                                case Enums.Weather.Snowstorm:
+                                    {
+                                        if (Globals.ActiveWeather != Enums.Weather.Snowing)
+                                        {
                                             WindowSwitcher.GameWindow.AddToBattleLog("It started to snow!", Color.LightCyan);
                                             Music.Music.AudioPlayer.PlaySoundEffect("magic579.wav");
                                         }
                                     }
                                     break;
-                                case Enums.Weather.Ashfall: {
+                                case Enums.Weather.Ashfall:
+                                    {
                                         WindowSwitcher.GameWindow.AddToBattleLog("Ashes filled the sky!", Color.LightCyan);
                                         Music.Music.AudioPlayer.PlaySoundEffect("magic487.wav");
                                     }
@@ -764,23 +898,28 @@ namespace Client.Logic.Network
                             }
 
                             Globals.ActiveWeather = weather;
-                            if (Maps.MapHelper.ActiveMap != null) {
+                            if (Maps.MapHelper.ActiveMap != null)
+                            {
                                 Maps.MapHelper.ActiveMap.DoOverlayChecks();
                             }
                         }
                     }
                     break;
-                case "darkness": {
+                case "darkness":
+                    {
                         Maps.MapHelper.ActiveMap.Darkness = parse[1].ToInt();
-                        if (PlayerManager.MyPlayer != null && PlayerManager.MyPlayer.Darkness > -2) {
+                        if (PlayerManager.MyPlayer != null && PlayerManager.MyPlayer.Darkness > -2)
+                        {
                             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(PlayerManager.MyPlayer.Darkness);
-                        } else {
+                        }
+                        else
+                        {
                             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(Maps.MapHelper.ActiveMap.Darkness);
                         }
-
                     }
                     break;
-                case "mapkey": {
+                case "mapkey":
+                    {
                         Maps.Map map = Maps.MapHelper.Maps[Enums.MapID.Active];
                         int x = parse[1].ToInt();
                         int y = parse[2].ToInt();
@@ -788,12 +927,13 @@ namespace Client.Logic.Network
                         map.Tile[x, y].DoorOpen = value;
                     }
                     break;
-                case "floorchangedisplay": {
+                case "floorchangedisplay":
+                    {
                         string dungeonName = parse[1];
                         int minDisplayTime = parse[2].ToInt();
                         string[] splitDungeonName = dungeonName.Split(' ');
                         string name = "";
-                        for (int i = 0; i<splitDungeonName.Length-1; i++)
+                        for (int i = 0; i < splitDungeonName.Length - 1; i++)
                         {
                             name += splitDungeonName[i];
                         }
@@ -801,25 +941,30 @@ namespace Client.Logic.Network
                         Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.ScreenOverlay = new Logic.Graphics.Effects.Overlays.ScreenOverlays.MapChangeInfoOverlay(dungeonName, minDisplayTime);
                     }
                     break;
-                case "spritechange": {
+                case "spritechange":
+                    {
                         Messenger.SendPacket(TcpPacket.CreatePacket("buysprite"));
                     }
                     break;
                 #endregion
                 #region Npcs
-                case "npchp": {
+                case "npchp":
+                    {
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null && map.Loaded) {
+                        if (map != null && map.Loaded)
+                        {
                             int n = parse[2].ToInt();
 
                             map.MapNpcs[n].HP = parse[3].ToInt();
@@ -827,19 +972,23 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "npcsprite": {
+                case "npcsprite":
+                    {
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null && map.Loaded) {
+                        if (map != null && map.Loaded)
+                        {
                             int n = parse[2].ToInt();
                             map.MapNpcs[n].Sprite = parse[3].ToInt();
                             map.MapNpcs[n].Form = parse[4].ToInt();
@@ -848,103 +997,120 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "npcvolatilestatus": {
+                case "npcvolatilestatus":
+                    {
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null && map.Loaded) {
+                        if (map != null && map.Loaded)
+                        {
                             int n = parse[2].ToInt();
                             map.MapNpcs[n].VolatileStatus.Clear();
-                            for (int i = 0; i < parse[3].ToInt(); i++) {
+                            for (int i = 0; i < parse[3].ToInt(); i++)
+                            {
                                 map.MapNpcs[n].VolatileStatus.Add(parse[4 + i].ToInt());
                             }
                         }
-
                     }
                     break;
-                case "npcconfuse": {
+                case "npcconfuse":
+                    {
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null && map.Loaded) {
+                        if (map != null && map.Loaded)
+                        {
                             int n = parse[2].ToInt();
 
                             //map.MapNpcs[n].Confused = parse[3].ToBool();
                         }
-
                     }
                     break;
-                case "npcattack": {
+                case "npcattack":
+                    {
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null && map.Loaded) {
+                        if (map != null && map.Loaded)
+                        {
                             int n = parse[2].ToInt();
 
                             map.MapNpcs[n].Attacking = true;
                             map.MapNpcs[n].AttackTimer = Globals.Tick + 1000;
                             map.MapNpcs[n].TotalAttackTime = 1000;
                         }
-
                     }
                     break;
-                case "npcxy": {
+                case "npcxy":
+                    {
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null && map.Loaded) {
-
+                        if (map != null && map.Loaded)
+                        {
                             int n = parse[2].ToInt();
                             map.MapNpcs[n].X = parse[3].ToInt();
                             map.MapNpcs[n].Y = parse[4].ToInt();
                         }
                     }
                     break;
-                case "npcdir": {
+                case "npcdir":
+                    {
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null && map.Loaded) {
+                        if (map != null && map.Loaded)
+                        {
                             int n = parse[2].ToInt();
                             map.MapNpcs[n].Direction = (Enums.Direction)parse[3].ToInt();
                             map.MapNpcs[n].Offset = new Point(0, 0);
@@ -952,40 +1118,47 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "npcstatus": {
+                case "npcstatus":
+                    {
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null && map.Loaded) {
+                        if (map != null && map.Loaded)
+                        {
                             int n = parse[2].ToInt();
 
                             map.MapNpcs[n].StatusAilment = (Enums.StatusAilment)parse[3].ToInt();
                         }
-
                     }
                     break;
-                case "nm": {
+                case "nm":
+                    {
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        
-                        for (int i = 0; i < 9; i++) {
+
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[2]) {
+                            if (testMap != null && testMap.MapID == parse[2])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null && map.Loaded) {
+                        if (map != null && map.Loaded)
+                        {
                             ByteUnpacker unpacker = new ByteUnpacker();
                             unpacker.AddRange(MaxInfo.MAX_MAP_NPCS); // Map npcs
                             unpacker.AddRange(4); // Direction
@@ -1011,8 +1184,9 @@ namespace Client.Logic.Network
                             map.MapNpcs[i].MovementSpeed = n;
 
                             bool seen = Logic.Graphics.Renderers.Screen.ScreenRenderer.CanBeSeen(map.MapNpcs[i].X, map.MapNpcs[i].Y, targetMapID);
-                            
-                            switch (map.MapNpcs[i].Direction) {
+
+                            switch (map.MapNpcs[i].Direction)
+                            {
                                 case Enums.Direction.Up:
                                     map.MapNpcs[i].Y--;
                                     map.MapNpcs[i].Offset = new Point(map.MapNpcs[i].Offset.X, Constants.TILE_HEIGHT);
@@ -1031,32 +1205,38 @@ namespace Client.Logic.Network
                                     break;
                             }
 
-                            if (seen != Logic.Graphics.Renderers.Screen.ScreenRenderer.CanBeSeen(map.MapNpcs[i].X, map.MapNpcs[i].Y, targetMapID)) {
+                            if (seen != Logic.Graphics.Renderers.Screen.ScreenRenderer.CanBeSeen(map.MapNpcs[i].X, map.MapNpcs[i].Y, targetMapID))
+                            {
                                 map.MapNpcs[i].Leaving = true;
                             }
 
-                            if (map.MapNpcs[i].WalkingFrame == -1) {
+                            if (map.MapNpcs[i].WalkingFrame == -1)
+                            {
                                 map.MapNpcs[i].LastWalkTime = Globals.Tick;
                                 map.MapNpcs[i].WalkingFrame = 0;
                             }
                         }
                     }
                     break;
-                case "spawnnpc": {
+                case "spawnnpc":
+                    {
                         int n = parse[2].ToInt();
 
                         Maps.Map map = null;
                         int mapSearchCounter = 0;
                         Enums.MapID targetMapID = Enums.MapID.Active;
-                        for (int i = 0; i < 9; i++) {
+                        for (int i = 0; i < 9; i++)
+                        {
                             Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                            if (testMap != null && testMap.MapID == parse[1]) {
+                            if (testMap != null && testMap.MapID == parse[1])
+                            {
                                 map = testMap;
                                 targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                 break;
                             }
                         }
-                        if (map != null) {
+                        if (map != null)
+                        {
                             map.MapNpcs[n] = new Maps.MapNpc();
                             map.MapNpcs[n].Num = parse[3].ToInt();
                             map.MapNpcs[n].Sprite = parse[4].ToInt();
@@ -1081,12 +1261,16 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "npcactive": {
+                case "npcactive":
+                    {
                         //int n = parse[1].ToInt();
 
-                        for (int i = 0; i < 9; i++) {
-                            if (Maps.MapHelper.Maps[(Enums.MapID)i] != null && Maps.MapHelper.Maps[(Enums.MapID)i].Loaded) {
-                                if (Maps.MapHelper.Maps[(Enums.MapID)i].MapID == parse[1]) {
+                        for (int i = 0; i < 9; i++)
+                        {
+                            if (Maps.MapHelper.Maps[(Enums.MapID)i] != null && Maps.MapHelper.Maps[(Enums.MapID)i].Loaded)
+                            {
+                                if (Maps.MapHelper.Maps[(Enums.MapID)i].MapID == parse[1])
+                                {
                                     Maps.MapHelper.Maps[(Enums.MapID)i].MapNpcs[parse[2].ToInt()].ScreenActive = parse[3].ToBool();
                                 }
                             }
@@ -1095,7 +1279,8 @@ namespace Client.Logic.Network
                         //Maps.MapHelper.ActiveMap.MapNpcs[n].ScreenActive = true;
                     }
                     break;
-                case "npcdead": {
+                case "npcdead":
+                    {
                         int n = parse[1].ToInt();
 
                         Maps.MapHelper.ActiveMap.MapNpcs[n] = new Maps.MapNpc();
@@ -1111,7 +1296,8 @@ namespace Client.Logic.Network
                     break;
                 #endregion
                 #region Items
-                case "spawnitem": {
+                case "spawnitem":
+                    {
                         int slot = parse[1].ToInt();
 
                         Maps.MapHelper.ActiveMap.MapItems[slot] = new Client.Logic.Maps.MapItem();
@@ -1120,10 +1306,10 @@ namespace Client.Logic.Network
                         Maps.MapHelper.ActiveMap.MapItems[slot].Sticky = parse[4].ToBool();
                         Maps.MapHelper.ActiveMap.MapItems[slot].X = parse[5].ToInt();
                         Maps.MapHelper.ActiveMap.MapItems[slot].Y = parse[6].ToInt();
-
                     }
                     break;
-                case "updateitem": {
+                case "updateitem":
+                    {
                         int n = parse[1].ToInt();
 
                         Items.ItemHelper.Items[n].Name = parse[2];
@@ -1156,56 +1342,65 @@ namespace Client.Logic.Network
                         Items.ItemHelper.Items[n].RecruitBonus = parse[29].ToInt();
 
 
-                        if (WindowSwitcher.FindWindow("winItemPanel") != null) {
+                        if (WindowSwitcher.FindWindow("winItemPanel") != null)
+                        {
                             ((Windows.Editors.winItemPanel)WindowSwitcher.FindWindow("winItemPanel")).RefreshItemList();
                         }
                     }
                     break;
-                case "openbank": {
+                case "openbank":
+                    {
                         //PlayerManager.MyPlayer.MovementLocked = false;
                         Menus.MenuSwitcher.OpenBankOptions();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "playerbank": {
-                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBank") != null) {
+                case "playerbank":
+                    {
+                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBank") != null)
+                        {
                             ((Menus.mnuBank)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBank")).LoadBankItems(parse);
                         }
                     }
                     break;
-                case "playerbankupdate": {
-
-                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBank") != null) {
+                case "playerbankupdate":
+                    {
+                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBank") != null)
+                        {
                             ((Menus.mnuBank)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBank")).BankItems[parse[1].ToInt() - 1].Num = parse[2].ToInt();
                             ((Menus.mnuBank)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBank")).BankItems[parse[1].ToInt() - 1].Value = parse[3].ToInt();
                             ((Menus.mnuBank)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBank")).DisplayItems(((Menus.mnuBank)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBank")).currentTen * 10);
                         }
                     }
                     break;
-                case "openshop": {
+                case "openshop":
+                    {
                         //PlayerManager.MyPlayer.MovementLocked = false;
                         Menus.MenuSwitcher.OpenShopOptions();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "trade": {
-                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuShop") != null) {
+                case "trade":
+                    {
+                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuShop") != null)
+                        {
                             ((Menus.mnuShop)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuShop")).LoadShopItems(parse);
                         }
                     }
                     break;
-                case "moverecallmenu": {
+                case "moverecallmenu":
+                    {
                         //PlayerManager.MyPlayer.MovementLocked = false;
                         Menus.MenuSwitcher.LinkShopRecallMenu();
                         ((Menus.mnuMoveRecall)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuMoveRecall")).LoadRecallMoves(parse);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
-
                     }
                     break;
                 #endregion
                 #region Players
-                case "leftmap": {
-                    PlayerManager.Players.Remove(parse[1]);
+                case "leftmap":
+                    {
+                        PlayerManager.Players.Remove(parse[1]);
                         //lock (PlayerManager.Players.Players) {
                         //    if (PlayerManager.Players.Players.ContainsKey(parse[1])) {
                         //        PlayerManager.Players.Players.RemoveAtKey(parse[1]);
@@ -1213,7 +1408,8 @@ namespace Client.Logic.Network
                         //}
                     }
                     break;
-                case "playerdata": {
+                case "playerdata":
+                    {
                         string id = parse[1];
                         IPlayer player = new GenericPlayer();
                         player.Name = parse[2];
@@ -1234,27 +1430,31 @@ namespace Client.Logic.Network
                         player.ScreenActive = parse[17].ToBool();
                         //player.Confused = parse[14].ToBool();
                         player.StatusAilment = (Enums.StatusAilment)parse[19].ToInt();
-                        for (int i = 0; i < parse[20].ToInt(); i++) {
+                        for (int i = 0; i < parse[20].ToInt(); i++)
+                        {
                             player.VolatileStatus.Add(parse[21 + i].ToInt());
                         }
                         // Make sure they aren't walking
                         player.MovementSpeed = Enums.MovementSpeed.Standing;
                         player.Offset = new Point();
-                        
+
                         PlayerManager.Players.Add(id, player);
                         Logic.Graphics.Renderers.Screen.ScreenRenderer.DeactivateOffscreenPlayers();
                     }
                     break;
-                case "playerguild": {
+                case "playerguild":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.Guild = parse[2];
                             player.GuildAccess = (Enums.GuildRank)parse[3].ToInt();
                         }
                     }
                     break;
-                case "myplayerdata": {
+                case "myplayerdata":
+                    {
                         PlayerManager.MyPlayer.ActiveTeamNum = parse[1].ToInt();
                         PlayerManager.MyPlayer.Name = parse[2];
                         PlayerManager.MyPlayer.Sprite = parse[3].ToInt();
@@ -1276,17 +1476,22 @@ namespace Client.Logic.Network
                         PlayerManager.MyPlayer.StatusAilment = (Enums.StatusAilment)parse[19].ToInt();
                         PlayerManager.MyPlayer.SpeedLimit = (Enums.MovementSpeed)parse[20].ToInt();
                         int mobility = parse[21].ToInt();
-                        for (int i = 0; i < 16; i++) {
-                            if (mobility % 2 == 1) {
+                        for (int i = 0; i < 16; i++)
+                        {
+                            if (mobility % 2 == 1)
+                            {
                                 PlayerManager.MyPlayer.Mobility[i] = true;
-                            } else {
+                            }
+                            else
+                            {
                                 PlayerManager.MyPlayer.Mobility[i] = false;
                             }
                             mobility /= 2;
                         }
                         PlayerManager.MyPlayer.TimeMultiplier = parse[22].ToInt();
-                        
-                        for (int i = 0; i < parse[24].ToInt(); i++) {
+
+                        for (int i = 0; i < parse[24].ToInt(); i++)
+                        {
                             PlayerManager.MyPlayer.VolatileStatus.Add(parse[25 + i].ToInt());
                         }
 
@@ -1294,25 +1499,32 @@ namespace Client.Logic.Network
                         PlayerManager.MyPlayer.MovementSpeed = Enums.MovementSpeed.Standing;
                         PlayerManager.MyPlayer.Offset = new Point();
 
-                        if (PlayerManager.MyPlayer.Darkness != parse[23].ToInt()) {
+                        if (PlayerManager.MyPlayer.Darkness != parse[23].ToInt())
+                        {
                             PlayerManager.MyPlayer.Darkness = parse[23].ToInt();
-                            if (PlayerManager.MyPlayer.Darkness > -2) {
+                            if (PlayerManager.MyPlayer.Darkness > -2)
+                            {
                                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(PlayerManager.MyPlayer.Darkness);
-                            } else if (Maps.MapHelper.ActiveMap != null) {
+                            }
+                            else if (Maps.MapHelper.ActiveMap != null)
+                            {
                                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(Maps.MapHelper.ActiveMap.Darkness);
                             }
                         }
                     }
                     break;
-                case "playeractive": {
+                case "playeractive":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.ScreenActive = parse[2].ToBool();
                         }
                     }
                     break;
-                case "playermove": {
+                case "playermove":
+                    {
                         string id = parse[1];
                         string mapID = parse[2];
                         int x = parse[3].ToInt();
@@ -1322,26 +1534,29 @@ namespace Client.Logic.Network
 
                         IPlayer player = PlayerManager.Players[id];
 
-                        if (player != null) {
-                            if (!(dir < Enums.Direction.Up || dir > Enums.Direction.Right)) {
-
+                        if (player != null)
+                        {
+                            if (!(dir < Enums.Direction.Up || dir > Enums.Direction.Right))
+                            {
                                 Maps.Map map = null;
                                 int mapSearchCounter = 0;
                                 Enums.MapID targetMapID = Enums.MapID.Active;
-                                for (int i = 0; i < 9; i++) {
+                                for (int i = 0; i < 9; i++)
+                                {
                                     Maps.Map testMap = Maps.MapHelper.Maps[(Enums.MapID)(i + mapSearchCounter)];
-                                    if (testMap != null && testMap.MapID == mapID) {
+                                    if (testMap != null && testMap.MapID == mapID)
+                                    {
                                         map = testMap;
                                         targetMapID = (Enums.MapID)(i + mapSearchCounter);
                                         break;
                                     }
                                 }
-                                if (map != null) {
-
-                                    if (Logic.Graphics.Renderers.Screen.ScreenRenderer.CanBeSeen(player.X, player.Y, targetMapID)) {
+                                if (map != null)
+                                {
+                                    if (Logic.Graphics.Renderers.Screen.ScreenRenderer.CanBeSeen(player.X, player.Y, targetMapID))
+                                    {
                                         player.Leaving = true;
                                     }
-
                                 }
 
                                 player.MapID = mapID;
@@ -1352,7 +1567,8 @@ namespace Client.Logic.Network
                                 player.Offset = new Point();
                                 player.MovementSpeed = n;
 
-                                switch (player.Direction) {
+                                switch (player.Direction)
+                                {
                                     case Enums.Direction.Up:
                                         player.Offset = new Point(player.Offset.X, Constants.TILE_HEIGHT);
                                         break;
@@ -1366,7 +1582,8 @@ namespace Client.Logic.Network
                                         player.Offset = new Point(Constants.TILE_WIDTH * -1, player.Offset.Y);
                                         break;
                                 }
-                                if (player.WalkingFrame == -1) {
+                                if (player.WalkingFrame == -1)
+                                {
                                     player.LastWalkTime = Globals.Tick;
                                     player.WalkingFrame = 0;
                                 }
@@ -1374,22 +1591,26 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "attack": {
+                case "attack":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
 
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.Attacking = true;
                             player.AttackTimer = Globals.Tick + 1000;
                             player.TotalAttackTime = 1000;
                         }
                     }
                     break;
-                case "playerdir": {
+                case "playerdir":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
 
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.Direction = (Enums.Direction)parse[2].ToInt();
 
                             player.MovementSpeed = Enums.MovementSpeed.Standing;
@@ -1397,57 +1618,73 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "myplayerguild": {
-                        if (PlayerManager.MyPlayer != null) {
+                case "myplayerguild":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.Guild = parse[1];
                             PlayerManager.MyPlayer.GuildAccess = (Enums.GuildRank)parse[2].ToInt();
                         }
                     }
                     break;
-                case "volatilestatus": {
-                    if (PlayerManager.MyPlayer != null) {
-                        PlayerManager.MyPlayer.VolatileStatus.Clear();
-                        for (int i = 0; i < parse[1].ToInt(); i++) {
-                            PlayerManager.MyPlayer.VolatileStatus.Add(parse[2 + i].ToInt());
+                case "volatilestatus":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
+                            PlayerManager.MyPlayer.VolatileStatus.Clear();
+                            for (int i = 0; i < parse[1].ToInt(); i++)
+                            {
+                                PlayerManager.MyPlayer.VolatileStatus.Add(parse[2 + i].ToInt());
+                            }
                         }
                     }
-                    }
                     break;
-                case "emote": {
-                        if (PlayerManager.MyPlayer != null) {
+                case "emote":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.CurrentEmote = new Client.Logic.Graphics.Renderers.Sprites.Emoticon(parse[1].ToInt(), parse[2].ToInt(), parse[3].ToInt());
                         }
                     }
                     break;
-                case "confusion": {
-                        if (PlayerManager.MyPlayer != null) {
+                case "confusion":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.Confused = parse[1].ToBool();
                         }
                     }
                     break;
-                case "playervolatilestatus": {
+                case "playervolatilestatus":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.VolatileStatus.Clear();
-                            for (int i = 0; i < parse[2].ToInt(); i++) {
+                            for (int i = 0; i < parse[2].ToInt(); i++)
+                            {
                                 player.VolatileStatus.Add(parse[3 + i].ToInt());
                             }
                         }
                     }
                     break;
-                case "playeremote": {
+                case "playeremote":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.CurrentEmote = new Client.Logic.Graphics.Renderers.Sprites.Emoticon(parse[2].ToInt(), parse[3].ToInt(), parse[4].ToInt());
                         }
                     }
                     break;
-                case "playersprite": {
+                case "playersprite":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.Sprite = parse[2].ToInt();
                             player.Form = parse[2].ToInt();
                             player.Shiny = (Enums.Coloration)parse[3].ToInt();
@@ -1455,73 +1692,91 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "playerdead": {
+                case "playerdead":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.Dead = parse[2].ToBool();
                         }
                     }
                     break;
-                case "playerhunted": {
+                case "playerhunted":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.Hunted = parse[2].ToBool();
                         }
                     }
                     break;
                     break;
-                case "statusailment": {
+                case "statusailment":
+                    {
                         PlayerManager.MyPlayer.StatusAilment = (Enums.StatusAilment)parse[1].ToInt();
                         WindowSwitcher.GameWindow.ActiveTeam.DisplayRecruitStatusAilment(PlayerManager.MyPlayer.ActiveTeamNum);
                     }
                     break;
-                case "playerstatused": {
+                case "playerstatused":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.StatusAilment = (Enums.StatusAilment)parse[2].ToInt();
                         }
                     }
                     break;
-                case "speedlimit": {
-                        if (PlayerManager.MyPlayer != null) {
+                case "speedlimit":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.SpeedLimit = (Enums.MovementSpeed)parse[1].ToInt();
                         }
                     }
                     break;
-                case "sprite": {
-                        if (PlayerManager.MyPlayer != null) {
+                case "sprite":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.Sprite = parse[1].ToInt();
                             PlayerManager.MyPlayer.Form = parse[2].ToInt();
                             PlayerManager.MyPlayer.Shiny = (Enums.Coloration)parse[3].ToInt();
                             PlayerManager.MyPlayer.Sex = (Enums.Sex)parse[4].ToInt();
                         }
-
                     }
                     break;
-                case "dead": {
-
-                        if (PlayerManager.MyPlayer != null) {
+                case "dead":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.Dead = parse[1].ToBool();
                         }
                     }
                     break;
-                case "hunted": {
-
-                        if (PlayerManager.MyPlayer != null) {
+                case "hunted":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.Hunted = parse[1].ToBool();
                         }
                     }
                     break;
-                case "mobility": {
-                        if (PlayerManager.MyPlayer != null) {
+                case "mobility":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             int mobility = parse[1].ToInt();
-                            for (int i = 0; i < 16; i++) {
-                                if (mobility % 2 == 1) {
+                            for (int i = 0; i < 16; i++)
+                            {
+                                if (mobility % 2 == 1)
+                                {
                                     PlayerManager.MyPlayer.Mobility[i] = true;
-                                } else {
+                                }
+                                else
+                                {
                                     PlayerManager.MyPlayer.Mobility[i] = false;
                                 }
                                 mobility /= 2;
@@ -1529,79 +1784,91 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "timemultiplier": {
-                        if (PlayerManager.MyPlayer != null) {
+                case "timemultiplier":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.TimeMultiplier = parse[1].ToInt();
                         }
-
                     }
                     break;
-                case "selfdarkness": {
-                        if (PlayerManager.MyPlayer != null && parse[1].ToInt() != PlayerManager.MyPlayer.Darkness) {
+                case "selfdarkness":
+                    {
+                        if (PlayerManager.MyPlayer != null && parse[1].ToInt() != PlayerManager.MyPlayer.Darkness)
+                        {
                             PlayerManager.MyPlayer.Darkness = parse[1].ToInt();
 
-                            if (PlayerManager.MyPlayer.Darkness > -2) {
+                            if (PlayerManager.MyPlayer.Darkness > -2)
+                            {
                                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(PlayerManager.MyPlayer.Darkness);
-                            } else {
+                            }
+                            else
+                            {
                                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetDarkness(Maps.MapHelper.ActiveMap.Darkness);
                             }
                         }
-
                     }
                     break;
-                case "visibility": {
-                        if (PlayerManager.MyPlayer != null) {
+                case "visibility":
+                    {
+                        if (PlayerManager.MyPlayer != null)
+                        {
                             PlayerManager.MyPlayer.ScreenActive = parse[1].ToBool();
                         }
-
                     }
                     break;
-                case "playerinv": {
-
-
+                case "playerinv":
+                    {
                         MyPlayer myPlayer = PlayerManager.MyPlayer;
-                        if (MaxInfo.MaxInv != parse[1].ToInt()) {
+                        if (MaxInfo.MaxInv != parse[1].ToInt())
+                        {
                             MaxInfo.MaxInv = parse[1].ToInt();
                             myPlayer.Inventory = new Inventory(MaxInfo.MaxInv);
                         }
                         int n = 2;
-                        for (int i = 1; i <= MaxInfo.MaxInv; i++) {
+                        for (int i = 1; i <= MaxInfo.MaxInv; i++)
+                        {
                             myPlayer.Inventory[i].Num = parse[n].ToInt();
                             myPlayer.Inventory[i].Value = parse[n + 1].ToInt();
                             myPlayer.Inventory[i].Sticky = parse[n + 2].ToBool();
 
                             n += 3;
                         }
-
-
                     }
                     break;
-                case "playerinvupdate": {
-
+                case "playerinvupdate":
+                    {
                         PlayerManager.MyPlayer.Inventory[parse[1].ToInt()].Num = parse[2].ToInt();
                         PlayerManager.MyPlayer.Inventory[parse[1].ToInt()].Value = parse[3].ToInt();
                         PlayerManager.MyPlayer.Inventory[parse[1].ToInt()].Sticky = parse[4].ToBool();
 
-                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuInventory") != null) {
+                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuInventory") != null)
+                        {
                             ((Menus.mnuInventory)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuInventory")).UpdateVisibleItem(parse[1].ToInt());
                             ((Menus.mnuInventory)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuInventory")).UpdateSelectedItemInfo();
                         }
                     }
                     break;
-                case "playerxy": {
+                case "playerxy":
+                    {
                         string id = parse[1];
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
+                        if (player != null)
+                        {
                             player.X = parse[2].ToInt();
                             player.Y = parse[3].ToInt();
 
                             player.MovementSpeed = Enums.MovementSpeed.Standing;
                             player.Offset = new Point();
 
-                            if (id == PlayerManager.MyConnectionID) {
-                                if (Stories.StoryProcessor.ActiveStory != null && Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment].Action == Enums.StoryAction.Warp) {
-                                    if (Maps.MapHelper.ActiveMap.MapID == ((Stories.Segments.WarpSegment)Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment]).Map) {
-                                        if (Stories.StoryProcessor.ActiveStory.State.StoryPaused) {
+                            if (id == PlayerManager.MyConnectionID)
+                            {
+                                if (Stories.StoryProcessor.ActiveStory != null && Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment].Action == Enums.StoryAction.Warp)
+                                {
+                                    if (Maps.MapHelper.ActiveMap.MapID == ((Stories.Segments.WarpSegment)Stories.StoryProcessor.ActiveStory.Segments[Stories.StoryProcessor.ActiveStory.State.CurrentSegment]).Map)
+                                    {
+                                        if (Stories.StoryProcessor.ActiveStory.State.StoryPaused)
+                                        {
                                             Stories.StoryProcessor.ActiveStory.State.Unpause();
                                             Stories.StoryProcessor.ActiveStory.State.StoryPaused = false;
                                         }
@@ -1613,15 +1880,18 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "movementlock": {
-                    PlayerManager.MyPlayer.MovementLocked = parse[1].ToBool();
+                case "movementlock":
+                    {
+                        PlayerManager.MyPlayer.MovementLocked = parse[1].ToBool();
                     }
                     break;
-                case "friendslist": {
+                case "friendslist":
+                    {
                         int count = parse[1].ToInt();
                         PlayerManager.MyPlayer.FriendsList.Clear();
                         int n = 2;
-                        for (int i = 0; i < count; i++) {
+                        for (int i = 0; i < count; i++)
+                        {
                             Friend friend = new Friend();
                             friend.Name = parse[n];
                             friend.Online = parse[n + 1].ToBool();
@@ -1629,7 +1899,8 @@ namespace Client.Logic.Network
 
                             n += 2;
                         }
-                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ActiveModule.ModuleID == Enums.ExpKitModules.FriendsList) {
+                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ActiveModule.ModuleID == Enums.ExpKitModules.FriendsList)
+                        {
                             ExpKit.Modules.kitFriendsList kitFriendsList = (ExpKit.Modules.kitFriendsList)Windows.WindowSwitcher.ExpKit.KitContainer.ActiveModule;
                             kitFriendsList.UpdateList(PlayerManager.MyPlayer.FriendsList);
                         }
@@ -1637,143 +1908,176 @@ namespace Client.Logic.Network
                     break;
                 #endregion
                 #region Party
-                case "partymemberdata": {
+                case "partymemberdata":
+                    {
                         int slot = parse[1].ToInt();
-                        if (PlayerManager.MyPlayer.Party == null) {
+                        if (PlayerManager.MyPlayer.Party == null)
+                        {
                             PlayerManager.MyPlayer.Party = new PartyData();
                         }
                         PlayerManager.MyPlayer.Party.LoadMember(slot, parse[2], parse[3].ToInt(),
                              parse[4].ToInt(), (Enums.Coloration)parse[5].ToInt(), (Enums.Sex)parse[6].ToInt(), parse[7].ToUlng(), parse[8].ToUlng(),
                                          parse[9].ToInt(), parse[10].ToInt());
-                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ActiveModule.ModuleID == Enums.ExpKitModules.Party) {
+                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ActiveModule.ModuleID == Enums.ExpKitModules.Party)
+                        {
                             ExpKit.Modules.kitParty kitParty = (ExpKit.Modules.kitParty)Windows.WindowSwitcher.ExpKit.KitContainer.ActiveModule;
                             kitParty.DisplayPartyMemberData(slot);
                         }
                     }
                     break;
-                case "clearpartyslot": {
+                case "clearpartyslot":
+                    {
                         int slot = parse[1].ToInt();
-                        if (PlayerManager.MyPlayer.Party == null) {
+                        if (PlayerManager.MyPlayer.Party == null)
+                        {
                             PlayerManager.MyPlayer.Party = new PartyData();
                         }
                         PlayerManager.MyPlayer.Party.ClearSlot(slot);
-                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ActiveModule.ModuleID == Enums.ExpKitModules.Party) {
+                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ActiveModule.ModuleID == Enums.ExpKitModules.Party)
+                        {
                             ExpKit.Modules.kitParty kitParty = (ExpKit.Modules.kitParty)Windows.WindowSwitcher.ExpKit.KitContainer.ActiveModule;
                             kitParty.DisplayPartyMemberData(slot);
                         }
                         break;
                     }
-                case "disbandparty": {
+                case "disbandparty":
+                    {
                         PlayerManager.MyPlayer.Party = new PartyData();
                         break;
                     }
                 #endregion
                 #region Guild
-                case "createguild": {
+                case "createguild":
+                    {
                         //PlayerManager.MyPlayer.MovementLocked = false;
                         Menus.MenuSwitcher.ShowGuildCreate(parse);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "guildmenu": {
+                case "guildmenu":
+                    {
                         //PlayerManager.MyPlayer.MovementLocked = false;
                         Menus.MenuSwitcher.ShowGuildManage(parse);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "fullguildupdate": {
+                case "fullguildupdate":
+                    {
                         Menus.mnuGuildManage menu = (Menus.mnuGuildManage)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuGuildManage");
-                        if (menu != null) {
+                        if (menu != null)
+                        {
                             menu.LoadGuildFromPacket(parse);
                         }
                     }
                     break;
-                case "guildupdate": {
-                    Menus.mnuGuildManage menu = (Menus.mnuGuildManage)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuGuildManage");
-                        if (menu != null) {
+                case "guildupdate":
+                    {
+                        Menus.mnuGuildManage menu = (Menus.mnuGuildManage)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuGuildManage");
+                        if (menu != null)
+                        {
                             menu.UpdateMember(parse[1].ToInt(), (Enums.GuildRank)parse[2].ToInt());
                         }
                     }
                     break;
-                case "guildadd": {
+                case "guildadd":
+                    {
                         Menus.mnuGuildManage menu = (Menus.mnuGuildManage)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuGuildManage");
-                        if (menu != null) {
+                        if (menu != null)
+                        {
                             menu.AddMember(parse[1]);
                         }
                     }
                     break;
-                case "guildremove": {
+                case "guildremove":
+                    {
                         Menus.mnuGuildManage menu = (Menus.mnuGuildManage)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuGuildManage");
-                        if (menu != null) {
+                        if (menu != null)
+                        {
                             menu.RemoveMember(parse[1].ToInt());
                         }
                     }
                     break;
                 #endregion
                 #region Moves
-                case "moves": {
+                case "moves":
+                    {
                         int n = 1;
 
-                        for (int i = 0; i < MaxInfo.MAX_PLAYER_MOVES; i++) {
+                        for (int i = 0; i < MaxInfo.MAX_PLAYER_MOVES; i++)
+                        {
                             Players.RecruitMove move = new Players.RecruitMove();
                             move.MoveNum = parse[n].ToInt();
                             move.CurrentPP = parse[n + 1].ToInt();
                             move.MaxPP = parse[n + 2].ToInt();
                             move.Sealed = parse[n + 3].ToBool();
-                            if (PlayerManager.MyPlayer != null) {
+                            if (PlayerManager.MyPlayer != null)
+                            {
                                 PlayerManager.MyPlayer.Moves[i] = move;
                             }
 
                             n += 4;
                         }
-                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuMoves") != null) {
+                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuMoves") != null)
+                        {
                             ((Menus.mnuMoves)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuMoves")).DisplayMoves();
                         }
                     }
                     break;
-                case "scriptspellanim": {
+                case "scriptspellanim":
+                    {
                         Logic.Graphics.Renderers.Moves.IMoveAnimation animation;
 
-                        switch ((Enums.MoveAnimationType)parse[1].ToInt()) {
-                            case Enums.MoveAnimationType.Normal: {
+                        switch ((Enums.MoveAnimationType)parse[1].ToInt())
+                        {
+                            case Enums.MoveAnimationType.Normal:
+                                {
                                     animation = new Logic.Graphics.Renderers.Moves.NormalMoveAnimation(parse[5].ToInt(), parse[6].ToInt());
                                 }
                                 break;
-                            case Enums.MoveAnimationType.Overlay: {
+                            case Enums.MoveAnimationType.Overlay:
+                                {
                                     animation = new Logic.Graphics.Renderers.Moves.OverlayMoveAnimation();
                                 }
                                 break;
-                            case Enums.MoveAnimationType.Tile: {
+                            case Enums.MoveAnimationType.Tile:
+                                {
                                     animation = new Logic.Graphics.Renderers.Moves.TileMoveAnimation(parse[5].ToInt(), parse[6].ToInt(), (Enums.MoveRange)parse[7].ToInt(), (Enums.Direction)parse[8].ToInt(), parse[9].ToInt());
                                 }
                                 break;
-                            case Enums.MoveAnimationType.Arrow: {
+                            case Enums.MoveAnimationType.Arrow:
+                                {
                                     animation = new Logic.Graphics.Renderers.Moves.ArrowMoveAnimation(parse[5].ToInt(), parse[6].ToInt(), (Enums.Direction)parse[7].ToInt(), parse[8].ToInt());
                                 }
                                 break;
-                            case Enums.MoveAnimationType.Throw: {
+                            case Enums.MoveAnimationType.Throw:
+                                {
                                     animation = new Logic.Graphics.Renderers.Moves.ThrowMoveAnimation(parse[5].ToInt(), parse[6].ToInt(), parse[7].ToInt(), parse[8].ToInt());
                                 }
                                 break;
-                            case Enums.MoveAnimationType.Beam: {
+                            case Enums.MoveAnimationType.Beam:
+                                {
                                     animation = new Logic.Graphics.Renderers.Moves.BeamMoveAnimation(parse[5].ToInt(), parse[6].ToInt(), (Enums.Direction)parse[7].ToInt(), parse[8].ToInt());
                                 }
                                 break;
-                            case Enums.MoveAnimationType.ItemArrow: {
+                            case Enums.MoveAnimationType.ItemArrow:
+                                {
                                     animation = new Logic.Graphics.Renderers.Moves.ItemArrowMoveAnimation(parse[5].ToInt(), parse[6].ToInt(), (Enums.Direction)parse[7].ToInt(), parse[8].ToInt());
                                 }
                                 break;
-                            case Enums.MoveAnimationType.ItemThrow: {
+                            case Enums.MoveAnimationType.ItemThrow:
+                                {
                                     animation = new Logic.Graphics.Renderers.Moves.ItemThrowMoveAnimation(parse[5].ToInt(), parse[6].ToInt(), parse[7].ToInt(), parse[8].ToInt());
                                 }
                                 break;
-                            default: {
+                            default:
+                                {
                                     animation = null;
                                 }
                                 break;
                         }
 
-                        if (animation != null) {
+                        if (animation != null)
+                        {
                             animation.AnimationIndex = parse[2].ToInt();
                             animation.RenderLoops = parse[4].ToInt();
                             animation.FrameLength = parse[3].ToInt();
@@ -1782,17 +2086,20 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "moveppupdate": {
+                case "moveppupdate":
+                    {
                         int slot = parse[1].ToInt();
                         PlayerManager.MyPlayer.Moves[slot].CurrentPP = parse[2].ToInt();
                         PlayerManager.MyPlayer.Moves[slot].MaxPP = parse[3].ToInt();
 
-                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuMoves") != null) {
+                        if (WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuMoves") != null)
+                        {
                             ((Menus.mnuMoves)WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuMoves")).DisplayMoves();
                         }
                     }
                     break;
-                case "openmoveforgetmenu": {
+                case "openmoveforgetmenu":
+                    {
                         Menus.MenuSwitcher.ShowMenu(new Menus.mnuMoveOverwrite("mnuMoveOverwrite"));
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
@@ -1803,7 +2110,8 @@ namespace Client.Logic.Network
 
 
                 #region Misc
-                case "sound": {
+                case "sound":
+                    {
                         Music.Music.AudioPlayer.PlaySoundEffect(parse[1]);/*
                         switch (parse[1].ToLower()) {
                             case "attack":
@@ -1833,75 +2141,88 @@ namespace Client.Logic.Network
                         }*/
                     }
                     break;
-                case "music": {
+                case "music":
+                    {
                         //Music.Music.AudioPlayer.PlayMusic(parse[1]);
                         ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).FadeToNext(parse[1], 1000);
                     }
                     break;
-                case "fademusic": {
+                case "fademusic":
+                    {
                         Music.Music.AudioPlayer.FadeOut(parse[1].ToInt());
                     }
                     break;
-                case "plainmsg": {
+                case "plainmsg":
+                    {
                         string msg = parse[1];
                         Enums.PlainMsgType type = (Enums.PlainMsgType)parse[2].ToInt();
 
                         SdlDotNet.Widgets.MessageBox.Show(msg, "----");
 
                         SdlDotNet.Widgets.Window winLoading = WindowSwitcher.FindWindow("winLoading");
-                        if (winLoading != null) {
+                        if (winLoading != null)
+                        {
                             winLoading.Close();
                         }
-                        switch (type) {
-                            case Enums.PlainMsgType.MainMenu: {
+                        switch (type)
+                        {
+                            case Enums.PlainMsgType.MainMenu:
+                                {
                                     WindowSwitcher.ShowMainMenu();
                                 }
                                 break;
-                            case Enums.PlainMsgType.Chars: {
+                            case Enums.PlainMsgType.Chars:
+                                {
                                     Messenger.SendCharListRequest();
                                 }
                                 break;
-                            case Enums.PlainMsgType.NewChar: {
+                            case Enums.PlainMsgType.NewChar:
+                                {
                                     Messenger.SendCharListRequest();
                                 }
                                 break;
                         }
                     }
                     break;
-                case "onlinelist": {
-                        
-
+                case "onlinelist":
+                    {
                         Menus.mnuOnlineList onlineList = WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuOnlineList") as Menus.mnuOnlineList;
-                        if (onlineList != null) {
+                        if (onlineList != null)
+                        {
                             onlineList.AddOnlinePlayers(parse);
                             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                         }
-
-                        
-                        
                     }
                     break;
-                case "gametime": {
+                case "gametime":
+                    {
                         Globals.GameTime = (Enums.Time)parse[1].ToInt();
-                        if (Maps.MapHelper.ActiveMap != null) {
+                        if (Maps.MapHelper.ActiveMap != null)
+                        {
                             Maps.MapHelper.ActiveMap.DoOverlayChecks();
                         }
                     }
                     break;
-                case "adventurelog": {
+                case "adventurelog":
+                    {
                         Menus.mnuAdventureLog adventureLog = WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuAdventureLog") as Menus.mnuAdventureLog;
-                        if (adventureLog != null) {
+                        if (adventureLog != null)
+                        {
                             adventureLog.LoadAdventureLogFromPacket(parse);
                         }
                     }
                     break;
-                case "focusonpoint": {
+                case "focusonpoint":
+                    {
                         int x = parse[1].ToInt();
                         int y = parse[2].ToInt();
 
-                        if (x == -1 && y == -1) {
+                        if (x == -1 && y == -1)
+                        {
                             Logic.Graphics.Renderers.Screen.ScreenRenderer.Camera.FocusObject = null;
-                        } else {
+                        }
+                        else
+                        {
                             Logic.Graphics.Renderers.Screen.CameraFocusObject focusObject = new Logic.Graphics.Renderers.Screen.CameraFocusObject();
                             focusObject.FocusedX = x;
                             focusObject.FocusedY = y;
@@ -1912,11 +2233,13 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "serverstatus": {
+                case "serverstatus":
+                    {
                         Globals.ServerStatus = parse[1];
                     }
                     break;
-                case "ping": {
+                case "ping":
+                    {
                         PingStopwatch.Stop();
                         Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.RecentPing = (int)PingStopwatch.ElapsedMilliseconds;
                     }
@@ -1924,40 +2247,48 @@ namespace Client.Logic.Network
                 #endregion
                 #region Editors
                 #region Map Editor
-                case "editmap": {
+                case "editmap":
+                    {
                         Maps.MapHelper.ActiveMap.Tile = Maps.MapHelper.ActiveMap.OriginalTiles;
                         Windows.Editors.EditorManager.OpenMapEditor();
                     }
                     break;
-                case "mapreport": {
+                case "mapreport":
+                    {
                         int n = 2;
                         int maxMaps = parse[1].ToInt();
                         String[] MapName;
                         MapName = new String[maxMaps];
-                        for (int i = 1; i <= maxMaps; i++) {
+                        for (int i = 1; i <= maxMaps; i++)
+                        {
                             MapName[i - 1] = parse[n];
 
                             n += 1;
                         }
 
-                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.IsModuleAvailable(Enums.ExpKitModules.MapReport)) {
+                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.IsModuleAvailable(Enums.ExpKitModules.MapReport))
+                        {
                             ExpKit.Modules.kitMapReport kitMapReport = (ExpKit.Modules.kitMapReport)Windows.WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.FindAvailableKitModule(Enums.ExpKitModules.MapReport);
                             kitMapReport.LoadAllMapNames(MapName);
                         }
                     }
                     break;
-                case "mapnameupdated": {
-                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.IsModuleAvailable(Enums.ExpKitModules.MapReport)) {
+                case "mapnameupdated":
+                    {
+                        if (Windows.WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.IsModuleAvailable(Enums.ExpKitModules.MapReport))
+                        {
                             ExpKit.Modules.kitMapReport kitMapReport = (ExpKit.Modules.kitMapReport)Windows.WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.FindAvailableKitModule(Enums.ExpKitModules.MapReport);
                             kitMapReport.UpdateMapName(parse[1].ToInt(), parse[2]);
                         }
                     }
                     break;
-                case "maplatestproperties": {
+                case "maplatestproperties":
+                    {
                         int n = 3;
                         Maps.MapHelper.ActiveMap.Instanced = parse[1].ToBool();
                         int npcs = parse[2].ToInt();
-                        for (int i = 0; i < npcs; i++) {
+                        for (int i = 0; i < npcs; i++)
+                        {
                             Maps.MapNpcSettings npc = new Maps.MapNpcSettings();
                             npc.NpcNum = parse[n].ToInt();
                             npc.SpawnX = parse[n + 1].ToInt();
@@ -1975,62 +2306,75 @@ namespace Client.Logic.Network
                         }
                     }
                     break;
-                case "mapeditortileplaced": {
+                case "mapeditortileplaced":
+                    {
                         WindowSwitcher.GameWindow.SetMapLayer(parse[1].ToInt(), parse[2].ToInt(), (Enums.LayerType)parse[3].ToInt(), parse[4].ToInt(), parse[5].ToInt());
                     }
                     break;
-                case "mapeditorattribplaced": {
+                case "mapeditorattribplaced":
+                    {
                         WindowSwitcher.GameWindow.SetMapAttribute(parse[1].ToInt(), parse[2].ToInt(),
                             (Enums.TileType)parse[3].ToInt(), parse[4].ToInt(), parse[5].ToInt(), parse[6].ToInt(),
                             parse[7], parse[8], parse[9], parse[10].ToInt());
                     }
                     break;
-                case "mapeditorlayerfill": {
+                case "mapeditorlayerfill":
+                    {
                         WindowSwitcher.GameWindow.FillLayer((Enums.LayerType)parse[1].ToInt(), parse[2].ToInt(), parse[3].ToInt());
                     }
                     break;
-                case "mapeditorattribfill": {
+                case "mapeditorattribfill":
+                    {
                         WindowSwitcher.GameWindow.FillAttributes((Enums.TileType)parse[1].ToInt(), parse[2].ToInt(), parse[3].ToInt(), parse[4].ToInt(),
                             parse[5], parse[6], parse[7], parse[8].ToInt());
                     }
                     break;
-                case "scriptedattributename": {
+                case "scriptedattributename":
+                    {
                         WindowSwitcher.GameWindow.lbl1.Text = "Script " + parse[1];
                     }
                     break;
-                case "scriptedsignattributename": {
+                case "scriptedsignattributename":
+                    {
                         WindowSwitcher.GameWindow.lbl1.Text = "Script " + parse[1];
                     }
                     break;
-                case "mobilityname": {
+                case "mobilityname":
+                    {
                         WindowSwitcher.GameWindow.lbl1.Text = "Mobility Flag: " + parse[1];
                     }
                     break;
                 #endregion
                 #region Random Dungeon Editor
-                case "rdungeoneditor": {
+                case "rdungeoneditor":
+                    {
                         Windows.Editors.EditorManager.RDungeonPanel.Show();
                     }
                     break;
-                case "rdungeonadded": {
+                case "rdungeonadded":
+                    {
                         MaxInfo.MaxRDungeons++;
                         RDungeons.RDungeonHelper.RDungeons.AddRDungeon(parse[1].ToInt(), new RDungeons.RDungeon());
                         RDungeons.RDungeonHelper.RDungeons[parse[1].ToInt()].Name = parse[2];
-                        if (WindowSwitcher.FindWindow("winRDungeonPanel") != null) {
+                        if (WindowSwitcher.FindWindow("winRDungeonPanel") != null)
+                        {
                             ((Windows.Editors.winRDungeonPanel)WindowSwitcher.FindWindow("winRDungeonPanel")).RefreshRDungeonList();
                         }
                     }
                     break;
-                case "rdungeonupdate": {
-
+                case "rdungeonupdate":
+                    {
                         RDungeons.RDungeonHelper.RDungeons[parse[1].ToInt()].Name = parse[2];
-                        if (WindowSwitcher.FindWindow("winRDungeonPanel") != null) {
+                        if (WindowSwitcher.FindWindow("winRDungeonPanel") != null)
+                        {
                             ((Windows.Editors.winRDungeonPanel)WindowSwitcher.FindWindow("winRDungeonPanel")).RefreshRDungeonList();
                         }
                     }
                     break;
-                case "editrdungeon": {
-                        if (WindowSwitcher.FindWindow("winRDungeonPanel") == null) {
+                case "editrdungeon":
+                    {
+                        if (WindowSwitcher.FindWindow("winRDungeonPanel") == null)
+                        {
                             Windows.Editors.EditorManager.RDungeonPanel.Show();
                         }
                         ((Windows.Editors.winRDungeonPanel)WindowSwitcher.FindWindow("winRDungeonPanel")).LoadRDungeon(parse);
@@ -2038,86 +2382,103 @@ namespace Client.Logic.Network
                     break;
                 #endregion
                 #region Dungeon Editor
-                case "dungeoneditor": {
+                case "dungeoneditor":
+                    {
                         Windows.Editors.EditorManager.DungeonPanel.Show();
                     }
                     break;
-                case "dungeonadded": {
+                case "dungeonadded":
+                    {
                         MaxInfo.MaxDungeons++;
                         Dungeons.DungeonHelper.Dungeons.AddDungeon(parse[1].ToInt(), new Dungeons.Dungeon());
                         Dungeons.DungeonHelper.Dungeons[parse[1].ToInt()].Name = parse[2];
-                        if (WindowSwitcher.FindWindow("winDungeonPanel") != null) {
+                        if (WindowSwitcher.FindWindow("winDungeonPanel") != null)
+                        {
                             ((Windows.Editors.winDungeonPanel)WindowSwitcher.FindWindow("winDungeonPanel")).RefreshDungeonList();
                         }
                     }
                     break;
-                case "updatedungeon": {
+                case "updatedungeon":
+                    {
                         Dungeons.DungeonHelper.Dungeons[parse[1].ToInt()].Name = parse[2];
-                        if (WindowSwitcher.FindWindow("winDungeonPanel") != null) {
+                        if (WindowSwitcher.FindWindow("winDungeonPanel") != null)
+                        {
                             ((Windows.Editors.winDungeonPanel)WindowSwitcher.FindWindow("winDungeonPanel")).RefreshDungeonList();
                         }
                     }
                     break;
-                case "editdungeon": {
-                        if (WindowSwitcher.FindWindow("winDungeonPanel") == null) {
+                case "editdungeon":
+                    {
+                        if (WindowSwitcher.FindWindow("winDungeonPanel") == null)
+                        {
                             Windows.Editors.EditorManager.DungeonPanel.Show();
                         }
                         ((Windows.Editors.winDungeonPanel)WindowSwitcher.FindWindow("winDungeonPanel")).LoadDungeon(parse);
-
                     }
                     break;
                 #endregion
                 #region Mission Editor
-                case "missioneditor": {
+                case "missioneditor":
+                    {
                         Windows.Editors.EditorManager.MissionPanel.Show();
                     }
                     break;
-                case "updatemission": {
+                case "updatemission":
+                    {
                         Dungeons.DungeonHelper.Dungeons[parse[1].ToInt()].Name = parse[2];
-                        if (WindowSwitcher.FindWindow("winMissionPanel") != null) {
+                        if (WindowSwitcher.FindWindow("winMissionPanel") != null)
+                        {
                             ((Windows.Editors.winMissionPanel)WindowSwitcher.FindWindow("winMissionPanel")).RefreshMissionList();
                         }
                     }
                     break;
-                case "editmission": {
+                case "editmission":
+                    {
                         ((Windows.Editors.winMissionPanel)WindowSwitcher.FindWindow("winMissionPanel")).LoadMission(parse);
                     }
                     break;
                 #endregion
                 #region Item Editor
-                case "itemeditor": {
+                case "itemeditor":
+                    {
                         Windows.Editors.EditorManager.ItemPanel.Show();
                     }
                     break;
-                case "edititem": {
-                    if (WindowSwitcher.FindWindow("winItemPanel") == null) {
-                        Windows.Editors.EditorManager.ItemPanel.Show();
-                    }
+                case "edititem":
+                    {
+                        if (WindowSwitcher.FindWindow("winItemPanel") == null)
+                        {
+                            Windows.Editors.EditorManager.ItemPanel.Show();
+                        }
                     ((Windows.Editors.winItemPanel)WindowSwitcher.FindWindow("winItemPanel")).LoadItem(parse[1].ToInt());
                     }
                     break;
                 #endregion
                 #region Move Editor
-                case "moveeditor": {
+                case "moveeditor":
+                    {
                         Windows.Editors.EditorManager.MovePanel.Show();
                     }
                     break;
-                case "editmove": {
-                    if (WindowSwitcher.FindWindow("winMovePanel") == null) {
-                        Windows.Editors.EditorManager.MovePanel.Show();
-                    }
+                case "editmove":
+                    {
+                        if (WindowSwitcher.FindWindow("winMovePanel") == null)
+                        {
+                            Windows.Editors.EditorManager.MovePanel.Show();
+                        }
                         ((Windows.Editors.winMovePanel)WindowSwitcher.FindWindow("winMovePanel")).LoadMove(parse);
-
                     }
                     break;
-                case "updatespell": {
+                case "updatespell":
+                    {
                         Moves.MoveHelper.Moves[parse[1].ToInt()].Name = parse[2];
                         Moves.MoveHelper.Moves[parse[1].ToInt()].RangeType = (Enums.MoveRange)parse[3].ToInt();
                         Moves.MoveHelper.Moves[parse[1].ToInt()].Range = parse[4].ToInt();
                         Moves.MoveHelper.Moves[parse[1].ToInt()].TargetType = (Enums.MoveTarget)parse[5].ToInt();
                         Moves.MoveHelper.Moves[parse[1].ToInt()].HitTime = parse[6].ToInt();
                         Moves.MoveHelper.Moves[parse[1].ToInt()].HitFreeze = parse[7].ToBool();
-                        if (WindowSwitcher.FindWindow("winMovePanel") != null) {
+                        if (WindowSwitcher.FindWindow("winMovePanel") != null)
+                        {
                             ((Windows.Editors.winMovePanel)WindowSwitcher.FindWindow("winMovePanel")).RefreshMoveList();
                         }
                     }
@@ -2125,19 +2486,21 @@ namespace Client.Logic.Network
                 #endregion
 
                 #region Shop Editor
-                case "shopeditor": {
+                case "shopeditor":
+                    {
                         Windows.Editors.EditorManager.ShopPanel.Show();
                     }
                     break;
-                case "editshop": {
+                case "editshop":
+                    {
                         ((Windows.Editors.winShopPanel)WindowSwitcher.FindWindow("winShopPanel")).LoadShop(parse);
-
-
                     }
                     break;
-                case "updateshop": {
+                case "updateshop":
+                    {
                         Shops.ShopHelper.Shops[parse[1].ToInt()].Name = parse[2];
-                        if (WindowSwitcher.FindWindow("winShopPanel") != null) {
+                        if (WindowSwitcher.FindWindow("winShopPanel") != null)
+                        {
                             ((Windows.Editors.winShopPanel)WindowSwitcher.FindWindow("winShopPanel")).RefreshShopList();
                         }
                     }
@@ -2145,11 +2508,13 @@ namespace Client.Logic.Network
                 #endregion
 
                 #region Arrow Editor
-                case "arroweditor": {
+                case "arroweditor":
+                    {
                         Windows.Editors.EditorManager.ArrowPanel.Show();
                     }
                     break;
-                case "editarrow": {
+                case "editarrow":
+                    {
                         // Obtain the arrow index
                         int arrowNum = parse[1].ToInt();
 
@@ -2161,12 +2526,14 @@ namespace Client.Logic.Network
 
                         // Display this data on the arrow editor window
                         Windows.Editors.winArrowPanel arrowWindow = WindowSwitcher.FindWindow("winArrowPanel") as Windows.Editors.winArrowPanel;
-                        if (arrowWindow != null) {
+                        if (arrowWindow != null)
+                        {
                             arrowWindow.DisplayArrowData();
                         }
                     }
                     break;
-                case "updatearrow": {
+                case "updatearrow":
+                    {
                         // Obtain the arrow index
                         int arrowNum = parse[1].ToInt();
 
@@ -2178,18 +2545,21 @@ namespace Client.Logic.Network
 
                         // Display this data on the arrow editor window, if it's open
                         Windows.Editors.winArrowPanel arrowWindow = WindowSwitcher.FindWindow("winArrowPanel") as Windows.Editors.winArrowPanel;
-                        if (arrowWindow != null) {
+                        if (arrowWindow != null)
+                        {
                             arrowWindow.RefreshArrowList();
                         }
                     }
                     break;
                 #endregion
                 #region Emoticons Editor
-                case "emoticoneditor": {
+                case "emoticoneditor":
+                    {
                         Windows.Editors.EditorManager.EmotionPanel.Show();
                     }
                     break;
-                case "editemoticon": {
+                case "editemoticon":
+                    {
                         // Optain the emoticon index
                         int emoteNum = parse[1].ToInt();
 
@@ -2199,12 +2569,14 @@ namespace Client.Logic.Network
 
                         // Display this data on the emoticon editor window
                         Windows.Editors.winEmotionPanel emoteWindow = WindowSwitcher.FindWindow("winEmotionPanel") as Windows.Editors.winEmotionPanel;
-                        if (emoteWindow != null) {
+                        if (emoteWindow != null)
+                        {
                             emoteWindow.DisplayEmotionData();
                         }
                     }
                     break;
-                case "updateemoticon": {
+                case "updateemoticon":
+                    {
                         // Obtain the emote index
                         int emoteNum = parse[1].ToInt();
 
@@ -2214,22 +2586,26 @@ namespace Client.Logic.Network
 
                         // Display this data on the emote editor window, if it's open
                         Windows.Editors.winEmotionPanel emotionWindow = WindowSwitcher.FindWindow("winEmotionPanel") as Windows.Editors.winEmotionPanel;
-                        if (emotionWindow != null) {
+                        if (emotionWindow != null)
+                        {
                             emotionWindow.RefreshEmoteList();
                         }
                     }
                     break;
                 #endregion
                 #region NPC Editor
-                case "npceditor": {
+                case "npceditor":
+                    {
                         Windows.Editors.EditorManager.NPCPanel.Show();
                     }
                     break;
-                case "editnpc": {
-                    if (WindowSwitcher.FindWindow("winNPCPanel") == null) {
-                        Windows.Editors.EditorManager.NPCPanel.Show();
-                    }
-                    Windows.Editors.EditorManager.NPCPanel.LoadNPC(parse);
+                case "editnpc":
+                    {
+                        if (WindowSwitcher.FindWindow("winNPCPanel") == null)
+                        {
+                            Windows.Editors.EditorManager.NPCPanel.Show();
+                        }
+                        Windows.Editors.EditorManager.NPCPanel.LoadNPC(parse);
                     }
                     break;
                 case "npcadded":
@@ -2250,42 +2626,49 @@ namespace Client.Logic.Network
                     break;
                 #endregion
                 #region House Editor
-                case "edithouse": {
+                case "edithouse":
+                    {
                         Windows.Editors.EditorManager.OpenHouseEditor();
                     }
                     break;
                 #endregion
                 #region Story Edtior
-                case "storyeditor": {
+                case "storyeditor":
+                    {
                         Windows.Editors.EditorManager.StoryPanel.Show();
                     }
                     break;
-                case "editstory": {
+                case "editstory":
+                    {
                         Windows.Editors.EditorManager.StoryPanel.LoadStory(parse);
                     }
                     break;
-                case "updatestoryname": {
+                case "updatestoryname":
+                    {
                         Stories.StoryHelper.Stories[parse[1].ToInt()].Name = parse[2];
-                        if (WindowSwitcher.FindWindow("winStoryPanel") != null) {
+                        if (WindowSwitcher.FindWindow("winStoryPanel") != null)
+                        {
                             ((Windows.Editors.winStoryPanel)WindowSwitcher.FindWindow("winStoryPanel")).RefreshStoryList();
                         }
                     }
                     break;
                 #endregion
                 #region Evolution Editor
-                case "evoeditor": {
+                case "evoeditor":
+                    {
                         Windows.Editors.EditorManager.EvolutionPanel.Show();
                     }
                     break;
-                case "editevo": {
+                case "editevo":
+                    {
                         ((Windows.Editors.winEvolutionPanel)WindowSwitcher.FindWindow("winEvolutionPanel")).LoadEvo(parse);
                     }
                     break;
-                case "updateevo": {
-
-
+                case "updateevo":
+                    {
                         Evolutions.EvolutionHelper.Evolutions[parse[1].ToInt()].Name = parse[2];
-                        if (WindowSwitcher.FindWindow("winEvolutionPanel") != null) {
+                        if (WindowSwitcher.FindWindow("winEvolutionPanel") != null)
+                        {
                             ((Windows.Editors.winEvolutionPanel)WindowSwitcher.FindWindow("winEvolutionPanel")).RefreshEvoList();
                         }
                     }
@@ -2293,20 +2676,24 @@ namespace Client.Logic.Network
                 #endregion
 
                 #region Scripts
-                case "scripteditstart": {
+                case "scripteditstart":
+                    {
                         // Because Windows Forms and SDL don't like playing together.
                         System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(RunScriptEditor));
                         t.SetApartmentState(System.Threading.ApartmentState.STA); //Set the thread to STA
                         t.Start();
-                        while (Windows.Editors.EditorManager.ScriptEditor == null) {
+                        while (Windows.Editors.EditorManager.ScriptEditor == null)
+                        {
                         }
                     }
                     break;
-                case "scriptfilelist": {
+                case "scriptfilelist":
+                    {
                         int filesCount = parse[1].ToInt();
                         List<string> files = new List<string>(filesCount);
                         int n = 2;
-                        for (int i = 0; i < filesCount; i++) {
+                        for (int i = 0; i < filesCount; i++)
+                        {
                             files.Add(parse[n]);
                             n += 1;
                         }
@@ -2314,51 +2701,61 @@ namespace Client.Logic.Network
                     }
                     break;
                 case "scriptfiledata":
-                case "scripteditdata": {
+                case "scripteditdata":
+                    {
                         Windows.Editors.ScriptEditor.ScriptFileTab tab = new Windows.Editors.ScriptEditor.ScriptFileTab();
                         tab.SetDocumentFile(parse[1]);
                         tab.SetDocumentText(parse[2]);
                         Windows.Editors.EditorManager.ScriptEditor.AddDocumentTab(tab);
                     }
                     break;
-                case "scriptsyntax": {
-                        if (System.IO.Directory.Exists(IO.Paths.StartupPath + "Script/") == false) {
+                case "scriptsyntax":
+                    {
+                        if (System.IO.Directory.Exists(IO.Paths.StartupPath + "Script/") == false)
+                        {
                             System.IO.Directory.CreateDirectory(IO.Paths.StartupPath + "Script/");
                         }
                         System.IO.File.WriteAllText(IO.Paths.StartupPath + "Script/CSharp.syn", parse[1]);
                     }
                     break;
-                case "scriptclasses": {
+                case "scriptclasses":
+                    {
                         int filesCount = parse[1].ToInt();
                         List<string> files = new List<string>(filesCount);
                         int n = 2;
-                        for (int i = 0; i < filesCount; i++) {
+                        for (int i = 0; i < filesCount; i++)
+                        {
                             files.Add(parse[n]);
                             n += 1;
                         }
                         Windows.Editors.EditorManager.ScriptEditor.SetClassesList(files);
                     }
                     break;
-                case "scriptmethods": {
+                case "scriptmethods":
+                    {
                         int filesCount = parse[1].ToInt();
                         List<string> files = new List<string>(filesCount);
                         int n = 2;
-                        for (int i = 0; i < filesCount; i++) {
+                        for (int i = 0; i < filesCount; i++)
+                        {
                             files.Add(parse[n]);
                             n += 1;
                         }
                         Windows.Editors.EditorManager.ScriptEditor.SetMethodsList(files);
                     }
                     break;
-                case "scriptparam": {
+                case "scriptparam":
+                    {
                         Windows.Editors.EditorManager.ScriptEditor.SetScriptParameterInfo(parse[1]);
                     }
                     break;
-                case "scriptediterrors": {
+                case "scriptediterrors":
+                    {
                         int errorsCount = parse[1].ToInt();
                         List<string> errors = new List<string>(errorsCount);
                         int n = 2;
-                        for (int i = 0; i < errorsCount; i++) {
+                        for (int i = 0; i < errorsCount; i++)
+                        {
                             string errorString = parse[n] + ", line: " + parse[n + 1] + ", error: " + parse[n + 3];
                             errors.Add(errorString);
                             n += 4;
@@ -2369,99 +2766,116 @@ namespace Client.Logic.Network
                 #endregion
                 #endregion
                 #region ExpKit
-                case "kitmodules": {
+                case "kitmodules":
+                    {
                         int count = parse[1].ToInt();
                         int n = 2;
                         WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.DisableAllModules();
-                        for (int i = 0; i < count; i++) {
+                        for (int i = 0; i < count; i++)
+                        {
                             WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.FindKitModule((Enums.ExpKitModules)parse[n].ToInt()).Enabled = true;
                             n += 1;
                         }
                         WindowSwitcher.ExpKit.KitContainer.SetActiveModule(0);
                     }
                     break;
-                case "setactivekitmodule": {
+                case "setactivekitmodule":
+                    {
                         Enums.ExpKitModules module = (Enums.ExpKitModules)parse[1].ToInt();
                         WindowSwitcher.ExpKit.KitContainer.SetActiveModule(module);
                     }
                     break;
                 #endregion
                 #region Housing
-                case "visithouse": {
+                case "visithouse":
+                    {
                         Menus.MenuSwitcher.ShowHouseSelectionMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "changehouseweather": {
+                case "changehouseweather":
+                    {
                         Menus.MenuSwitcher.ShowHouseWeatherMenu(parse[1].ToInt());
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "changehousedarkness": {
+                case "changehousedarkness":
+                    {
                         Menus.MenuSwitcher.ShowHouseDarknessMenu(parse[1].ToInt());
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "changehousebounds": {
+                case "changehousebounds":
+                    {
                         Menus.MenuSwitcher.ShowHouseBoundsMenu(parse[1].ToInt());
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "addhouseshop": {
+                case "addhouseshop":
+                    {
                         Menus.MenuSwitcher.ShowHouseShopMenu(parse[1].ToInt());
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "addhousesound": {
+                case "addhousesound":
+                    {
                         Menus.MenuSwitcher.ShowHouseSoundMenu(parse[1].ToInt());
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "addhousenotice": {
+                case "addhousenotice":
+                    {
                         Menus.MenuSwitcher.ShowHouseNoticeMenu(parse[1].ToInt(), parse[2].ToInt());
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "addhousesign": {
-                    Menus.MenuSwitcher.ShowHouseSignMenu(parse[1].ToInt());
+                case "addhousesign":
+                    {
+                        Menus.MenuSwitcher.ShowHouseSignMenu(parse[1].ToInt());
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
                 #endregion
                 #region Missions
-                case "missionboard": {
+                case "missionboard":
+                    {
                         Menus.MenuSwitcher.OpenMissionBoard(parse);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case "missionremoved": {
+                case "missionremoved":
+                    {
                         Menus.Core.IMenu mnuMissionBoard = WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuMissionBoard");
-                        if (mnuMissionBoard != null) {
+                        if (mnuMissionBoard != null)
+                        {
                             ((Menus.mnuMissionBoard)mnuMissionBoard).RemoveJob(parse[1].ToInt());
                             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                         }
-                        
                     }
                     break;
-                case "missionadded": {
+                case "missionadded":
+                    {
                         Menus.Core.IMenu mnuMissionBoard = WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuMissionBoard");
-                        if (mnuMissionBoard != null) {
+                        if (mnuMissionBoard != null)
+                        {
                             ((Menus.mnuMissionBoard)mnuMissionBoard).AddJob(parse);
                             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                         }
                     }
                     break;
-                case "joblist": {
+                case "joblist":
+                    {
                         int n = 2;
                         int jobCount = parse[1].ToInt();
                         // Clear the job list first
                         PlayerManager.MyPlayer.JobList.Jobs.Clear();
-                        for (int i = 0; i < jobCount; i++) {
+                        for (int i = 0; i < jobCount; i++)
+                        {
                             Missions.Job job = new Missions.Job();
                             job.Title = parse[n];
-                            job.Summary = parse[n+1];
-                            job.GoalName = parse[n+2];
-                            job.ClientSpecies = parse[n+3].ToInt();
+                            job.Summary = parse[n + 1];
+                            job.GoalName = parse[n + 2];
+                            job.ClientSpecies = parse[n + 3].ToInt();
                             job.ClientForm = parse[n + 4].ToInt();
                             job.MissionType = (Enums.MissionType)parse[n + 5].ToInt();
                             job.Data1 = parse[n + 6].ToInt();
@@ -2470,7 +2884,7 @@ namespace Client.Logic.Network
                             job.RewardNum = parse[n + 9].ToInt();
                             job.RewardAmount = parse[n + 10].ToInt();
                             //job.Mugshot = parse[n + 11].ToInt();
-                            
+
                             job.Accepted = (Enums.JobStatus)parse[n + 12].ToInt();
                             job.CanSend = parse[n + 13].ToBool();
 
@@ -2479,15 +2893,15 @@ namespace Client.Logic.Network
                         }
 
                         Menus.Core.IMenu mnuJobList = WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuJobList");
-                        if (mnuJobList != null) {
+                        if (mnuJobList != null)
+                        {
                             ((Menus.mnuJobList)mnuJobList).DisplayItems();
                         }
-
                     }
                     break;
-                case "newjob": {
-
-                    int n = 1;
+                case "newjob":
+                    {
+                        int n = 1;
                         Missions.Job job = new Missions.Job();
                         job.Title = parse[n];
                         job.Summary = parse[n + 1];
@@ -2508,54 +2922,64 @@ namespace Client.Logic.Network
                         PlayerManager.MyPlayer.JobList.Jobs.Add(job);
 
                         Menus.Core.IMenu mnuJobList = WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuJobList");
-                        if (mnuJobList != null) {
+                        if (mnuJobList != null)
+                        {
                             ((Menus.mnuJobList)mnuJobList).DisplayItems();
                         }
                     }
                     break;
-                case "acceptjob": {
+                case "acceptjob":
+                    {
                         int slot = parse[1].ToInt();
                         PlayerManager.MyPlayer.JobList.Jobs[slot].Accepted = (Enums.JobStatus)parse[2].ToInt();
 
-                        for (int i = PlayerManager.MyPlayer.MapGoals.Count - 1; i >= 0; i--) {
-                            if (PlayerManager.MyPlayer.JobList.Jobs[slot].Accepted != Enums.JobStatus.Taken && PlayerManager.MyPlayer.MapGoals[i].JobListSlot == slot) {
+                        for (int i = PlayerManager.MyPlayer.MapGoals.Count - 1; i >= 0; i--)
+                        {
+                            if (PlayerManager.MyPlayer.JobList.Jobs[slot].Accepted != Enums.JobStatus.Taken && PlayerManager.MyPlayer.MapGoals[i].JobListSlot == slot)
+                            {
                                 PlayerManager.MyPlayer.MapGoals.RemoveAt(i);
                             }
                         }
 
                         Menus.Core.IMenu mnuJobList = WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuJobList");
-                        if (mnuJobList != null) {
+                        if (mnuJobList != null)
+                        {
                             ((Menus.mnuJobList)mnuJobList).DisplayItems();
                         }
                     }
                     break;
-                case "jobsends": {
+                case "jobsends":
+                    {
                         int slot = parse[1].ToInt();
                         PlayerManager.MyPlayer.JobList.Jobs[slot].CanSend = parse[2].ToBool();
 
 
                         Menus.Core.IMenu mnuJobList = WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuJobList");
-                        if (mnuJobList != null) {
+                        if (mnuJobList != null)
+                        {
                             Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuJobList");
                             ((Menus.mnuJobList)mnuJobList).DisplayItems();
                         }
                     }
                     break;
-                case "deletejob": {
-
+                case "deletejob":
+                    {
                         PlayerManager.MyPlayer.JobList.Jobs.RemoveAt(parse[1].ToInt());
 
                         Menus.Core.IMenu mnuJobList = WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuJobList");
-                        if (mnuJobList != null) {
+                        if (mnuJobList != null)
+                        {
                             ((Menus.mnuJobList)mnuJobList).DisplayItems();
                         }
                     }
                     break;
-                case "missiongoal": {
+                case "missiongoal":
+                    {
                         int count = parse[1].ToInt();
                         int n = 2;
                         PlayerManager.MyPlayer.MapGoals.Clear();
-                        for (int i = 0; i < count; i++) {
+                        for (int i = 0; i < count; i++)
+                        {
                             Missions.MissionGoal goal = new Missions.MissionGoal();
 
                             goal.JobListSlot = parse[n].ToInt();
@@ -2598,14 +3022,16 @@ namespace Client.Logic.Network
                 //        Menus.MenuSwitcher.ShowMenu(codeViewer);
                 //    }
                 //    break;
-                case "missionexp": {
+                case "missionexp":
+                    {
                         PlayerManager.MyPlayer.MissionExp = parse[1].ToInt();
                         PlayerManager.MyPlayer.ExplorerRank = (Enums.ExplorerRank)parse[2].ToInt();
                     }
                     break;
                 #endregion
                 #region Custom Menus
-                case "custommenu": {
+                case "custommenu":
+                    {
                         SdlDotNet.Widgets.WidgetCollection widgets = new SdlDotNet.Widgets.WidgetCollection();
                         CustomMenus.CustomMenuOptions options = new CustomMenus.CustomMenuOptions();
                         options.Name = parse[1];
@@ -2614,14 +3040,16 @@ namespace Client.Logic.Network
                         int labelCount = parse[6].ToInt();
                         int textboxCount = parse[7].ToInt();
                         int n = 8;
-                        for (int i = 0; i < pictureBoxCount; i++) {
+                        for (int i = 0; i < pictureBoxCount; i++)
+                        {
                             SdlDotNet.Widgets.PictureBox picture = new SdlDotNet.Widgets.PictureBox("pictureBox" + i);
                             picture.ImageLocation = parse[n];
                             picture.Location = new Point(parse[n + 1].ToInt(), parse[n + 2].ToInt());
                             widgets.AddWidget(picture.Name, picture);
                             n += 3;
                         }
-                        for (int i = 0; i < labelCount; i++) {
+                        for (int i = 0; i < labelCount; i++)
+                        {
                             SdlDotNet.Widgets.Label label = new SdlDotNet.Widgets.Label("label" + i);
                             label.AutoSize = false;
                             label.Location = new Point(parse[n].ToInt(), parse[n + 1].ToInt());
@@ -2632,7 +3060,8 @@ namespace Client.Logic.Network
                             widgets.AddWidget(label.Name, label);
                             n += 8;
                         }
-                        for (int i = 0; i < textboxCount; i++) {
+                        for (int i = 0; i < textboxCount; i++)
+                        {
                             SdlDotNet.Widgets.TextBox textBox = new SdlDotNet.Widgets.TextBox("textBox" + i);
                             textBox.Location = new Point(parse[n].ToInt(), parse[n + 1].ToInt());
                             textBox.Size = new Size(parse[n + 2].ToInt(), 14);
@@ -2649,11 +3078,13 @@ namespace Client.Logic.Network
                     break;
                 #endregion
                 #region Story
-                case "storycheck": {
+                case "storycheck":
+                    {
                         Messenger.SendPacket(TcpPacket.CreatePacket("needstory", "yes", parse[1]));
                     }
                     break;
-                case "updatestory": {
+                case "updatestory":
+                    {
                         Client.Logic.Stories.Story story = new Client.Logic.Stories.Story();
                         story.LocalStory = false;
 
@@ -2663,23 +3094,26 @@ namespace Client.Logic.Network
                         int segments = parse[5].ToInt();
 
                         int n = 6;
-                        for (int i = 0; i < segments; i++) {
+                        for (int i = 0; i < segments; i++)
+                        {
                             Stories.Segment segment = new Stories.Segment();
                             int paramCount = parse[n].ToInt();
                             segment.Action = (Enums.StoryAction)(parse[n + 1].ToInt());
                             n += 2;
-                            for (int a = 0; a < paramCount; a++) {
+                            for (int a = 0; a < paramCount; a++)
+                            {
                                 segment.AddParameter(parse[n], parse[n + 1]);
                                 n += 2;
                             }
-                            
+
                             story.AppendSegment(segment.ToSpecific());
                         }
 
                         Stories.StoryHelper.CachedStory = story;
                     }
                     break;
-                case "runstory": {
+                case "runstory":
+                    {
                         Client.Logic.Stories.Story story = new Client.Logic.Stories.Story();
                         story.LocalStory = false;
 
@@ -2689,12 +3123,14 @@ namespace Client.Logic.Network
                         int segments = parse[5].ToInt();
 
                         int n = 6;
-                        for (int i = 0; i < segments; i++) {
+                        for (int i = 0; i < segments; i++)
+                        {
                             Stories.Segment segment = new Stories.Segment();
                             int paramCount = parse[n].ToInt();
                             segment.Action = (Enums.StoryAction)(parse[n + 1].ToInt());
                             n += 2;
-                            for (int a = 0; a < paramCount; a++) {
+                            for (int a = 0; a < paramCount; a++)
+                            {
                                 segment.AddParameter(parse[n], parse[n + 1]);
                                 n += 2;
                             }
@@ -2707,19 +3143,22 @@ namespace Client.Logic.Network
                         Stories.StoryProcessor.PlayStory(Stories.StoryHelper.CachedStory, 0);
                     }
                     break;
-                case "startstory": {
+                case "startstory":
+                    {
                         Messenger.SendStoryLoadingComplete();
                         Stories.StoryProcessor.PlayStory(Stories.StoryHelper.CachedStory, parse[2].ToInt());
                     }
                     break;
-                case "askquestion": {
+                case "askquestion":
+                    {
                         Stories.Story story = new Stories.Story();
                         story.Name = "Ask Question";
                         story.LocalStory = true;
 
                         string[] choices = new string[parse[4].ToInt()];
                         int n = 5;
-                        for (int i = 0; i < choices.Length; i++) {
+                        for (int i = 0; i < choices.Length; i++)
+                        {
                             choices[i] = parse[n];
 
                             n += 1;
@@ -2736,77 +3175,103 @@ namespace Client.Logic.Network
                         Stories.StoryProcessor.PlayStory(story, 0);
                     }
                     break;
-                case "loadingstory": {
+                case "loadingstory":
+                    {
                         Stories.StoryProcessor.loadingStory = true;
                     }
                     break;
-                case "breakstory": {
-                    Stories.StoryProcessor.ForceEndStory();
+                case "breakstory":
+                    {
+                        Stories.StoryProcessor.ForceEndStory();
                     }
                     break;
                 #endregion
                 #region Trading
-                case "opentrademenu": {
+                case "opentrademenu":
+                    {
                         string tradePartner = parse[1];
                         Menus.MenuSwitcher.ShowMenu(new Menus.mnuTrade("mnuTrade", tradePartner));
                     }
                     break;
-                case "tradesetitemupdate": {
+                case "tradesetitemupdate":
+                    {
                         Menus.mnuTrade menu = (Menus.mnuTrade)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuTrade");
-                        if (menu != null) {
-                            if (parse[3].ToBool()) {
-                                if (!string.IsNullOrEmpty(parse[1])) {
+                        if (menu != null)
+                        {
+                            if (parse[3].ToBool())
+                            {
+                                if (!string.IsNullOrEmpty(parse[1]))
+                                {
                                     menu.UpdateSetItem(parse[1].ToInt(), parse[2].ToInt());
-                                } else {
+                                }
+                                else
+                                {
                                     menu.UpdateSetItem(-1, 0);
                                 }
-                            } else {
-                                if (!string.IsNullOrEmpty(parse[1])) {
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(parse[1]))
+                                {
                                     menu.UpdatePartnersSetItem(parse[1].ToInt(), parse[2].ToInt());
-                                } else {
+                                }
+                                else
+                                {
                                     menu.UpdatePartnersSetItem(-1, 0);
                                 }
                             }
                         }
                     }
                     break;
-                case "tradecomplete": {
+                case "tradecomplete":
+                    {
                         Menus.mnuTrade menu = (Menus.mnuTrade)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuTrade");
-                        if (menu != null) {
+                        if (menu != null)
+                        {
                             menu.ResetTradeData();
                         }
                     }
                     break;
-                case "unconfirmtrade": {
+                case "unconfirmtrade":
+                    {
                         Menus.mnuTrade menu = (Menus.mnuTrade)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuTrade");
-                        if (menu != null) {
+                        if (menu != null)
+                        {
                             menu.UnconfirmTrade();
                         }
                     }
                     break;
-                case "endtrade": {
+                case "endtrade":
+                    {
                         Menus.mnuTrade menu = (Menus.mnuTrade)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuTrade");
-                        if (menu != null) {
+                        if (menu != null)
+                        {
                             Menus.MenuSwitcher.CloseAllMenus();
                         }
                     }
                     break;
                 #endregion
                 #region Pets
-                case "activepets": {
+                case "activepets":
+                    {
                         string id = parse[1];
                         int n = 2;
                         IPlayer player = PlayerManager.Players[id];
-                        if (player != null) {
-                            for (int i = 1; i < MaxInfo.MAX_ACTIVETEAM; i++) {
-                                if (parse[n] != "-1") {
+                        if (player != null)
+                        {
+                            for (int i = 1; i < MaxInfo.MAX_ACTIVETEAM; i++)
+                            {
+                                if (parse[n] != "-1")
+                                {
                                     player.Pets[i] = new PlayerPet(i, player);
                                     player.Pets[i].X = player.X;
                                     player.Pets[i].Y = player.Y - 1;
                                     player.Pets[i].Sprite = parse[n].ToInt();
                                     //TODO: add forme/shiny/gender data
                                     n += 1;
-                                } else {
+                                }
+                                else
+                                {
                                     player.Pets[i] = null;
                                     n += 1;
                                 }
@@ -2816,10 +3281,12 @@ namespace Client.Logic.Network
                     break;
                 #endregion
                 #region Tournament
-                case "tournamentlisting": {
+                case "tournamentlisting":
+                    {
                         Tournaments.TournamentListing[] listings = new Tournaments.TournamentListing[parse[1].ToInt()];
                         int n = 2;
-                        for (int i = 0; i < listings.Length; i++) {
+                        for (int i = 0; i < listings.Length; i++)
+                        {
                             listings[i] = new Tournaments.TournamentListing(
                                 parse[n],
                                 parse[n + 1],
@@ -2829,10 +3296,12 @@ namespace Client.Logic.Network
                         Menus.MenuSwitcher.ShowTournamentListingMenu(listings, Enums.TournamentListingMode.Join);
                     }
                     break;
-                case "tournamentspectatelisting": {
+                case "tournamentspectatelisting":
+                    {
                         Tournaments.TournamentListing[] listings = new Tournaments.TournamentListing[parse[1].ToInt()];
                         int n = 2;
-                        for (int i = 0; i < listings.Length; i++) {
+                        for (int i = 0; i < listings.Length; i++)
+                        {
                             listings[i] = new Tournaments.TournamentListing(
                                 parse[n],
                                 parse[n + 1],
@@ -2842,7 +3311,8 @@ namespace Client.Logic.Network
                         Menus.MenuSwitcher.ShowTournamentListingMenu(listings, Enums.TournamentListingMode.Spectate);
                     }
                     break;
-                case "tournamentruleseditor": {
+                case "tournamentruleseditor":
+                    {
                         Tournaments.TournamentRules rules = new Tournaments.TournamentRules();
                         rules.SleepClause = parse[1].ToBool();
                         rules.AccuracyClause = parse[2].ToBool();
@@ -2854,7 +3324,8 @@ namespace Client.Logic.Network
                         Menus.MenuSwitcher.ShowTournamentRulesEditorMenu(rules);
                     }
                     break;
-                case "tournamentrules": {
+                case "tournamentrules":
+                    {
                         Tournaments.TournamentRules rules = new Tournaments.TournamentRules();
                         rules.SleepClause = parse[1].ToBool();
                         rules.AccuracyClause = parse[2].ToBool();
@@ -2866,7 +3337,7 @@ namespace Client.Logic.Network
                         Menus.MenuSwitcher.ShowTournamentRulesViewerMenu(rules);
                     }
                     break;
-                #endregion
+                    #endregion
 
 
 
@@ -2874,23 +3345,31 @@ namespace Client.Logic.Network
         }
 
 
-        private static void ChatReceived(string[] parse) {
+        private static void ChatReceived(string[] parse)
+        {
             string text = parse[1].Replace("\\", "/") + "\n";
             List<SdlDotNet.Widgets.CharRenderOptions> renderOptions = new List<SdlDotNet.Widgets.CharRenderOptions>();
             Color color;
-            if (parse[2].ToInt() == -1) {
+            if (parse[2].ToInt() == -1)
+            {
                 color = Color.FromArgb(255, 255, 255, 254);
-            } else {
+            }
+            else
+            {
                 color = Color.FromArgb(parse[2].ToInt());
             }
             bool foundName = text.Contains(":");
             bool nameEnded = false;
-            for (int i = 0; i < text.Length; i++) {
+            for (int i = 0; i < text.Length; i++)
+            {
                 SdlDotNet.Widgets.CharRenderOptions options = new SdlDotNet.Widgets.CharRenderOptions(color);
-                if (foundName) {
-                    if (nameEnded == false) {
+                if (foundName)
+                {
+                    if (nameEnded == false)
+                    {
                         options.Bold = true;
-                        if (text[i] == ':') {
+                        if (text[i] == ':')
+                        {
                             nameEnded = true;
                         }
                     }
@@ -2899,17 +3378,17 @@ namespace Client.Logic.Network
             }
             SdlDotNet.Widgets.CharRenderOptions[] newRenderOptions = Client.Logic.Graphics.StringParser.ParseText(renderOptions.ToArray(), ref text);
             ExpKit.Modules.kitChat chat = (ExpKit.Modules.kitChat)WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.FindKitModule(Enums.ExpKitModules.Chat);
-            if (chat != null) {
+            if (chat != null)
+            {
                 chat.AppendChat(text, newRenderOptions);
             }
         }
 
-        private static void RunScriptEditor() {
+        private static void RunScriptEditor()
+        {
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.Run(Windows.Editors.EditorManager.ScriptEditor = new Windows.Editors.ScriptEditor.frmScriptEditor());
         }
-
-     
 
         #endregion Methods
     }

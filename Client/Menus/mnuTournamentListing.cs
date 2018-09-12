@@ -27,7 +27,8 @@ namespace Client.Logic.Menus
 {
     class mnuTournamentListing : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -40,13 +41,14 @@ namespace Client.Logic.Menus
         Label lblItemNum;
         TournamentListing[] listings;
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
         public mnuTournamentListing(string name, TournamentListing[] listings, Enums.TournamentListingMode mode)
-            : base(name) {
-
+            : base(name)
+        {
             this.listings = listings;
             this.mode = mode;
 
@@ -60,9 +62,12 @@ namespace Client.Logic.Menus
             lblJoinTournament = new Label("lblJoinTournament");
             lblJoinTournament.AutoSize = true;
             lblJoinTournament.Font = FontManager.LoadFont("PMDCP", 48);
-            if (mode == Enums.TournamentListingMode.Join) {
+            if (mode == Enums.TournamentListingMode.Join)
+            {
                 lblJoinTournament.Text = "Join A Tournament";
-            } else if (mode == Enums.TournamentListingMode.Spectate) {
+            }
+            else if (mode == Enums.TournamentListingMode.Spectate)
+            {
                 lblJoinTournament.Text = "Spectate In A Tournament";
             }
             lblJoinTournament.ForeColor = Color.WhiteSmoke;
@@ -78,7 +83,8 @@ namespace Client.Logic.Menus
             lblItemNum.Text = "";//"0/" + ((MaxInfo.MaxInv - 1) / 10 + 1);
 
             lblActiveTournaments = new Label[10];
-            for (int i = 0; i < lblActiveTournaments.Length; i++) {
+            for (int i = 0; i < lblActiveTournaments.Length; i++)
+            {
                 lblActiveTournaments[i] = new Label("lblActiveTournaments" + i);
                 //lblVisibleItems[i].AutoSize = true;
                 //lblVisibleItems[i].Size = new Size(200, 32);
@@ -100,8 +106,10 @@ namespace Client.Logic.Menus
             ChangeSelected(0 % 10);
         }
 
-        void lblActiveTournament_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (Players.PlayerManager.MyPlayer.GetInvItemNum(currentTen * 10 + Array.IndexOf(lblActiveTournaments, sender)) > 0) {
+        void lblActiveTournament_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (Players.PlayerManager.MyPlayer.GetInvItemNum(currentTen * 10 + Array.IndexOf(lblActiveTournaments, sender)) > 0)
+            {
                 ChangeSelected(Array.IndexOf(lblActiveTournaments, sender));
 
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuTournamentListingSelected("mnuTournamentListingSelected", listings[GetSelectedItemSlot()], mode));
@@ -112,10 +120,13 @@ namespace Client.Logic.Menus
             }
         }
 
-        public void DisplayItems(int startNum) {
+        public void DisplayItems(int startNum)
+        {
             this.BeginUpdate();
-            for (int i = 0; i < lblActiveTournaments.Length; i++) {
-                if (startNum + i >= listings.Length) {
+            for (int i = 0; i < lblActiveTournaments.Length; i++)
+            {
+                if (startNum + i >= listings.Length)
+                {
                     break;
                 }
                 lblActiveTournaments[i].Text = listings[startNum + i].Name;
@@ -123,74 +134,92 @@ namespace Client.Logic.Menus
             this.EndUpdate();
         }
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 63 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        private int GetSelectedItemSlot() {
+        private int GetSelectedItemSlot()
+        {
             return itemPicker.SelectedItem + currentTen * 10;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem >= 9 || itemPicker.SelectedItem + 1 + currentTen >= listings.Length) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem >= 9 || itemPicker.SelectedItem + 1 + currentTen >= listings.Length)
+                        {
                             ChangeSelected(0);
                             //DisplayItems(1);
-                        } else {
-
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem <= 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem <= 0)
+                        {
                             ChangeSelected(System.Math.Min(9, (listings.Length - 1) % 10));
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.LeftArrow: {
+                case SdlDotNet.Input.Key.LeftArrow:
+                    {
                         //int itemSlot = (currentTen + 1) - 10;//System.Math.Max(1, GetSelectedItemSlot() - (11 - itemPicker.SelectedItem));
-                        if (currentTen <= 0) {
+                        if (currentTen <= 0)
+                        {
                             currentTen = ((listings.Length - 1) / 10);
-                        } else {
+                        }
+                        else
+                        {
                             currentTen--;
                         }
                         DisplayItems(currentTen * 10);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep4.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.RightArrow: {
+                case SdlDotNet.Input.Key.RightArrow:
+                    {
                         //int itemSlot = currentTen + 1 + 10;
-                        if (currentTen >= ((listings.Length - 1) / 10)) {
+                        if (currentTen >= ((listings.Length - 1) / 10))
+                        {
                             currentTen = 0;
-                        } else {
+                        }
+                        else
+                        {
                             currentTen++;
                         }
                         DisplayItems(currentTen * 10);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep4.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuTournamentListingSelected("mnuTournamentListingSelected", listings[GetSelectedItemSlot()], mode));
                         Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuTournamentListingSelected");
 
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
-
-
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                     }
                     break;
             }
         }
-
     }
 }

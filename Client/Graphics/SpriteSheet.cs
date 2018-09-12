@@ -1,4 +1,13 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using PMDCP.Core;
+
+using SdlDotNet.Graphics;
+using System.IO;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,16 +27,6 @@
 
 namespace Client.Logic.Graphics
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using PMDCP.Core;
-
-    using SdlDotNet.Graphics;
-    using System.IO;
-
     #region Enumerations
 
     public enum FrameType
@@ -145,7 +144,6 @@ namespace Client.Logic.Graphics
             }
         }
 
-
         #endregion Methods
     }
 
@@ -208,7 +206,7 @@ namespace Client.Logic.Graphics
 
             loader.Load(this, frameData, overrideForm);
 
-            this.sizeInBytes = 5 * 1000;
+            sizeInBytes = 5 * 1000;
         }
 
         public Rectangle GetFrameBounds(FrameType frameType, Enums.Direction direction, int frameNum)
@@ -242,7 +240,6 @@ namespace Client.Logic.Graphics
                             byte[] imgData = reader.ReadBytes(size);
                             using (MemoryStream stream = new MemoryStream(imgData))
                             {
-
                                 Bitmap bitmap = (Bitmap)Image.FromStream(stream);
                                 Surface sheetSurface = new Surface(bitmap);
                                 sheetSurface.Transparent = true;
@@ -265,7 +262,6 @@ namespace Client.Logic.Graphics
 
                         using (MemoryStream stream = new MemoryStream(imgData))
                         {
-
                             Bitmap bitmap = (Bitmap)Image.FromStream(stream);
                             Surface sheetSurface = new Surface(bitmap);
                             sheetSurface.Transparent = true;
@@ -278,8 +274,7 @@ namespace Client.Logic.Graphics
                 }
             }
 
-            this.sizeInBytes = totalByteSize;
-
+            sizeInBytes = totalByteSize;
         }
 
 

@@ -24,7 +24,7 @@ namespace Client.Logic.Maps
 {
     class DungeonRoom
     {
-         #region Fields
+        #region Fields
 
         int height;
         int width;
@@ -35,7 +35,8 @@ namespace Client.Logic.Maps
 
         #region Constructors
 
-        public DungeonRoom(int x, int y, int width, int height) {
+        public DungeonRoom(int x, int y, int width, int height)
+        {
             this.x = x;
             this.y = y;
             this.width = width;
@@ -46,35 +47,40 @@ namespace Client.Logic.Maps
 
         #region Properties
 
-        public int Height {
+        public int Height
+        {
             get { return height; }
             set { height = value; }
         }
 
-        public int Width {
+        public int Width
+        {
             get { return width; }
             set { width = value; }
         }
 
-        public int X {
+        public int X
+        {
             get { return x; }
             set { x = value; }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return y; }
             set { y = value; }
         }
 
         #endregion Properties
 
-        public bool IsInRoom(int x, int y) {
+        public bool IsInRoom(int x, int y)
+        {
             return true;
             return (
                x >= this.x &&
                y >= this.y &&
-               x - this.x <= this.width &&
-               y - this.y <= this.height
+               x - this.x <= width &&
+               y - this.y <= height
                );
         }
     }

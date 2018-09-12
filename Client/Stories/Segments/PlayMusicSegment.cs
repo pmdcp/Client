@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class PlayMusicSegment : ISegment
     {
         #region Fields
@@ -38,22 +37,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public PlayMusicSegment(string file, bool honorSettings, bool loop) {
+        public PlayMusicSegment(string file, bool honorSettings, bool loop)
+        {
             Load(file, honorSettings, loop);
         }
 
-        public PlayMusicSegment() {
+        public PlayMusicSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.PlayMusic; }
         }
 
-        public string File {
+        public string File
+        {
             get { return file; }
             set { file = value; }
         }
@@ -63,17 +66,20 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool HonorSettings {
+        public bool HonorSettings
+        {
             get { return honorSettings; }
             set { honorSettings = value; }
         }
 
-        public bool Loop {
+        public bool Loop
+        {
             get { return loop; }
             set { loop = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -81,7 +87,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(string file, bool honorSettings, bool loop) {
+        public void Load(string file, bool honorSettings, bool loop)
+        {
             this.file = file;
             this.honorSettings = honorSettings;
             this.loop = loop;
@@ -93,16 +100,21 @@ namespace Client.Logic.Stories.Segments
             Load(parameters.GetValue("File"), parameters.GetValue("HonorSettings").ToBool(), parameters.GetValue("Loop").ToBool());
         }
 
-        public void Process(StoryState state) {
-            this.storyState = state;
+        public void Process(StoryState state)
+        {
+            storyState = state;
             string fileToPlay = null;
-            if (file == "%mapmusic%") {
+            if (file == "%mapmusic%")
+            {
                 fileToPlay = Maps.MapHelper.ActiveMap.Music;
-            } else {
+            }
+            else
+            {
                 fileToPlay = file;
             }
-            if (!string.IsNullOrEmpty(fileToPlay)) {
-                Music.Music.AudioPlayer.PlayMusic(fileToPlay, this.loop ? -1 : 1, !honorSettings, true);
+            if (!string.IsNullOrEmpty(fileToPlay))
+            {
+                Music.Music.AudioPlayer.PlayMusic(fileToPlay, loop ? -1 : 1, !honorSettings, true);
             }
         }
 

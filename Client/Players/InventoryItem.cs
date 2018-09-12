@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,20 +21,18 @@
 
 namespace Client.Logic.Players
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class InventoryItem
     {
         #region Properties
 
-        public int Num {
+        public int Num
+        {
             get;
             set;
         }
 
-        public int Value {
+        public int Value
+        {
             get;
             set;
         }

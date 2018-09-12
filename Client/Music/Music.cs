@@ -25,17 +25,21 @@ namespace Client.Logic.Music
     class Music
     {
         static IAudioPlayer audioPlayer;
-        public static IAudioPlayer AudioPlayer {
-            get {
+        public static IAudioPlayer AudioPlayer
+        {
+            get
+            {
                 return audioPlayer;
             }
         }
 
-        public static void Initialize() {
+        public static void Initialize()
+        {
             audioPlayer = new Bass.BassAudioPlayer();
         }
 
-        public static void Dispose() {
+        public static void Dispose()
+        {
             audioPlayer.Dispose();
         }
     }

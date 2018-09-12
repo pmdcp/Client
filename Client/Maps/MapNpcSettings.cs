@@ -37,12 +37,14 @@ namespace Client.Logic.Maps
         public int StartStatusCounter { get; set; }
         public int StartStatusChance { get; set; }
 
-        public MapNpcSettings() {
+        public MapNpcSettings()
+        {
             // If the NpcNum -2, the server will not save this MapNpc
             NpcNum = -2;
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             if (!(obj is MapNpcSettings)) return false;
             MapNpcSettings npc = obj as MapNpcSettings;
 

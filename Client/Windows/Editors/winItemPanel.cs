@@ -130,10 +130,8 @@ namespace Client.Logic.Windows.Editors
         #region Constructors
 
         public winItemPanel()
-            : base("winItemPanel") {
-
-
-
+            : base("winItemPanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -159,7 +157,8 @@ namespace Client.Logic.Windows.Editors
             lbxItemList = new ListBox("lbxItemList");
             lbxItemList.Location = new Point(10, 10);
             lbxItemList.Size = new Size(180, 140);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": " + Items.ItemHelper.Items[(i + 1) + 10 * currentTen].Name);
                 lbxItemList.Items.Add(lbiItem);
             }
@@ -735,46 +734,58 @@ namespace Client.Logic.Windows.Editors
             this.AddWidget(pnlItemEditor);
 
             this.LoadComplete();
-
         }
 
         #endregion Constructors
 
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshItemList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen < (MaxInfo.MaxItems / 10)) {
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < (MaxInfo.MaxItems / 10))
+            {
                 currentTen++;
             }
             RefreshItemList();
         }
 
-        public void RefreshItemList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < MaxInfo.MaxItems) {
+        public void RefreshItemList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < MaxInfo.MaxItems)
+                {
                     ((ListBoxTextItem)lbxItemList.Items[i]).Text = (((i + 1) + 10 * currentTen) + ": " + Items.ItemHelper.Items[(i + 1) + 10 * currentTen].Name);
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxItemList.Items[i]).Text = "---";
                 }
             }
         }
 
 
-        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxItemList.SelectedItems.Count == 1) {
+        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxItemList.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxItemList.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     LoadItem(index[0].ToInt());
                 }
             }
         }
 
-        public void LoadItem(int index) {
+        public void LoadItem(int index)
+        {
             itemNum = index;
             Items.Item item = Items.ItemHelper.Items[itemNum];
             pnlItemList.Visible = false;
@@ -789,64 +800,80 @@ namespace Client.Logic.Windows.Editors
             chkLoseable.Checked = item.Loseable;
             txtDescription.Text = item.Desc;
             nudRarity.Value = item.Rarity;
-            switch (item.Type) {
-                case Enums.ItemType.None: {
+            switch (item.Type)
+            {
+                case Enums.ItemType.None:
+                    {
                         optTypeNone.Checked = true;
                     }
                     break;
-                case Enums.ItemType.Held: {
+                case Enums.ItemType.Held:
+                    {
                         optTypeHeld.Checked = true;
                     }
                     break;
-                case Enums.ItemType.HeldByParty: {
+                case Enums.ItemType.HeldByParty:
+                    {
                         optTypeHeldByParty.Checked = true;
                     }
                     break;
-                case Enums.ItemType.HeldInBag: {
+                case Enums.ItemType.HeldInBag:
+                    {
                         optTypeHeldInBag.Checked = true;
                     }
                     break;
-                case Enums.ItemType.PotionAddHP: {
+                case Enums.ItemType.PotionAddHP:
+                    {
                         optTypePotionAddHP.Checked = true;
                     }
                     break;
-                case Enums.ItemType.PotionAddPP: {
+                case Enums.ItemType.PotionAddPP:
+                    {
                         optTypePotionAddPP.Checked = true;
                     }
                     break;
-                case Enums.ItemType.PotionAddBelly: {
+                case Enums.ItemType.PotionAddBelly:
+                    {
                         optTypePotionAddBelly.Checked = true;
                     }
                     break;
-                case Enums.ItemType.PotionSubHP: {
+                case Enums.ItemType.PotionSubHP:
+                    {
                         optTypePotionSubHP.Checked = true;
                     }
                     break;
-                case Enums.ItemType.PotionSubPP: {
+                case Enums.ItemType.PotionSubPP:
+                    {
                         optTypePotionSubPP.Checked = true;
                     }
                     break;
-                case Enums.ItemType.PotionSubBelly: {
+                case Enums.ItemType.PotionSubBelly:
+                    {
                         optTypePotionSubBelly.Checked = true;
                     }
                     break;
-                case Enums.ItemType.Key: {
+                case Enums.ItemType.Key:
+                    {
                         optTypeKey.Checked = true;
                     }
                     break;
-                case Enums.ItemType.Currency: {
+                case Enums.ItemType.Currency:
+                    {
                         optTypeCurrency.Checked = true;
                     }
                     break;
-                case Enums.ItemType.TM: {
+                case Enums.ItemType.TM:
+                    {
                         optTypeTM.Checked = true;
                     }
                     break;
-                case Enums.ItemType.Scripted: {
+                case Enums.ItemType.Scripted:
+                    {
                         optTypeScripted.Checked = true;
                     }
                     break;
-                default: {
+                default:
+                    {
                         optTypeNone.Checked = true;
                     }
                     break;
@@ -876,20 +903,22 @@ namespace Client.Logic.Windows.Editors
             nudRecruitBonus.Value = item.RecruitBonus;
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             return;
         }
 
-        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             itemNum = -1;
             pnlItemEditor.Visible = false;
             pnlItemList.Visible = true;
             this.Size = new System.Drawing.Size(pnlItemList.Width, pnlItemList.Height);
-
         }
 
-        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Items.Item itemToSend = new Items.Item();
 
             itemToSend.Name = txtName.Text;
@@ -901,46 +930,60 @@ namespace Client.Logic.Windows.Editors
             itemToSend.Desc = txtDescription.Text;
 
             itemToSend.Type = Enums.ItemType.None;
-            if (optTypeNone.Checked == true) {
+            if (optTypeNone.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.None;
             }
-            if (optTypeHeld.Checked == true) {
+            if (optTypeHeld.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.Held;
             }
-            if (optTypeHeldByParty.Checked == true) {
+            if (optTypeHeldByParty.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.HeldByParty;
             }
-            if (optTypeHeldInBag.Checked == true) {
+            if (optTypeHeldInBag.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.HeldInBag;
             }
-            if (optTypePotionAddHP.Checked == true) {
+            if (optTypePotionAddHP.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.PotionAddHP;
             }
-            if (optTypePotionAddPP.Checked == true) {
+            if (optTypePotionAddPP.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.PotionAddPP;
             }
-            if (optTypePotionAddBelly.Checked == true) {
+            if (optTypePotionAddBelly.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.PotionAddBelly;
             }
-            if (optTypePotionSubHP.Checked == true) {
+            if (optTypePotionSubHP.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.PotionSubHP;
             }
-            if (optTypePotionSubPP.Checked == true) {
+            if (optTypePotionSubPP.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.PotionSubPP;
             }
-            if (optTypePotionSubBelly.Checked == true) {
+            if (optTypePotionSubBelly.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.PotionSubBelly;
             }
-            if (optTypeKey.Checked == true) {
+            if (optTypeKey.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.Key;
             }
-            if (optTypeCurrency.Checked == true) {
+            if (optTypeCurrency.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.Currency;
             }
-            if (optTypeTM.Checked == true) {
+            if (optTypeTM.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.TM;
             }
-            if (optTypeScripted.Checked == true) {
+            if (optTypeScripted.Checked == true)
+            {
                 itemToSend.Type = Enums.ItemType.Scripted;
             }
 
@@ -976,13 +1019,6 @@ namespace Client.Logic.Windows.Editors
             pnlItemEditor.Visible = false;
             pnlItemList.Visible = true;
             this.Size = new System.Drawing.Size(pnlItemList.Width, pnlItemList.Height);
-
         }
-
-
-
-
-
-
     }
 }

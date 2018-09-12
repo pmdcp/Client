@@ -532,8 +532,8 @@ namespace Client.Logic.Windows.Editors
 
         #region Constructors
         public winRDungeonPanel()
-            : base("winRDungeonPanel") {
-
+            : base("winRDungeonPanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -548,7 +548,6 @@ namespace Client.Logic.Windows.Editors
             LoadpnlRDungeonList();
 
             this.LoadComplete();
-
         }
         #endregion
 
@@ -556,8 +555,10 @@ namespace Client.Logic.Windows.Editors
 
         #region Loading
 
-        void LoadpnlRDungeonList() {
-            if (!listLoaded) {
+        void LoadpnlRDungeonList()
+        {
+            if (!listLoaded)
+            {
                 pnlRDungeonList = new Panel("pnlRDungeonList");
                 pnlRDungeonList.Size = this.Size;
                 pnlRDungeonList.Location = new Point(0, 0);
@@ -568,7 +569,8 @@ namespace Client.Logic.Windows.Editors
                 lbxRDungeonList = new ListBox("lbxRDungeonList");
                 lbxRDungeonList.Location = new Point(10, 10);
                 lbxRDungeonList.Size = new Size(180, 140);
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 10; i++)
+                {
                     lbxRDungeonList.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": ---"));
                 }
                 RefreshRDungeonList();
@@ -628,8 +630,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonGeneral() {
-            if (!generalLoaded) {
+        void LoadpnlRDungeonGeneral()
+        {
+            if (!generalLoaded)
+            {
                 pnlRDungeonGeneral = new Panel("pnlRDungeonGeneral");
                 pnlRDungeonGeneral.Size = new Size(250, 220);
                 pnlRDungeonGeneral.Location = new Point(0, 0);
@@ -757,8 +761,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonFloors() {
-            if (!floorsLoaded) {
+        void LoadpnlRDungeonFloors()
+        {
+            if (!floorsLoaded)
+            {
                 pnlRDungeonFloors = new Panel("pnlRDungeonFloors");
                 pnlRDungeonFloors.Size = new Size(600, 400);
                 pnlRDungeonFloors.Location = new Point(0, 0);
@@ -853,8 +859,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonFloorSettingSelection() {
-            if (!floorSettingSelectionLoaded) {
+        void LoadpnlRDungeonFloorSettingSelection()
+        {
+            if (!floorSettingSelectionLoaded)
+            {
                 pnlRDungeonFloorSettingSelection = new Panel("pnlRDungeonFloorSettingSelection");
                 pnlRDungeonFloorSettingSelection.Size = new Size(600, 320);
                 pnlRDungeonFloorSettingSelection.Location = new Point(0, 80);
@@ -960,8 +968,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonStructure() {
-            if (!structureLoaded) {
+        void LoadpnlRDungeonStructure()
+        {
+            if (!structureLoaded)
+            {
                 pnlRDungeonStructure = new Panel("pnlRDungeonStructure");
                 pnlRDungeonStructure.Size = new Size(600, 320);
                 pnlRDungeonStructure.Location = new Point(0, 80);
@@ -1229,8 +1239,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonLandTiles() {
-            if (!landTilesLoaded) {
+        void LoadpnlRDungeonLandTiles()
+        {
+            if (!landTilesLoaded)
+            {
                 pnlRDungeonLandTiles = new Panel("pnlRDungeonLandTiles");
                 pnlRDungeonLandTiles.Size = new Size(600, 320);
                 pnlRDungeonLandTiles.Location = new Point(0, 80);
@@ -1247,13 +1259,17 @@ namespace Client.Logic.Windows.Editors
 
                 lblLandTileset = new Label[22];
                 picLandTileset = new PictureBox[22];
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < 22; i++)
+                {
                     lblLandTileset[i] = new Label("lblLandTileset" + i);
                     lblLandTileset[i].Font = Graphics.FontManager.LoadFont("Tahoma", 10);
                     lblLandTileset[i].AutoSize = true;
-                    if (i < 16) {
+                    if (i < 16)
+                    {
                         lblLandTileset[i].Location = new Point(2 + 70 * (i / 4), 30 + 70 * (i % 4));
-                    } else {
+                    }
+                    else
+                    {
                         lblLandTileset[i].Location = new Point(352 + 70 * ((i - 16) / 3), 30 + 70 * ((i - 16) % 3));
                     }
 
@@ -1263,9 +1279,12 @@ namespace Client.Logic.Windows.Editors
                     picLandTileset[i].Image = new SdlDotNet.Graphics.Surface(32, 32);
                     picLandTileset[i].Click += new EventHandler<MouseButtonEventArgs>(picLandTileset_Click);
 
-                    if (i < 16) {
+                    if (i < 16)
+                    {
                         picLandTileset[i].Location = new Point(10 + 70 * (i / 4), 46 + 70 * (i % 4));
-                    } else {
+                    }
+                    else
+                    {
                         picLandTileset[i].Location = new Point(360 + 70 * ((i - 16) / 3), 46 + 70 * ((i - 16) % 3));
                     }
 
@@ -1314,8 +1333,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonLandAltTiles() {
-            if (!landAltTilesLoaded) {
+        void LoadpnlRDungeonLandAltTiles()
+        {
+            if (!landAltTilesLoaded)
+            {
                 pnlRDungeonLandAltTiles = new Panel("pnlRDungeonLandAltTiles");
                 pnlRDungeonLandAltTiles.Size = new Size(600, 320);
                 pnlRDungeonLandAltTiles.Location = new Point(0, 80);
@@ -1332,17 +1353,25 @@ namespace Client.Logic.Windows.Editors
 
                 lblLandAltTileset = new Label[23];
                 picLandAltTileset = new PictureBox[23];
-                for (int i = 0; i < 23; i++) {
+                for (int i = 0; i < 23; i++)
+                {
                     lblLandAltTileset[i] = new Label("lblLandAltTileset" + i);
                     lblLandAltTileset[i].Font = Graphics.FontManager.LoadFont("Tahoma", 10);
                     lblLandAltTileset[i].AutoSize = true;
-                    if (i == 5) {
+                    if (i == 5)
+                    {
                         lblLandAltTileset[i].Location = new Point(352, 240);
-                    } else if (i == 22) {
+                    }
+                    else if (i == 22)
+                    {
                         lblLandAltTileset[i].Location = new Point(422, 240);
-                    } else if (i < 16) {
+                    }
+                    else if (i < 16)
+                    {
                         lblLandAltTileset[i].Location = new Point(2 + 70 * (i / 4), 30 + 70 * (i % 4));
-                    } else {
+                    }
+                    else
+                    {
                         lblLandAltTileset[i].Location = new Point(352 + 70 * ((i - 16) / 3), 30 + 70 * ((i - 16) % 3));
                     }
 
@@ -1352,13 +1381,20 @@ namespace Client.Logic.Windows.Editors
                     picLandAltTileset[i].Image = new SdlDotNet.Graphics.Surface(32, 32);
                     picLandAltTileset[i].Click += new EventHandler<MouseButtonEventArgs>(picLandAltTileset_Click);
 
-                    if (i == 5) {
+                    if (i == 5)
+                    {
                         picLandAltTileset[i].Location = new Point(360, 256);
-                    } else if (i == 22) {
+                    }
+                    else if (i == 22)
+                    {
                         picLandAltTileset[i].Location = new Point(430, 256);
-                    } else if (i < 16) {
+                    }
+                    else if (i < 16)
+                    {
                         picLandAltTileset[i].Location = new Point(10 + 70 * (i / 4), 46 + 70 * (i % 4));
-                    } else {
+                    }
+                    else
+                    {
                         picLandAltTileset[i].Location = new Point(360 + 70 * ((i - 16) / 3), 46 + 70 * ((i - 16) % 3));
                     }
 
@@ -1408,8 +1444,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonWaterTiles() {
-            if (!waterTilesLoaded) {
+        void LoadpnlRDungeonWaterTiles()
+        {
+            if (!waterTilesLoaded)
+            {
                 pnlRDungeonWaterTiles = new Panel("pnlRDungeonWaterTiles");
                 pnlRDungeonWaterTiles.Size = new Size(600, 320);
                 pnlRDungeonWaterTiles.Location = new Point(0, 80);
@@ -1425,13 +1463,17 @@ namespace Client.Logic.Windows.Editors
 
                 lblWaterTileset = new Label[22];
                 picWaterTileset = new PictureBox[22];
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < 22; i++)
+                {
                     lblWaterTileset[i] = new Label("lblWaterTileset" + i);
                     lblWaterTileset[i].Font = Graphics.FontManager.LoadFont("Tahoma", 10);
                     lblWaterTileset[i].AutoSize = true;
-                    if (i < 16) {
+                    if (i < 16)
+                    {
                         lblWaterTileset[i].Location = new Point(2 + 70 * (i / 4), 30 + 70 * (i % 4));
-                    } else {
+                    }
+                    else
+                    {
                         lblWaterTileset[i].Location = new Point(352 + 70 * ((i - 16) / 3), 30 + 70 * ((i - 16) % 3));
                     }
 
@@ -1441,9 +1483,12 @@ namespace Client.Logic.Windows.Editors
                     picWaterTileset[i].Image = new SdlDotNet.Graphics.Surface(32, 32);
                     picWaterTileset[i].Click += new EventHandler<MouseButtonEventArgs>(picWaterTileset_Click);
 
-                    if (i < 16) {
+                    if (i < 16)
+                    {
                         picWaterTileset[i].Location = new Point(10 + 70 * (i / 4), 46 + 70 * (i % 4));
-                    } else {
+                    }
+                    else
+                    {
                         picWaterTileset[i].Location = new Point(360 + 70 * ((i - 16) / 3), 46 + 70 * ((i - 16) % 3));
                     }
 
@@ -1492,8 +1537,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonWaterAnimTiles() {
-            if (!waterAnimTilesLoaded) {
+        void LoadpnlRDungeonWaterAnimTiles()
+        {
+            if (!waterAnimTilesLoaded)
+            {
                 pnlRDungeonWaterAnimTiles = new Panel("pnlRDungeonWaterAnimTiles");
                 pnlRDungeonWaterAnimTiles.Size = new Size(600, 320);
                 pnlRDungeonWaterAnimTiles.Location = new Point(0, 80);
@@ -1509,13 +1556,17 @@ namespace Client.Logic.Windows.Editors
 
                 lblWaterAnimTileset = new Label[22];
                 picWaterAnimTileset = new PictureBox[22];
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < 22; i++)
+                {
                     lblWaterAnimTileset[i] = new Label("lblWaterAnimTileset" + i);
                     lblWaterAnimTileset[i].Font = Graphics.FontManager.LoadFont("Tahoma", 10);
                     lblWaterAnimTileset[i].AutoSize = true;
-                    if (i < 16) {
+                    if (i < 16)
+                    {
                         lblWaterAnimTileset[i].Location = new Point(2 + 70 * (i / 4), 30 + 70 * (i % 4));
-                    } else {
+                    }
+                    else
+                    {
                         lblWaterAnimTileset[i].Location = new Point(352 + 70 * ((i - 16) / 3), 30 + 70 * ((i - 16) % 3));
                     }
 
@@ -1525,9 +1576,12 @@ namespace Client.Logic.Windows.Editors
                     picWaterAnimTileset[i].Image = new SdlDotNet.Graphics.Surface(32, 32);
                     picWaterAnimTileset[i].Click += new EventHandler<MouseButtonEventArgs>(picWaterAnimTileset_Click);
 
-                    if (i < 16) {
+                    if (i < 16)
+                    {
                         picWaterAnimTileset[i].Location = new Point(10 + 70 * (i / 4), 46 + 70 * (i % 4));
-                    } else {
+                    }
+                    else
+                    {
                         picWaterAnimTileset[i].Location = new Point(360 + 70 * ((i - 16) / 3), 46 + 70 * ((i - 16) % 3));
                     }
 
@@ -1576,8 +1630,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonAttributes() {
-            if (!attributesLoaded) {
+        void LoadpnlRDungeonAttributes()
+        {
+            if (!attributesLoaded)
+            {
                 pnlRDungeonAttributes = new Panel("pnlRDungeonAttributes");
                 pnlRDungeonAttributes.Size = new Size(600, 320);
                 pnlRDungeonAttributes.Location = new Point(0, 80);
@@ -1593,7 +1649,8 @@ namespace Client.Logic.Windows.Editors
                 cbGroundType = new ComboBox("cbGroundType");
                 cbGroundType.Location = new Point(10, 26);
                 cbGroundType.Size = new Size(100, 16);
-                for (int i = 0; i < 40; i++) {
+                for (int i = 0; i < 40; i++)
+                {
                     cbGroundType.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": " + Enum.GetName(typeof(Enums.TileType), i)));
                 }
                 cbGroundType.SelectItem(0);
@@ -1678,7 +1735,8 @@ namespace Client.Logic.Windows.Editors
                 cbHallType = new ComboBox("cbHallType");
                 cbHallType.Location = new Point(120, 26);
                 cbHallType.Size = new Size(100, 16);
-                for (int i = 0; i < 40; i++) {
+                for (int i = 0; i < 40; i++)
+                {
                     cbHallType.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": " + Enum.GetName(typeof(Enums.TileType), i)));
                 }
                 cbHallType.SelectItem(0);
@@ -1763,7 +1821,8 @@ namespace Client.Logic.Windows.Editors
                 cbWaterType = new ComboBox("cbWaterType");
                 cbWaterType.Location = new Point(230, 26);
                 cbWaterType.Size = new Size(100, 16);
-                for (int i = 0; i < 40; i++) {
+                for (int i = 0; i < 40; i++)
+                {
                     cbWaterType.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": " + Enum.GetName(typeof(Enums.TileType), i)));
                 }
                 cbWaterType.SelectItem(0);
@@ -1848,7 +1907,8 @@ namespace Client.Logic.Windows.Editors
                 cbWallType = new ComboBox("cbWallType");
                 cbWallType.Location = new Point(340, 26);
                 cbWallType.Size = new Size(100, 16);
-                for (int i = 0; i < 40; i++) {
+                for (int i = 0; i < 40; i++)
+                {
                     cbWallType.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": " + Enum.GetName(typeof(Enums.TileType), i)));
                 }
                 cbWallType.SelectItem(0);
@@ -1999,8 +2059,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonItems() {
-            if (!itemsLoaded) {
+        void LoadpnlRDungeonItems()
+        {
+            if (!itemsLoaded)
+            {
                 pnlRDungeonItems = new Panel("pnlRDungeonItems");
                 pnlRDungeonItems.Size = new Size(600, 320);
                 pnlRDungeonItems.Location = new Point(0, 80);
@@ -2160,7 +2222,7 @@ namespace Client.Logic.Windows.Editors
                 btnChangeItem.Text = "Change Item";
                 btnChangeItem.Click += new EventHandler<MouseButtonEventArgs>(btnChangeItem_Click);
 
-                
+
 
                 chkBulkItem = new CheckBox("chkBulkItem");
                 chkBulkItem.Size = new Size(100, 17);
@@ -2203,8 +2265,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonNpcs() {
-            if (!npcsLoaded) {
+        void LoadpnlRDungeonNpcs()
+        {
+            if (!npcsLoaded)
+            {
                 pnlRDungeonNpcs = new Panel("pnlRDungeonNpcs");
                 pnlRDungeonNpcs.Size = new Size(600, 320);
                 pnlRDungeonNpcs.Location = new Point(0, 80);
@@ -2329,7 +2393,8 @@ namespace Client.Logic.Windows.Editors
                 cbNpcStartStatus = new ComboBox("cbNpcStartStatus");
                 cbNpcStartStatus.Size = new System.Drawing.Size(80, 20);
                 cbNpcStartStatus.Location = new Point(190, 108);
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 6; i++)
+                {
                     cbNpcStartStatus.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("Tahoma", 10), ((Enums.StatusAilment)i).ToString()));
                 }
                 cbNpcStartStatus.SelectItem(0);
@@ -2443,8 +2508,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonTraps() {
-            if (!trapsLoaded) {
+        void LoadpnlRDungeonTraps()
+        {
+            if (!trapsLoaded)
+            {
                 pnlRDungeonTraps = new Panel("pnlRDungeonTraps");
                 pnlRDungeonTraps.Size = new Size(600, 320);
                 pnlRDungeonTraps.Location = new Point(0, 80);
@@ -2466,7 +2533,8 @@ namespace Client.Logic.Windows.Editors
 
                 lblTrapTileset = new Label[10];
                 picTrapTileset = new PictureBox[10];
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 10; i++)
+                {
                     lblTrapTileset[i] = new Label("lblTrapTileset" + i);
                     lblTrapTileset[i].Font = Graphics.FontManager.LoadFont("Tahoma", 10);
                     lblTrapTileset[i].AutoSize = true;
@@ -2501,7 +2569,8 @@ namespace Client.Logic.Windows.Editors
                 cbTrapType = new ComboBox("cbTrapType");
                 cbTrapType.Location = new Point(10, 80);
                 cbTrapType.Size = new Size(120, 16);
-                for (int i = 0; i < 40; i++) {
+                for (int i = 0; i < 40; i++)
+                {
                     cbTrapType.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": " + Enum.GetName(typeof(Enums.TileType), i)));
                 }
                 cbTrapType.SelectItem(0);
@@ -2663,8 +2732,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonWeather() {
-            if (!weatherLoaded) {
+        void LoadpnlRDungeonWeather()
+        {
+            if (!weatherLoaded)
+            {
                 pnlRDungeonWeather = new Panel("pnlRDungeonWeather");
                 pnlRDungeonWeather.Size = new Size(600, 320);
                 pnlRDungeonWeather.Location = new Point(0, 80);
@@ -2688,7 +2759,8 @@ namespace Client.Logic.Windows.Editors
                 cbWeather.Size = new Size(200, 16);
 
                 //ComboBox cbWeather;
-                for (int i = 0; i < 13; i++) {
+                for (int i = 0; i < 13; i++)
+                {
                     //lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), );
                     cbWeather.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), i + ": " + Enum.GetName(typeof(Enums.Weather), i)));
                 }
@@ -2726,8 +2798,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonGoal() {
-            if (!goalLoaded) {
+        void LoadpnlRDungeonGoal()
+        {
+            if (!goalLoaded)
+            {
                 pnlRDungeonGoal = new Panel("pnlRDungeonGoal");
                 pnlRDungeonGoal.Size = new Size(600, 320);
                 pnlRDungeonGoal.Location = new Point(0, 80);
@@ -2821,8 +2895,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonChambers() {
-            if (!chambersLoaded) {
+        void LoadpnlRDungeonChambers()
+        {
+            if (!chambersLoaded)
+            {
                 pnlRDungeonChambers = new Panel("pnlRDungeonChambers");
                 pnlRDungeonChambers.Size = new Size(600, 320);
                 pnlRDungeonChambers.Location = new Point(0, 80);
@@ -2939,8 +3015,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlRDungeonMisc() {
-            if (!miscLoaded) {
+        void LoadpnlRDungeonMisc()
+        {
+            if (!miscLoaded)
+            {
                 pnlRDungeonMisc = new Panel("pnlRDungeonMisc");
                 pnlRDungeonMisc.Size = new Size(600, 320);
                 pnlRDungeonMisc.Location = new Point(0, 80);
@@ -2978,7 +3056,8 @@ namespace Client.Logic.Windows.Editors
                 lbxMusic.Size = new Size(260, 220);
                 lbxMusic.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("Tahoma", 10), "None"));
                 string[] songs = System.IO.Directory.GetFiles(IO.Paths.MusicPath);
-                for (int i = 0; i < songs.Length; i++) {
+                for (int i = 0; i < songs.Length; i++)
+                {
                     lbxMusic.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("Tahoma", 10), System.IO.Path.GetFileName(songs[i])));
                 }
                 //Button btnPlayMusic;
@@ -3003,8 +3082,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void LoadpnlTileSelector() {
-            if (!tileSelectorLoaded) {
+        void LoadpnlTileSelector()
+        {
+            if (!tileSelectorLoaded)
+            {
                 pnlTileSelector = new Panel("pnlTileSelector");
                 pnlTileSelector.Size = new Size(600, 400);
                 pnlTileSelector.Location = new Point(0, 0);
@@ -3062,25 +3143,31 @@ namespace Client.Logic.Windows.Editors
 
         #region RDungeon List
 
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshRDungeonList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen < (MaxInfo.MaxRDungeons / 10)) {
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < (MaxInfo.MaxRDungeons / 10))
+            {
                 currentTen++;
             }
             RefreshRDungeonList();
         }
 
-        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxRDungeonList.SelectedItems.Count == 1) {
+        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxRDungeonList.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxRDungeonList.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
-
+                if (index[0].IsNumeric())
+                {
                     //Messenger.SendEditRDungeon(index[0].ToInt());
                     btnEdit.Text = "Loading...";
 
@@ -3091,23 +3178,27 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             return;
         }
 
-        void btnAddNew_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnAddNew_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Messenger.SendAddRDungeon();
-
-
         }
 
-        public void RefreshRDungeonList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < MaxInfo.MaxRDungeons) {
+        public void RefreshRDungeonList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < MaxInfo.MaxRDungeons)
+                {
                     ((ListBoxTextItem)lbxRDungeonList.Items[i]).Text = ((i + 1) + 10 * currentTen) + ": " + RDungeons.RDungeonHelper.RDungeons[(i + 10 * currentTen)].Name;
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxRDungeonList.Items[i]).Text = "---";
                 }
             }
@@ -3117,8 +3208,8 @@ namespace Client.Logic.Windows.Editors
 
         #region General
 
-        public void LoadRDungeon(string[] parse) {
-
+        public void LoadRDungeon(string[] parse)
+        {
             //load Rdungeon from packet
             rdungeon = new EditableRDungeon(parse[1].ToInt());
             rdungeon.DungeonName = parse[2];
@@ -3129,7 +3220,8 @@ namespace Client.Logic.Windows.Editors
             rdungeon.WindTimer = parse[7].ToInt();
             rdungeon.DungeonIndex = parse[8].ToInt();
             int n = 9;
-            for (int i = 0; i < rdungeon.MaxFloors; i++) {
+            for (int i = 0; i < rdungeon.MaxFloors; i++)
+            {
                 rdungeon.Floors.Add(new EditableRDungeonFloor());
                 rdungeon.Floors[i].TrapMin = parse[n].ToInt();
                 rdungeon.Floors[i].TrapMax = parse[n + 1].ToInt();
@@ -3411,7 +3503,8 @@ namespace Client.Logic.Windows.Editors
                 n += 31;
 
 
-                for (int item = 0; item < parse[n].ToInt(); item++) {
+                for (int item = 0; item < parse[n].ToInt(); item++)
+                {
                     EditableRDungeonItem newItem = new EditableRDungeonItem();
                     newItem.ItemNum = parse[n + item * 10 + 1].ToInt();
                     newItem.MinAmount = parse[n + item * 10 + 2].ToInt();
@@ -3428,7 +3521,8 @@ namespace Client.Logic.Windows.Editors
                 }
                 n += rdungeon.Floors[i].Items.Count * 10 + 1;
 
-                for (int npc = 0; npc < parse[n].ToInt(); npc++) {
+                for (int npc = 0; npc < parse[n].ToInt(); npc++)
+                {
                     MapNpcSettings newNpc = new MapNpcSettings();
                     newNpc.NpcNum = parse[n + npc * 7 + 1].ToInt();
                     newNpc.MinLevel = parse[n + npc * 7 + 2].ToInt();
@@ -3442,7 +3536,8 @@ namespace Client.Logic.Windows.Editors
                 }
                 n += rdungeon.Floors[i].Npcs.Count * 7 + 1;
 
-                for (int traps = 0; traps < parse[n].ToInt(); traps++) {
+                for (int traps = 0; traps < parse[n].ToInt(); traps++)
+                {
                     EditableRDungeonTrap newTile = new EditableRDungeonTrap();
                     newTile.SpecialTile.Type = (Enums.TileType)parse[n + traps * 29 + 1].ToInt();
                     newTile.SpecialTile.Data1 = parse[n + traps * 29 + 2].ToInt();
@@ -3475,17 +3570,17 @@ namespace Client.Logic.Windows.Editors
                     newTile.AppearanceRate = parse[n + traps * 29 + 29].ToInt();
 
                     rdungeon.Floors[i].SpecialTiles.Add(newTile);
-
                 }
                 n += rdungeon.Floors[i].SpecialTiles.Count * 29 + 1;
 
-                for (int weather = 0; weather < parse[n].ToInt(); weather++) {
+                for (int weather = 0; weather < parse[n].ToInt(); weather++)
+                {
                     rdungeon.Floors[i].Weather.Add((Enums.Weather)parse[n + 1 + weather].ToInt());
-
                 }
                 n += rdungeon.Floors[i].Weather.Count + 1;
 
-                for (int chamber = 0; chamber < parse[n].ToInt(); chamber++) {
+                for (int chamber = 0; chamber < parse[n].ToInt(); chamber++)
+                {
                     EditableRDungeonChamber newChamber = new EditableRDungeonChamber();
                     newChamber.ChamberNum = parse[n + chamber * 4 + 1].ToInt();
                     newChamber.String1 = parse[n + chamber * 4 + 2];
@@ -3494,16 +3589,18 @@ namespace Client.Logic.Windows.Editors
                     rdungeon.Floors[i].Chambers.Add(newChamber);
                 }
                 n += rdungeon.Floors[i].Chambers.Count * 4 + 1;
-
             }
 
             pnlRDungeonList.Visible = false;
             btnEdit.Text = "Edit";
 
             txtDungeonName.Text = rdungeon.DungeonName;
-            if (rdungeon.Direction == Enums.Direction.Up) {
+            if (rdungeon.Direction == Enums.Direction.Up)
+            {
                 optUp.Checked = true;
-            } else {
+            }
+            else
+            {
                 optDown.Checked = true;
             }
             nudMaxFloors.Value = rdungeon.MaxFloors;
@@ -3526,10 +3623,10 @@ namespace Client.Logic.Windows.Editors
             //btnGeneral.Selected = true;
 
             //this.TitleBar.Text = "General Random Dungeon Options";
-
         }
 
-        void btnFloors_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnFloors_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonFloors();
             LoadpnlRDungeonFloorSettingSelection();
 
@@ -3555,10 +3652,10 @@ namespace Client.Logic.Windows.Editors
 
             this.Size = new System.Drawing.Size(pnlRDungeonFloors.Width, pnlRDungeonFloors.Height);
             this.TitleBar.Text = "Random Dungeon Floor Options";
-
         }
 
-        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             rdungeon = null;
             pnlRDungeonGeneral.Visible = false;
             pnlRDungeonList.Visible = true;
@@ -3566,11 +3663,15 @@ namespace Client.Logic.Windows.Editors
             this.TitleBar.Text = "Random Dungeon Panel";
         }
 
-        void btnSave_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnSave_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             rdungeon.DungeonName = txtDungeonName.Text;
-            if (optUp.Checked) {
+            if (optUp.Checked)
+            {
                 rdungeon.Direction = Enums.Direction.Up;
-            } else {
+            }
+            else
+            {
                 rdungeon.Direction = Enums.Direction.Down;
             }
             rdungeon.MaxFloors = nudMaxFloors.Value;
@@ -3586,13 +3687,13 @@ namespace Client.Logic.Windows.Editors
             pnlRDungeonList.Visible = true;
             this.Size = new System.Drawing.Size(pnlRDungeonList.Width, pnlRDungeonList.Height);
             this.TitleBar.Text = "Random Dungeon Panel";
-
         }
 
         #endregion
 
         #region Floors
-        void btnGeneral_Click(object sender, MouseButtonEventArgs e) {
+        void btnGeneral_Click(object sender, MouseButtonEventArgs e)
+        {
             //if (!btnGeneral.Selected) {
             //btnGeneral.Selected = true;
             //btnFloors.Selected = false;
@@ -3610,20 +3711,24 @@ namespace Client.Logic.Windows.Editors
             //}
         }
 
-        void nudFirstFloor_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
-            if (nudFirstFloor.Value > nudLastFloor.Value) {
+        void nudFirstFloor_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
+            if (nudFirstFloor.Value > nudLastFloor.Value)
+            {
                 nudLastFloor.Value = nudFirstFloor.Value;
             }
         }
 
-        void nudLastFloor_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
-            if (nudFirstFloor.Value > nudLastFloor.Value) {
+        void nudLastFloor_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
+            if (nudFirstFloor.Value > nudLastFloor.Value)
+            {
                 nudFirstFloor.Value = nudLastFloor.Value;
             }
         }
 
-        void btnSettingsMenu_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnSettingsMenu_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             pnlRDungeonGeneral.Visible = false;
             pnlRDungeonFloors.Visible = true;
             if (pnlRDungeonStructure != null) pnlRDungeonStructure.Visible = false;
@@ -3645,17 +3750,21 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load All Settings from Floor";
         }
 
-        void btnSaveFloor_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            for (int i = rdungeon.Floors.Count; i < nudMaxFloors.Value; i++) {
+        void btnSaveFloor_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            for (int i = rdungeon.Floors.Count; i < nudMaxFloors.Value; i++)
+            {
                 rdungeon.Floors.Add(new EditableRDungeonFloor());
             }
 
-            if (nudFirstFloor.Value > nudMaxFloors.Value || nudLastFloor.Value > nudMaxFloors.Value) {
+            if (nudFirstFloor.Value > nudMaxFloors.Value || nudLastFloor.Value > nudMaxFloors.Value)
+            {
                 lblSaveLoadMessage.Text = "Cannot save floor(s) above the maximum.";
                 return;
             }
 
-            if (pnlRDungeonFloorSettingSelection.Visible == true) {
+            if (pnlRDungeonFloorSettingSelection.Visible == true)
+            {
                 LoadpnlRDungeonStructure();
                 LoadpnlRDungeonLandTiles();
                 LoadpnlRDungeonLandAltTiles();
@@ -3671,8 +3780,8 @@ namespace Client.Logic.Windows.Editors
                 LoadpnlRDungeonMisc();
 
                 //Structure
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].TrapMin = nudTrapMin.Value;
                     rdungeon.Floors[floor].TrapMax = nudTrapMax.Value;
                     rdungeon.Floors[floor].ItemMin = nudItemMin.Value;
@@ -3918,7 +4027,8 @@ namespace Client.Logic.Windows.Editors
 
                     //Items
                     rdungeon.Floors[floor].Items.Clear();
-                    for (int item = 0; item < itemList.Count; item++) {
+                    for (int item = 0; item < itemList.Count; item++)
+                    {
                         EditableRDungeonItem newItem = new EditableRDungeonItem();
                         newItem.ItemNum = itemList[item].ItemNum;
                         newItem.MinAmount = itemList[item].MinAmount;
@@ -3940,7 +4050,8 @@ namespace Client.Logic.Windows.Editors
                     rdungeon.Floors[floor].NpcMax = nudNpcMax.Value;
 
                     rdungeon.Floors[floor].Npcs.Clear();
-                    for (int npc = 0; npc < npcList.Count; npc++) {
+                    for (int npc = 0; npc < npcList.Count; npc++)
+                    {
                         MapNpcSettings newNpc = new MapNpcSettings();
                         newNpc.NpcNum = npcList[npc].NpcNum;
                         newNpc.MinLevel = npcList[npc].MinLevel;
@@ -3955,7 +4066,8 @@ namespace Client.Logic.Windows.Editors
 
                     //Traps
                     rdungeon.Floors[floor].SpecialTiles.Clear();
-                    for (int traps = 0; traps < trapList.Count; traps++) {
+                    for (int traps = 0; traps < trapList.Count; traps++)
+                    {
                         EditableRDungeonTrap newTile = new EditableRDungeonTrap();
 
                         newTile.SpecialTile.Ground = trapList[traps].SpecialTile.Ground;
@@ -3995,21 +4107,30 @@ namespace Client.Logic.Windows.Editors
 
                     //Weather
                     rdungeon.Floors[floor].Weather.Clear();
-                    for (int weather = 0; weather < lbxWeather.Items.Count; weather++) {
+                    for (int weather = 0; weather < lbxWeather.Items.Count; weather++)
+                    {
                         string[] weatherindex = lbxWeather.Items[weather].TextIdentifier.Split(':');
-                        if (weatherindex[1].IsNumeric()) {
+                        if (weatherindex[1].IsNumeric())
+                        {
                             rdungeon.Floors[floor].Weather.Add((Enums.Weather)weatherindex[1].ToInt());
                         }
                     }
 
                     //Goal
-                    if (optNextFloor.Checked) {
+                    if (optNextFloor.Checked)
+                    {
                         rdungeon.Floors[floor].GoalType = Enums.RFloorGoalType.NextFloor;
-                    } else if (optMap.Checked) {
+                    }
+                    else if (optMap.Checked)
+                    {
                         rdungeon.Floors[floor].GoalType = Enums.RFloorGoalType.Map;
-                    } else if (optScripted.Checked) {
+                    }
+                    else if (optScripted.Checked)
+                    {
                         rdungeon.Floors[floor].GoalType = Enums.RFloorGoalType.Scripted;
-                    } else {
+                    }
+                    else
+                    {
                         rdungeon.Floors[floor].GoalType = Enums.RFloorGoalType.NextFloor;
                     }
 
@@ -4019,25 +4140,26 @@ namespace Client.Logic.Windows.Editors
 
                     //chambers
                     rdungeon.Floors[floor].Chambers.Clear();
-                    for (int chamber = 0; chamber < chamberList.Count; chamber++) {
+                    for (int chamber = 0; chamber < chamberList.Count; chamber++)
+                    {
                         EditableRDungeonChamber addedChamber = new EditableRDungeonChamber();
                         addedChamber.ChamberNum = chamberList[chamber].ChamberNum;
                         addedChamber.String1 = chamberList[chamber].String1;
                         addedChamber.String2 = chamberList[chamber].String2;
                         addedChamber.String3 = chamberList[chamber].String3;
                         rdungeon.Floors[floor].Chambers.Add(addedChamber);
-
                     }
 
                     //Misc
                     rdungeon.Floors[floor].Darkness = nudDarkness.Value;
-                    if (lbxMusic.SelectedItems.Count != 1 || lbxMusic.Items[0].Selected) {
+                    if (lbxMusic.SelectedItems.Count != 1 || lbxMusic.Items[0].Selected)
+                    {
                         rdungeon.Floors[floor].Music = "";
-                    } else {
+                    }
+                    else
+                    {
                         rdungeon.Floors[floor].Music = lbxMusic.SelectedItems[0].TextIdentifier;
                     }
-
-
                 }
 
 
@@ -4045,9 +4167,11 @@ namespace Client.Logic.Windows.Editors
 
 
                 lblSaveLoadMessage.Text = "All settings saved to floor(s)";
-            } else if (pnlRDungeonStructure != null && pnlRDungeonStructure.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+            }
+            else if (pnlRDungeonStructure != null && pnlRDungeonStructure.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].TrapMin = nudTrapMin.Value;
                     rdungeon.Floors[floor].TrapMax = nudTrapMax.Value;
                     rdungeon.Floors[floor].ItemMin = nudItemMin.Value;
@@ -4065,12 +4189,13 @@ namespace Client.Logic.Windows.Editors
                     rdungeon.Floors[floor].CraterMinLength = nudCraterMinLength.Value;
                     rdungeon.Floors[floor].CraterMaxLength = nudCraterMaxLength.Value;
                     rdungeon.Floors[floor].CraterFuzzy = chkCraterFuzzy.Checked;
-
                 }
                 lblSaveLoadMessage.Text = "Structure settings saved to floor(s)";
-            } else if (pnlRDungeonLandTiles != null && pnlRDungeonLandTiles.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+            }
+            else if (pnlRDungeonLandTiles != null && pnlRDungeonLandTiles.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].StairsSheet = landTileNumbers[0, 19];
                     rdungeon.Floors[floor].mGroundSheet = landTileNumbers[0, 16];
                     rdungeon.Floors[floor].mTopLeftSheet = landTileNumbers[0, 10];
@@ -4116,11 +4241,13 @@ namespace Client.Logic.Windows.Editors
                     rdungeon.Floors[floor].mRowLeftX = landTileNumbers[1, 3];
                     rdungeon.Floors[floor].mRowCenterX = landTileNumbers[1, 7];
                     rdungeon.Floors[floor].mRowRightX = landTileNumbers[1, 11];
-
                 }
                 lblSaveLoadMessage.Text = "Land Tile settings saved to floor(s)";
-            } else if (pnlRDungeonLandAltTiles != null && pnlRDungeonLandAltTiles.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
+            }
+            else if (pnlRDungeonLandAltTiles != null && pnlRDungeonLandAltTiles.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].mGroundAlt2Sheet = landAltTileNumbers[0, 19];
                     rdungeon.Floors[floor].mGroundAltSheet = landAltTileNumbers[0, 16];
                     rdungeon.Floors[floor].mTopLeftAltSheet = landAltTileNumbers[0, 10];
@@ -4168,12 +4295,13 @@ namespace Client.Logic.Windows.Editors
                     rdungeon.Floors[floor].mRowLeftAltX = landAltTileNumbers[1, 3];
                     rdungeon.Floors[floor].mRowCenterAltX = landAltTileNumbers[1, 7];
                     rdungeon.Floors[floor].mRowRightAltX = landAltTileNumbers[1, 11];
-
                 }
                 lblSaveLoadMessage.Text = "Land Alt Tile settings saved to floor(s)";
-            } else if (pnlRDungeonWaterTiles != null && pnlRDungeonWaterTiles.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+            }
+            else if (pnlRDungeonWaterTiles != null && pnlRDungeonWaterTiles.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].mShoreSurroundedSheet = waterTileNumbers[0, 15];
                     rdungeon.Floors[floor].mShoreInnerTopLeftSheet = waterTileNumbers[0, 0];
                     rdungeon.Floors[floor].mShoreTopSheet = waterTileNumbers[0, 4];
@@ -4219,12 +4347,13 @@ namespace Client.Logic.Windows.Editors
                     rdungeon.Floors[floor].mShoreInnerLeftX = waterTileNumbers[1, 3];
                     rdungeon.Floors[floor].mShoreHorizontalX = waterTileNumbers[1, 7];
                     rdungeon.Floors[floor].mShoreInnerRightX = waterTileNumbers[1, 11];
-
                 }
                 lblSaveLoadMessage.Text = "Water Tile settings saved to floor(s)";
-            } else if (pnlRDungeonWaterAnimTiles != null && pnlRDungeonWaterAnimTiles.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+            }
+            else if (pnlRDungeonWaterAnimTiles != null && pnlRDungeonWaterAnimTiles.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].mShoreSurroundedAnimSheet = waterAnimTileNumbers[0, 15];
                     rdungeon.Floors[floor].mShoreInnerTopLeftAnimSheet = waterAnimTileNumbers[0, 0];
                     rdungeon.Floors[floor].mShoreTopAnimSheet = waterAnimTileNumbers[0, 4];
@@ -4270,13 +4399,13 @@ namespace Client.Logic.Windows.Editors
                     rdungeon.Floors[floor].mShoreInnerLeftAnimX = waterAnimTileNumbers[1, 3];
                     rdungeon.Floors[floor].mShoreHorizontalAnimX = waterAnimTileNumbers[1, 7];
                     rdungeon.Floors[floor].mShoreInnerRightAnimX = waterAnimTileNumbers[1, 11];
-
                 }
                 lblSaveLoadMessage.Text = "Water Anim Tile settings saved to floor(s)";
-            } else if (pnlRDungeonAttributes != null && pnlRDungeonAttributes.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
-
+            }
+            else if (pnlRDungeonAttributes != null && pnlRDungeonAttributes.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].GroundTile.Type = (Enums.TileType)cbGroundType.SelectedIndex;
                     rdungeon.Floors[floor].GroundTile.Data1 = nudGroundData1.Value;
                     rdungeon.Floors[floor].GroundTile.Data2 = nudGroundData2.Value;
@@ -4308,15 +4437,16 @@ namespace Client.Logic.Windows.Editors
                     rdungeon.Floors[floor].WallTile.String1 = txtWallString1.Text;
                     rdungeon.Floors[floor].WallTile.String2 = txtWallString2.Text;
                     rdungeon.Floors[floor].WallTile.String3 = txtWallString3.Text;
-
-
                 }
                 lblSaveLoadMessage.Text = "Attribute settings saved to floor(s)";
-            } else if (pnlRDungeonItems != null && pnlRDungeonItems.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+            }
+            else if (pnlRDungeonItems != null && pnlRDungeonItems.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].Items.Clear();
-                    for (int item = 0; item < itemList.Count; item++) {
+                    for (int item = 0; item < itemList.Count; item++)
+                    {
                         EditableRDungeonItem newItem = new EditableRDungeonItem();
                         newItem.ItemNum = itemList[item].ItemNum;
                         newItem.MinAmount = itemList[item].MinAmount;
@@ -4331,18 +4461,20 @@ namespace Client.Logic.Windows.Editors
 
                         rdungeon.Floors[floor].Items.Add(newItem);
                     }
-
                 }
                 lblSaveLoadMessage.Text = "Item settings saved to floor(s)";
-            } else if (pnlRDungeonNpcs != null && pnlRDungeonNpcs.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+            }
+            else if (pnlRDungeonNpcs != null && pnlRDungeonNpcs.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].NpcSpawnTime = nudNpcSpawnTime.Value;
                     rdungeon.Floors[floor].NpcMin = nudNpcMin.Value;
                     rdungeon.Floors[floor].NpcMax = nudNpcMax.Value;
 
                     rdungeon.Floors[floor].Npcs.Clear();
-                    for (int npc = 0; npc < npcList.Count; npc++) {
+                    for (int npc = 0; npc < npcList.Count; npc++)
+                    {
                         MapNpcSettings newNpc = new MapNpcSettings();
                         newNpc.NpcNum = npcList[npc].NpcNum;
                         newNpc.MinLevel = npcList[npc].MinLevel;
@@ -4354,14 +4486,16 @@ namespace Client.Logic.Windows.Editors
 
                         rdungeon.Floors[floor].Npcs.Add(newNpc);
                     }
-
                 }
                 lblSaveLoadMessage.Text = "Npc settings saved to floor(s)";
-            } else if (pnlRDungeonTraps != null && pnlRDungeonTraps.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+            }
+            else if (pnlRDungeonTraps != null && pnlRDungeonTraps.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].SpecialTiles.Clear();
-                    for (int traps = 0; traps < trapList.Count; traps++) {
+                    for (int traps = 0; traps < trapList.Count; traps++)
+                    {
                         EditableRDungeonTrap newTile = new EditableRDungeonTrap();
 
                         newTile.SpecialTile.Ground = trapList[traps].SpecialTile.Ground;
@@ -4398,93 +4532,105 @@ namespace Client.Logic.Windows.Editors
 
                         rdungeon.Floors[floor].SpecialTiles.Add(newTile);
                     }
-
                 }
                 lblSaveLoadMessage.Text = "Trap settings saved to floor(s)";
-            } else if (pnlRDungeonWeather != null && pnlRDungeonWeather.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+            }
+            else if (pnlRDungeonWeather != null && pnlRDungeonWeather.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].Weather.Clear();
-                    for (int weather = 0; weather < lbxWeather.Items.Count; weather++) {
+                    for (int weather = 0; weather < lbxWeather.Items.Count; weather++)
+                    {
                         string[] weatherindex = lbxWeather.Items[weather].TextIdentifier.Split(':');
-                        if (weatherindex[1].IsNumeric()) {
+                        if (weatherindex[1].IsNumeric())
+                        {
                             rdungeon.Floors[floor].Weather.Add((Enums.Weather)weatherindex[1].ToInt());
                         }
                     }
-
-
                 }
                 lblSaveLoadMessage.Text = "Weather settings saved to floor(s)";
-            } else if (pnlRDungeonGoal != null && pnlRDungeonGoal.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
-
-                    if (optNextFloor.Checked) {
+            }
+            else if (pnlRDungeonGoal != null && pnlRDungeonGoal.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
+                    if (optNextFloor.Checked)
+                    {
                         rdungeon.Floors[floor].GoalType = Enums.RFloorGoalType.NextFloor;
-                    } else if (optMap.Checked) {
+                    }
+                    else if (optMap.Checked)
+                    {
                         rdungeon.Floors[floor].GoalType = Enums.RFloorGoalType.Map;
-                    } else if (optScripted.Checked) {
+                    }
+                    else if (optScripted.Checked)
+                    {
                         rdungeon.Floors[floor].GoalType = Enums.RFloorGoalType.Scripted;
-                    } else {
+                    }
+                    else
+                    {
                         rdungeon.Floors[floor].GoalType = Enums.RFloorGoalType.NextFloor;
                     }
 
                     rdungeon.Floors[floor].GoalMap = nudData1.Value;
                     rdungeon.Floors[floor].GoalX = nudData2.Value;
                     rdungeon.Floors[floor].GoalY = nudData3.Value;
-
-
-
                 }
                 lblSaveLoadMessage.Text = "Goal settings saved to floor(s)";
-            } else if (pnlRDungeonChambers != null && pnlRDungeonChambers.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
+            }
+            else if (pnlRDungeonChambers != null && pnlRDungeonChambers.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].Chambers.Clear();
-                    for (int chamber = 0; chamber < chamberList.Count; chamber++) {
+                    for (int chamber = 0; chamber < chamberList.Count; chamber++)
+                    {
                         EditableRDungeonChamber addedChamber = new EditableRDungeonChamber();
                         addedChamber.ChamberNum = chamberList[chamber].ChamberNum;
                         addedChamber.String1 = chamberList[chamber].String1;
                         addedChamber.String2 = chamberList[chamber].String2;
                         addedChamber.String3 = chamberList[chamber].String3;
                         rdungeon.Floors[floor].Chambers.Add(addedChamber);
-
                     }
-
-
                 }
                 lblSaveLoadMessage.Text = "Chamber settings saved to floor(s)";
-            } else if (pnlRDungeonMisc != null && pnlRDungeonMisc.Visible == true) {
-                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-
-
+            }
+            else if (pnlRDungeonMisc != null && pnlRDungeonMisc.Visible == true)
+            {
+                for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                {
                     rdungeon.Floors[floor].Darkness = nudDarkness.Value;
-                    if (lbxMusic.SelectedItems.Count != 1 || lbxMusic.Items[0].Selected) {
+                    if (lbxMusic.SelectedItems.Count != 1 || lbxMusic.Items[0].Selected)
+                    {
                         rdungeon.Floors[floor].Music = "";
-                    } else {
+                    }
+                    else
+                    {
                         rdungeon.Floors[floor].Music = lbxMusic.SelectedItems[0].TextIdentifier;
                     }
-
                 }
 
 
                 lblSaveLoadMessage.Text = "Misc settings saved to floor(s)";
             }
-
         }
 
-        void btnLoadFloor_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            for (int i = rdungeon.Floors.Count; i < nudMaxFloors.Value; i++) {
+        void btnLoadFloor_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            for (int i = rdungeon.Floors.Count; i < nudMaxFloors.Value; i++)
+            {
                 rdungeon.Floors.Add(new EditableRDungeonFloor());
             }
-            if (nudFirstFloor.Value > nudMaxFloors.Value) {
+            if (nudFirstFloor.Value > nudMaxFloors.Value)
+            {
                 lblSaveLoadMessage.Text = "Cannot load floor above the maximum.";
                 return;
             }
 
             EditableRDungeonFloor loadingfloor = rdungeon.Floors[nudFirstFloor.Value - 1];
 
-            if (pnlRDungeonFloorSettingSelection.Visible == true) {
+            if (pnlRDungeonFloorSettingSelection.Visible == true)
+            {
                 LoadpnlRDungeonStructure();
                 LoadpnlRDungeonLandTiles();
                 LoadpnlRDungeonLandAltTiles();
@@ -4565,7 +4711,8 @@ namespace Client.Logic.Windows.Editors
                 landTileNumbers[1, 7] = loadingfloor.mRowCenterX;
                 landTileNumbers[1, 11] = loadingfloor.mRowRightX;
 
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < 22; i++)
+                {
                     picLandTileset[i].Image = Graphics.GraphicsManager.Tiles[landTileNumbers[0, i]][landTileNumbers[1, i]];
                 }
 
@@ -4618,7 +4765,8 @@ namespace Client.Logic.Windows.Editors
                 landAltTileNumbers[1, 7] = loadingfloor.mRowCenterAltX;
                 landAltTileNumbers[1, 11] = loadingfloor.mRowRightAltX;
 
-                for (int i = 0; i < 23; i++) {
+                for (int i = 0; i < 23; i++)
+                {
                     picLandAltTileset[i].Image = Graphics.GraphicsManager.Tiles[landAltTileNumbers[0, i]][landAltTileNumbers[1, i]];
                 }
 
@@ -4670,7 +4818,8 @@ namespace Client.Logic.Windows.Editors
                 waterTileNumbers[1, 7] = loadingfloor.mShoreHorizontalX;
                 waterTileNumbers[1, 11] = loadingfloor.mShoreInnerRightX;
 
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < 22; i++)
+                {
                     picWaterTileset[i].Image = Graphics.GraphicsManager.Tiles[waterTileNumbers[0, i]][waterTileNumbers[1, i]];
                 }
 
@@ -4721,7 +4870,8 @@ namespace Client.Logic.Windows.Editors
                 waterAnimTileNumbers[1, 7] = loadingfloor.mShoreHorizontalAnimX;
                 waterAnimTileNumbers[1, 11] = loadingfloor.mShoreInnerRightAnimX;
 
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < 22; i++)
+                {
                     picWaterAnimTileset[i].Image = Graphics.GraphicsManager.Tiles[waterAnimTileNumbers[0, i]][waterAnimTileNumbers[1, i]];
                 }
 
@@ -4761,7 +4911,8 @@ namespace Client.Logic.Windows.Editors
                 //Items
                 itemList.Clear();
                 lbxItems.Items.Clear();
-                for (int item = 0; item < loadingfloor.Items.Count; item++) {
+                for (int item = 0; item < loadingfloor.Items.Count; item++)
+                {
                     EditableRDungeonItem newItem = new EditableRDungeonItem();
                     newItem.ItemNum = loadingfloor.Items[item].ItemNum;
                     newItem.MinAmount = loadingfloor.Items[item].MinAmount;
@@ -4785,7 +4936,8 @@ namespace Client.Logic.Windows.Editors
 
                 npcList.Clear();
                 lbxNpcs.Items.Clear();
-                for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++) {
+                for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++)
+                {
                     MapNpcSettings newNpc = new MapNpcSettings();
                     newNpc.NpcNum = loadingfloor.Npcs[npc].NpcNum;
                     newNpc.MinLevel = loadingfloor.Npcs[npc].MinLevel;
@@ -4804,7 +4956,8 @@ namespace Client.Logic.Windows.Editors
                 //Traps
                 trapList.Clear();
                 lbxTraps.Items.Clear();
-                for (int traps = 0; traps < loadingfloor.SpecialTiles.Count; traps++) {
+                for (int traps = 0; traps < loadingfloor.SpecialTiles.Count; traps++)
+                {
                     EditableRDungeonTrap newTile = new EditableRDungeonTrap();
 
                     newTile.SpecialTile.Ground = loadingfloor.SpecialTiles[traps].SpecialTile.Ground;
@@ -4845,25 +4998,31 @@ namespace Client.Logic.Windows.Editors
 
                 //Weather
                 lbxWeather.Items.Clear();
-                for (int weather = 0; weather < loadingfloor.Weather.Count; weather++) {
+                for (int weather = 0; weather < loadingfloor.Weather.Count; weather++)
+                {
                     lbxWeather.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (weather + 1) + ":" + (int)loadingfloor.Weather[weather] + ": " + Enum.GetName(typeof(Enums.Weather), loadingfloor.Weather[weather])));
                 }
 
                 //Goal
-                switch (loadingfloor.GoalType) {
-                    case Enums.RFloorGoalType.NextFloor: {
+                switch (loadingfloor.GoalType)
+                {
+                    case Enums.RFloorGoalType.NextFloor:
+                        {
                             optNextFloor.Checked = true;
                         }
                         break;
-                    case Enums.RFloorGoalType.Map: {
+                    case Enums.RFloorGoalType.Map:
+                        {
                             optMap.Checked = true;
                         }
                         break;
-                    case Enums.RFloorGoalType.Scripted: {
+                    case Enums.RFloorGoalType.Scripted:
+                        {
                             optScripted.Checked = true;
                         }
                         break;
-                    default: {
+                    default:
+                        {
                             optNextFloor.Checked = true;
                         }
                         break;
@@ -4876,7 +5035,8 @@ namespace Client.Logic.Windows.Editors
                 //chambers
                 chamberList.Clear();
                 lbxChambers.Items.Clear();
-                for (int chamber = 0; chamber < loadingfloor.Chambers.Count; chamber++) {
+                for (int chamber = 0; chamber < loadingfloor.Chambers.Count; chamber++)
+                {
                     EditableRDungeonChamber newChamber = new EditableRDungeonChamber();
                     newChamber.ChamberNum = loadingfloor.Chambers[chamber].ChamberNum;
                     newChamber.String1 = loadingfloor.Chambers[chamber].String1;
@@ -4888,18 +5048,24 @@ namespace Client.Logic.Windows.Editors
 
                 //Misc
                 nudDarkness.Value = loadingfloor.Darkness;
-                if (loadingfloor.Music == "") {
+                if (loadingfloor.Music == "")
+                {
                     lbxMusic.SelectItem(0);
-                } else {
-                    for (int i = 0; i < lbxMusic.Items.Count; i++) {
-                        if (lbxMusic.Items[i].TextIdentifier == loadingfloor.Music) {
+                }
+                else
+                {
+                    for (int i = 0; i < lbxMusic.Items.Count; i++)
+                    {
+                        if (lbxMusic.Items[i].TextIdentifier == loadingfloor.Music)
+                        {
                             lbxMusic.SelectItem(i);
                         }
                     }
                 }
                 lblSaveLoadMessage.Text = "All settings loaded";
-            } else if (pnlRDungeonStructure != null && pnlRDungeonStructure.Visible == true) {
-
+            }
+            else if (pnlRDungeonStructure != null && pnlRDungeonStructure.Visible == true)
+            {
                 nudTrapMin.Value = loadingfloor.TrapMin;
                 nudTrapMax.Value = loadingfloor.TrapMax;
                 nudItemMin.Value = loadingfloor.ItemMin;
@@ -4919,8 +5085,9 @@ namespace Client.Logic.Windows.Editors
                 chkCraterFuzzy.Checked = loadingfloor.CraterFuzzy;
 
                 lblSaveLoadMessage.Text = "Structure settings loaded";
-            } else if (pnlRDungeonLandTiles != null && pnlRDungeonLandTiles.Visible == true) {
-
+            }
+            else if (pnlRDungeonLandTiles != null && pnlRDungeonLandTiles.Visible == true)
+            {
                 landTileNumbers[0, 19] = loadingfloor.StairsSheet;
                 landTileNumbers[0, 16] = loadingfloor.mGroundSheet;
                 landTileNumbers[0, 10] = loadingfloor.mTopLeftSheet;
@@ -4967,13 +5134,15 @@ namespace Client.Logic.Windows.Editors
                 landTileNumbers[1, 7] = loadingfloor.mRowCenterX;
                 landTileNumbers[1, 11] = loadingfloor.mRowRightX;
 
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < 22; i++)
+                {
                     picLandTileset[i].Image = Graphics.GraphicsManager.Tiles[landTileNumbers[0, i]][landTileNumbers[1, i]];
                 }
 
                 lblSaveLoadMessage.Text = "Land Tile settings loaded";
-            } else if (pnlRDungeonLandAltTiles != null && pnlRDungeonLandAltTiles.Visible == true) {
-
+            }
+            else if (pnlRDungeonLandAltTiles != null && pnlRDungeonLandAltTiles.Visible == true)
+            {
                 landAltTileNumbers[0, 19] = loadingfloor.mGroundAlt2Sheet;
                 landAltTileNumbers[0, 16] = loadingfloor.mGroundAltSheet;
                 landAltTileNumbers[0, 10] = loadingfloor.mTopLeftAltSheet;
@@ -5022,13 +5191,15 @@ namespace Client.Logic.Windows.Editors
                 landAltTileNumbers[1, 7] = loadingfloor.mRowCenterAltX;
                 landAltTileNumbers[1, 11] = loadingfloor.mRowRightAltX;
 
-                for (int i = 0; i < 23; i++) {
+                for (int i = 0; i < 23; i++)
+                {
                     picLandAltTileset[i].Image = Graphics.GraphicsManager.Tiles[landAltTileNumbers[0, i]][landAltTileNumbers[1, i]];
                 }
 
                 lblSaveLoadMessage.Text = "Land Alt Tile settings loaded";
-            } else if (pnlRDungeonWaterTiles != null && pnlRDungeonWaterTiles.Visible == true) {
-
+            }
+            else if (pnlRDungeonWaterTiles != null && pnlRDungeonWaterTiles.Visible == true)
+            {
                 waterTileNumbers[0, 15] = loadingfloor.mShoreSurroundedSheet;
                 waterTileNumbers[0, 0] = loadingfloor.mShoreInnerTopLeftSheet;
                 waterTileNumbers[0, 4] = loadingfloor.mShoreTopSheet;
@@ -5075,13 +5246,15 @@ namespace Client.Logic.Windows.Editors
                 waterTileNumbers[1, 7] = loadingfloor.mShoreHorizontalX;
                 waterTileNumbers[1, 11] = loadingfloor.mShoreInnerRightX;
 
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < 22; i++)
+                {
                     picWaterTileset[i].Image = Graphics.GraphicsManager.Tiles[waterTileNumbers[0, i]][waterTileNumbers[1, i]];
                 }
 
                 lblSaveLoadMessage.Text = "Water Tile settings loaded";
-            } else if (pnlRDungeonWaterAnimTiles != null && pnlRDungeonWaterAnimTiles.Visible == true) {
-
+            }
+            else if (pnlRDungeonWaterAnimTiles != null && pnlRDungeonWaterAnimTiles.Visible == true)
+            {
                 waterAnimTileNumbers[0, 15] = loadingfloor.mShoreSurroundedAnimSheet;
                 waterAnimTileNumbers[0, 0] = loadingfloor.mShoreInnerTopLeftAnimSheet;
                 waterAnimTileNumbers[0, 4] = loadingfloor.mShoreTopAnimSheet;
@@ -5128,13 +5301,15 @@ namespace Client.Logic.Windows.Editors
                 waterAnimTileNumbers[1, 7] = loadingfloor.mShoreHorizontalAnimX;
                 waterAnimTileNumbers[1, 11] = loadingfloor.mShoreInnerRightAnimX;
 
-                for (int i = 0; i < 22; i++) {
+                for (int i = 0; i < 22; i++)
+                {
                     picWaterAnimTileset[i].Image = Graphics.GraphicsManager.Tiles[waterAnimTileNumbers[0, i]][waterAnimTileNumbers[1, i]];
                 }
 
                 lblSaveLoadMessage.Text = "Water Anim Tile settings loaded";
-            } else if (pnlRDungeonAttributes != null && pnlRDungeonAttributes.Visible == true) {
-
+            }
+            else if (pnlRDungeonAttributes != null && pnlRDungeonAttributes.Visible == true)
+            {
                 cbGroundType.SelectItem((int)loadingfloor.GroundTile.Type);
                 nudGroundData1.Value = loadingfloor.GroundTile.Data1;
                 nudGroundData2.Value = loadingfloor.GroundTile.Data2;
@@ -5168,11 +5343,13 @@ namespace Client.Logic.Windows.Editors
                 txtWallString3.Text = loadingfloor.WallTile.String3;
 
                 lblSaveLoadMessage.Text = "Attribute settings loaded";
-            } else if (pnlRDungeonItems != null && pnlRDungeonItems.Visible == true) {
-
+            }
+            else if (pnlRDungeonItems != null && pnlRDungeonItems.Visible == true)
+            {
                 itemList.Clear();
                 lbxItems.Items.Clear();
-                for (int item = 0; item < loadingfloor.Items.Count; item++) {
+                for (int item = 0; item < loadingfloor.Items.Count; item++)
+                {
                     EditableRDungeonItem newItem = new EditableRDungeonItem();
                     newItem.ItemNum = loadingfloor.Items[item].ItemNum;
                     newItem.MinAmount = loadingfloor.Items[item].MinAmount;
@@ -5191,15 +5368,17 @@ namespace Client.Logic.Windows.Editors
 
 
                 lblSaveLoadMessage.Text = "Item settings loaded";
-            } else if (pnlRDungeonNpcs != null && pnlRDungeonNpcs.Visible == true) {
-
+            }
+            else if (pnlRDungeonNpcs != null && pnlRDungeonNpcs.Visible == true)
+            {
                 nudNpcSpawnTime.Value = loadingfloor.NpcSpawnTime;
                 nudNpcMin.Value = loadingfloor.NpcMin;
                 nudNpcMax.Value = loadingfloor.NpcMax;
 
                 npcList.Clear();
                 lbxNpcs.Items.Clear();
-                for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++) {
+                for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++)
+                {
                     MapNpcSettings newNpc = new MapNpcSettings();
                     newNpc.NpcNum = loadingfloor.Npcs[npc].NpcNum;
                     newNpc.MinLevel = loadingfloor.Npcs[npc].MinLevel;
@@ -5213,15 +5392,16 @@ namespace Client.Logic.Windows.Editors
                     lbxNpcs.Items.Add(new ListBoxTextItem(Client.Logic.Graphics.FontManager.LoadFont("tahoma", 10), (npc + 1) + ": "
                 + "(" + newNpc.AppearanceRate + "%) " + "Lv." + newNpc.MinLevel + "-" + newNpc.MaxLevel + " " + Npc.NpcHelper.Npcs[newNpc.NpcNum].Name
                 + " [" + newNpc.StartStatusChance + "% " + newNpc.StartStatus.ToString() + "]"));
-
                 }
 
                 lblSaveLoadMessage.Text = "Npc settings loaded";
-            } else if (pnlRDungeonTraps != null && pnlRDungeonTraps.Visible == true) {
-
+            }
+            else if (pnlRDungeonTraps != null && pnlRDungeonTraps.Visible == true)
+            {
                 trapList.Clear();
                 lbxTraps.Items.Clear();
-                for (int traps = 0; traps < loadingfloor.SpecialTiles.Count; traps++) {
+                for (int traps = 0; traps < loadingfloor.SpecialTiles.Count; traps++)
+                {
                     EditableRDungeonTrap newTile = new EditableRDungeonTrap();
 
                     newTile.SpecialTile.Ground = loadingfloor.SpecialTiles[traps].SpecialTile.Ground;
@@ -5262,30 +5442,38 @@ namespace Client.Logic.Windows.Editors
 
 
                 lblSaveLoadMessage.Text = "Trap settings loaded";
-            } else if (pnlRDungeonWeather != null && pnlRDungeonWeather.Visible == true) {
-
+            }
+            else if (pnlRDungeonWeather != null && pnlRDungeonWeather.Visible == true)
+            {
                 lbxWeather.Items.Clear();
-                for (int weather = 0; weather < loadingfloor.Weather.Count; weather++) {
+                for (int weather = 0; weather < loadingfloor.Weather.Count; weather++)
+                {
                     lbxWeather.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (weather + 1) + ":" + (int)loadingfloor.Weather[weather] + ": " + Enum.GetName(typeof(Enums.Weather), loadingfloor.Weather[weather])));
                 }
 
                 lblSaveLoadMessage.Text = "Weather settings loaded";
-            } else if (pnlRDungeonGoal != null && pnlRDungeonGoal.Visible == true) {
-
-                switch (loadingfloor.GoalType) {
-                    case Enums.RFloorGoalType.NextFloor: {
+            }
+            else if (pnlRDungeonGoal != null && pnlRDungeonGoal.Visible == true)
+            {
+                switch (loadingfloor.GoalType)
+                {
+                    case Enums.RFloorGoalType.NextFloor:
+                        {
                             optNextFloor.Checked = true;
                         }
                         break;
-                    case Enums.RFloorGoalType.Map: {
+                    case Enums.RFloorGoalType.Map:
+                        {
                             optMap.Checked = true;
                         }
                         break;
-                    case Enums.RFloorGoalType.Scripted: {
+                    case Enums.RFloorGoalType.Scripted:
+                        {
                             optScripted.Checked = true;
                         }
                         break;
-                    default: {
+                    default:
+                        {
                             optNextFloor.Checked = true;
                         }
                         break;
@@ -5296,11 +5484,13 @@ namespace Client.Logic.Windows.Editors
                 nudData3.Value = loadingfloor.GoalY;
 
                 lblSaveLoadMessage.Text = "Goal settings loaded";
-            } else if (pnlRDungeonChambers != null && pnlRDungeonChambers.Visible == true) {
-
+            }
+            else if (pnlRDungeonChambers != null && pnlRDungeonChambers.Visible == true)
+            {
                 chamberList.Clear();
                 lbxChambers.Items.Clear();
-                for (int chamber = 0; chamber < loadingfloor.Chambers.Count; chamber++) {
+                for (int chamber = 0; chamber < loadingfloor.Chambers.Count; chamber++)
+                {
                     EditableRDungeonChamber newChamber = new EditableRDungeonChamber();
                     newChamber.ChamberNum = loadingfloor.Chambers[chamber].ChamberNum;
                     newChamber.String1 = loadingfloor.Chambers[chamber].String1;
@@ -5311,14 +5501,20 @@ namespace Client.Logic.Windows.Editors
                 }
 
                 lblSaveLoadMessage.Text = "Chamber settings loaded";
-            } else if (pnlRDungeonMisc != null && pnlRDungeonMisc.Visible == true) {
-
+            }
+            else if (pnlRDungeonMisc != null && pnlRDungeonMisc.Visible == true)
+            {
                 nudDarkness.Value = loadingfloor.Darkness;
-                if (loadingfloor.Music == "") {
+                if (loadingfloor.Music == "")
+                {
                     lbxMusic.SelectItem(0);
-                } else {
-                    for (int i = 0; i < lbxMusic.Items.Count; i++) {
-                        if (lbxMusic.Items[i].TextIdentifier == loadingfloor.Music) {
+                }
+                else
+                {
+                    for (int i = 0; i < lbxMusic.Items.Count; i++)
+                    {
+                        if (lbxMusic.Items[i].TextIdentifier == loadingfloor.Music)
+                        {
                             lbxMusic.SelectItem(i);
                         }
                     }
@@ -5331,7 +5527,8 @@ namespace Client.Logic.Windows.Editors
         #endregion
 
         #region Settings Menu
-        void btnStructure_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnStructure_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonStructure();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5340,7 +5537,8 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load These Settings from Floor";
         }
 
-        void btnLandTiles_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnLandTiles_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonLandTiles();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5349,7 +5547,8 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load These Settings from Floor";
         }
 
-        void btnWaterTiles_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnWaterTiles_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonWaterTiles();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5358,7 +5557,8 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load These Settings from Floor";
         }
 
-        void btnAttributes_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnAttributes_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonAttributes();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5367,7 +5567,8 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load These Settings from Floor";
         }
 
-        void btnItems_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnItems_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonItems();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5376,7 +5577,8 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load These Settings from Floor";
         }
 
-        void btnNpcs_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnNpcs_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonNpcs();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5385,17 +5587,18 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load These Settings from Floor";
         }
 
-        void btnTraps_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnTraps_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonTraps();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
             pnlRDungeonTraps.Visible = true;
             btnSaveFloor.Text = "Save These Settings to Floor(s)";
             btnLoadFloor.Text = "Load These Settings from Floor";
-
         }
 
-        void btnWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonWeather();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5404,7 +5607,8 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load These Settings from Floor";
         }
 
-        void btnGoal_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnGoal_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonGoal();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5413,7 +5617,8 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load These Settings from Floor";
         }
 
-        void btnChambers_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnChambers_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonChambers();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5422,7 +5627,8 @@ namespace Client.Logic.Windows.Editors
             btnLoadFloor.Text = "Load These Settings from Floor";
         }
 
-        void btnMisc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnMisc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonMisc();
 
             pnlRDungeonFloorSettingSelection.Visible = false;
@@ -5435,15 +5641,16 @@ namespace Client.Logic.Windows.Editors
 
         #region Land Tiles
 
-        void picLandTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void picLandTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlTileSelector();
             editedTile = Array.IndexOf(picLandTileset, sender);
             pnlRDungeonLandTiles.Visible = false;
             pnlTileSelector.Visible = true;
-
         }
 
-        void btnLandAltSwitch_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnLandAltSwitch_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonLandAltTiles();
 
             pnlRDungeonLandTiles.Visible = false;
@@ -5453,16 +5660,16 @@ namespace Client.Logic.Windows.Editors
         #endregion
         #region Land Alt Tiles
 
-        void picLandAltTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void picLandAltTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlTileSelector();
             editedTile = Array.IndexOf(picLandAltTileset, sender) + 44;
             pnlRDungeonLandAltTiles.Visible = false;
             pnlTileSelector.Visible = true;
-
         }
 
-        void btnLandSwitch_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnLandSwitch_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             pnlRDungeonLandAltTiles.Visible = false;
             pnlRDungeonLandTiles.Visible = true;
         }
@@ -5470,15 +5677,16 @@ namespace Client.Logic.Windows.Editors
         #endregion
         #region Water Tiles
 
-        void picWaterTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void picWaterTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlTileSelector();
             editedTile = Array.IndexOf(picWaterTileset, sender) + 22;
             pnlRDungeonWaterTiles.Visible = false;
             pnlTileSelector.Visible = true;
-
         }
 
-        void btnWaterAnimSwitch_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnWaterAnimSwitch_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlRDungeonWaterAnimTiles();
 
             pnlRDungeonWaterTiles.Visible = false;
@@ -5488,16 +5696,16 @@ namespace Client.Logic.Windows.Editors
         #endregion
         #region Water Anim Tiles
 
-        void picWaterAnimTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void picWaterAnimTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlTileSelector();
             editedTile = Array.IndexOf(picWaterAnimTileset, sender) + 67;
             pnlRDungeonWaterAnimTiles.Visible = false;
             pnlTileSelector.Visible = true;
-
         }
 
-        void btnWaterSwitch_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnWaterSwitch_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             pnlRDungeonWaterAnimTiles.Visible = false;
             pnlRDungeonWaterTiles.Visible = true;
         }
@@ -5505,20 +5713,22 @@ namespace Client.Logic.Windows.Editors
         #endregion
         #region Items
 
-        void nudItemNum_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
-
-            if (nudItemNum.Value > 0 && nudItemNum.Value < MaxInfo.MaxItems) {
-
+        void nudItemNum_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
+            if (nudItemNum.Value > 0 && nudItemNum.Value < MaxInfo.MaxItems)
+            {
                 lblItemNum.Text = Items.ItemHelper.Items[nudItemNum.Value].Name;
-
-            } else {
+            }
+            else
+            {
                 lblItemNum.Text = "Item # ";
             }
-
         }
 
-        void btnAddItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (nudItemNum.Value > 0) {
+        void btnAddItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (nudItemNum.Value > 0)
+            {
                 EditableRDungeonItem newItem = new EditableRDungeonItem();
                 newItem.ItemNum = nudItemNum.Value;
                 newItem.MinAmount = nudMinValue.Value;
@@ -5531,20 +5741,25 @@ namespace Client.Logic.Windows.Editors
                 newItem.OnWater = chkOnWater.Checked;
                 newItem.OnWall = chkOnWall.Checked;
 
-                if (chkBulkItem.Checked) {
-                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-                        if (lbxItems.SelectedIndex >= 0 && lbxItems.SelectedIndex < rdungeon.Floors[floor].Items.Count) {
+                if (chkBulkItem.Checked)
+                {
+                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                    {
+                        if (lbxItems.SelectedIndex >= 0 && lbxItems.SelectedIndex < rdungeon.Floors[floor].Items.Count)
+                        {
                             rdungeon.Floors[floor].Items.Insert(lbxItems.SelectedIndex, newItem);
-                        } else {
+                        }
+                        else
+                        {
                             rdungeon.Floors[floor].Items.Add(newItem);
                         }
-
                     }
 
                     itemList.Clear();
                     lbxItems.Items.Clear();
                     EditableRDungeonFloor loadingfloor = rdungeon.Floors[nudFirstFloor.Value - 1];
-                    for (int item = 0; item < loadingfloor.Items.Count; item++) {
+                    for (int item = 0; item < loadingfloor.Items.Count; item++)
+                    {
                         EditableRDungeonItem newLoadItem = new EditableRDungeonItem();
                         newLoadItem.ItemNum = loadingfloor.Items[item].ItemNum;
                         newLoadItem.MinAmount = loadingfloor.Items[item].MinAmount;
@@ -5560,26 +5775,31 @@ namespace Client.Logic.Windows.Editors
                         itemList.Add(newLoadItem);
                         lbxItems.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (item + 1) + ": (" + newLoadItem.AppearanceRate + "%) " + newLoadItem.MinAmount + "-" + newLoadItem.MaxAmount + " " + Items.ItemHelper.Items[newLoadItem.ItemNum].Name + " (" + newLoadItem.StickyRate + "% Sticky)"));
                     }
-
-                } else {
-                    if (lbxItems.SelectedIndex >= 0 && lbxItems.SelectedIndex < lbxItems.Items.Count) {
+                }
+                else
+                {
+                    if (lbxItems.SelectedIndex >= 0 && lbxItems.SelectedIndex < lbxItems.Items.Count)
+                    {
                         itemList.Insert(lbxItems.SelectedIndex, newItem);
-                    } else {
+                    }
+                    else
+                    {
                         itemList.Add(newItem);
                     }
 
                     lbxItems.Items.Clear();
-                    for (int item = 0; item < itemList.Count; item++) {
+                    for (int item = 0; item < itemList.Count; item++)
+                    {
                         lbxItems.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (item + 1) + ": (" + itemList[item].AppearanceRate + "%) " + itemList[item].MinAmount + "-" + itemList[item].MaxAmount + " " + Items.ItemHelper.Items[itemList[item].ItemNum].Name + " (" + itemList[item].StickyRate + "% Sticky)"));
                     }
-
                 }
             }
         }
 
-        void btnLoadItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
-            if (lbxItems.SelectedIndex > -1) {
+        void btnLoadItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxItems.SelectedIndex > -1)
+            {
                 nudItemNum.Value = itemList[lbxItems.SelectedIndex].ItemNum;
                 nudMinValue.Value = itemList[lbxItems.SelectedIndex].MinAmount;
                 nudMaxValue.Value = itemList[lbxItems.SelectedIndex].MaxAmount;
@@ -5591,12 +5811,12 @@ namespace Client.Logic.Windows.Editors
                 chkOnWater.Checked = itemList[lbxItems.SelectedIndex].OnWater;
                 chkOnWall.Checked = itemList[lbxItems.SelectedIndex].OnWall;
             }
-
         }
 
-        void btnChangeItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
-            if (lbxItems.SelectedIndex > -1) {
+        void btnChangeItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxItems.SelectedIndex > -1)
+            {
                 EditableRDungeonItem newItem = new EditableRDungeonItem();
                 newItem.ItemNum = nudItemNum.Value;
                 newItem.MinAmount = nudMinValue.Value;
@@ -5609,10 +5829,14 @@ namespace Client.Logic.Windows.Editors
                 newItem.OnWater = chkOnWater.Checked;
                 newItem.OnWall = chkOnWall.Checked;
 
-                if (chkBulkItem.Checked) {
-                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-                        for (int j = 0; j < rdungeon.Floors[floor].Items.Count; j++) {
-                            if (itemList[lbxItems.SelectedIndex].Equals(rdungeon.Floors[floor].Items[j])) {
+                if (chkBulkItem.Checked)
+                {
+                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                    {
+                        for (int j = 0; j < rdungeon.Floors[floor].Items.Count; j++)
+                        {
+                            if (itemList[lbxItems.SelectedIndex].Equals(rdungeon.Floors[floor].Items[j]))
+                            {
                                 rdungeon.Floors[floor].Items[j] = newItem;
                             }
                         }
@@ -5621,7 +5845,8 @@ namespace Client.Logic.Windows.Editors
                     itemList.Clear();
                     lbxItems.Items.Clear();
                     EditableRDungeonFloor loadingfloor = rdungeon.Floors[nudFirstFloor.Value - 1];
-                    for (int item = 0; item < loadingfloor.Items.Count; item++) {
+                    for (int item = 0; item < loadingfloor.Items.Count; item++)
+                    {
                         EditableRDungeonItem newLoadItem = new EditableRDungeonItem();
                         newLoadItem.ItemNum = loadingfloor.Items[item].ItemNum;
                         newLoadItem.MinAmount = loadingfloor.Items[item].MinAmount;
@@ -5637,27 +5862,32 @@ namespace Client.Logic.Windows.Editors
                         itemList.Add(newLoadItem);
                         lbxItems.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (item + 1) + ": (" + newLoadItem.AppearanceRate + "%) " + newLoadItem.MinAmount + "-" + newLoadItem.MaxAmount + " " + Items.ItemHelper.Items[newLoadItem.ItemNum].Name + " (" + newLoadItem.StickyRate + "% Sticky)"));
                     }
-
-                } else {
+                }
+                else
+                {
                     itemList[lbxItems.SelectedIndex] = newItem;
 
                     lbxItems.Items.Clear();
-                    for (int item = 0; item < itemList.Count; item++) {
-
+                    for (int item = 0; item < itemList.Count; item++)
+                    {
                         lbxItems.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (item + 1) + ": (" + itemList[item].AppearanceRate + "%) " + itemList[item].MinAmount + "-" + itemList[item].MaxAmount + " " + Items.ItemHelper.Items[itemList[item].ItemNum].Name + " (" + itemList[item].StickyRate + "% Sticky)"));
                     }
                 }
             }
-
         }
 
-        void btnRemoveItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxItems.SelectedIndex > -1) {
-
-                if (chkBulkItem.Checked) {
-                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-                        for (int j = rdungeon.Floors[floor].Items.Count-1; j >= 0; j--) {
-                            if (itemList[lbxItems.SelectedIndex].Equals(rdungeon.Floors[floor].Items[j])) {
+        void btnRemoveItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxItems.SelectedIndex > -1)
+            {
+                if (chkBulkItem.Checked)
+                {
+                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                    {
+                        for (int j = rdungeon.Floors[floor].Items.Count - 1; j >= 0; j--)
+                        {
+                            if (itemList[lbxItems.SelectedIndex].Equals(rdungeon.Floors[floor].Items[j]))
+                            {
                                 rdungeon.Floors[floor].Items.RemoveAt(j);
                             }
                         }
@@ -5666,7 +5896,8 @@ namespace Client.Logic.Windows.Editors
                     itemList.Clear();
                     lbxItems.Items.Clear();
                     EditableRDungeonFloor loadingfloor = rdungeon.Floors[nudFirstFloor.Value - 1];
-                    for (int item = 0; item < loadingfloor.Items.Count; item++) {
+                    for (int item = 0; item < loadingfloor.Items.Count; item++)
+                    {
                         EditableRDungeonItem newLoadItem = new EditableRDungeonItem();
                         newLoadItem.ItemNum = loadingfloor.Items[item].ItemNum;
                         newLoadItem.MinAmount = loadingfloor.Items[item].MinAmount;
@@ -5682,36 +5913,38 @@ namespace Client.Logic.Windows.Editors
                         itemList.Add(newLoadItem);
                         lbxItems.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (item + 1) + ": (" + newLoadItem.AppearanceRate + "%) " + newLoadItem.MinAmount + "-" + newLoadItem.MaxAmount + " " + Items.ItemHelper.Items[newLoadItem.ItemNum].Name + " (" + newLoadItem.StickyRate + "% Sticky)"));
                     }
-
-                } else {
+                }
+                else
+                {
                     itemList.RemoveAt(lbxItems.SelectedIndex);
                     lbxItems.Items.Clear();
-                    for (int item = 0; item < itemList.Count; item++) {
-
+                    for (int item = 0; item < itemList.Count; item++)
+                    {
                         lbxItems.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (item + 1) + ": (" + itemList[item].AppearanceRate + "%) " + itemList[item].MinAmount + "-" + itemList[item].MaxAmount + " " + Items.ItemHelper.Items[itemList[item].ItemNum].Name + " (" + itemList[item].StickyRate + "% Sticky)"));
                     }
                 }
             }
-
         }
 
         #endregion
         #region NPCs
 
-        void nudNpcNum_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
-
-            if (nudNpcNum.Value > 0 && nudNpcNum.Value < MaxInfo.MaxNpcs) {
-
+        void nudNpcNum_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
+            if (nudNpcNum.Value > 0 && nudNpcNum.Value < MaxInfo.MaxNpcs)
+            {
                 lblNpcNum.Text = Npc.NpcHelper.Npcs[nudNpcNum.Value].Name;
-
-            } else {
+            }
+            else
+            {
                 lblNpcNum.Text = "NPC #";
             }
-
         }
 
-        void btnAddNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (nudNpcNum.Value > 0) {
+        void btnAddNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (nudNpcNum.Value > 0)
+            {
                 MapNpcSettings newNpc = new MapNpcSettings();
                 newNpc.NpcNum = nudNpcNum.Value;
                 newNpc.MinLevel = nudMinLevel.Value;
@@ -5721,20 +5954,25 @@ namespace Client.Logic.Windows.Editors
                 newNpc.StartStatusCounter = nudStatusCounter.Value;
                 newNpc.StartStatusChance = nudStatusChance.Value;
 
-                if (chkBulkNpc.Checked) {
-                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-                        if (lbxNpcs.SelectedIndex >= 0 && lbxNpcs.SelectedIndex < rdungeon.Floors[floor].Npcs.Count) {
+                if (chkBulkNpc.Checked)
+                {
+                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                    {
+                        if (lbxNpcs.SelectedIndex >= 0 && lbxNpcs.SelectedIndex < rdungeon.Floors[floor].Npcs.Count)
+                        {
                             rdungeon.Floors[floor].Npcs.Insert(lbxNpcs.SelectedIndex, newNpc);
-                        } else {
+                        }
+                        else
+                        {
                             rdungeon.Floors[floor].Npcs.Add(newNpc);
                         }
-
                     }
 
                     npcList.Clear();
                     lbxNpcs.Items.Clear();
                     EditableRDungeonFloor loadingfloor = rdungeon.Floors[nudFirstFloor.Value - 1];
-                    for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++) {
+                    for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++)
+                    {
                         MapNpcSettings newLoadNpc = new MapNpcSettings();
                         newLoadNpc.NpcNum = loadingfloor.Npcs[npc].NpcNum;
                         newLoadNpc.MinLevel = loadingfloor.Npcs[npc].MinLevel;
@@ -5749,31 +5987,35 @@ namespace Client.Logic.Windows.Editors
                     + "(" + newLoadNpc.AppearanceRate + "%) " + "Lv." + newLoadNpc.MinLevel + "-" + newLoadNpc.MaxLevel + " " + Npc.NpcHelper.Npcs[newLoadNpc.NpcNum].Name
                     + " [" + newLoadNpc.StartStatusChance + "% " + newLoadNpc.StartStatus.ToString() + "]"));
                     }
-
-                } else {
-                    if (lbxNpcs.SelectedIndex >= 0 && lbxNpcs.SelectedIndex < lbxNpcs.Items.Count) {
+                }
+                else
+                {
+                    if (lbxNpcs.SelectedIndex >= 0 && lbxNpcs.SelectedIndex < lbxNpcs.Items.Count)
+                    {
                         npcList.Insert(lbxNpcs.SelectedIndex, newNpc);
-                    } else {
+                    }
+                    else
+                    {
                         npcList.Add(newNpc);
                     }
 
                     lbxNpcs.Items.Clear();
-                    for (int npc = 0; npc < npcList.Count; npc++) {
-
+                    for (int npc = 0; npc < npcList.Count; npc++)
+                    {
                         lbxNpcs.Items.Add(new ListBoxTextItem(Client.Logic.Graphics.FontManager.LoadFont("tahoma", 10), (npc + 1) + ": "
                         + "(" + npcList[npc].AppearanceRate + "%) " + "Lv." + npcList[npc].MinLevel + "-" + npcList[npc].MaxLevel + " "
                         + Npc.NpcHelper.Npcs[npcList[npc].NpcNum].Name
                         + " [" + npcList[npc].StartStatusChance + "% " + npcList[npc].StartStatus.ToString() + "]"));
                     }
-
                 }
             }
         }
 
 
-        void btnLoadNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
-            if (lbxNpcs.SelectedIndex > -1) {
+        void btnLoadNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxNpcs.SelectedIndex > -1)
+            {
                 nudNpcNum.Value = npcList[lbxNpcs.SelectedIndex].NpcNum;
                 nudMinLevel.Value = npcList[lbxNpcs.SelectedIndex].MinLevel;
                 nudMaxLevel.Value = npcList[lbxNpcs.SelectedIndex].MaxLevel;
@@ -5782,12 +6024,12 @@ namespace Client.Logic.Windows.Editors
                 nudStatusCounter.Value = npcList[lbxNpcs.SelectedIndex].StartStatusCounter;
                 nudStatusChance.Value = npcList[lbxNpcs.SelectedIndex].StartStatusChance;
             }
-
         }
 
-        void btnChangeNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
-            if (nudNpcNum.Value > 0) {
+        void btnChangeNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (nudNpcNum.Value > 0)
+            {
                 MapNpcSettings newNpc = new MapNpcSettings();
                 newNpc.NpcNum = nudNpcNum.Value;
                 newNpc.MinLevel = nudMinLevel.Value;
@@ -5797,10 +6039,14 @@ namespace Client.Logic.Windows.Editors
                 newNpc.StartStatusCounter = nudStatusCounter.Value;
                 newNpc.StartStatusChance = nudStatusChance.Value;
 
-                if (chkBulkNpc.Checked) {
-                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-                        for (int j = 0; j < rdungeon.Floors[floor].Npcs.Count; j++) {
-                            if (npcList[lbxNpcs.SelectedIndex].Equals(rdungeon.Floors[floor].Npcs[j])) {
+                if (chkBulkNpc.Checked)
+                {
+                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                    {
+                        for (int j = 0; j < rdungeon.Floors[floor].Npcs.Count; j++)
+                        {
+                            if (npcList[lbxNpcs.SelectedIndex].Equals(rdungeon.Floors[floor].Npcs[j]))
+                            {
                                 rdungeon.Floors[floor].Npcs[j] = newNpc;
                             }
                         }
@@ -5809,7 +6055,8 @@ namespace Client.Logic.Windows.Editors
                     npcList.Clear();
                     lbxNpcs.Items.Clear();
                     EditableRDungeonFloor loadingfloor = rdungeon.Floors[nudFirstFloor.Value - 1];
-                    for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++) {
+                    for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++)
+                    {
                         MapNpcSettings newLoadNpc = new MapNpcSettings();
                         newLoadNpc.NpcNum = loadingfloor.Npcs[npc].NpcNum;
                         newLoadNpc.MinLevel = loadingfloor.Npcs[npc].MinLevel;
@@ -5824,33 +6071,35 @@ namespace Client.Logic.Windows.Editors
                     + "(" + newLoadNpc.AppearanceRate + "%) " + "Lv." + newLoadNpc.MinLevel + "-" + newLoadNpc.MaxLevel + " " + Npc.NpcHelper.Npcs[newLoadNpc.NpcNum].Name
                     + " [" + newLoadNpc.StartStatusChance + "% " + newLoadNpc.StartStatus.ToString() + "]"));
                     }
-
-                } else {
+                }
+                else
+                {
                     npcList[lbxNpcs.SelectedIndex] = newNpc;
 
                     lbxNpcs.Items.Clear();
-                    for (int npc = 0; npc < npcList.Count; npc++) {
-
+                    for (int npc = 0; npc < npcList.Count; npc++)
+                    {
                         lbxNpcs.Items.Add(new ListBoxTextItem(Client.Logic.Graphics.FontManager.LoadFont("tahoma", 10), (npc + 1) + ": "
                         + "(" + npcList[npc].AppearanceRate + "%) " + "Lv." + npcList[npc].MinLevel + "-" + npcList[npc].MaxLevel + " "
                         + Npc.NpcHelper.Npcs[npcList[npc].NpcNum].Name
                         + " [" + npcList[npc].StartStatusChance + "% " + npcList[npc].StartStatus.ToString() + "]"));
                     }
-
                 }
             }
-            
         }
 
-        void btnRemoveNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
-            if (lbxNpcs.SelectedIndex > -1) {
-
-                if (chkBulkNpc.Checked) {
-
-                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++) {
-                        for (int j = rdungeon.Floors[floor].Npcs.Count - 1; j >= 0; j--) {
-                            if (npcList[lbxNpcs.SelectedIndex].Equals(rdungeon.Floors[floor].Npcs[j])) {
+        void btnRemoveNpc_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxNpcs.SelectedIndex > -1)
+            {
+                if (chkBulkNpc.Checked)
+                {
+                    for (int floor = nudFirstFloor.Value - 1; floor < nudLastFloor.Value; floor++)
+                    {
+                        for (int j = rdungeon.Floors[floor].Npcs.Count - 1; j >= 0; j--)
+                        {
+                            if (npcList[lbxNpcs.SelectedIndex].Equals(rdungeon.Floors[floor].Npcs[j]))
+                            {
                                 rdungeon.Floors[floor].Npcs.RemoveAt(j);
                             }
                         }
@@ -5859,7 +6108,8 @@ namespace Client.Logic.Windows.Editors
                     npcList.Clear();
                     lbxNpcs.Items.Clear();
                     EditableRDungeonFloor loadingfloor = rdungeon.Floors[nudFirstFloor.Value - 1];
-                    for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++) {
+                    for (int npc = 0; npc < loadingfloor.Npcs.Count; npc++)
+                    {
                         MapNpcSettings newLoadNpc = new MapNpcSettings();
                         newLoadNpc.NpcNum = loadingfloor.Npcs[npc].NpcNum;
                         newLoadNpc.MinLevel = loadingfloor.Npcs[npc].MinLevel;
@@ -5874,31 +6124,31 @@ namespace Client.Logic.Windows.Editors
                     + "(" + newLoadNpc.AppearanceRate + "%) " + "Lv." + newLoadNpc.MinLevel + "-" + newLoadNpc.MaxLevel + " " + Npc.NpcHelper.Npcs[newLoadNpc.NpcNum].Name
                     + " [" + newLoadNpc.StartStatusChance + "% " + newLoadNpc.StartStatus.ToString() + "]"));
                     }
-
-                } else {
+                }
+                else
+                {
                     npcList.RemoveAt(lbxNpcs.SelectedIndex);
 
 
                     lbxNpcs.Items.Clear();
-                    for (int npc = 0; npc < npcList.Count; npc++) {
-
+                    for (int npc = 0; npc < npcList.Count; npc++)
+                    {
                         lbxNpcs.Items.Add(new ListBoxTextItem(Client.Logic.Graphics.FontManager.LoadFont("tahoma", 10), (npc + 1) + ": "
                         + "(" + npcList[npc].AppearanceRate + "%) " + "Lv." + npcList[npc].MinLevel + "-" + npcList[npc].MaxLevel + " "
                         + Npc.NpcHelper.Npcs[npcList[npc].NpcNum].Name
                         + " [" + npcList[npc].StartStatusChance + "% " + npcList[npc].StartStatus.ToString() + "]"));
                     }
-
                 }
-                
             }
-
         }
 
         #endregion
         #region Traps
 
-        void btnAddTrap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (cbTrapType.SelectedIndex > -1) {
+        void btnAddTrap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (cbTrapType.SelectedIndex > -1)
+            {
                 EditableRDungeonTrap newTile = new EditableRDungeonTrap();
                 newTile.SpecialTile.Ground = trapTileNumbers[1, 0];
                 newTile.SpecialTile.GroundAnim = trapTileNumbers[1, 1];
@@ -5933,9 +6183,12 @@ namespace Client.Logic.Windows.Editors
 
                 newTile.AppearanceRate = nudTrapChance.Value;
 
-                if (lbxTraps.SelectedIndex >= 0 && lbxTraps.SelectedIndex < lbxTraps.Items.Count) {
+                if (lbxTraps.SelectedIndex >= 0 && lbxTraps.SelectedIndex < lbxTraps.Items.Count)
+                {
                     trapList.Insert(lbxTraps.SelectedIndex, newTile);
-                } else {
+                }
+                else
+                {
                     trapList.Add(newTile);
                 }
 
@@ -5947,9 +6200,10 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnLoadTrap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxTraps.SelectedIndex > -1) {
-
+        void btnLoadTrap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxTraps.SelectedIndex > -1)
+            {
                 trapTileNumbers[1, 0] = trapList[lbxTraps.SelectedIndex].SpecialTile.Ground;
                 trapTileNumbers[1, 1] = trapList[lbxTraps.SelectedIndex].SpecialTile.GroundAnim;
                 trapTileNumbers[1, 2] = trapList[lbxTraps.SelectedIndex].SpecialTile.Mask;
@@ -5972,7 +6226,8 @@ namespace Client.Logic.Windows.Editors
                 trapTileNumbers[0, 8] = trapList[lbxTraps.SelectedIndex].SpecialTile.Fringe2Set;
                 trapTileNumbers[0, 9] = trapList[lbxTraps.SelectedIndex].SpecialTile.F2AnimSet;
 
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 10; i++)
+                {
                     picTrapTileset[i].Image = Graphics.GraphicsManager.Tiles[trapTileNumbers[0, i]][trapTileNumbers[1, i]];
                 }
 
@@ -6035,44 +6290,43 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void picTrapTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void picTrapTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             LoadpnlTileSelector();
 
             editedTile = Array.IndexOf(picTrapTileset, sender) + 89;
             pnlRDungeonTraps.Visible = false;
             pnlTileSelector.Visible = true;
-
         }
 
-        void btnRemoveTrap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
-            if (lbxTraps.SelectedIndex > -1) {
+        void btnRemoveTrap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxTraps.SelectedIndex > -1)
+            {
                 trapList.RemoveAt(lbxTraps.SelectedIndex);
 
 
                 lbxTraps.Items.Clear();
-                for (int traps = 0; traps < trapList.Count; traps++) {
-
+                for (int traps = 0; traps < trapList.Count; traps++)
+                {
                     lbxTraps.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (traps + 1) + ": " + trapList[traps].SpecialTile.Type + "/" + trapList[traps].SpecialTile.Data1 + "/" + trapList[traps].SpecialTile.Data2 + "/" + trapList[traps].SpecialTile.Data3));
                 }
             }
-
         }
 
 
         #endregion
         #region Weather
 
-        void btnAddWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnAddWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             lbxWeather.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (lbxWeather.Items.Count + 1) + ":" + cbWeather.SelectedIndex + ": " + Enum.GetName(typeof(Enums.Weather), cbWeather.SelectedIndex)));
-
         }
 
-        void btnRemoveWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
-
-            for (int weather = lbxWeather.SelectedIndex + 1; weather < lbxWeather.Items.Count; weather++) {
+        void btnRemoveWeather_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            for (int weather = lbxWeather.SelectedIndex + 1; weather < lbxWeather.Items.Count; weather++)
+            {
                 string[] weatherindex = lbxWeather.Items[weather].TextIdentifier.Split(':');
                 lbxWeather.Items[weather].TextIdentifier = weather + ":" + weatherindex[1] + ":" + weatherindex[2];
             }
@@ -6083,34 +6337,32 @@ namespace Client.Logic.Windows.Editors
         #endregion
         #region Goal
 
-        void optNextFloor_Checked(object sender, EventArgs e) {
-
+        void optNextFloor_Checked(object sender, EventArgs e)
+        {
             lblData1.Text = "[No Parameter]";
             lblData2.Text = "[No Parameter]";
             lblData3.Text = "[No Parameter]";
-
         }
 
-        void optMap_Checked(object sender, EventArgs e) {
-
+        void optMap_Checked(object sender, EventArgs e)
+        {
             lblData1.Text = "Map Number:";
             lblData2.Text = "X:";
             lblData3.Text = "Y:";
-
         }
 
-        void optScripted_Checked(object sender, EventArgs e) {
-
+        void optScripted_Checked(object sender, EventArgs e)
+        {
             lblData1.Text = "Script Number:";
             lblData2.Text = "[No Parameter]";
             lblData3.Text = "[No Parameter]";
-
         }
 
         #endregion
         #region Chambers
 
-        void btnAddChamber_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnAddChamber_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             EditableRDungeonChamber chamber = new EditableRDungeonChamber();
             chamber.ChamberNum = nudChamber.Value;
             chamber.String1 = txtChamberString1.Text;
@@ -6118,11 +6370,12 @@ namespace Client.Logic.Windows.Editors
             chamber.String3 = txtChamberString3.Text;
             chamberList.Add(chamber);
             lbxChambers.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), "#" + chamber.ChamberNum + "/" + chamber.String1 + "/" + chamber.String2 + "/" + chamber.String3));
-
         }
 
-        void btnRemoveChamber_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxChambers.SelectedIndex > -1) {
+        void btnRemoveChamber_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxChambers.SelectedIndex > -1)
+            {
                 chamberList.RemoveAt(lbxChambers.SelectedIndex);
                 lbxChambers.Items.RemoveAt(lbxChambers.SelectedIndex);
             }
@@ -6131,80 +6384,97 @@ namespace Client.Logic.Windows.Editors
         #endregion
         #region Misc
 
-        void btnPlayMusic_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnPlayMusic_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             string song = null;
-            if (lbxMusic.SelectedIndex > 0) {
+            if (lbxMusic.SelectedIndex > 0)
+            {
                 song = ((ListBoxTextItem)lbxMusic.SelectedItems[0]).Text;
-            } else if (lbxMusic.SelectedIndex == 0) {
+            }
+            else if (lbxMusic.SelectedIndex == 0)
+            {
                 Music.Music.AudioPlayer.StopMusic();
             }
-            if (!string.IsNullOrEmpty(song)) {
+            if (!string.IsNullOrEmpty(song))
+            {
                 Music.Music.AudioPlayer.PlayMusic(song, -1, true, true);
             }
-
         }
 
         #endregion
 
         #region Tileset
 
-        void nudTileSet_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e) {
-
+        void nudTileSet_ValueChanged(object sender, SdlDotNet.Widgets.ValueChangedEventArgs e)
+        {
             TileSelector.ActiveTilesetSurface = Graphics.GraphicsManager.Tiles[nudTileSet.Value];
         }
 
-        void btnTileSetOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnTileSetOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             pnlTileSelector.Visible = false;
-            if (editedTile < 22) {
+            if (editedTile < 22)
+            {
                 pnlRDungeonLandTiles.Visible = true;
                 landTileNumbers[0, editedTile] = nudTileSet.Value;
                 landTileNumbers[1, editedTile] = TileSelector.SelectedTile.Y * (TileSelector.ActiveTilesetSurface.Size.Width / Constants.TILE_WIDTH) + TileSelector.SelectedTile.X;
                 picLandTileset[editedTile].Image = TileSelector.ActiveTilesetSurface[landTileNumbers[1, editedTile]];
-            } else if (editedTile < 44) {
+            }
+            else if (editedTile < 44)
+            {
                 pnlRDungeonWaterTiles.Visible = true;
                 waterTileNumbers[0, editedTile - 22] = nudTileSet.Value;
                 waterTileNumbers[1, editedTile - 22] = TileSelector.SelectedTile.Y * (TileSelector.ActiveTilesetSurface.Size.Width / Constants.TILE_WIDTH) + TileSelector.SelectedTile.X;
                 picWaterTileset[editedTile - 22].Image = TileSelector.ActiveTilesetSurface[waterTileNumbers[1, editedTile - 22]];
-            } else if (editedTile < 67) {
+            }
+            else if (editedTile < 67)
+            {
                 pnlRDungeonLandAltTiles.Visible = true;
                 landAltTileNumbers[0, editedTile - 44] = nudTileSet.Value;
                 landAltTileNumbers[1, editedTile - 44] = TileSelector.SelectedTile.Y * (TileSelector.ActiveTilesetSurface.Size.Width / Constants.TILE_WIDTH) + TileSelector.SelectedTile.X;
                 picLandAltTileset[editedTile - 44].Image = TileSelector.ActiveTilesetSurface[landAltTileNumbers[1, editedTile - 44]];
-            } else if (editedTile < 89) {
+            }
+            else if (editedTile < 89)
+            {
                 pnlRDungeonWaterAnimTiles.Visible = true;
                 waterAnimTileNumbers[0, editedTile - 67] = nudTileSet.Value;
                 waterAnimTileNumbers[1, editedTile - 67] = TileSelector.SelectedTile.Y * (TileSelector.ActiveTilesetSurface.Size.Width / Constants.TILE_WIDTH) + TileSelector.SelectedTile.X;
                 picWaterAnimTileset[editedTile - 67].Image = TileSelector.ActiveTilesetSurface[waterAnimTileNumbers[1, editedTile - 67]];
-            } else if (editedTile < 99) {
+            }
+            else if (editedTile < 99)
+            {
                 pnlRDungeonTraps.Visible = true;
                 trapTileNumbers[0, editedTile - 89] = nudTileSet.Value;
                 trapTileNumbers[1, editedTile - 89] = TileSelector.SelectedTile.Y * (TileSelector.ActiveTilesetSurface.Size.Width / Constants.TILE_WIDTH) + TileSelector.SelectedTile.X;
                 picTrapTileset[editedTile - 89].Image = TileSelector.ActiveTilesetSurface[trapTileNumbers[1, editedTile - 89]];
             }
             editedTile = -1;
-
         }
 
-        void btnTileSetCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnTileSetCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             pnlTileSelector.Visible = false;
-            if (editedTile < 22) {
+            if (editedTile < 22)
+            {
                 pnlRDungeonLandTiles.Visible = true;
-            } else if (editedTile < 44) {
+            }
+            else if (editedTile < 44)
+            {
                 pnlRDungeonWaterTiles.Visible = true;
-            } else if (editedTile < 67) {
+            }
+            else if (editedTile < 67)
+            {
                 pnlRDungeonLandAltTiles.Visible = true;
-            } else if (editedTile < 89) {
+            }
+            else if (editedTile < 89)
+            {
                 pnlRDungeonWaterAnimTiles.Visible = true;
-            } else if (editedTile < 99) {
+            }
+            else if (editedTile < 99)
+            {
                 pnlRDungeonTraps.Visible = true;
             }
             editedTile = -1;
-
-
-
         }
 
         #endregion

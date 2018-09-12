@@ -38,20 +38,23 @@ namespace Client.Logic.Menus
         Widgets.MenuItemPicker itemPicker;
         const int MAX_ITEMS = 3;
 
-        public int MoveSlot {
+        public int MoveSlot
+        {
             get { return moveSlot; }
-            set {
+            set
+            {
                 moveSlot = value;
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
         public mnuMoveSelected(string name, int moveSlot)
-            : base(name) {
-
+            : base(name)
+        {
             base.Size = new Size(165, 155);
             base.MenuDirection = Enums.MenuDirection.Horizontal;
             base.Location = new Point(300, 34);
@@ -102,59 +105,74 @@ namespace Client.Logic.Menus
             this.AddWidget(lblForget);
 
             this.MoveSlot = moveSlot;
-
         }
 
 
 
-        void lblUse_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblUse_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(0, moveSlot);
         }
 
-        void lblShiftUp_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblShiftUp_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(1, moveSlot);
         }
 
-        void lblShiftDown_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblShiftDown_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(2, moveSlot);
         }
 
-        void lblForget_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblForget_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(3, moveSlot);
         }
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 23 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
-            			Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem, moveSlot);
-                        
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         CloseMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                     }
@@ -162,31 +180,39 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void SelectItem(int itemNum, int moveSlot) {
-            switch (itemNum) {
-                case 0: { // Use move
+        private void SelectItem(int itemNum, int moveSlot)
+        {
+            switch (itemNum)
+            {
+                case 0:
+                    { // Use move
                         Players.PlayerManager.MyPlayer.UseMove(moveSlot);
                         CloseMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case 1: { // Shift Up
-                        if (moveSlot > 0) {
+                case 1:
+                    { // Shift Up
+                        if (moveSlot > 0)
+                        {
                             Players.PlayerManager.MyPlayer.ShiftMove(moveSlot, true);
                             CloseMenu();
                             Music.Music.AudioPlayer.PlaySoundEffect("beep6.wav");
                         }
                     }
                     break;
-                case 2: { // Shift Down
-                        if (moveSlot < 3) {
+                case 2:
+                    { // Shift Down
+                        if (moveSlot < 3)
+                        {
                             Players.PlayerManager.MyPlayer.ShiftMove(moveSlot, false);
                             CloseMenu();
                             Music.Music.AudioPlayer.PlaySoundEffect("beep6.wav");
                         }
                     }
                     break;
-                case 3: { // Forget move
+                case 3:
+                    { // Forget move
                         Players.PlayerManager.MyPlayer.ForgetMove(moveSlot);
                         CloseMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
@@ -195,15 +221,16 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void CloseMenu() {
+        private void CloseMenu()
+        {
             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(this);
             Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuMoves");
-            
         }
 
 
 
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }

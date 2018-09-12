@@ -58,6 +58,5 @@ namespace Client.Logic.Sdl
 
             IO.Options.SaveXml();
         }
-
     }
 }

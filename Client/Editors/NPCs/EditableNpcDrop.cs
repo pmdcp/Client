@@ -26,17 +26,20 @@ namespace Client.Logic.Editors.NPCs
     {
         #region Properties
 
-        public int Chance {
+        public int Chance
+        {
             get;
             set;
         }
 
-        public int ItemNum {
+        public int ItemNum
+        {
             get;
             set;
         }
 
-        public int ItemValue {
+        public int ItemValue
+        {
             get;
             set;
         }

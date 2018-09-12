@@ -40,8 +40,8 @@ namespace Client.Logic.Windows
         CheckBox chkSavePassword;
 
         public winLogin()
-            : base("winLogin") {
-
+            : base("winLogin")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new Size(500, 150);
@@ -90,7 +90,8 @@ namespace Client.Logic.Windows
             chkSavePassword.Size = new System.Drawing.Size(200, 16);
             chkSavePassword.Location = new Point(130, 80);
             chkSavePassword.BackColor = Color.Transparent;
-            if (!string.IsNullOrEmpty(IO.Options.SavedPassword)) {
+            if (!string.IsNullOrEmpty(IO.Options.SavedPassword))
+            {
                 chkSavePassword.Checked = true;
             }
 
@@ -131,27 +132,37 @@ namespace Client.Logic.Windows
             tmrServerChecker.Start();
         }
 
-        void tmrServerChecker_Elapsed(object sender, EventArgs e) {
-            if (NetworkManager.TcpClient.Socket.Connected) {
-                if (lblServerStatus.Text != "Online") {
+        void tmrServerChecker_Elapsed(object sender, EventArgs e)
+        {
+            if (NetworkManager.TcpClient.Socket.Connected)
+            {
+                if (lblServerStatus.Text != "Online")
+                {
                     lblServerStatus.Text = "Online";
                 }
-            } else {
-                if (NetworkManager.ShouldAttemptReconnect()) {
+            }
+            else
+            {
+                if (NetworkManager.ShouldAttemptReconnect())
+                {
                     NetworkManager.Connect();
                 }
-                if (lblServerStatus.Text != "Offline") {
+                if (lblServerStatus.Text != "Offline")
+                {
                     lblServerStatus.Text = "Offline";
                 }
             }
         }
 
-        void btnLogin_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (NetworkManager.TcpClient.Socket.Connected) {
+        void btnLogin_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (NetworkManager.TcpClient.Socket.Connected)
+            {
                 lblServerStatus.Text = "Online";
-                string account = txtUsername.Text; 
+                string account = txtUsername.Text;
                 string password = txtPassword.Text;
-                if (chkSavePassword.Checked) {
+                if (chkSavePassword.Checked)
+                {
                     IO.Options.SavedAccount = account;
                     IO.Options.SavedPassword = password;
 
@@ -166,7 +177,8 @@ namespace Client.Logic.Windows
             }
         }
 
-        void btnClear_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnClear_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             txtUsername.Text = "";
             txtPassword.Text = "";
         }

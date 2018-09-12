@@ -63,7 +63,7 @@ namespace Client.Logic.Graphics.Effects.Weather
 
             speed = Logic.MathFunctions.Random.Next(40, 120);
 
-            
+
             base.AlphaBlending = true;
             base.Alpha = 0;
         }
@@ -76,7 +76,7 @@ namespace Client.Logic.Graphics.Effects.Weather
             float change = delta * speed;
 
             //base.Alpha = (byte)((this.Y % 64)/ 4 /* 16 + 1*/);
-            
+
             switch ((this.Y % 64) / 4)
             {
                 case 0:
@@ -84,12 +84,14 @@ namespace Client.Logic.Graphics.Effects.Weather
                         base.Alpha = 255;
                     }
                     break;
-                case 15: case 1:
+                case 15:
+                case 1:
                     {
                         base.Alpha = 192;
                     }
                     break;
-                case 14: case 2:
+                case 14:
+                case 2:
                     {
                         base.Alpha = 128;
                     }
@@ -99,9 +101,8 @@ namespace Client.Logic.Graphics.Effects.Weather
                         base.Alpha = 0;
                     }
                     break;
-
             }
-            
+
             //base.Alpha = (byte)System.Math.Max(0, (System.Math.Abs(this.Y % 64 - 32) - 24)* 32 - 1);
             this.Y += (int)change;
             this.X += (int)System.Math.Ceiling(change * wind);
@@ -122,12 +123,12 @@ namespace Client.Logic.Graphics.Effects.Weather
         {
             try
             {
-                if (!this.disposed)
+                if (!disposed)
                 {
                     if (disposing)
                     {
                     }
-                    this.disposed = true;
+                    disposed = true;
                 }
             }
             finally

@@ -36,8 +36,8 @@ namespace Client.Logic.Windows
         bool newsUpdated;
 
         public winUpdates()
-            : base("winUpdates") {
-
+            : base("winUpdates")
+        {
             this.Windowed = true;
             //this.TitleBar.Text = "News and Updates";
             this.TitleBar.CloseButton.Visible = false;
@@ -72,15 +72,20 @@ namespace Client.Logic.Windows
             this.AddWidget(tmrUpdateNews);
         }
 
-        void tmrUpdateNews_Elapsed(object sender, EventArgs e) {
-            if (!newsUpdated) {
+        void tmrUpdateNews_Elapsed(object sender, EventArgs e)
+        {
+            if (!newsUpdated)
+            {
                 Messenger.SendRequestNews();
-            } else {
+            }
+            else
+            {
                 tmrUpdateNews.Stop();
             }
         }
 
-        public void DisplayNews(string news) {
+        public void DisplayNews(string news)
+        {
             lblUpdates.Text = news;
             //CharRenderOptions options = new CharRenderOptions(lblUpdates.ForeColor);
             //options.Bold = true;
@@ -90,7 +95,8 @@ namespace Client.Logic.Windows
             newsUpdated = true;
         }
 
-        public void ClearNews() {
+        public void ClearNews()
+        {
             lblUpdates.Text = "Receiving latest news from server...";
             newsUpdated = false;
             tmrUpdateNews.Start();

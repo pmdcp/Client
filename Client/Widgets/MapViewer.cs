@@ -37,7 +37,8 @@ namespace Client.Logic.Widgets
         #region Constructors
 
         public MapViewer(string name)
-            : base(name) {
+            : base(name)
+        {
             base.BackColor = Color.Black;
             ScreenRenderer.Initialize();
             //gl = new Graphics.GLRoutines();
@@ -49,12 +50,14 @@ namespace Client.Logic.Widgets
             this.RenderFrame += new EventHandler(MapViewer_RenderFrame);
         }
 
-        void MapViewer_Resized(object sender, EventArgs e) {
+        void MapViewer_Resized(object sender, EventArgs e)
+        {
             RecreateRendererDestinationData();
         }
 
         Logic.Graphics.Renderers.RendererDestinationData destData;
-        private void RecreateRendererDestinationData() {
+        private void RecreateRendererDestinationData()
+        {
             destData = new Graphics.Renderers.RendererDestinationData(base.Buffer, new Point(0, 0), this.Size);
         }
 
@@ -68,9 +71,11 @@ namespace Client.Logic.Widgets
 
         #region Properties
 
-        public Maps.Map ActiveMap {
+        public Maps.Map ActiveMap
+        {
             get { return Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.Map; }
-            set {
+            set
+            {
                 // Reset the camera
                 //ScreenRenderer.Camera.X = 0;
                 //ScreenRenderer.Camera.X2 = 20;
@@ -79,7 +84,8 @@ namespace Client.Logic.Widgets
                 ScreenRenderer.RenderOptions.Map = value;
                 if (MapUpdated != null)
                     MapUpdated(this, null);
-                if (value != null) {
+                if (value != null)
+                {
                     ScreenRenderer.Camera.FocusOnSprite(Players.PlayerManager.MyPlayer);
 
                     // Get the camera coordinates
@@ -88,17 +94,23 @@ namespace Client.Logic.Widgets
                     ScreenRenderer.Camera.X2 = ScreenRenderer.GetScreenRight();
                     ScreenRenderer.Camera.Y2 = ScreenRenderer.GetScreenBottom() + 1;
                     // Verify that the coordinates aren't outside the map bounds
-                    if (ScreenRenderer.Camera.X < 0 && ScreenRenderer.RenderOptions.Map.Left < 1) {
+                    if (ScreenRenderer.Camera.X < 0 && ScreenRenderer.RenderOptions.Map.Left < 1)
+                    {
                         ScreenRenderer.Camera.X = 0;
                         ScreenRenderer.Camera.X2 = 20;
-                    } else if (ScreenRenderer.Camera.X2 > ScreenRenderer.RenderOptions.Map.MaxX + 1 && ScreenRenderer.RenderOptions.Map.Right < 1) {
+                    }
+                    else if (ScreenRenderer.Camera.X2 > ScreenRenderer.RenderOptions.Map.MaxX + 1 && ScreenRenderer.RenderOptions.Map.Right < 1)
+                    {
                         ScreenRenderer.Camera.X = ScreenRenderer.RenderOptions.Map.MaxX - 19;
                         ScreenRenderer.Camera.X2 = ScreenRenderer.RenderOptions.Map.MaxX + 1;
                     }
-                    if (ScreenRenderer.Camera.Y < 0 && ScreenRenderer.RenderOptions.Map.Up < 1) {
+                    if (ScreenRenderer.Camera.Y < 0 && ScreenRenderer.RenderOptions.Map.Up < 1)
+                    {
                         ScreenRenderer.Camera.Y = 0;
                         ScreenRenderer.Camera.Y2 = 15;
-                    } else if (ScreenRenderer.Camera.Y2 > ScreenRenderer.RenderOptions.Map.MaxY + 1 && ScreenRenderer.RenderOptions.Map.Down < 1) {
+                    }
+                    else if (ScreenRenderer.Camera.Y2 > ScreenRenderer.RenderOptions.Map.MaxY + 1 && ScreenRenderer.RenderOptions.Map.Down < 1)
+                    {
                         ScreenRenderer.Camera.Y = ScreenRenderer.RenderOptions.Map.MaxY - 14;
                         ScreenRenderer.Camera.Y2 = ScreenRenderer.RenderOptions.Map.MaxY + 1;
                     }
@@ -110,33 +122,42 @@ namespace Client.Logic.Widgets
 
         #region Methods
 
-        
 
-        public override void FreeResources() {
+
+        public override void FreeResources()
+        {
             base.FreeResources();
         }
 
-        public override void OnTick(SdlDotNet.Core.TickEventArgs e) {
-            if (e.Tick > lastAnimTick + 250) {
+        public override void OnTick(SdlDotNet.Core.TickEventArgs e)
+        {
+            if (e.Tick > lastAnimTick + 250)
+            {
                 Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayAnimation = !Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayAnimation;
                 lastAnimTick = e.Tick;
             }
             if (Globals.Tick > ((Client.Logic.Music.Bass.BassAudioPlayer)Music.Music.AudioPlayer).TimeOfNextSong
-                && ((Client.Logic.Music.Bass.BassAudioPlayer)Music.Music.AudioPlayer).TimeOfNextSong > 0) {
+                && ((Client.Logic.Music.Bass.BassAudioPlayer)Music.Music.AudioPlayer).TimeOfNextSong > 0)
+            {
                 ((Client.Logic.Music.Bass.BassAudioPlayer)Music.Music.AudioPlayer).PlayNextMusic();
             }
             base.OnTick(e);
             RequestRedraw();
         }
 
-        void MapViewer_RenderFrame(object sender, EventArgs e) {
-            try {
-                if (Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.Map != null && Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.Map.Loaded) {
+        void MapViewer_RenderFrame(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.Map != null && Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.Map.Loaded)
+                {
                     //Graphics.Renderers.Screen.ScreenRenderer.RenderScreen(base.Buffer, this.Location);
                     //gl.DrawScreen(base.Buffer, activeMap, mapAnim, this.cameraX, this.cameraX2, this.cameraY, this.cameraY2, displayAttributes, displayMapGrid, displayLocation, overlay);
                     Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderScreen(destData);
                 }
-            } catch (Exception ex){
+            }
+            catch (Exception ex)
+            {
                 System.Diagnostics.Debug.WriteLine("Rendering:");
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
                 System.Diagnostics.Debug.WriteLine(ex.StackTrace);
@@ -163,17 +184,21 @@ namespace Client.Logic.Widgets
         //    base.DrawComplete();
         //}
 
-        public SdlDotNet.Graphics.Surface CaptureMapImage(bool captureVisibleArea, bool captureAttributes, bool captureMapGrid) {
+        public SdlDotNet.Graphics.Surface CaptureMapImage(bool captureVisibleArea, bool captureAttributes, bool captureMapGrid)
+        {
             int cameraX;
             int cameraX2;
             int cameraY;
             int cameraY2;
-            if (captureVisibleArea) {
+            if (captureVisibleArea)
+            {
                 cameraX = ScreenRenderer.Camera.X;
                 cameraX2 = ScreenRenderer.Camera.X2;
                 cameraY = ScreenRenderer.Camera.Y;
                 cameraY2 = ScreenRenderer.Camera.Y2;
-            } else {
+            }
+            else
+            {
                 cameraX = 0;
                 cameraX2 = Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.Map.MaxX;
                 cameraY = 0;
@@ -184,8 +209,6 @@ namespace Client.Logic.Widgets
             Client.Logic.Graphics.Renderers.Maps.MapRenderer.DrawTiles(new Logic.Graphics.Renderers.RendererDestinationData(screenshotSurf, new Point(0, 0), screenshotSurf.Size), Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.Map, Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayAnimation, cameraX, cameraX2, cameraY, cameraY2, captureAttributes, captureMapGrid);
             return screenshotSurf;
         }
-
-
 
         #endregion Methods
     }

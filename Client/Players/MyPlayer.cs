@@ -28,30 +28,36 @@ namespace Client.Logic.Players
 {
     class MyPlayer : IPlayer
     {
-        public Logic.Graphics.SpriteSheet SpriteSheet {
+        public Logic.Graphics.SpriteSheet SpriteSheet
+        {
             get;
             set;
         }
 
-        public int Sprite {
+        public int Sprite
+        {
             get;
             set;
         }
         public int Form { get; set; }
         public Enums.Coloration Shiny { get; set; }
-        
-        public Enums.Sex Sex {
-            get {
+
+        public Enums.Sex Sex
+        {
+            get
+            {
                 return GetActiveRecruit().Sex;
             }
-            set {
+            set
+            {
                 GetActiveRecruit().Sex = value;
             }
         }
 
-        
 
-        public PlayerType PlayerType {
+
+        public PlayerType PlayerType
+        {
             get { return Players.PlayerType.My; }
         }
 
@@ -62,32 +68,38 @@ namespace Client.Logic.Players
 
         public bool SwitchingSeamlessMaps { get; set; }
 
-        public string Name {
+        public string Name
+        {
             get;
             set;
         }
 
-        public string MapID {
+        public string MapID
+        {
             get;
             set;
         }
 
-        public int X {
+        public int X
+        {
             get { return Location.X; }
             set { Location = new Point(value, Location.Y); }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return Location.Y; }
             set { Location = new Point(Location.X, value); }
         }
 
-        public int TargetX {
+        public int TargetX
+        {
             get;
             set;
         }
 
-        public int TargetY {
+        public int TargetY
+        {
             get;
             set;
         }
@@ -96,7 +108,8 @@ namespace Client.Logic.Players
         public Enums.MovementSpeed StoryMovementSpeed { get; set; }
         public Algorithms.Pathfinder.PathfinderResult StoryPathfinderResult { get; set; }
 
-        public Point Location {
+        public Point Location
+        {
             get;
             set;
         }
@@ -105,64 +118,76 @@ namespace Client.Logic.Players
 
         public bool ScreenActive { get; set; }
 
-        public int SleepTimer {
+        public int SleepTimer
+        {
             get;
             set;
         }
 
-        public int SleepFrame {
+        public int SleepFrame
+        {
             get;
             set;
         }
 
-        public string Guild {
+        public string Guild
+        {
             get;
             set;
         }
 
-        public Enums.GuildRank GuildAccess {
+        public Enums.GuildRank GuildAccess
+        {
             get;
             set;
         }
 
-        public string Status {
+        public string Status
+        {
             get;
             set;
         }
 
-        
 
-        public bool Hunted {
+
+        public bool Hunted
+        {
             get;
             set;
         }
 
-        public bool Dead {
+        public bool Dead
+        {
             get;
             set;
         }
 
-        public Enums.Rank Access {
+        public Enums.Rank Access
+        {
             get;
             set;
         }
 
-        public Enums.Direction Direction {
+        public Enums.Direction Direction
+        {
             get;
             set;
         }
 
-        public bool MovementLocked {
+        public bool MovementLocked
+        {
             get;
             set;
         }
 
-        public bool Solid {
+        public bool Solid
+        {
             get;
             set;
         }
 
-        public string ID {
+        public string ID
+        {
             get;
             set;
         }
@@ -177,42 +202,52 @@ namespace Client.Logic.Players
         public int Belly { get; set; }
         public int MaxBelly { get; set; }
         public bool Confused { get; set; }
-        public Enums.StatusAilment StatusAilment {
-            get {
+        public Enums.StatusAilment StatusAilment
+        {
+            get
+            {
                 return GetActiveRecruit().StatusAilment;
             }
-            set {
+            set
+            {
                 GetActiveRecruit().StatusAilment = value;
             }
         }
-        public List<int> VolatileStatus {
+        public List<int> VolatileStatus
+        {
             get;
             set;
         }
 
         public Enums.MovementSpeed SpeedLimit { get; set; }
         public Inventory Inventory { get; set; }
-        public int Level {
-            get {
+        public int Level
+        {
+            get
+            {
                 return GetActiveRecruit().Level;
             }
-            set {
+            set
+            {
                 GetActiveRecruit().Level = value;
             }
         }
-        public bool[] Mobility {
+        public bool[] Mobility
+        {
             get;
             set;
         }
 
 
-        public int TimeMultiplier {
+        public int TimeMultiplier
+        {
             get;
             set;
         }
 
 
-        public int Darkness {
+        public int Darkness
+        {
             get;
             set;
         }
@@ -227,11 +262,14 @@ namespace Client.Logic.Players
 
         int activeTeamNum;
 
-        public int ActiveTeamNum {
-            get {
+        public int ActiveTeamNum
+        {
+            get
+            {
                 return activeTeamNum;
             }
-            set {
+            set
+            {
                 activeTeamNum = value;
                 Windows.WindowSwitcher.GameWindow.ActiveTeam.SetSelected(value);
             }
@@ -267,12 +305,14 @@ namespace Client.Logic.Players
         public PacketList MovementPacketCache { get; set; }
         public int LastMovementCacheSend { get; set; }
 
-        public MyPlayer() {
+        public MyPlayer()
+        {
             // Initialize the job list
             jobList = new JobList();
             // Initialize the move list
             Moves = new RecruitMove[MaxInfo.MAX_PLAYER_MOVES];
-            for (int i = 0; i < Moves.Length; i++) {
+            for (int i = 0; i < Moves.Length; i++)
+            {
                 Moves[i] = new RecruitMove();
             }
             // Initialize the player team
@@ -291,12 +331,14 @@ namespace Client.Logic.Players
             TargetY = -1;
         }
 
-        public List<MissionGoal> MapGoals {
+        public List<MissionGoal> MapGoals
+        {
             get;
             set;
         }
 
-        public JobList JobList {
+        public JobList JobList
+        {
             get { return jobList; }
         }
 
@@ -304,49 +346,64 @@ namespace Client.Logic.Players
 
         public Graphics.Renderers.Sprites.Emoticon CurrentEmote { get; set; }
 
-        public Recruit GetActiveRecruit() {
+        public Recruit GetActiveRecruit()
+        {
             return Team[ActiveTeamNum];
         }
 
-        public int GetInvItemNum(int invSlot) {
-            if (invSlot > 0) {
+        public int GetInvItemNum(int invSlot)
+        {
+            if (invSlot > 0)
+            {
                 return Inventory[invSlot].Num;
-            } else {
+            }
+            else
+            {
                 return 0;
             }
         }
 
-        public int GetInvItemAmount(int invSlot) {
-            if (invSlot > -1) {
+        public int GetInvItemAmount(int invSlot)
+        {
+            if (invSlot > -1)
+            {
                 return Inventory[invSlot].Value;
-            } else {
+            }
+            else
+            {
                 return 0;
             }
         }
 
-        public bool GetInvItemSticky(int invSlot) {
-            if (invSlot > -1) {
+        public bool GetInvItemSticky(int invSlot)
+        {
+            if (invSlot > -1)
+            {
                 return Inventory[invSlot].Sticky;
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }
 
-        public bool IsEquiped(int invSlot) {
-            for (int i = 0; i < 4; i++) {
-                if (Team[i] != null && Team[i].HeldItemSlot == invSlot) {
+        public bool IsEquiped(int invSlot)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (Team[i] != null && Team[i].HeldItemSlot == invSlot)
+                {
                     return true;
-
                 }
-
             }
 
             return false;
         }
 
-        public void UseMove(int moveSlot) {
-            if (Moves[moveSlot].MoveNum > 0  && MovementSpeed != Enums.MovementSpeed.Slip) {
-
+        public void UseMove(int moveSlot)
+        {
+            if (Moves[moveSlot].MoveNum > 0 && MovementSpeed != Enums.MovementSpeed.Slip)
+            {
                 int attackSpeed = 0;
                 //if (GetActiveRecruit().HeldItemSlot > 0) {
                 //    attackSpeed = Items.ItemHelper.Items[Players.PlayerManager.MyPlayer.GetInvItemNum(Players.PlayerManager.MyPlayer.GetActiveRecruit().HeldItemSlot)].AttackSpeed;
@@ -357,46 +414,56 @@ namespace Client.Logic.Players
                 attackSpeed = attackSpeed * Players.PlayerManager.MyPlayer.TimeMultiplier / 1000;
 
 
-                if (Players.PlayerManager.MyPlayer.AttackTimer < Globals.Tick && Players.PlayerManager.MyPlayer.Attacking == false) {
+                if (Players.PlayerManager.MyPlayer.AttackTimer < Globals.Tick && Players.PlayerManager.MyPlayer.Attacking == false)
+                {
                     Messenger.SendUseMove(moveSlot);
                     Attacking = true;
                     AttackTimer = Globals.Tick + attackSpeed;
                     TotalAttackTime = attackSpeed;
-                    if (Logic.Moves.MoveHelper.Moves[Moves[moveSlot].MoveNum].HitFreeze) {
+                    if (Logic.Moves.MoveHelper.Moves[Moves[moveSlot].MoveNum].HitFreeze)
+                    {
                         PauseTimer = Globals.Tick + attackSpeed;
                     }
                     // no more having to cast while standing
 
                 }
-            } else {
+            }
+            else
+            {
                 ExpKit.Modules.kitChat chat = (ExpKit.Modules.kitChat)WindowSwitcher.ExpKit.KitContainer.ModuleSwitcher.FindKitModule(Enums.ExpKitModules.Chat);
-                if (chat != null) {
+                if (chat != null)
+                {
                     chat.AppendChat("There is no move here!", Color.Red);
                 }
             }
         }
 
-        public void ForgetMove(int moveSlot) {
+        public void ForgetMove(int moveSlot)
+        {
             //Dim CstSplWalk As String
             //            Dim CstSplWalk2 As String
-            if (Moves[moveSlot].MoveNum > 0) {
-
+            if (Moves[moveSlot].MoveNum > 0)
+            {
                 Messenger.SendForgetMove(moveSlot);
-
-
-            } else {
+            }
+            else
+            {
                 // TODO: AddText("There is no move here!");
             }
         }
 
-        public void ShiftMove(int moveSlot, bool shiftUp) {
+        public void ShiftMove(int moveSlot, bool shiftUp)
+        {
             //Dim CstSplWalk As String
             //            Dim CstSplWalk2 As String
             //if (Moves[moveSlot].MoveNum > 0)
             //{
-            if (moveSlot < 1 && shiftUp || moveSlot > 2 && !shiftUp) {
+            if (moveSlot < 1 && shiftUp || moveSlot > 2 && !shiftUp)
+            {
                 //tell the player it can't be done in some way (maybe beep at him...)
-            } else {
+            }
+            else
+            {
                 Messenger.SendShiftMove(moveSlot, shiftUp);
             }
 
@@ -407,7 +474,8 @@ namespace Client.Logic.Players
             //}
         }
 
-        public void SwapMoves(int oldMoveSlot, int newMoveSlot) {
+        public void SwapMoves(int oldMoveSlot, int newMoveSlot)
+        {
             Messenger.SendSwapMoves(oldMoveSlot, newMoveSlot);
         }
 
@@ -416,50 +484,69 @@ namespace Client.Logic.Players
         //    set;
         //}
 
-        public void CharSwap(int slot) {//may require timing restrictions?
-            if (slot == ActiveTeamNum) {
+        public void CharSwap(int slot)
+        {//may require timing restrictions?
+            if (slot == ActiveTeamNum)
+            {
                 //(insert nickname) is already in!
-            } else {
+            }
+            else
+            {
                 Messenger.SendActiveCharSwap(slot);
             }
         }
 
         public void LeaderSwap(int slot)//may require timing restrictions?
         {
-            if (slot == 0) {
+            if (slot == 0)
+            {
                 //That Pokémon is already leader!
-            } else {
+            }
+            else
+            {
                 Messenger.SendSwitchLeader(slot);
             }
         }
 
         public void SendHome(int slot)//may require timing restrictions?
         {
-            if (slot == 0) {
+            if (slot == 0)
+            {
                 //The leader cannot be sent home!
-            } else {
+            }
+            else
+            {
                 Messenger.SendRemoveFromTeam(slot);
             }
         }
 
-        public void SetCurrentRoom() {
-            if (MapID.StartsWith("rd")) {
+        public void SetCurrentRoom()
+        {
+            if (MapID.StartsWith("rd"))
+            {
                 CurrentRoom = GetTargetRoom();
 
-                if (PlayerManager.MyPlayer.CurrentRoom.Width < 3) {
-                    if (PlayerManager.MyPlayer.CurrentRoom.Height > 2) {
+                if (PlayerManager.MyPlayer.CurrentRoom.Width < 3)
+                {
+                    if (PlayerManager.MyPlayer.CurrentRoom.Height > 2)
+                    {
                         CurrentRoom.Y = Y - 1;
                         CurrentRoom.Height = 2;
                     }
                 }
-                if (PlayerManager.MyPlayer.CurrentRoom.Height < 3) {
-                    if (PlayerManager.MyPlayer.CurrentRoom.Width > 2) {
+                if (PlayerManager.MyPlayer.CurrentRoom.Height < 3)
+                {
+                    if (PlayerManager.MyPlayer.CurrentRoom.Width > 2)
+                    {
                         CurrentRoom.X = X - 1;
                         CurrentRoom.Width = 2;
                     }
                 }
-            } else {
-                if (PlayerManager.MyPlayer.CurrentRoom == null) {
+            }
+            else
+            {
+                if (PlayerManager.MyPlayer.CurrentRoom == null)
+                {
                     CurrentRoom = new Maps.DungeonRoom(0, 0, 0, 0);
                 }
                 CurrentRoom.X = 0;
@@ -469,7 +556,8 @@ namespace Client.Logic.Players
             }
         }
 
-        public Maps.DungeonRoom GetTargetRoom() {
+        public Maps.DungeonRoom GetTargetRoom()
+        {
             Maps.Map map = Maps.MapHelper.ActiveMap;
             int targetX = X;
             int targetY = Y;
@@ -491,24 +579,30 @@ namespace Client.Logic.Players
             int roomStartY = -1;
             int roomHeight = -1;
 
-            while (true) {
+            while (true)
+            {
                 // Keep going left until we've hit a wall...
                 x1--;
                 blockedCount = 0;
-                if (x1 < 0) {
+                if (x1 < 0)
+                {
                     roomStartX = 0;
                     break;
                 }
-                if (GameProcessor.IsBlocked(map, x1, targetY)) {
+                if (GameProcessor.IsBlocked(map, x1, targetY))
+                {
                     blockedCount++;
                 }
-                if (GameProcessor.IsBlocked(map, x1, targetY - 1)) {
+                if (GameProcessor.IsBlocked(map, x1, targetY - 1))
+                {
                     blockedCount++;
                 }
-                if (GameProcessor.IsBlocked(map, x1, targetY + 1)) {
+                if (GameProcessor.IsBlocked(map, x1, targetY + 1))
+                {
                     blockedCount++;
                 }
-                if (blockedCount == 3 || blockedCount == 2) {
+                if (blockedCount == 3 || blockedCount == 2)
+                {
                     // This means that a hallway was found between blocks!
                     leftXDistance = x1;
                     roomStartX = x1;
@@ -516,24 +610,30 @@ namespace Client.Logic.Players
                 }
             }
             x1 = targetX;
-            while (true) {
+            while (true)
+            {
                 // Keep going right until we've hit a wall...
                 x1++;
                 blockedCount = 0;
-                if (x1 > map.MaxX) {
+                if (x1 > map.MaxX)
+                {
                     roomWidth = map.MaxX - roomStartX;
                     break;
                 }
-                if (GameProcessor.IsBlocked(map, x1, targetY)) {
+                if (GameProcessor.IsBlocked(map, x1, targetY))
+                {
                     blockedCount++;
                 }
-                if (GameProcessor.IsBlocked(map, x1, targetY - 1)) {
+                if (GameProcessor.IsBlocked(map, x1, targetY - 1))
+                {
                     blockedCount++;
                 }
-                if (GameProcessor.IsBlocked(map, x1, targetY + 1)) {
+                if (GameProcessor.IsBlocked(map, x1, targetY + 1))
+                {
                     blockedCount++;
                 }
-                if (blockedCount == 3 || blockedCount == 2) {
+                if (blockedCount == 3 || blockedCount == 2)
+                {
                     // This means that a hallway was found between blocks!
                     rightXDistance = x1;
                     roomWidth = (x1 - targetX) + (targetX - roomStartX);
@@ -541,24 +641,30 @@ namespace Client.Logic.Players
                 }
             }
 
-            while (true) {
+            while (true)
+            {
                 // Keep going up until we've hit a wall...
                 y1--;
                 blockedCount = 0;
-                if (y1 < 0) {
+                if (y1 < 0)
+                {
                     roomStartY = 0;
                     break;
                 }
-                if (GameProcessor.IsBlocked(map, targetX, y1)) {
+                if (GameProcessor.IsBlocked(map, targetX, y1))
+                {
                     blockedCount++;
                 }
-                if (GameProcessor.IsBlocked(map, targetX - 1, y1)) {
+                if (GameProcessor.IsBlocked(map, targetX - 1, y1))
+                {
                     blockedCount++;
                 }
-                if (GameProcessor.IsBlocked(map, targetX + 1, y1)) {
+                if (GameProcessor.IsBlocked(map, targetX + 1, y1))
+                {
                     blockedCount++;
                 }
-                if (blockedCount == 3 || blockedCount == 2) {
+                if (blockedCount == 3 || blockedCount == 2)
+                {
                     // This means that a hallway was found between blocks!
                     upYDistance = y1;
                     roomStartY = y1;
@@ -566,24 +672,30 @@ namespace Client.Logic.Players
                 }
             }
             y1 = targetY;
-            while (true) {
+            while (true)
+            {
                 // Keep going down until we've hit a wall...
                 y1++;
                 blockedCount = 0;
-                if (y1 > map.MaxY) {
+                if (y1 > map.MaxY)
+                {
                     roomHeight = map.MaxY - roomStartY;
                     break;
                 }
-                if (GameProcessor.IsBlocked(map, targetX, y1)) {
+                if (GameProcessor.IsBlocked(map, targetX, y1))
+                {
                     blockedCount++;
                 }
-                if (GameProcessor.IsBlocked(map, targetX - 1, y1)) {
+                if (GameProcessor.IsBlocked(map, targetX - 1, y1))
+                {
                     blockedCount++;
                 }
-                if (GameProcessor.IsBlocked(map, targetX + 1, y1)) {
+                if (GameProcessor.IsBlocked(map, targetX + 1, y1))
+                {
                     blockedCount++;
                 }
-                if (blockedCount == 3 || blockedCount == 2) {
+                if (blockedCount == 3 || blockedCount == 2)
+                {
                     // This means that a hallway was found between blocks!
                     downYDistance = y1;
                     roomHeight = (y1 - targetY) + (targetY - roomStartY);
@@ -593,6 +705,5 @@ namespace Client.Logic.Players
 
             return new Maps.DungeonRoom(roomStartX, roomStartY, roomWidth, roomHeight);
         }
-
     }
 }

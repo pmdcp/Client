@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -16,16 +20,14 @@
 // along with Mystery Dungeon eXtended.  If not, see <http://www.gnu.org/licenses/>.
 
 
-namespace Client.Logic.Graphics.Renderers.Moves {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    class TileMoveAnimation : IMoveAnimation {
+namespace Client.Logic.Graphics.Renderers.Moves
+{
+    class TileMoveAnimation : IMoveAnimation
+    {
         #region Constructors
 
-        public TileMoveAnimation(int targetX, int targetY, Enums.MoveRange rangeType, Enums.Direction dir, int range) {
+        public TileMoveAnimation(int targetX, int targetY, Enums.MoveRange rangeType, Enums.Direction dir, int range)
+        {
             StartX = targetX;
             StartY = targetY;
             RangeType = rangeType;
@@ -37,72 +39,83 @@ namespace Client.Logic.Graphics.Renderers.Moves {
 
         #region Properties
 
-        public bool Active {
+        public bool Active
+        {
             get;
             set;
         }
 
-        public int AnimationIndex {
+        public int AnimationIndex
+        {
             get;
             set;
         }
 
-        public int CompletedLoops {
+        public int CompletedLoops
+        {
             get;
             set;
         }
 
-        public int Frame {
+        public int Frame
+        {
             get;
             set;
         }
 
-        public int FrameLength {
+        public int FrameLength
+        {
             get;
             set;
         }
 
-        public int MoveTime {
+        public int MoveTime
+        {
             get;
             set;
         }
 
-        public int RenderLoops {
+        public int RenderLoops
+        {
             get;
             set;
         }
 
-        public Enums.MoveAnimationType AnimType {
+        public Enums.MoveAnimationType AnimType
+        {
             get { return Enums.MoveAnimationType.Tile; }
         }
 
-        public int StartX {
+        public int StartX
+        {
             get;
             set;
         }
 
-        public int StartY {
+        public int StartY
+        {
             get;
             set;
         }
 
-        public Enums.MoveRange RangeType {
+        public Enums.MoveRange RangeType
+        {
             get;
             set;
         }
 
-        public int Range {
+        public int Range
+        {
             get;
             set;
         }
 
-        public Enums.Direction Direction {
+        public Enums.Direction Direction
+        {
             get;
             set;
         }
 
         #endregion Properties
-
-
     }
 }

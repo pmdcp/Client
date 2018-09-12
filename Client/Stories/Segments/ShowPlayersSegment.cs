@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class ShowPlayersSegment : ISegment
     {
         #region Fields
@@ -38,14 +37,16 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public ShowPlayersSegment() {
+        public ShowPlayersSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.ShowPlayers; }
         }
 
@@ -55,7 +56,8 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -63,7 +65,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load() {
+        public void Load()
+        {
         }
 
         public void LoadFromSegmentData(ListPair<string, string> parameters)
@@ -71,7 +74,8 @@ namespace Client.Logic.Stories.Segments
             this.parameters = parameters;
         }
 
-        public void Process(StoryState state) {
+        public void Process(StoryState state)
+        {
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.PlayersVisible = true;
         }
 

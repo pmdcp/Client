@@ -30,8 +30,8 @@ namespace Client.Logic.Menus
 {
     class mnuOptions : Widgets.BorderedPanel, Core.IMenu
     {
-
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -68,7 +68,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuOptions(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(280, 390);
             base.MenuDirection = Enums.MenuDirection.Vertical;
 
@@ -254,14 +255,16 @@ namespace Client.Logic.Menus
 
 
 
-            for (int i = 0; i < 12; i++) {
+            for (int i = 0; i < 12; i++)
+            {
                 CreateTempOption(i);
                 ShowOption(i);
             }
         }
 
 
-        void lblSave_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblSave_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(12);
         }
 
@@ -270,17 +273,22 @@ namespace Client.Logic.Menus
 
         #region Methods
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             int pointerX = 30;
             int pointerY = 83;
 
-            if (itemNum > 3) {
+            if (itemNum > 3)
+            {
                 pointerY += 26;
-                if (itemNum > 6) {
+                if (itemNum > 6)
+                {
                     pointerY += 26;
-                    if (itemNum > 8) {
+                    if (itemNum > 8)
+                    {
                         pointerY += 26;
-                        if (itemNum > 11) {
+                        if (itemNum > 11)
+                        {
                             pointerX -= 10;
                             pointerY += 6;
                         }
@@ -293,57 +301,79 @@ namespace Client.Logic.Menus
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
-            			Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.LeftArrow: {
-                        if (itemPicker.SelectedItem == 3) {
-                            if (tempAutoSaveSpeed > 0) {
+                case SdlDotNet.Input.Key.LeftArrow:
+                    {
+                        if (itemPicker.SelectedItem == 3)
+                        {
+                            if (tempAutoSaveSpeed > 0)
+                            {
                                 tempAutoSaveSpeed--;
                                 ShowOption(3);
                             }
-                        } else if (itemPicker.SelectedItem != 12) {
+                        }
+                        else if (itemPicker.SelectedItem != 12)
+                        {
                             SelectItem(itemPicker.SelectedItem);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep4.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep4.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.RightArrow: {
-                        if (itemPicker.SelectedItem == 3) {
-                            if (tempAutoSaveSpeed < 10) {
+                case SdlDotNet.Input.Key.RightArrow:
+                    {
+                        if (itemPicker.SelectedItem == 3)
+                        {
+                            if (tempAutoSaveSpeed < 10)
+                            {
                                 tempAutoSaveSpeed++;
                                 ShowOption(3);
                             }
-                        } else if (itemPicker.SelectedItem != 12) {
+                        }
+                        else if (itemPicker.SelectedItem != 12)
+                        {
                             SelectItem(itemPicker.SelectedItem);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep4.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep4.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         // goes to the main menu; should it?
                         MenuSwitcher.ShowOthersMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
@@ -352,16 +382,23 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void SelectItem(int itemNum) {
-            if (itemNum == 3) {
-                if (tempAutoSaveSpeed < 10) {
+        private void SelectItem(int itemNum)
+        {
+            if (itemNum == 3)
+            {
+                if (tempAutoSaveSpeed < 10)
+                {
                     tempAutoSaveSpeed++;
                     ShowOption(3);
                 }
-            } else if (itemNum < 12) {
+            }
+            else if (itemNum < 12)
+            {
                 tempOptions[itemNum] = !tempOptions[itemNum];
                 ShowOption(itemNum);
-            } else {
+            }
+            else
+            {
                 //Save method goes here
                 IO.Options.PlayerName = tempOptions[0];
                 IO.Options.PlayerDamage = tempOptions[1];
@@ -384,129 +421,147 @@ namespace Client.Logic.Menus
                 IO.Options.UpdateActiveOptions();
 
                 MenuSwitcher.ShowMainMenu();
-                
             }
-
         }
 
-        public void CreateTempOption(int itemNum) {
-            switch (itemNum) {
-                case 0: {
+        public void CreateTempOption(int itemNum)
+        {
+            switch (itemNum)
+            {
+                case 0:
+                    {
                         tempOptions[itemNum] = IO.Options.PlayerName;
                     }
                     break;
-                case 1: {
+                case 1:
+                    {
                         tempOptions[itemNum] = IO.Options.PlayerDamage;
                     }
                     break;
-                case 2: {
+                case 2:
+                    {
                         tempOptions[itemNum] = IO.Options.PlayerBar;
                     }
                     break;
-                case 3: {
+                case 3:
+                    {
                         tempAutoSaveSpeed = IO.Options.AutoSaveSpeed;
                     }
                     break;
-                case 4: {
+                case 4:
+                    {
                         tempOptions[itemNum] = IO.Options.NpcName;
                     }
                     break;
-                case 5: {
+                case 5:
+                    {
                         tempOptions[itemNum] = IO.Options.NpcDamage;
                     }
                     break;
-                case 6: {
+                case 6:
+                    {
                         tempOptions[itemNum] = IO.Options.NpcBar;
                     }
                     break;
-                case 7: {
+                case 7:
+                    {
                         tempOptions[itemNum] = IO.Options.Music;
                     }
                     break;
-                case 8: {
+                case 8:
+                    {
                         tempOptions[itemNum] = IO.Options.Sound;
                     }
                     break;
-                case 9: {
+                case 9:
+                    {
                         tempOptions[itemNum] = IO.Options.SpeechBubbles;
                     }
                     break;
-                case 10: {
+                case 10:
+                    {
                         tempOptions[itemNum] = IO.Options.Timestamps;
                     }
                     break;
-                case 11: {
+                case 11:
+                    {
                         tempOptions[itemNum] = IO.Options.AutoScroll;
                     }
                     break;
-
-
-
-
             }
         }
 
-        public void ShowOption(int itemNum) {
-
-            switch (itemNum) {
-                case 0: {
+        public void ShowOption(int itemNum)
+        {
+            switch (itemNum)
+            {
+                case 0:
+                    {
                         lblPlayerDataName.Text = "Name: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 1: {
+                case 1:
+                    {
                         lblPlayerDataDamage.Text = "Damage: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 2: {
+                case 2:
+                    {
                         lblPlayerDataMiniHP.Text = "Mini-HP Bar: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 3: {
+                case 3:
+                    {
                         lblPlayerDataAutoSaveSpeed.Text = "Auto-Save Speed: " + tempAutoSaveSpeed;
                     }
                     break;
-                case 4: {
+                case 4:
+                    {
                         lblNpcDataName.Text = "Name: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 5: {
+                case 5:
+                    {
                         lblNpcDataDamage.Text = "Damage: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 6: {
+                case 6:
+                    {
                         lblNpcDataMiniHP.Text = "Mini-HP Bar: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 7: {
+                case 7:
+                    {
                         lblSoundDataMusic.Text = "Music: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 8: {
+                case 8:
+                    {
                         lblSoundDataSound.Text = "Sound Effects: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 9: {
+                case 9:
+                    {
                         lblChatDataSpeechBubbles.Text = "Speech Bubbles: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 10: {
+                case 10:
+                    {
                         lblChatDataTimeStamps.Text = "TimeStamps: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-                case 11: {
+                case 11:
+                    {
                         lblChatDataAutoScroll.Text = "Auto-Scroll: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-
-
-
-
             }
         }
 
-        public String BoolToString(bool setting) {
-            if (setting == true) {
-
+        public String BoolToString(bool setting)
+        {
+            if (setting == true)
+            {
                 return "On";
             }
 
@@ -515,7 +570,8 @@ namespace Client.Logic.Menus
 
         #endregion Methods
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
     }

@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using SdlDotNet.Widgets;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Windows
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using SdlDotNet.Widgets;
-
     class WindowSwitcher
     {
         #region Enumerations
@@ -43,22 +42,26 @@ namespace Client.Logic.Windows
 
         #region Properties
 
-        public static Window ActiveWindow {
+        public static Window ActiveWindow
+        {
             get;
             set;
         }
 
-        public static winGame GameWindow {
+        public static winGame GameWindow
+        {
             get;
             set;
         }
 
-        public static winExpKit ExpKit {
+        public static winExpKit ExpKit
+        {
             get;
             set;
         }
 
-        public static Updater.winUpdater UpdaterWindow {
+        public static Updater.winUpdater UpdaterWindow
+        {
             get;
             set;
         }
@@ -87,23 +90,27 @@ namespace Client.Logic.Windows
 
         #region Methods
 
-        public static SdlDotNet.Widgets.Window FindWindow(string windowName) {
+        public static SdlDotNet.Widgets.Window FindWindow(string windowName)
+        {
             return SdlDotNet.Widgets.WindowManager.FindWindow(windowName);
         }
 
-        public static void AddWindow(SdlDotNet.Widgets.Window window) {
+        public static void AddWindow(SdlDotNet.Widgets.Window window)
+        {
             SdlDotNet.Widgets.WindowManager.AddWindow(window);
         }
 
-        public static void ShowMainMenu() {
+        public static void ShowMainMenu()
+        {
             SdlDotNet.Widgets.WindowManager.AddWindow(new winMainMenu());
             SdlDotNet.Widgets.WindowManager.AddWindow(new winUpdates());
             SdlDotNet.Widgets.WindowManager.AddWindow(new winLogin());
             // Now that the menus have been shown, lets play the menu music
-            
+
         }
 
-        public static void ShowAccountSettings() {
+        public static void ShowAccountSettings()
+        {
             SdlDotNet.Widgets.WindowManager.AddWindow(new winAccountSettings());
             //Music.Music.AudioPlayer.PlayMusic("Temporal Tower.mp3");
         }

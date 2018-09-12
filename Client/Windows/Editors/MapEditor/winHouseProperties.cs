@@ -1,4 +1,12 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using SdlDotNet.Widgets;
+using Client.Logic.Maps;
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,15 +25,6 @@
 
 namespace Client.Logic.Windows.Editors.MapEditor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using SdlDotNet.Widgets;
-    using Client.Logic.Maps;
-    using PMDCP.Core;
-
     class winHouseProperties : Window
     {
         #region Fields
@@ -44,7 +43,8 @@ namespace Client.Logic.Windows.Editors.MapEditor
         #region Constructors
 
         public winHouseProperties()
-            : base("winHouseProperties") {
+            : base("winHouseProperties")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "Music";
@@ -105,7 +105,7 @@ namespace Client.Logic.Windows.Editors.MapEditor
             btnCancel.Click += new EventHandler<MouseButtonEventArgs>(btnCancel_Click);
 
             #endregion
-            
+
             this.AddWidget(lblMusic);
             this.AddWidget(cmbMusic);
             this.AddWidget(btnPlay);
@@ -118,42 +118,51 @@ namespace Client.Logic.Windows.Editors.MapEditor
             LoadMusic();
         }
 
-        void btnStop_Click(object sender, MouseButtonEventArgs e) {
+        void btnStop_Click(object sender, MouseButtonEventArgs e)
+        {
             // Stop the music
             Music.Music.AudioPlayer.StopMusic();
             // Play the map music
-            if (!string.IsNullOrEmpty(MapHelper.ActiveMap.Music)) {
+            if (!string.IsNullOrEmpty(MapHelper.ActiveMap.Music))
+            {
                 //Music.Music.AudioPlayer.PlayMusic(MapHelper.ActiveMap.Music);
                 ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).FadeToNext(MapHelper.ActiveMap.Music, 1000);
             }
         }
 
-        void btnPlay_Click(object sender, MouseButtonEventArgs e) {
+        void btnPlay_Click(object sender, MouseButtonEventArgs e)
+        {
             string song = null;
-            if (cmbMusic.SelectedIndex > -1) {
+            if (cmbMusic.SelectedIndex > -1)
+            {
                 song = ((ListBoxTextItem)cmbMusic.SelectedItem).Text;
             }
-            if (!string.IsNullOrEmpty(song)) {
+            if (!string.IsNullOrEmpty(song))
+            {
                 Music.Music.AudioPlayer.PlayMusic(song, -1, true, true);
             }
         }
 
-        void btnOk_Click(object sender, MouseButtonEventArgs e) {
+        void btnOk_Click(object sender, MouseButtonEventArgs e)
+        {
             properties.Music = (cmbMusic.SelectedItem == null || string.IsNullOrEmpty(cmbMusic.SelectedItem.TextIdentifier)) ? properties.Music : cmbMusic.SelectedItem.TextIdentifier;
             Maps.MapHelper.ActiveMap.LoadFromHouseClass(properties);
             this.Close();
         }
 
-        void btnCancel_Click(object sender, MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
             this.Close();
         }
 
         #endregion Constructors
 
-        void LoadMusic() {
+        void LoadMusic()
+        {
             SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("PMDCP", 18);
             string[] musicFiles = System.IO.Directory.GetFiles(IO.Paths.MusicPath);
-            for (int i = 0; i < musicFiles.Length; i++) {
+            for (int i = 0; i < musicFiles.Length; i++)
+            {
                 cmbMusic.Items.Add(new ListBoxTextItem(font, System.IO.Path.GetFileName(musicFiles[i])));
             }
             cmbMusic.SelectItem(properties.Music);

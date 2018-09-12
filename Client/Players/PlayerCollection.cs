@@ -32,52 +32,73 @@ namespace Client.Logic.Players
         //    get { return players; }
         //}
 
-        public PlayerCollection() {
+        public PlayerCollection()
+        {
             players = new ListPair<string, IPlayer>();
         }
 
-        public IPlayer this[string connectionID] {
-            get {
-                lock (lockObject) {
-                    if (players.ContainsKey(connectionID) == false) {
+        public IPlayer this[string connectionID]
+        {
+            get
+            {
+                lock (lockObject)
+                {
+                    if (players.ContainsKey(connectionID) == false)
+                    {
                         return null;
-                    } else {
+                    }
+                    else
+                    {
                         return players[connectionID];
                     }
                 }
             }
-            set {
-                lock (lockObject) {
+            set
+            {
+                lock (lockObject)
+                {
                     players[connectionID] = value;
                 }
             }
         }
 
-        public void Clear() {
-            lock (lockObject) {
+        public void Clear()
+        {
+            lock (lockObject)
+            {
                 players.Clear();
             }
         }
 
-        public void Add(string connectionID, IPlayer player) {
-            lock (lockObject) {
-                if (!players.ContainsKey(connectionID)) {
+        public void Add(string connectionID, IPlayer player)
+        {
+            lock (lockObject)
+            {
+                if (!players.ContainsKey(connectionID))
+                {
                     players.Add(connectionID, player);
-                } else {
+                }
+                else
+                {
                     players[connectionID] = player;
                 }
             }
         }
 
-        public void Remove(string connectionID) {
-            lock (lockObject) {
+        public void Remove(string connectionID)
+        {
+            lock (lockObject)
+            {
                 players.RemoveAtKey(connectionID);
             }
         }
 
-        public IEnumerable<IPlayer> GetAllPlayers() {
-            lock (lockObject) {
-                foreach (IPlayer player in players.Values) {
+        public IEnumerable<IPlayer> GetAllPlayers()
+        {
+            lock (lockObject)
+            {
+                foreach (IPlayer player in players.Values)
+                {
                     yield return player;
                 }
             }

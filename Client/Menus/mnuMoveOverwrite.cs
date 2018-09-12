@@ -31,7 +31,8 @@ namespace Client.Logic.Menus
 {
     class mnuMoveOverwrite : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -50,7 +51,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuMoveOverwrite(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(170, 178);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(10, 40);
@@ -101,19 +103,23 @@ namespace Client.Logic.Menus
             this.AddWidget(lblMove4);
         }
 
-        void lblMove1_Click(object sender, MouseButtonEventArgs e) {
+        void lblMove1_Click(object sender, MouseButtonEventArgs e)
+        {
             SelectItem(0);
         }
 
-        void lblMove2_Click(object sender, MouseButtonEventArgs e) {
+        void lblMove2_Click(object sender, MouseButtonEventArgs e)
+        {
             SelectItem(1);
         }
 
-        void lblMove3_Click(object sender, MouseButtonEventArgs e) {
+        void lblMove3_Click(object sender, MouseButtonEventArgs e)
+        {
             SelectItem(2);
         }
 
-        void lblMove4_Click(object sender, MouseButtonEventArgs e) {
+        void lblMove4_Click(object sender, MouseButtonEventArgs e)
+        {
             SelectItem(3);
         }
 
@@ -121,7 +127,8 @@ namespace Client.Logic.Menus
 
         #region Properties
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
@@ -129,54 +136,72 @@ namespace Client.Logic.Menus
 
         #region Methods
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 23 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
-            			Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                     }
                     break;
             }
         }
 
-        private void SelectItem(int itemNum) {
-            switch (itemNum) {
-                case 0: {
+        private void SelectItem(int itemNum)
+        {
+            switch (itemNum)
+            {
+                case 0:
+                    {
                         Messenger.SendPacket(TcpPacket.CreatePacket("overwritemove", "0"));
                     }
                     break;
-                case 1: {
+                case 1:
+                    {
                         Messenger.SendPacket(TcpPacket.CreatePacket("overwritemove", "1"));
                     }
                     break;
-                case 2: {
+                case 2:
+                    {
                         Messenger.SendPacket(TcpPacket.CreatePacket("overwritemove", "2"));
                     }
                     break;
-                case 3: {
+                case 3:
+                    {
                         Messenger.SendPacket(TcpPacket.CreatePacket("overwritemove", "3"));
                     }
                     break;

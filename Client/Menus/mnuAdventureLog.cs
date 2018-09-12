@@ -260,7 +260,7 @@ namespace Client.Logic.Menus
             this.AddWidget(pnlDungeons);
             this.AddWidget(pnlPokedex);
             #endregion AddWidget
-            
+
         }
 
         #endregion Constructors
@@ -327,11 +327,9 @@ namespace Client.Logic.Menus
                         pnlPokedex.Visible = true;
                     }
                     break;
-
             }
 
             lblPage.Text = "Page " + (page + 1);
-
         }
 
         public void LoadAdventureLogFromPacket(string[] parse)
@@ -350,8 +348,8 @@ namespace Client.Logic.Menus
             //Dungeons
             for (int i = 0; i < parse[n].ToInt(); i++)
             {
-                ListBoxTextItem item = new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), parse[n + i*2 + 1]);
-                if (parse[n + i*2 + 2].ToInt() > 0)
+                ListBoxTextItem item = new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), parse[n + i * 2 + 1]);
+                if (parse[n + i * 2 + 2].ToInt() > 0)
                 {
                     item.ForeColor = Color.Cyan;
                 }
@@ -360,7 +358,6 @@ namespace Client.Logic.Menus
                     item.ForeColor = Color.Red;
                 }
                 lbxDungeonList.Items.Add(item);
-                
             }
 
             n += lbxDungeonList.Items.Count * 2;
@@ -376,7 +373,7 @@ namespace Client.Logic.Menus
                 }
                 else
                 {
-                    item = new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "#" + i + ": " + Pokedex.PokemonHelper.Pokemon[i-1].Name);
+                    item = new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "#" + i + ": " + Pokedex.PokemonHelper.Pokemon[i - 1].Name);
                     if (parse[n + 1].ToInt() == 1)
                     {
                         item.ForeColor = Color.Red;

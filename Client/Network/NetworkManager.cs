@@ -69,7 +69,6 @@ namespace Client.Logic.Network
             }
             catch (Exception ex)
             {
-
             }
         }
 

@@ -36,14 +36,17 @@ namespace Client.Logic.ExpKit.Modules
         Label lblChannel;
         ComboBox channelSelector;
 
-        public Label Chat {
-            get {
+        public Label Chat
+        {
+            get
+            {
                 return lblChat;
             }
         }
 
         public kitChat(string name)
-            : base(name) {
+            : base(name)
+        {
             enabled = true;
 
             base.BackColor = Color.Transparent;
@@ -60,7 +63,7 @@ namespace Client.Logic.ExpKit.Modules
             lblChannel.ForeColor = Color.WhiteSmoke;
 
             channelSelector = new ComboBox("channelSelector");
-            
+
 
             txtCommands = new TextBox("txtCommands");
             Skins.SkinManager.LoadTextBoxGui(txtCommands);
@@ -76,9 +79,11 @@ namespace Client.Logic.ExpKit.Modules
             this.AddWidget(channelSelector);
         }
 
-        public void AppendChat(string text, SdlDotNet.Widgets.CharRenderOptions[] renderOptions) {
+        public void AppendChat(string text, SdlDotNet.Widgets.CharRenderOptions[] renderOptions)
+        {
             lblChat.AppendText(text, renderOptions);
-            if (lblChat.Text.Length > 10000) {
+            if (lblChat.Text.Length > 10000)
+            {
                 GlyphRenderData[] newRenderOptions = new GlyphRenderData[10000];
                 lblChat.CharRenderOptions.CopyTo(lblChat.CharRenderOptions.Count - 10000, newRenderOptions, 0, 10000);
                 lblChat.SetText(newRenderOptions);
@@ -86,41 +91,49 @@ namespace Client.Logic.ExpKit.Modules
             lblChat.ScrollToBottom();
         }
 
-        public void AppendChat(string text, SdlDotNet.Widgets.CharRenderOptions renderOptions) {
+        public void AppendChat(string text, SdlDotNet.Widgets.CharRenderOptions renderOptions)
+        {
             lblChat.AppendText(text, renderOptions);
             lblChat.ScrollToBottom();
         }
 
-        public void AppendChat(string text, Color color) {
+        public void AppendChat(string text, Color color)
+        {
             AppendChat(text + "\n", new CharRenderOptions(color));
         }
 
-        void txtCommands_KeyUp(object sender, SdlDotNet.Input.KeyboardEventArgs e) {
-            if (e.Key == SdlDotNet.Input.Key.Return) {
+        void txtCommands_KeyUp(object sender, SdlDotNet.Input.KeyboardEventArgs e)
+        {
+            if (e.Key == SdlDotNet.Input.Key.Return)
+            {
                 CommandProcessor.ProcessCommand(txtCommands.Text, (Enums.ChatChannel)Enum.Parse(typeof(Enums.ChatChannel), channelSelector.SelectedItem.TextIdentifier, true));
                 txtCommands.Text = "";
             }
         }
 
-        public void SetAutoScroll(bool set) {
+        public void SetAutoScroll(bool set)
+        {
             lblChat.AutoScroll = set;
         }
 
-        public void Created(int index) {
+        public void Created(int index)
+        {
             moduleIndex = index;
         }
 
-        public void SwitchOut() {
-
+        public void SwitchOut()
+        {
         }
 
-        public void Initialize(Size containerSize) {
+        public void Initialize(Size containerSize)
+        {
             this.containerSize = containerSize;
             RecalculatePositions();
             this.RequestRedraw();
         }
 
-        private void RecalculatePositions() {
+        private void RecalculatePositions()
+        {
             lblChat.Location = new Point(0, 0);
             lblChat.Size = new Size(containerSize.Width, containerSize.Height - 40 - 18);
             txtCommands.Location = new Point(0, lblChat.Y + lblChat.Height + 1);
@@ -142,12 +155,16 @@ namespace Client.Logic.ExpKit.Modules
             channelSelector.Items.Add(new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "Local"));
             channelSelector.Items.Add(new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "Global"));
             channelSelector.Items.Add(new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "Guild"));
-            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Monitor)) {
+            if (Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Monitor))
+            {
                 channelSelector.Items.Add(new ListBoxTextItem(FontManager.LoadFont("PMDCP", 16), "Staff"));
             }
-            if (selectedIndex < channelSelector.Items.Count && selectedIndex > -1) {
+            if (selectedIndex < channelSelector.Items.Count && selectedIndex > -1)
+            {
                 channelSelector.SelectItem(selectedIndex);
-            } else {
+            }
+            else
+            {
                 channelSelector.SelectItem(0);
             }
             //lblCounter.Size = new Size(containerSize.Width - 10, 30);
@@ -155,22 +172,27 @@ namespace Client.Logic.ExpKit.Modules
             //btnDecrement.Location = new Point(DrawingSupport.GetCenter(containerSize, btnDecrement.Size).X + (btnDecrement.Width / 2), lblCounter.Y + lblCounter.Height + 5);
         }
 
-        public int ModuleIndex {
+        public int ModuleIndex
+        {
             get { return moduleIndex; }
         }
 
-        public string ModuleName {
+        public string ModuleName
+        {
             get { return "Chat"; }
         }
 
-        public Panel ModulePanel {
+        public Panel ModulePanel
+        {
             get { return this; }
         }
 
 
-        public bool Enabled {
+        public bool Enabled
+        {
             get { return enabled; }
-            set {
+            set
+            {
                 enabled = value;
                 if (EnabledChanged != null)
                     EnabledChanged(this, EventArgs.Empty);
@@ -181,7 +203,8 @@ namespace Client.Logic.ExpKit.Modules
         public event EventHandler EnabledChanged;
 
 
-        public Enums.ExpKitModules ModuleID {
+        public Enums.ExpKitModules ModuleID
+        {
             get { return Enums.ExpKitModules.Chat; }
         }
     }

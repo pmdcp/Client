@@ -32,7 +32,8 @@ namespace Client.Logic.Graphics.Renderers.Sprites
     {
         //public static List<SpeechBubble> SpeechBubbles;
 
-        public static void Initialize() {
+        public static void Initialize()
+        {
             //SpeechBubbles = new List<SpeechBubble>();
         }
 
@@ -41,46 +42,58 @@ namespace Client.Logic.Graphics.Renderers.Sprites
             return SpriteXLoader.GetSpriteFormString(sprite.Form, (int)sprite.Shiny, (int)sprite.Sex);
         }
 
-        public static void DrawSpeechBubble(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, int tick) {
-            if (sprite.CurrentSpeech != null) {
-                if (sprite.CurrentSpeech.MarkedForRemoval == false) {
+        public static void DrawSpeechBubble(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, int tick)
+        {
+            if (sprite.CurrentSpeech != null)
+            {
+                if (sprite.CurrentSpeech.MarkedForRemoval == false)
+                {
                     sprite.CurrentSpeech.Process(tick);
-                    if (sprite.CurrentSpeech.RedrawRequested) {
+                    if (sprite.CurrentSpeech.RedrawRequested)
+                    {
                         sprite.CurrentSpeech.DrawBuffer();
                     }
                     int startX = (sprite.X * Constants.TILE_WIDTH) + sprite.Offset.X - (sprite.CurrentSpeech.Buffer.Width / 2) + 16;
                     int startY = ((sprite.Y + 1) * Constants.TILE_HEIGHT) + sprite.Offset.Y;
                     destData.Blit(sprite.CurrentSpeech.Buffer, new Point(ScreenRenderer.ToScreenX(startX), ScreenRenderer.ToScreenY(startY)));
-                } else {
+                }
+                else
+                {
                     sprite.CurrentSpeech.FreeResources();
                     sprite.CurrentSpeech = null;
                 }
             }
         }
 
-        public static void DrawSprite(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite) {
-            
+        public static void DrawSprite(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite)
+        {
             int x, y;
-            
+
             int spriteNum = sprite.Sprite;
-            
-            if (Globals.FoolsMode) {
-                if (spriteNum == 420) {
+
+            if (Globals.FoolsMode)
+            {
+                if (spriteNum == 420)
+                {
                     spriteNum = 867;
-                } else if (spriteNum == 582 || spriteNum == 583 || spriteNum == 584) {
+                }
+                else if (spriteNum == 582 || spriteNum == 583 || spriteNum == 584)
+                {
                     spriteNum = 787;
                 }
             }
 
             SpriteSheet spriteSheet = sprite.SpriteSheet;
-            if (spriteSheet == null || !(spriteSheet.Num == sprite.Sprite && spriteSheet.Form == GetSpriteFormString(sprite))) {
+            if (spriteSheet == null || !(spriteSheet.Num == sprite.Sprite && spriteSheet.Form == GetSpriteFormString(sprite)))
+            {
                 spriteSheet = GraphicsManager.GetSpriteSheet(spriteNum, sprite.Form, (int)sprite.Shiny, (int)sprite.Sex);
 
                 sprite.SpriteSheet = spriteSheet;
             }
 
             Surface spriteToBlit = null;
-            if (spriteSheet == null) {
+            if (spriteSheet == null)
+            {
                 return;
             }
 
@@ -88,28 +101,35 @@ namespace Client.Logic.Graphics.Renderers.Sprites
             bool moving = false;
 
 
-            if (sprite.Attacking == false && sprite.WalkingFrame != -1) {
+            if (sprite.Attacking == false && sprite.WalkingFrame != -1)
+            {
                 int currentOffset = 0;
-                switch (sprite.Direction) {
-                    case Enums.Direction.Up: {
+                switch (sprite.Direction)
+                {
+                    case Enums.Direction.Up:
+                        {
                             currentOffset = sprite.Offset.Y;
                         }
                         break;
-                    case Enums.Direction.Down: {
+                    case Enums.Direction.Down:
+                        {
                             currentOffset = sprite.Offset.Y * -1;
                         }
                         break;
-                    case Enums.Direction.Left: {
+                    case Enums.Direction.Left:
+                        {
                             currentOffset = sprite.Offset.X;
                         }
                         break;
-                    case Enums.Direction.Right: {
+                    case Enums.Direction.Right:
+                        {
                             currentOffset = sprite.Offset.X * -1;
                         }
                         break;
                 }
                 int frameCount = spriteSheet.FrameData.GetFrameCount(FrameType.Walk, sprite.Direction);
-                while (sprite.MovementSpeed != Enums.MovementSpeed.Standing && Globals.Tick - sprite.LastWalkTime > 512 / GameProcessor.DetermineSpeed(sprite.MovementSpeed)) {
+                while (sprite.MovementSpeed != Enums.MovementSpeed.Standing && Globals.Tick - sprite.LastWalkTime > 512 / GameProcessor.DetermineSpeed(sprite.MovementSpeed))
+                {
                     sprite.LastWalkTime += (512 / GameProcessor.DetermineSpeed(sprite.MovementSpeed));
                     sprite.WalkingFrame = (sprite.WalkingFrame + 1) % frameCount;
                 }
@@ -117,20 +137,25 @@ namespace Client.Logic.Graphics.Renderers.Sprites
                 rec = spriteSheet.GetFrameBounds(FrameType.Walk, sprite.Direction, sprite.WalkingFrame);
             }
 
-            if (sprite.Attacking && sprite.TotalAttackTime > 0) {
+            if (sprite.Attacking && sprite.TotalAttackTime > 0)
+            {
                 //if there's more than one attack frame, we have a fluid motion
-                if (spriteSheet.FrameData.GetFrameCount(FrameType.Attack, sprite.Direction) > 1 && (sprite.TotalAttackTime - sprite.AttackTimer + Globals.Tick) / sprite.TotalAttackTime < 1) {
+                if (spriteSheet.FrameData.GetFrameCount(FrameType.Attack, sprite.Direction) > 1 && (sprite.TotalAttackTime - sprite.AttackTimer + Globals.Tick) / sprite.TotalAttackTime < 1)
+                {
                     spriteToBlit = spriteSheet.GetSheet(FrameType.Attack, sprite.Direction);
                     rec = spriteSheet.GetFrameBounds(FrameType.Attack, sprite.Direction,
                         (sprite.TotalAttackTime - sprite.AttackTimer + Globals.Tick) * spriteSheet.FrameData.GetFrameCount(FrameType.Attack, sprite.Direction) / sprite.TotalAttackTime);
-                } else if (sprite.AttackTimer - Globals.Tick > sprite.TotalAttackTime / 2) {
+                }
+                else if (sprite.AttackTimer - Globals.Tick > sprite.TotalAttackTime / 2)
+                {
                     spriteToBlit = spriteSheet.GetSheet(FrameType.Attack, sprite.Direction);
                     rec = spriteSheet.GetFrameBounds(FrameType.Attack, sprite.Direction, 0);
                 }
             }
-            
+
             // Check to see if we want to stop making him attack
-            if (sprite.AttackTimer < Globals.Tick) {
+            if (sprite.AttackTimer < Globals.Tick)
+            {
                 sprite.Attacking = false;
                 sprite.AttackTimer = 0;
             }
@@ -140,7 +165,8 @@ namespace Client.Logic.Graphics.Renderers.Sprites
             x = sprite.Location.X;// * Const.PIC_X + sx + player.XOffset;
             y = sprite.Location.Y;// * Const.PIC_Y + sx + player.YOffset;
 
-            if (y < 0) {
+            if (y < 0)
+            {
                 y = 0;
                 //rec.Y = rec.Y + (y * -1);
             }
@@ -150,18 +176,23 @@ namespace Client.Logic.Graphics.Renderers.Sprites
             dstPoint.X = ScreenRenderer.ToTileX(x) + sprite.Offset.X - (spriteSheet.FrameData.FrameWidth / 2 - 16);
             dstPoint.Y = ScreenRenderer.ToTileY(y) + sprite.Offset.Y - (spriteSheet.FrameData.FrameHeight - 32); // - (Constants.TILE_HEIGHT / 2);
 
-            switch (sprite.StatusAilment) {
-                case Enums.StatusAilment.Paralyze: {
+            switch (sprite.StatusAilment)
+            {
+                case Enums.StatusAilment.Paralyze:
+                    {
                         dstPoint.X -= (2 + System.Math.Abs(Globals.Tick % 8 - 4));
                         break;
                     }
-                default: {
+                default:
+                    {
                         //dstPoint.X = ScreenRenderer.ToTileX(x) + sprite.Offset.X;
                         break;
                     }
             }
-            if (sprite.StatusAilment == Enums.StatusAilment.Sleep) {
-                if (Globals.Tick > sprite.SleepTimer + 500) {
+            if (sprite.StatusAilment == Enums.StatusAilment.Sleep)
+            {
+                if (Globals.Tick > sprite.SleepTimer + 500)
+                {
                     sprite.SleepTimer = Globals.Tick;
                     sprite.SleepFrame = (sprite.SleepFrame + 1) % spriteSheet.FrameData.GetFrameCount(FrameType.Sleep, Enums.Direction.Down);
                 }
@@ -184,36 +215,47 @@ namespace Client.Logic.Graphics.Renderers.Sprites
                 }
             }
 
-            if (rec == Rectangle.Empty && sprite.StatusAilment == Enums.StatusAilment.OK) {
-                if (sprite.Offset == Point.Empty && spriteSheet.FrameData.GetFrameCount(FrameType.Idle, sprite.Direction) > 0) {
-                    if (sprite.IdleTimer == -1) {
+            if (rec == Rectangle.Empty && sprite.StatusAilment == Enums.StatusAilment.OK)
+            {
+                if (sprite.Offset == Point.Empty && spriteSheet.FrameData.GetFrameCount(FrameType.Idle, sprite.Direction) > 0)
+                {
+                    if (sprite.IdleTimer == -1)
+                    {
                         sprite.IdleTimer = Globals.Tick + 2000;
-                    } else if (Globals.Tick > sprite.IdleTimer + 100) {
+                    }
+                    else if (Globals.Tick > sprite.IdleTimer + 100)
+                    {
                         sprite.IdleTimer = Globals.Tick;
 
                         sprite.IdleFrame++;
-                        if (sprite.IdleFrame >= spriteSheet.FrameData.GetFrameCount(FrameType.Idle, sprite.Direction)) {
+                        if (sprite.IdleFrame >= spriteSheet.FrameData.GetFrameCount(FrameType.Idle, sprite.Direction))
+                        {
                             sprite.IdleFrame = 0;
                         }
                         spriteToBlit = spriteSheet.GetSheet(FrameType.Idle, sprite.Direction);
                         rec = spriteSheet.GetFrameBounds(FrameType.Idle, sprite.Direction, sprite.IdleFrame);
-
                     }
-                } else {
+                }
+                else
+                {
                     sprite.IdleTimer = -1;
                     sprite.IdleFrame = 0;
                 }
-            } else {
+            }
+            else
+            {
                 sprite.IdleTimer = -1;
                 sprite.IdleFrame = 0;
             }
 
-            if (sprite.IdleTimer != -1) {
+            if (sprite.IdleTimer != -1)
+            {
                 spriteToBlit = spriteSheet.GetSheet(FrameType.Idle, sprite.Direction);
                 rec = spriteSheet.GetFrameBounds(FrameType.Idle, sprite.Direction, sprite.IdleFrame);
             }
 
-            if ((rec == Rectangle.Empty || (moving == true && sprite.Offset == Point.Empty)) && sprite.StatusAilment != Enums.StatusAilment.Sleep && sprite.IdleTimer == -1) {
+            if ((rec == Rectangle.Empty || (moving == true && sprite.Offset == Point.Empty)) && sprite.StatusAilment != Enums.StatusAilment.Sleep && sprite.IdleTimer == -1)
+            {
                 spriteToBlit = spriteSheet.GetSheet(FrameType.Walk, sprite.Direction);
                 rec = spriteSheet.GetFrameBounds(FrameType.Walk, sprite.Direction, 0);
             }
@@ -221,7 +263,8 @@ namespace Client.Logic.Graphics.Renderers.Sprites
 
 
             //if (sprite.Size == Enums.Size.Normal) {
-            if (Globals.FoolsMode) {
+            if (Globals.FoolsMode)
+            {
                 dstPoint.X = ScreenRenderer.ToTileX(x) + sprite.Offset.X;
                 dstPoint.Y = ScreenRenderer.ToTileY(y) + sprite.Offset.Y;
 
@@ -235,14 +278,12 @@ namespace Client.Logic.Graphics.Renderers.Sprites
 
 
             destData.Blit(spriteToBlit, dstPoint, rec);
-            
-            
+
             //spriteToBlit.AlphaBlending = false;
-
-
         }
 
-        public static void DrawSpriteName(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, Color color, string name) {
+        public static void DrawSpriteName(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, Color color, string name)
+        {
             int textX;
             int textY;
 
@@ -261,7 +302,8 @@ namespace Client.Logic.Graphics.Renderers.Sprites
             //}
         }
 
-        public static void DrawSpriteGuild(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, Color color, string guild) {
+        public static void DrawSpriteGuild(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, Color color, string guild)
+        {
             int textX;
             int textY;
 
@@ -280,7 +322,8 @@ namespace Client.Logic.Graphics.Renderers.Sprites
             //}
         }
 
-        public static void DrawSpriteHPBar(RendererDestinationData destData, ISprite sprite, int hp, int maxHP) {
+        public static void DrawSpriteHPBar(RendererDestinationData destData, ISprite sprite, int hp, int maxHP)
+        {
             int x = 0;
             int y = 0;
 
@@ -305,19 +348,21 @@ namespace Client.Logic.Graphics.Renderers.Sprites
             //} else {
             Box hpBox = new SdlDotNet.Graphics.Primitives.Box(new Point(destData.Location.X + x, destData.Location.Y + y + 36), new Point(destData.Location.X + x + 32, destData.Location.Y + y + 40));
             destData.Draw(hpBox, Color.Black, false, true);
-            if (maxHP > 0) {
+            if (maxHP > 0)
+            {
                 hpBox = new SdlDotNet.Graphics.Primitives.Box(new Point(destData.Location.X + x + 1, destData.Location.Y + y + 37), new Point(Convert.ToInt32(destData.Location.X + x + (Logic.MathFunctions.CalculatePercent(hp, maxHP) * 0.01) * 31), destData.Location.Y + y + 39));
             }
             destData.Draw(hpBox, Color.LightGreen, false, true);
             //}
         }
 
-        public static void DrawStatus(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, int emoteIndex, Point offset) {
+        public static void DrawStatus(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, int emoteIndex, Point offset)
+        {
             DrawStatus(destData, activeMap, targetMapID, sprite, emoteIndex, Globals.Tick / 50 % 12, offset);
         }
 
-        public static void DrawStatus(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, int emoteIndex, int emoteFrame, Point offset) {
-
+        public static void DrawStatus(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, ISprite sprite, int emoteIndex, int emoteFrame, Point offset)
+        {
             int x, y;
             int width = Constants.TILE_WIDTH;
             int height = Constants.TILE_HEIGHT;
@@ -344,8 +389,6 @@ namespace Client.Logic.Graphics.Renderers.Sprites
 
 
             destData.Blit(Graphics.GraphicsManager.GetEmoteSheet(emoteIndex).Sheet, dstPoint, rec);
-
         }
-
     }
 }

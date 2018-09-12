@@ -35,22 +35,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public PadlockSegment(Enums.PadlockState state) {
+        public PadlockSegment(Enums.PadlockState state)
+        {
             Load(state);
         }
 
-        public PadlockSegment() {
+        public PadlockSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.Padlock; }
         }
 
-        public Enums.PadlockState State {
+        public Enums.PadlockState State
+        {
             get { return state; }
             set { state = value; }
         }
@@ -60,7 +64,8 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -68,17 +73,19 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(Enums.PadlockState state) {
+        public void Load(Enums.PadlockState state)
+        {
             this.state = state;
         }
 
         public void LoadFromSegmentData(ListPair<string, string> parameters)
         {
             this.parameters = parameters;
-            this.state = (Enums.PadlockState)(parameters.GetValue("State").ToInt(0));
+            state = (Enums.PadlockState)(parameters.GetValue("State").ToInt(0));
         }
 
-        public void Process(StoryState state) {
+        public void Process(StoryState state)
+        {
             Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("actonaction"));
         }
 

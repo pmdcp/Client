@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic.Missions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using PMDCP.Core;
-
     class MissionHelper
     {
         #region Fields
@@ -55,12 +54,15 @@ namespace Client.Logic.Missions
 
         public static void LoadMissionsFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n = 2;
                 int max = parse[1].ToInt();
                 mMissions.ClearMissions();
-                if (max > 0) {
-                    for (int i = 0; i < max; i++) {
+                if (max > 0)
+                {
+                    for (int i = 0; i < max; i++)
+                    {
                         dataLoadPercent = System.Math.Min(99, Logic.MathFunctions.CalculatePercent(i, max));
                         mMissions.AddMission(i, new Mission());
                         mMissions[i].Title = parse[n];
@@ -69,7 +71,9 @@ namespace Client.Logic.Missions
                     }
                     dataLoadPercent = 100;
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }

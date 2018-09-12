@@ -34,27 +34,39 @@ namespace Client.Logic.Graphics
         public int FrameWidth { get; private set; }
         public int FrameHeight { get; private set; }
 
-        public SpriteXLoader(string path, bool hasMeta) {
+        public SpriteXLoader(string path, bool hasMeta)
+        {
             this.path = path;
 
-            if (hasMeta) {
+            if (hasMeta)
+            {
                 LoadMeta();
             }
         }
 
-        private void LoadMeta() {
-            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                using (var zipFile = new ZipArchive(fileStream)) {
-                    using (var metaStream = zipFile.GetEntry("Meta.xml").Open()) {
-                        using (XmlReader reader = XmlReader.Create(metaStream)) {
-                            while (reader.Read()) {
-                                if (reader.IsStartElement()) {
-                                    switch (reader.Name) {
-                                        case "FrameWidth": {
+        private void LoadMeta()
+        {
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (var zipFile = new ZipArchive(fileStream))
+                {
+                    using (var metaStream = zipFile.GetEntry("Meta.xml").Open())
+                    {
+                        using (XmlReader reader = XmlReader.Create(metaStream))
+                        {
+                            while (reader.Read())
+                            {
+                                if (reader.IsStartElement())
+                                {
+                                    switch (reader.Name)
+                                    {
+                                        case "FrameWidth":
+                                            {
                                                 FrameWidth = Convert.ToInt32(reader.ReadElementString());
                                             }
                                             break;
-                                        case "FrameHeight": {
+                                        case "FrameHeight":
+                                            {
                                                 FrameHeight = Convert.ToInt32(reader.ReadElementString());
                                             }
                                             break;
@@ -67,18 +79,25 @@ namespace Client.Logic.Graphics
             }
         }
 
-        public List<string> LoadForms() {
+        public List<string> LoadForms()
+        {
             List<string> forms = new List<string>();
 
-            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                using (var zipFile = new ZipArchive(fileStream)) {
-                    foreach (var entry in zipFile.Entries) {
-                        if (entry.Name.StartsWith("Forms")) {
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (var zipFile = new ZipArchive(fileStream))
+                {
+                    foreach (var entry in zipFile.Entries)
+                    {
+                        if (entry.Name.StartsWith("Forms"))
+                        {
                             string formFileName = entry.Name.Substring(6);
-                            if (!string.IsNullOrEmpty(formFileName)) {
+                            if (!string.IsNullOrEmpty(formFileName))
+                            {
                                 string formName = Path.GetDirectoryName(formFileName);
 
-                                if (forms.Contains(formName) == false) {
+                                if (forms.Contains(formName) == false)
+                                {
                                     forms.Add(formName);
                                 }
                             }
@@ -90,8 +109,10 @@ namespace Client.Logic.Graphics
             return forms;
         }
 
-        public string GetFrameTypeString(FrameType frameType) {
-            switch (frameType) {
+        public string GetFrameTypeString(FrameType frameType)
+        {
+            switch (frameType)
+            {
                 case FrameType.Idle:
                     return "Idle";
                 case FrameType.Walk:
@@ -117,8 +138,10 @@ namespace Client.Logic.Graphics
             }
         }
 
-        public string GetDirectionString(Enums.Direction direction) {
-            switch (direction) {
+        public string GetDirectionString(Enums.Direction direction)
+        {
+            switch (direction)
+            {
                 case Enums.Direction.Down:
                     return "Down";
                 case Enums.Direction.DownLeft:
@@ -140,23 +163,35 @@ namespace Client.Logic.Graphics
             }
         }
 
-        public static string GetSpriteFormString(int form, int shiny, int sex) {
+        public static string GetSpriteFormString(int form, int shiny, int sex)
+        {
             string formString = "r";
 
-            if (form >= 0) {
+            if (form >= 0)
+            {
                 formString += "-" + form;
-                if ((int)shiny >= 0) {
-                    if (shiny == (int)Enums.Coloration.Shiny) {
+                if ((int)shiny >= 0)
+                {
+                    if (shiny == (int)Enums.Coloration.Shiny)
+                    {
                         formString += "-S";
-                    } else if (shiny == (int)Enums.Coloration.Normal) {
+                    }
+                    else if (shiny == (int)Enums.Coloration.Normal)
+                    {
                         formString += "-N";
                     }
-                    if ((int)sex >= 0) {
-                        if (sex == (int)Enums.Sex.Female) {
+                    if ((int)sex >= 0)
+                    {
+                        if (sex == (int)Enums.Sex.Female)
+                        {
                             formString += "-F";
-                        } else if (sex == (int)Enums.Sex.Male) {
+                        }
+                        else if (sex == (int)Enums.Sex.Male)
+                        {
                             formString += "-M";
-                        } else if (sex == (int)Enums.Sex.Genderless) {
+                        }
+                        else if (sex == (int)Enums.Sex.Genderless)
+                        {
                             formString += "-G";
                         }
                     }
@@ -165,17 +200,23 @@ namespace Client.Logic.Graphics
             return formString;
         }
 
-        public void LoadMugshot(Mugshot sheet, string overrideForm) {
+        public void LoadMugshot(Mugshot sheet, string overrideForm)
+        {
             string formDirectory = "Forms/" + overrideForm + "/";
 
-            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                using (var zipFile = new ZipArchive(fileStream)) {
-                    using (MemoryStream ms = new MemoryStream()) {
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (var zipFile = new ZipArchive(fileStream))
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
                         string fullImageString = formDirectory + "Portrait.png";
 
                         var entry = zipFile.GetEntry(fullImageString);
-                        if (entry != null) {
-                            using (var entryStream = entry.Open()) {
+                        if (entry != null)
+                        {
+                            using (var entryStream = entry.Open())
+                            {
                                 entryStream.CopyTo(ms);
                             }
 
@@ -188,24 +229,32 @@ namespace Client.Logic.Graphics
             }
         }
 
-        public void Load(SpriteSheet sheet, FrameData frameData, string overrideForm) {
+        public void Load(SpriteSheet sheet, FrameData frameData, string overrideForm)
+        {
             string formDirectory = "Forms/" + overrideForm + "/";
 
             frameData.SetFrameSize(FrameWidth, FrameHeight);
-            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                using (var zipFile = new ZipArchive(fileStream)) {
-
-                    foreach (FrameType frameType in Enum.GetValues(typeof(FrameType))) {
-                        if (FrameTypeHelper.IsFrameTypeDirectionless(frameType) == false) {
-                            for (int i = 0; i < 8; i++) {
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (var zipFile = new ZipArchive(fileStream))
+                {
+                    foreach (FrameType frameType in Enum.GetValues(typeof(FrameType)))
+                    {
+                        if (FrameTypeHelper.IsFrameTypeDirectionless(frameType) == false)
+                        {
+                            for (int i = 0; i < 8; i++)
+                            {
                                 Enums.Direction dir = GraphicsManager.GetAnimIntDir(i);
 
-                                using (MemoryStream ms = new MemoryStream()) {
+                                using (MemoryStream ms = new MemoryStream())
+                                {
                                     string fullImageString = formDirectory + GetFrameTypeString(frameType) + "-" + GetDirectionString(dir) + ".png";
 
                                     var entry = zipFile.GetEntry(fullImageString);
-                                    if (entry != null) {
-                                        using (var entryStream = entry.Open()) {
+                                    if (entry != null)
+                                    {
+                                        using (var entryStream = entry.Open())
+                                        {
                                             entryStream.CopyTo(ms);
                                         }
 
@@ -217,18 +266,25 @@ namespace Client.Logic.Graphics
                                         sheet.AddSheet(frameType, dir, sheetSurface);
 
                                         frameData.SetFrameCount(frameType, dir, bitmap.Width / frameData.FrameWidth);
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         frameData.SetFrameCount(frameType, dir, 0);
                                     }
                                 }
                             }
-                        } else {
-                            using (MemoryStream ms = new MemoryStream()) {
+                        }
+                        else
+                        {
+                            using (MemoryStream ms = new MemoryStream())
+                            {
                                 string fullImageString = formDirectory + GetFrameTypeString(frameType) + "-" + GetDirectionString(Enums.Direction.Down) + ".png";
 
                                 var entry = zipFile.GetEntry(fullImageString);
-                                if (entry != null) {
-                                    using (var entryStream = entry.Open()) {
+                                if (entry != null)
+                                {
+                                    using (var entryStream = entry.Open())
+                                    {
                                         entryStream.CopyTo(ms);
                                     }
 
@@ -240,7 +296,9 @@ namespace Client.Logic.Graphics
                                     sheet.AddSheet(frameType, Enums.Direction.Down, sheetSurface);
 
                                     frameData.SetFrameCount(frameType, Enums.Direction.Down, bitmap.Width / frameData.FrameWidth);
-                                } else {
+                                }
+                                else
+                                {
                                     frameData.SetFrameCount(frameType, Enums.Direction.Down, 0);
                                 }
                             }

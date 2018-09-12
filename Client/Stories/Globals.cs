@@ -19,7 +19,6 @@
 /*
  * Created by SharpDevelop.
  * User: Pikachu
- * Date: 27/09/2009
  * Time: 11:15 PM
  * 
  */

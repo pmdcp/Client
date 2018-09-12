@@ -40,32 +40,40 @@ namespace Client.Logic.Menus
         Widgets.MenuItemPicker itemPicker;
         int maxItems;
 
-        public int JobSlot {
+        public int JobSlot
+        {
             get { return jobSlot; }
-            set {
+            set
+            {
                 jobSlot = value;
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
         public mnuJobSelected(string name, int jobSlot)
-            : base(name) {
-                int size = 95;
-                maxItems = 1;
-                if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Finished ||
-                    Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Failed) {
-                } else {
-                    size += 30;
-                    maxItems++;
-                }
-                if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].CanSend) {
-                    size += 60;
-                    maxItems++;
-                }
-                base.Size = new Size(180, size);
+            : base(name)
+        {
+            int size = 95;
+            maxItems = 1;
+            if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Finished ||
+                Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Failed)
+            {
+            }
+            else
+            {
+                size += 30;
+                maxItems++;
+            }
+            if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].CanSend)
+            {
+                size += 60;
+                maxItems++;
+            }
+            base.Size = new Size(180, size);
             base.MenuDirection = Enums.MenuDirection.Horizontal;
             base.Location = new Point(300, 34);
 
@@ -75,16 +83,21 @@ namespace Client.Logic.Menus
             int locY = 8;
 
             if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Finished ||
-                Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Failed) {
-                
-            } else {
+                Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Failed)
+            {
+            }
+            else
+            {
                 lblAccept = new Label("lblAccept");
                 lblAccept.Font = FontManager.LoadFont("PMDCP", 32);
                 lblAccept.AutoSize = true;
                 if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Obtained ||
-                    Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Suspended) {
+                    Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Suspended)
+                {
                     lblAccept.Text = "Accept";
-                } else if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Taken) {
+                }
+                else if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Taken)
+                {
                     lblAccept.Text = "Cancel";
                 }
                 lblAccept.Location = new Point(30, locY);
@@ -97,7 +110,7 @@ namespace Client.Logic.Menus
                 locY += 30;
             }
 
-            
+
 
             lblDescription = new Label("lblDescription");
             lblDescription.Font = FontManager.LoadFont("PMDCP", 32);
@@ -119,8 +132,8 @@ namespace Client.Logic.Menus
             lblDelete.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(lblDelete_Click);
             locY += 30;
 
-            if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].CanSend) {
-
+            if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].CanSend)
+            {
                 lblSend = new Label("lblSend");
                 lblSend.Font = FontManager.LoadFont("PMDCP", 32);
                 lblSend.AutoSize = true;
@@ -139,7 +152,6 @@ namespace Client.Logic.Menus
 
                 this.AddWidget(lblSend);
                 this.AddWidget(txtSend);
-
             }
 
 
@@ -148,58 +160,74 @@ namespace Client.Logic.Menus
             this.AddWidget(lblDelete);
 
             this.jobSlot = jobSlot;
-
         }
 
 
 
-        void lblAccept_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblAccept_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(0, jobSlot);
         }
 
-        void lblDescription_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblDescription_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(1, jobSlot);
         }
 
-        void lblDelete_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblDelete_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(2, jobSlot);
         }
 
-        void lblSend_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblSend_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(3, jobSlot);
         }
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 23 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == maxItems) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == maxItems)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
-            			Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(maxItems);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem, jobSlot);
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         CloseMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                     }
@@ -207,36 +235,45 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void SelectItem(int itemNum, int jobSlot) {
+        private void SelectItem(int itemNum, int jobSlot)
+        {
             if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Finished ||
-                Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Failed) {
+                Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Failed)
+            {
                 itemNum++;
             }
-            switch (itemNum) {
-                case 0: { // Accept
-
+            switch (itemNum)
+            {
+                case 0:
+                    { // Accept
                         if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Obtained ||
-                            Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Suspended) {
+                            Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Suspended)
+                        {
                             Messenger.SendStartMission(jobSlot);
-                        } else if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Taken) {
+                        }
+                        else if (Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot].Accepted == Enums.JobStatus.Taken)
+                        {
                             Messenger.SendCancelJob(jobSlot);
                         }
                         MenuSwitcher.ShowJobListMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case 1: { // Description
-                    MenuSwitcher.ShowJobSummary(Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot]);
+                case 1:
+                    { // Description
+                        MenuSwitcher.ShowJobSummary(Players.PlayerManager.MyPlayer.JobList.Jobs[jobSlot]);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case 2: { // Delete
+                case 2:
+                    { // Delete
                         Messenger.SendDeleteJob(jobSlot);
                         CloseMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case 3: { // Send
+                case 3:
+                    { // Send
                         Messenger.SendSendMission(jobSlot, txtSend.Text);
                         CloseMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
@@ -245,14 +282,16 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void CloseMenu() {
+        private void CloseMenu()
+        {
             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(this);
             Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuJobList");
         }
 
 
 
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }

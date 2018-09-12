@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic.Graphics.Renderers.Moves
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
     class NormalMoveAnimation : IMoveAnimation
     {
         #region Constructors
@@ -97,7 +96,5 @@ namespace Client.Logic.Graphics.Renderers.Moves
         }
 
         #endregion Properties
-
-        
     }
 }

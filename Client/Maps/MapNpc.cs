@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,14 +21,11 @@
 
 namespace Client.Logic.Maps
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     [Serializable]
     class MapNpc : Graphics.Renderers.Sprites.ISprite
     {
-        public MapNpc() {
+        public MapNpc()
+        {
             Location = new System.Drawing.Point();
             Offset = new System.Drawing.Point();
             VolatileStatus = new List<int>();
@@ -33,18 +33,21 @@ namespace Client.Logic.Maps
 
         #region Properties
 
-        public Logic.Graphics.SpriteSheet SpriteSheet {
+        public Logic.Graphics.SpriteSheet SpriteSheet
+        {
             get;
             set;
         }
 
-        public int AttackTimer {
+        public int AttackTimer
+        {
             get;
             set;
         }
         public int TotalAttackTime { get; set; }
 
-        public bool Attacking {
+        public bool Attacking
+        {
             get;
             set;
         }
@@ -54,52 +57,61 @@ namespace Client.Logic.Maps
         //    set;
         //}
 
-        public Enums.Direction Direction {
+        public Enums.Direction Direction
+        {
             get;
             set;
         }
 
-        public bool Enemy {
+        public bool Enemy
+        {
             get;
             set;
         }
 
-        public int EmotionNum {
+        public int EmotionNum
+        {
             get;
             set;
         }
 
-        public int EmotionTime {
+        public int EmotionTime
+        {
             get;
             set;
         }
 
-        public int EmotionVar {
+        public int EmotionVar
+        {
             get;
             set;
         }
 
-        public int HP {
+        public int HP
+        {
             get;
             set;
         }
 
-        public string Map {
+        public string Map
+        {
             get;
             set;
         }
 
-        public int MaxHP {
+        public int MaxHP
+        {
             get;
             set;
         }
 
-        public Enums.MovementSpeed MovementSpeed {
+        public Enums.MovementSpeed MovementSpeed
+        {
             get;
             set;
         }
 
-        
+
         public Enums.StatusAilment StatusAilment { get; set; }
 
         public List<int> VolatileStatus
@@ -108,19 +120,22 @@ namespace Client.Logic.Maps
             set;
         }
 
-        public int Num {
+        public int Num
+        {
             get;
             set;
         }
 
-        public int Target {
+        public int Target
+        {
             get;
             set;
         }
 
         #endregion Properties
 
-        public int Sprite {
+        public int Sprite
+        {
             get;
             set;
         }
@@ -134,31 +149,39 @@ namespace Client.Logic.Maps
         public int LastWalkTime { get; set; }
         public int WalkingFrame { get; set; }
 
-        public System.Drawing.Point Offset {
+        public System.Drawing.Point Offset
+        {
             get;
             set;
         }
 
-        public System.Drawing.Point Location {
+        public System.Drawing.Point Location
+        {
             get;
             set;
         }
 
 
-        public int X {
-            get {
+        public int X
+        {
+            get
+            {
                 return Location.X;
             }
-            set {
+            set
+            {
                 Location = new System.Drawing.Point(value, Location.Y);
             }
         }
 
-        public int Y {
-            get {
+        public int Y
+        {
+            get
+            {
                 return Location.Y;
             }
-            set {
+            set
+            {
                 Location = new System.Drawing.Point(Location.X, value);
             }
         }
@@ -167,12 +190,14 @@ namespace Client.Logic.Maps
 
         public bool ScreenActive { get; set; }
 
-        public int SleepTimer {
+        public int SleepTimer
+        {
             get;
             set;
         }
 
-        public int SleepFrame {
+        public int SleepFrame
+        {
             get;
             set;
         }

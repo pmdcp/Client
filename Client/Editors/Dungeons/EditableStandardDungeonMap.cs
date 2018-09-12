@@ -24,8 +24,8 @@ namespace Client.Logic.Editors.Dungeons
 {
     class EditableStandardDungeonMap
     {
-        public int MapNum {get;set;}
-        public Enums.JobDifficulty Difficulty {get;set;}
-        public bool IsBadGoalMap {get;set;}
+        public int MapNum { get; set; }
+        public Enums.JobDifficulty Difficulty { get; set; }
+        public bool IsBadGoalMap { get; set; }
     }
 }

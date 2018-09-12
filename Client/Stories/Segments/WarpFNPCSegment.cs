@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class WarpFNPCSegment : ISegment
     {
         #region Fields
@@ -38,41 +37,49 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public WarpFNPCSegment(string id, int x, int y) {
+        public WarpFNPCSegment(string id, int x, int y)
+        {
             Load(id, x, y);
         }
 
-        public WarpFNPCSegment() {
+        public WarpFNPCSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.WarpFNPC; }
         }
 
-        public string ID {
+        public string ID
+        {
             get { return id; }
             set { id = value; }
         }
 
-        public ListPair<string, string> Parameters {
+        public ListPair<string, string> Parameters
+        {
             get { return parameters; }
         }
 
-        public int X {
+        public int X
+        {
             get { return x; }
             set { x = value; }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return y; }
             set { y = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -80,7 +87,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(string id, int x, int y) {
+        public void Load(string id, int x, int y)
+        {
             this.id = id;
             this.x = x;
             this.y = y;
@@ -92,10 +100,13 @@ namespace Client.Logic.Stories.Segments
             Load(parameters.GetValue("ID"), parameters.GetValue("X").ToInt(), parameters.GetValue("Y").ToInt());
         }
 
-        public void Process(StoryState state) {
-            this.storyState = state;
-            for (int i = 0; i < state.FNPCs.Count; i++) {
-                if (state.FNPCs[i].ID == id) {
+        public void Process(StoryState state)
+        {
+            storyState = state;
+            for (int i = 0; i < state.FNPCs.Count; i++)
+            {
+                if (state.FNPCs[i].ID == id)
+                {
                     state.FNPCs[i].X = x;
                     state.FNPCs[i].Y = y;
                 }

@@ -29,7 +29,8 @@ namespace Client.Logic.Menus
 {
     class mnuHelpPage : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -49,7 +50,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuHelpPage(string name, string helpFolder, int page)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(620, 420);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(10, 40);
@@ -74,7 +76,7 @@ namespace Client.Logic.Menus
             picHelpPage = new PictureBox("picHelpPage");
             picHelpPage.SizeMode = ImageSizeMode.StretchImage;
             picHelpPage.Location = new Point(50, 50);
-            picHelpPage.Size = new Size(this.Width - (picHelpPage.X * 2), this.Height - picHelpPage.Y -20);
+            picHelpPage.Size = new Size(this.Width - (picHelpPage.X * 2), this.Height - picHelpPage.Y - 20);
             picHelpPage.BackColor = Color.Green;
 
             //lstHelpTopics = new ListBox("lstHelpTopics");
@@ -90,8 +92,10 @@ namespace Client.Logic.Menus
             LoadHelpPage(this.page);
         }
 
-        void LoadHelpPage(int page) {
-            if (System.IO.File.Exists(IO.Paths.StartupPath + "Help/" + helpFolder + "/" + "page" + (page + 1).ToString() + ".png")) {
+        void LoadHelpPage(int page)
+        {
+            if (System.IO.File.Exists(IO.Paths.StartupPath + "Help/" + helpFolder + "/" + "page" + (page + 1).ToString() + ".png"))
+            {
                 picHelpPage.Image = SurfaceManager.LoadSurface(IO.Paths.StartupPath + "Help/" + helpFolder + "/" + "page" + (page + 1).ToString() + ".png", true, false);
                 lblPageNumber.Text = "Page " + (page + 1).ToString();
                 lblPageNumber.Location = new Point(this.Width - lblPageNumber.Width - 40, 5);
@@ -101,26 +105,33 @@ namespace Client.Logic.Menus
         #endregion Constructors
         #region Methods
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.LeftArrow: {
-                        if (page > 0) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.LeftArrow:
+                    {
+                        if (page > 0)
+                        {
                             page--;
                             LoadHelpPage(page);
                             Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                         }
                     }
                     break;
-                case SdlDotNet.Input.Key.RightArrow: {
-                        if (System.IO.File.Exists(IO.Paths.StartupPath + "Help/" + helpFolder + "/" + "page" + (page + 1).ToString() + ".png")) {
+                case SdlDotNet.Input.Key.RightArrow:
+                    {
+                        if (System.IO.File.Exists(IO.Paths.StartupPath + "Help/" + helpFolder + "/" + "page" + (page + 1).ToString() + ".png"))
+                        {
                             page++;
                             LoadHelpPage(page);
                             Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                         }
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         // Show the otherackspace key is pressed
                         MenuSwitcher.ShowHelpMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
@@ -129,7 +140,8 @@ namespace Client.Logic.Menus
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 

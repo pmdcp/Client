@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.Shops
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class ShopHelper
     {
         #region Fields
@@ -54,9 +53,11 @@ namespace Client.Logic.Shops
 
         public static void LoadShopsFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n = 1;
-                for (int i = 1; i <= MaxInfo.MaxShops; i++) {
+                for (int i = 1; i <= MaxInfo.MaxShops; i++)
+                {
                     dataLoadPercent = System.Math.Min(99, Logic.MathFunctions.CalculatePercent(i, MaxInfo.MaxShops));
                     mShops[i] = new Shop();
                     mShops[i].Name = parse[n + 1];
@@ -64,7 +65,9 @@ namespace Client.Logic.Shops
                     ((Windows.winLoading)Windows.WindowSwitcher.FindWindow("winLoading")).UpdateLoadText("Recieving Data... " + DataManager.AverageLoadPercent().ToString() + "%");
                 }
                 dataLoadPercent = 100;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }

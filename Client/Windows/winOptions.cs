@@ -28,7 +28,6 @@ namespace Client.Logic.Windows
 {
     class winOptions : Core.WindowCore
     {
-
         #region Fields
 
         Label lblPlayerData;
@@ -82,7 +81,7 @@ namespace Client.Logic.Windows
             lblPlayerDataName.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblPlayerDataName.Text = "Name: ";
             lblPlayerDataName.HoverColor = Color.Red;
-            lblPlayerDataName.Click +=new EventHandler<MouseButtonEventArgs>(lblPlayerDataName_Click);
+            lblPlayerDataName.Click += new EventHandler<MouseButtonEventArgs>(lblPlayerDataName_Click);
 
             lblPlayerDataDamage = new Label("lblPlayerDataDamage");
             lblPlayerDataDamage.Location = new Point(250, 8);
@@ -90,7 +89,7 @@ namespace Client.Logic.Windows
             lblPlayerDataDamage.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblPlayerDataDamage.Text = "Damage: ";
             lblPlayerDataDamage.HoverColor = Color.Red;
-            lblPlayerDataDamage.Click +=new EventHandler<MouseButtonEventArgs>(lblPlayerDataDamage_Click);
+            lblPlayerDataDamage.Click += new EventHandler<MouseButtonEventArgs>(lblPlayerDataDamage_Click);
 
             lblPlayerDataMiniHP = new Label("lblPlayerDataMiniHP");
             lblPlayerDataMiniHP.Location = new Point(400, 8);
@@ -98,7 +97,7 @@ namespace Client.Logic.Windows
             lblPlayerDataMiniHP.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblPlayerDataMiniHP.Text = "Mini-HP: ";
             lblPlayerDataMiniHP.HoverColor = Color.Red;
-            lblPlayerDataMiniHP.Click +=new EventHandler<MouseButtonEventArgs>(lblPlayerDataMiniHP_Click);
+            lblPlayerDataMiniHP.Click += new EventHandler<MouseButtonEventArgs>(lblPlayerDataMiniHP_Click);
 
             lblPlayerDataAutoSaveSpeed = new Label("lblPlayerDataAutoSaveSpeed");
             lblPlayerDataAutoSaveSpeed.Location = new Point(130, 32);
@@ -134,7 +133,7 @@ namespace Client.Logic.Windows
             lblNpcDataName.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblNpcDataName.Text = "Name: ";
             lblNpcDataName.HoverColor = Color.Red;
-            lblNpcDataName.Click +=new EventHandler<MouseButtonEventArgs>(lblNpcDataName_Click);
+            lblNpcDataName.Click += new EventHandler<MouseButtonEventArgs>(lblNpcDataName_Click);
 
             lblNpcDataDamage = new Label("lblNpcDataDamage");
             lblNpcDataDamage.Location = new Point(250, 64);
@@ -142,7 +141,7 @@ namespace Client.Logic.Windows
             lblNpcDataDamage.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblNpcDataDamage.Text = "Damage: ";
             lblNpcDataDamage.HoverColor = Color.Red;
-            lblNpcDataDamage.Click +=new EventHandler<MouseButtonEventArgs>(lblNpcDataDamage_Click);
+            lblNpcDataDamage.Click += new EventHandler<MouseButtonEventArgs>(lblNpcDataDamage_Click);
 
             lblNpcDataMiniHP = new Label("lblNpcDataMiniHP");
             lblNpcDataMiniHP.Location = new Point(400, 64);
@@ -150,7 +149,7 @@ namespace Client.Logic.Windows
             lblNpcDataMiniHP.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblNpcDataMiniHP.Text = "Mini-HP: ";
             lblNpcDataMiniHP.HoverColor = Color.Red;
-            lblNpcDataMiniHP.Click +=new EventHandler<MouseButtonEventArgs>(lblNpcDataMiniHP_Click);
+            lblNpcDataMiniHP.Click += new EventHandler<MouseButtonEventArgs>(lblNpcDataMiniHP_Click);
 
             lblSoundData = new Label("lblSoundData");
             lblSoundData.Location = new Point(0, 88);
@@ -164,7 +163,7 @@ namespace Client.Logic.Windows
             lblSoundDataMusic.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblSoundDataMusic.Text = "Music: ";
             lblSoundDataMusic.HoverColor = Color.Red;
-            lblSoundDataMusic.Click +=new EventHandler<MouseButtonEventArgs>(lblSoundDataMusic_Click);
+            lblSoundDataMusic.Click += new EventHandler<MouseButtonEventArgs>(lblSoundDataMusic_Click);
 
             lblSoundDataSound = new Label("lblSoundDataSound");
             lblSoundDataSound.Location = new Point(250, 96);
@@ -172,7 +171,7 @@ namespace Client.Logic.Windows
             lblSoundDataSound.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblSoundDataSound.Text = "Sound: ";
             lblSoundDataSound.HoverColor = Color.Red;
-            lblSoundDataSound.Click +=new EventHandler<MouseButtonEventArgs>(lblSoundDataSound_Click);
+            lblSoundDataSound.Click += new EventHandler<MouseButtonEventArgs>(lblSoundDataSound_Click);
 
             lblChatData = new Label("lblChatData");
             lblChatData.Location = new Point(0, 120);
@@ -186,7 +185,7 @@ namespace Client.Logic.Windows
             lblChatDataSpeechBubbles.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblChatDataSpeechBubbles.Text = "Speech Bubbles: ";
             lblChatDataSpeechBubbles.HoverColor = Color.Red;
-            lblChatDataSpeechBubbles.Click +=new EventHandler<MouseButtonEventArgs>(lblChatDataSpeechBubbles_Click);
+            lblChatDataSpeechBubbles.Click += new EventHandler<MouseButtonEventArgs>(lblChatDataSpeechBubbles_Click);
 
             lblChatDataTimeStamps = new Label("lblChatDataTimeStamps");
             lblChatDataTimeStamps.Location = new Point(300, 128);
@@ -194,7 +193,7 @@ namespace Client.Logic.Windows
             lblChatDataTimeStamps.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblChatDataTimeStamps.Text = "TimeStamps: ";
             lblChatDataTimeStamps.HoverColor = Color.Red;
-            lblChatDataTimeStamps.Click +=new EventHandler<MouseButtonEventArgs>(lblChatDataTimeStamps_Click);
+            lblChatDataTimeStamps.Click += new EventHandler<MouseButtonEventArgs>(lblChatDataTimeStamps_Click);
 
             lblChatDataAutoScroll = new Label("lblChatDataAutoScroll");
             lblChatDataAutoScroll.Location = new Point(130, 152);
@@ -202,7 +201,7 @@ namespace Client.Logic.Windows
             lblChatDataAutoScroll.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblChatDataAutoScroll.Text = "Auto-Scroll: ";
             lblChatDataAutoScroll.HoverColor = Color.Red;
-            lblChatDataAutoScroll.Click +=new EventHandler<MouseButtonEventArgs>(lblChatDataAutoScroll_Click);
+            lblChatDataAutoScroll.Click += new EventHandler<MouseButtonEventArgs>(lblChatDataAutoScroll_Click);
 
             lblSave = new Label("lblSave");
             lblSave.Location = new Point(480, 170);
@@ -253,7 +252,7 @@ namespace Client.Logic.Windows
         }
 
         #endregion Constructors
-        
+
         #region Methods
 
         void lblPlayerDataName_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
@@ -265,17 +264,19 @@ namespace Client.Logic.Windows
         {
             SelectItem(1);
         }
-        
+
         void lblPlayerDataMiniHP_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
         {
             SelectItem(2);
         }
-        
-        void lblRight_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+
+        void lblRight_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(3);
         }
 
-        void lblLeft_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblLeft_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(13);
         }
 
@@ -318,7 +319,7 @@ namespace Client.Logic.Windows
         {
             SelectItem(11);
         }
-        
+
         void lblSave_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
         {
             SelectItem(12);
@@ -368,7 +369,7 @@ namespace Client.Logic.Windows
                 }
                 if (tempAutoSaveSpeed == 0)
                 {
-                    tempAutoSaveSpeed2 ++;
+                    tempAutoSaveSpeed2++;
                     ShowOption(3);
                 }
                 if (tempAutoSaveSpeed2 == 2)
@@ -403,7 +404,6 @@ namespace Client.Logic.Windows
                 WindowSwitcher.ShowMainMenu();
                 this.Close();
             }
-
         }
 
         public void CreateTempOption(int itemNum)
@@ -470,16 +470,11 @@ namespace Client.Logic.Windows
                         tempOptions[itemNum] = IO.Options.AutoScroll;
                     }
                     break;
-
-
-
-
             }
         }
 
         public void ShowOption(int itemNum)
         {
-
             switch (itemNum)
             {
                 case 0:
@@ -542,7 +537,6 @@ namespace Client.Logic.Windows
                         lblChatDataAutoScroll.Text = "Auto-Scroll: " + BoolToString(tempOptions[itemNum]);
                     }
                     break;
-
             }
         }
 
@@ -550,7 +544,6 @@ namespace Client.Logic.Windows
         {
             if (setting == true)
             {
-
                 return "On";
             }
 
@@ -558,7 +551,5 @@ namespace Client.Logic.Windows
         }
 
         #endregion Methods
-
-        
     }
 }

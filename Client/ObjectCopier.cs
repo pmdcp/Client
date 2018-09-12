@@ -40,26 +40,31 @@ namespace Client.Logic
         /// <typeparam name="T">The type of object being copied.</typeparam>
         /// <param name="source">The object instance to copy.</param>
         /// <returns>The copied object.</returns>
-        public static T CloneObject<T>(T source) {
-            if (!typeof(T).IsSerializable) {
+        public static T CloneObject<T>(T source)
+        {
+            if (!typeof(T).IsSerializable)
+            {
                 throw new ArgumentException("The type must be serializable.", "source");
             }
 
             // Don't serialize a null object, simply return the default for that object
-            if (Object.ReferenceEquals(source, null)) {
+            if (Object.ReferenceEquals(source, null))
+            {
                 return default(T);
             }
 
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new MemoryStream();
-            using (stream) {
+            using (stream)
+            {
                 formatter.Serialize(stream, source);
                 stream.Seek(0, SeekOrigin.Begin);
                 return (T)formatter.Deserialize(stream);
             }
         }
 
-        public static T Clone<T>(this T source) {
+        public static T Clone<T>(this T source)
+        {
             return CloneObject<T>(source);
         }
     }

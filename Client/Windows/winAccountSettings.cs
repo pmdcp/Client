@@ -31,7 +31,8 @@ namespace Client.Logic.Windows
         Label lblBack;
 
         public winAccountSettings()
-            : base("winAccountSettings") {
+            : base("winAccountSettings")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "Account Settings";
@@ -53,22 +54,24 @@ namespace Client.Logic.Windows
             lblBack.Location = new Point(45, 100);
             lblBack.AutoSize = true;
             lblBack.ForeColor = Color.Black;
-            lblBack.Click +=new EventHandler<MouseButtonEventArgs>(lblBack_Click);
+            lblBack.Click += new EventHandler<MouseButtonEventArgs>(lblBack_Click);
 
             this.AddWidget(btnChangePassword);
             this.AddWidget(lblBack);
 
             this.LoadComplete();
-       }
+        }
 
-        void btnChangePassword_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnChangePassword_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowManager.AddWindow(new winChangePassword());
-       }
+        }
 
-        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowSwitcher.ShowMainMenu();
-       }
+        }
     }
 }

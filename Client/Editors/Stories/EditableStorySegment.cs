@@ -26,22 +26,26 @@ namespace Client.Logic.Editors.Stories
     {
         ListPair<string, string> parameters;
 
-        public EditableStorySegment() {
+        public EditableStorySegment()
+        {
             parameters = new ListPair<string, string>();
         }
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get;
             set;
         }
 
-        public ListPair<string, string> Parameters {
+        public ListPair<string, string> Parameters
+        {
             get { return parameters; }
         }
 
-        public void AddParameter(string paramID, string value) {
+        public void AddParameter(string paramID, string value)
+        {
             parameters.Add(paramID, value);
         }
 
