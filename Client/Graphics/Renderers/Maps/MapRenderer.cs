@@ -981,7 +981,7 @@ namespace Client.Logic.Graphics.Renderers.Maps
 
             foreach (MapItem item in activeMap.MapItems)
             {
-                if (item.Num != -1 && activeMap.Tile[item.X, item.Y].SeenBySelf)
+                if (item.Num > 0 && activeMap.Tile[item.X, item.Y].SeenBySelf)
                 {
                     miniMapSurface.Fill(new Rectangle(item.X * tileRatio, item.Y * tileRatio, tileRatio, tileRatio), Color.Yellow);
                 }
