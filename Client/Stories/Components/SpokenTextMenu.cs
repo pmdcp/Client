@@ -29,18 +29,20 @@ namespace Client.Logic.Stories.Components
         Label lblText;
         PictureBox picSpeaker;
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
 
         public SpokenTextMenu(string name, Size storyBounds)
-            : base(name) {
-
+            : base(name)
+        {
             this.Size = new System.Drawing.Size(storyBounds.Width - 10, 100);
             this.Location = new Point(5, storyBounds.Height - this.Height);
 
@@ -48,7 +50,7 @@ namespace Client.Logic.Stories.Components
             lblText.BackColor = Color.Transparent;
             lblText.ForeColor = Color.WhiteSmoke;
             lblText.AutoSize = false;
-            lblText.Font = Graphics.FontManager.LoadFont("PMDCP", 24);
+            lblText.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblText.Location = new Point(15, 10);
             lblText.Size = new System.Drawing.Size(this.WidgetPanel.Width - lblText.Location.X, this.WidgetPanel.Height - lblText.Location.Y);
 
@@ -62,39 +64,49 @@ namespace Client.Logic.Stories.Components
             this.WidgetPanel.AddWidget(picSpeaker);
         }
 
-        public void DisplayText(string text) {
+        public void DisplayText(string text)
+        {
             DisplayText(text, -1);
         }
 
-        public void DisplayText(string text, int mugshot) {
+        public void DisplayText(string text, int mugshot)
+        {
             bool displayMugshot = false;
-            if (mugshot > -1) {
+            if (mugshot > -1)
+            {
                 Logic.Graphics.Mugshot mugshotImg = Logic.Graphics.GraphicsManager.GetMugshot(mugshot, 0, 0, 0);
-                if (mugshotImg != null) {
+                if (mugshotImg != null)
+                {
                     displayMugshot = true;
                 }
             }
-            if (displayMugshot) {
+            if (displayMugshot)
+            {
                 picSpeaker.Image = Logic.Graphics.GraphicsManager.GetMugshot(mugshot, 0, 0, 0).GetEmote(0);//Tools.CropImage(Logic.Graphics.GraphicsManager.Speakers, new Rectangle((mugshot % 15) * 40, (mugshot / 15) * 40, 40, 40));
                 lblText.Location = new Point(picSpeaker.X + picSpeaker.Width + 10, 10);
                 lblText.Size = new System.Drawing.Size(this.WidgetPanel.Width - lblText.Location.X, this.WidgetPanel.Height - lblText.Location.Y);
                 picSpeaker.Show();
-            } else {
+            }
+            else
+            {
                 picSpeaker.Hide();
                 lblText.Location = new Point(15, 10);
                 lblText.Size = new System.Drawing.Size(this.WidgetPanel.Width - lblText.Location.X, this.WidgetPanel.Height - lblText.Location.Y);
             }
             CharRenderOptions[] renderOptions = new CharRenderOptions[text.Length];
-            for (int i = 0; i < renderOptions.Length; i++) {
+            for (int i = 0; i < renderOptions.Length; i++)
+            {
                 renderOptions[i] = new CharRenderOptions(Color.WhiteSmoke);
             }
             renderOptions = Client.Logic.Graphics.StringParser.ParseText(renderOptions, ref text);
             lblText.SetText(text, renderOptions);
         }
 
-        public override void Close() {
+        public override void Close()
+        {
             base.Close();
-            if (this.ParentContainer != null) {
+            if (this.ParentContainer != null)
+            {
                 this.ParentContainer.RemoveWidget(this.GroupedWidget.Name);
             }
         }

@@ -58,29 +58,31 @@ namespace Client.Logic.Menus
         public mnuRecruitSelected(string name, int recruitSlot, int activeTeamStatus)
             : base(name)
         {
-
-            if (activeTeamStatus == 0) {
+            if (activeTeamStatus == 0)
+            {
                 maxItems = 0;
                 base.Size = new Size(165, 95);
-            }else if (activeTeamStatus == -1) {
+            }
+            else if (activeTeamStatus == -1)
+            {
                 maxItems = 1;
                 base.Size = new Size(165, 95);
-            }else {
+            }
+            else
+            {
                 maxItems = 2;
                 base.Size = new Size(165, 155);
             }
             base.MenuDirection = Enums.MenuDirection.Horizontal;
             base.Location = new Point(310, 40);
-            
-            
-            
-            
 
-            
-            if (activeTeamStatus == 0) {
-                
-                
 
+
+
+
+
+            if (activeTeamStatus == 0)
+            {
                 lblRename = new Label("lblRename");
                 lblRename.Font = FontManager.LoadFont("PMDCP", 32);
                 lblRename.AutoSize = true;
@@ -96,11 +98,9 @@ namespace Client.Logic.Menus
                 txtRename.Location = new Point(32, 43);
                 txtRename.Font = FontManager.LoadFont("PMDCP", 16);
                 this.AddWidget(txtRename);
-
-            } else if (activeTeamStatus > 0 && activeTeamStatus < 4) {
-                
-                
-
+            }
+            else if (activeTeamStatus > 0 && activeTeamStatus < 4)
+            {
                 lblMakeLeader = new Label("lblMakeLeader");
                 lblMakeLeader.Font = FontManager.LoadFont("PMDCP", 32);
                 lblMakeLeader.AutoSize = true;
@@ -136,10 +136,9 @@ namespace Client.Logic.Menus
                 txtRename.Location = new Point(32, 103);
                 txtRename.Font = FontManager.LoadFont("PMDCP", 16);
                 this.AddWidget(txtRename);
-            } else {
-                
-                
-
+            }
+            else
+            {
                 lblJoinTeam = new Label("lblJoinTeam");
                 lblJoinTeam.Font = FontManager.LoadFont("PMDCP", 32);
                 lblJoinTeam.AutoSize = true;
@@ -148,7 +147,7 @@ namespace Client.Logic.Menus
                 lblJoinTeam.ForeColor = Color.WhiteSmoke;
                 //lblJoinTeam.HoverColor = Color.Red;
                 //lblJoinTeam.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(lblJoinTeam_Click);
-                
+
                 this.AddWidget(lblJoinTeam);
 
                 lblRelease = new Label("lblRelease");
@@ -160,10 +159,8 @@ namespace Client.Logic.Menus
                 //lblRelease.HoverColor = Color.Red;
                 //lblRelease.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(lblRelease_Click);
                 this.AddWidget(lblRelease);
-
-                
             }
-            
+
             itemPicker = new Widgets.MenuItemPicker("itemPicker");
             itemPicker.Location = new Point(18, 23);
             this.AddWidget(itemPicker);
@@ -252,51 +249,69 @@ namespace Client.Logic.Menus
 
         private void SelectItem(int itemNum, int menuType, int recruitSlot)
         {
-            if (menuType == 0) {
+            if (menuType == 0)
+            {
                 menuType = 2;
-            } else if (menuType > 0 && menuType < 4) {
+            }
+            else if (menuType > 0 && menuType < 4)
+            {
                 menuType = 1;
-            } else {
+            }
+            else
+            {
                 menuType = 0;
             }
 
-            if (menuType == 1 && itemNum == 0) {
+            if (menuType == 1 && itemNum == 0)
+            {
                 //Make Leader
                 Network.Messenger.SendSwitchLeader(activeTeamStatus);
                 CloseMenu();
-            } else if (menuType == 1 && itemNum == 1) {
+            }
+            else if (menuType == 1 && itemNum == 1)
+            {
                 //standby
                 Network.Messenger.SendStandbyFromTeam(activeTeamStatus);
                 CloseMenu();
-            } else if (menuType == 0 && itemNum == 0) {
+            }
+            else if (menuType == 0 && itemNum == 0)
+            {
                 //join team
                 int freeSlot = -1;
-                for (int i = 1; i < 4; i++) {
-                    if (Players.PlayerManager.MyPlayer.Team[i] == null || Players.PlayerManager.MyPlayer.Team[i].Loaded == false) {
+                for (int i = 1; i < 4; i++)
+                {
+                    if (Players.PlayerManager.MyPlayer.Team[i] == null || Players.PlayerManager.MyPlayer.Team[i].Loaded == false)
+                    {
                         freeSlot = i;
                         break;
-                    }   
+                    }
                 }
-                if (freeSlot == -1) {
-
+                if (freeSlot == -1)
+                {
                     //tell it's not possible
-                } else {
+                }
+                else
+                {
                     Network.Messenger.SendAddToTeam(freeSlot, recruitSlot);
                 }
                 CloseMenu();
-            } else if (menuType == 0 && itemNum == 1) {
+            }
+            else if (menuType == 0 && itemNum == 1)
+            {
                 //farewell
                 Network.Messenger.SendReleaseRecruit(recruitSlot);
                 CloseMenu();
                 MenuSwitcher.CloseAllMenus();
-            } else if (menuType == 2 || itemNum == 2) {
+            }
+            else if (menuType == 2 || itemNum == 2)
+            {
                 //rename
                 //if (txtRename.Text != "") {
-                    Network.Messenger.SendChangeRecruitName(activeTeamStatus, txtRename.Text);
+                Network.Messenger.SendChangeRecruitName(activeTeamStatus, txtRename.Text);
                 //}
                 CloseMenu();
             }
-        	Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
+            Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
 
             /*
             switch (itemNum)

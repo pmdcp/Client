@@ -19,11 +19,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PMDCP.Compression.Zip;
 using System.Xml;
 using System.IO;
 using System.Drawing;
 using SdlDotNet.Graphics;
+using System.IO.Compression;
 
 namespace Client.Logic.Graphics
 {
@@ -46,31 +46,31 @@ namespace Client.Logic.Graphics
 
         private void LoadMeta()
         {
-            using (ZipFile zipFile = ZipFile.Read(path))
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                using (MemoryStream ms = new MemoryStream())
+                using (var zipFile = new ZipArchive(fileStream))
                 {
-                    zipFile["Meta.xml"].Extract(ms);
-
-                    ms.Seek(0, SeekOrigin.Begin);
-                    using (XmlReader reader = XmlReader.Create(ms))
+                    using (var metaStream = zipFile.GetEntry("Meta.xml").Open())
                     {
-                        while (reader.Read())
+                        using (XmlReader reader = XmlReader.Create(metaStream))
                         {
-                            if (reader.IsStartElement())
+                            while (reader.Read())
                             {
-                                switch (reader.Name)
+                                if (reader.IsStartElement())
                                 {
-                                    case "FrameWidth":
-                                        {
-                                            FrameWidth = Convert.ToInt32(reader.ReadElementString());
-                                        }
-                                        break;
-                                    case "FrameHeight":
-                                        {
-                                            FrameHeight = Convert.ToInt32(reader.ReadElementString());
-                                        }
-                                        break;
+                                    switch (reader.Name)
+                                    {
+                                        case "FrameWidth":
+                                            {
+                                                FrameWidth = Convert.ToInt32(reader.ReadElementString());
+                                            }
+                                            break;
+                                        case "FrameHeight":
+                                            {
+                                                FrameHeight = Convert.ToInt32(reader.ReadElementString());
+                                            }
+                                            break;
+                                    }
                                 }
                             }
                         }
@@ -83,20 +83,23 @@ namespace Client.Logic.Graphics
         {
             List<string> forms = new List<string>();
 
-            using (ZipFile zipFile = ZipFile.Read(path))
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                foreach (ZipEntry entry in zipFile)
+                using (var zipFile = new ZipArchive(fileStream))
                 {
-                    if (entry.FileName.StartsWith("Forms"))
+                    foreach (var entry in zipFile.Entries)
                     {
-                        string formFileName = entry.FileName.Substring(6);
-                        if (!string.IsNullOrEmpty(formFileName))
+                        if (entry.FullName.StartsWith("Forms"))
                         {
-                            string formName = Path.GetDirectoryName(formFileName);
-
-                            if (forms.Contains(formName) == false)
+                            string formFileName = entry.FullName.Substring(6);
+                            if (!string.IsNullOrEmpty(formFileName))
                             {
-                                forms.Add(formName);
+                                string formName = Path.GetDirectoryName(formFileName);
+
+                                if (forms.Contains(formName) == false)
+                                {
+                                    forms.Add(formName);
+                                }
                             }
                         }
                     }
@@ -201,19 +204,26 @@ namespace Client.Logic.Graphics
         {
             string formDirectory = "Forms/" + overrideForm + "/";
 
-            using (ZipFile zipFile = ZipFile.Read(path))
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                using (MemoryStream ms = new MemoryStream())
+                using (var zipFile = new ZipArchive(fileStream))
                 {
-                    string fullImageString = formDirectory + "Portrait.png";
-
-                    if (zipFile.ContainsEntry(fullImageString))
+                    using (MemoryStream ms = new MemoryStream())
                     {
-                        zipFile[fullImageString].Extract(ms);
+                        string fullImageString = formDirectory + "Portrait.png";
 
-                        ms.Seek(0, SeekOrigin.Begin);
+                        var entry = zipFile.GetEntry(fullImageString);
+                        if (entry != null)
+                        {
+                            using (var entryStream = entry.Open())
+                            {
+                                entryStream.CopyTo(ms);
+                            }
 
-                        sheet.LoadFromData(ms.ToArray());
+                            ms.Seek(0, SeekOrigin.Begin);
+
+                            sheet.LoadFromData(ms.ToArray());
+                        }
                     }
                 }
             }
@@ -224,63 +234,73 @@ namespace Client.Logic.Graphics
             string formDirectory = "Forms/" + overrideForm + "/";
 
             frameData.SetFrameSize(FrameWidth, FrameHeight);
-            using (ZipFile zipFile = ZipFile.Read(path))
+            using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-
-                foreach (FrameType frameType in Enum.GetValues(typeof(FrameType)))
+                using (var zipFile = new ZipArchive(fileStream))
                 {
-                    if (FrameTypeHelper.IsFrameTypeDirectionless(frameType) == false)
+                    foreach (FrameType frameType in Enum.GetValues(typeof(FrameType)))
                     {
-                        for (int i = 0; i < 8; i++)
+                        if (FrameTypeHelper.IsFrameTypeDirectionless(frameType) == false)
                         {
-                            Enums.Direction dir = GraphicsManager.GetAnimIntDir(i);
+                            for (int i = 0; i < 8; i++)
+                            {
+                                Enums.Direction dir = GraphicsManager.GetAnimIntDir(i);
 
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    string fullImageString = formDirectory + GetFrameTypeString(frameType) + "-" + GetDirectionString(dir) + ".png";
+
+                                    var entry = zipFile.GetEntry(fullImageString);
+                                    if (entry != null)
+                                    {
+                                        using (var entryStream = entry.Open())
+                                        {
+                                            entryStream.CopyTo(ms);
+                                        }
+
+                                        ms.Seek(0, SeekOrigin.Begin);
+                                        Bitmap bitmap = (Bitmap)Image.FromStream(ms);
+                                        Surface sheetSurface = new Surface(bitmap);
+                                        sheetSurface.Transparent = true;
+
+                                        sheet.AddSheet(frameType, dir, sheetSurface);
+
+                                        frameData.SetFrameCount(frameType, dir, bitmap.Width / frameData.FrameWidth);
+                                    }
+                                    else
+                                    {
+                                        frameData.SetFrameCount(frameType, dir, 0);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
                             using (MemoryStream ms = new MemoryStream())
                             {
-                                string fullImageString = formDirectory + GetFrameTypeString(frameType) + "-" + GetDirectionString(dir) + ".png";
+                                string fullImageString = formDirectory + GetFrameTypeString(frameType) + "-" + GetDirectionString(Enums.Direction.Down) + ".png";
 
-                                if (zipFile.ContainsEntry(fullImageString))
+                                var entry = zipFile.GetEntry(fullImageString);
+                                if (entry != null)
                                 {
-                                    zipFile[fullImageString].Extract(ms);
+                                    using (var entryStream = entry.Open())
+                                    {
+                                        entryStream.CopyTo(ms);
+                                    }
 
                                     ms.Seek(0, SeekOrigin.Begin);
                                     Bitmap bitmap = (Bitmap)Image.FromStream(ms);
                                     Surface sheetSurface = new Surface(bitmap);
                                     sheetSurface.Transparent = true;
 
-                                    sheet.AddSheet(frameType, dir, sheetSurface);
+                                    sheet.AddSheet(frameType, Enums.Direction.Down, sheetSurface);
 
-                                    frameData.SetFrameCount(frameType, dir, bitmap.Width / frameData.FrameWidth);
+                                    frameData.SetFrameCount(frameType, Enums.Direction.Down, bitmap.Width / frameData.FrameWidth);
                                 }
                                 else
                                 {
-                                    frameData.SetFrameCount(frameType, dir, 0);
+                                    frameData.SetFrameCount(frameType, Enums.Direction.Down, 0);
                                 }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            string fullImageString = formDirectory + GetFrameTypeString(frameType) + "-" + GetDirectionString(Enums.Direction.Down) + ".png";
-
-                            if (zipFile.ContainsEntry(fullImageString))
-                            {
-                                zipFile[fullImageString].Extract(ms);
-
-                                ms.Seek(0, SeekOrigin.Begin);
-                                Bitmap bitmap = (Bitmap)Image.FromStream(ms);
-                                Surface sheetSurface = new Surface(bitmap);
-                                sheetSurface.Transparent = true;
-
-                                sheet.AddSheet(frameType, Enums.Direction.Down, sheetSurface);
-
-                                frameData.SetFrameCount(frameType, Enums.Direction.Down, bitmap.Width / frameData.FrameWidth);
-                            }
-                            else
-                            {
-                                frameData.SetFrameCount(frameType, Enums.Direction.Down, 0);
                             }
                         }
                     }

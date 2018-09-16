@@ -30,7 +30,8 @@ namespace Client.Logic.Menus
 {
     class mnuVisitHouse : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -42,7 +43,8 @@ namespace Client.Logic.Menus
         Button btnCancel;
 
         public mnuVisitHouse(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(300, 200);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = Client.Logic.Graphics.DrawingSupport.GetCenter(Windows.WindowSwitcher.GameWindow.MapViewer.Size, this.Size);
@@ -90,24 +92,28 @@ namespace Client.Logic.Menus
             this.AddWidget(btnCancel);
         }
 
-        void btnMyHouse_Click(object sender, MouseButtonEventArgs e) {
+        void btnMyHouse_Click(object sender, MouseButtonEventArgs e)
+        {
             Messenger.SendHouseVisitRequest(Players.PlayerManager.MyPlayer.Name);
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
         }
 
-        void btnAccept_Click(object sender, MouseButtonEventArgs e) {
+        void btnAccept_Click(object sender, MouseButtonEventArgs e)
+        {
             Messenger.SendHouseVisitRequest(txtHouse.Text);
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
         }
 
-        void btnCancel_Click(object sender, MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
     }

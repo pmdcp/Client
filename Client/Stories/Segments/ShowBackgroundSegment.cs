@@ -1,4 +1,11 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using Client.Logic.Menus.Core;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,14 +25,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using Client.Logic.Menus.Core;
-
-    using PMDCP.Core;
-
     class ShowBackgroundSegment : ISegment
     {
         #region Fields
@@ -38,22 +37,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public ShowBackgroundSegment(string file) {
+        public ShowBackgroundSegment(string file)
+        {
             Load(file);
         }
 
-        public ShowBackgroundSegment() {
+        public ShowBackgroundSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.ShowBackground; }
         }
 
-        public string File {
+        public string File
+        {
             get { return file; }
             set { file = value; }
         }
@@ -64,7 +67,8 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -72,18 +76,21 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(string file) {
+        public void Load(string file)
+        {
             this.file = file;
         }
 
         public void LoadFromSegmentData(ListPair<string, string> parameters)
         {
             this.parameters = parameters;
-            this.file = parameters.GetValue("File");
+            file = parameters.GetValue("File");
         }
 
-        public void Process(StoryState state) {
-            if (Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.StoryBackground != null) {
+        public void Process(StoryState state)
+        {
+            if (Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.StoryBackground != null)
+            {
                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.StoryBackground.Dispose();
             }
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.StoryBackground = Logic.Graphics.SurfaceManager.LoadSurface(IO.Paths.StoryDataPath + "Backgrounds/" + file);

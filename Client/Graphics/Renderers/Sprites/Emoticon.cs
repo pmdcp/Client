@@ -20,9 +20,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Client.Logic.Graphics.Renderers.Sprites {
-    public class Emoticon {
-
+namespace Client.Logic.Graphics.Renderers.Sprites
+{
+    public class Emoticon
+    {
         public int EmoteIndex { get; set; }
 
         public int EmoteSpeed { get; set; }
@@ -35,11 +36,11 @@ namespace Client.Logic.Graphics.Renderers.Sprites {
 
         public int CurrentCycle { get; set; }
 
-        public Emoticon(int index, int speed, int cycles) {
+        public Emoticon(int index, int speed, int cycles)
+        {
             EmoteIndex = index;
             EmoteSpeed = speed;
             EmoteCycles = cycles;
         }
-
     }
 }

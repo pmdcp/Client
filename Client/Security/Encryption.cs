@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic.Security
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Security.Cryptography;
-    using System.Text;
-
     /// <summary>
     /// Provides methods used in encryption.
     /// </summary>
@@ -88,7 +87,8 @@ namespace Client.Logic.Security
         /// <returns>The decrypted string.</returns>
         public string DecryptData(string encryptedtext)
         {
-            try {
+            try
+            {
                 // Convert the encrypted text string to a byte array.
                 byte[] encryptedBytes = Convert.FromBase64String(encryptedtext);
 
@@ -103,7 +103,9 @@ namespace Client.Logic.Security
 
                 // Convert the plaintext stream to a string.
                 return System.Text.Encoding.Unicode.GetString(ms.ToArray());
-            } catch {
+            }
+            catch
+            {
                 return "sdcksndcsac ascascscdds";
             }
         }

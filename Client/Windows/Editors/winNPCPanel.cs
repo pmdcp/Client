@@ -85,8 +85,8 @@ namespace Client.Logic.Windows.Editors
 
         #region Constructors
         public winNPCPanel()
-            : base("winNPCPanel") {
-
+            : base("winNPCPanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -113,7 +113,8 @@ namespace Client.Logic.Windows.Editors
             lbxNPCList = new ListBox("lbxNPCList");
             lbxNPCList.Location = new Point(10, 10);
             lbxNPCList.Size = new Size(180, 140);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 ListBoxTextItem lbiNPC = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": " + Npc.NpcHelper.Npcs[(i + 1) + 10 * currentTen].Name);
                 lbxNPCList.Items.Add(lbiNPC);
             }
@@ -247,7 +248,8 @@ namespace Client.Logic.Windows.Editors
             cmbBehaviour = new ComboBox("cmbBehaviour");
             cmbBehaviour.Location = new Point(75, lblBehaviour.Y);
             cmbBehaviour.Size = new System.Drawing.Size(200, 15);
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 7; i++)
+            {
                 cmbBehaviour.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.NpcBehavior), i)));
             }
 
@@ -266,7 +268,8 @@ namespace Client.Logic.Windows.Editors
             lblMove = new Label[4];
             lblMoveInfo = new Label[4];
             nudMove = new NumericUpDown[4];
-            for (int i = 0; i < lblMove.Length; i++) {
+            for (int i = 0; i < lblMove.Length; i++)
+            {
                 lblMove[i] = new Label("lblMove" + i);
                 lblMoveInfo[i] = new Label("lblMoveInfo" + i);
                 nudMove[i] = new NumericUpDown("nudMove" + i);
@@ -402,7 +405,8 @@ namespace Client.Logic.Windows.Editors
             pnlNPCEditor.AddWidget(lblRecruitRate);
             pnlNPCEditor.AddWidget(nudRecruitRate);
 
-            for (int i = 0; i < lblMove.Length; i++) {
+            for (int i = 0; i < lblMove.Length; i++)
+            {
                 pnlNPCEditor.AddWidget(lblMove[i]);
                 pnlNPCEditor.AddWidget(nudMove[i]);
                 pnlNPCEditor.AddWidget(lblMoveInfo[i]);
@@ -430,52 +434,63 @@ namespace Client.Logic.Windows.Editors
             this.LoadComplete();
         }
 
-        void txtDropItemTag_TextChanged(object sender, EventArgs e) {
+        void txtDropItemTag_TextChanged(object sender, EventArgs e)
+        {
             npc.Drops[nudDropSelector.Value - 1].Tag = txtDropItemTag.Text;
         }
 
-        void nudDropItemChance_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudDropItemChance_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             npc.Drops[nudDropSelector.Value - 1].Chance = e.NewValue;
         }
 
-        void nudDropItemAmount_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudDropItemAmount_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             npc.Drops[nudDropSelector.Value - 1].ItemValue = e.NewValue;
         }
 
-        void nudDropItemNum_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudDropItemNum_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             npc.Drops[nudDropSelector.Value - 1].ItemNum = e.NewValue;
         }
 
-        void nudDropSelector_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudDropSelector_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             nudDropItemNum.Value = npc.Drops[e.NewValue - 1].ItemNum;
             nudDropItemAmount.Value = npc.Drops[e.NewValue - 1].ItemValue;
             nudDropItemChance.Value = npc.Drops[e.NewValue - 1].Chance;
             txtDropItemTag.Text = npc.Drops[e.NewValue - 1].Tag;
         }
 
-        void winNPCPanel_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void winNPCPanel_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             int index = Array.IndexOf(nudMove, sender);
-            if (e.NewValue == 0) {
+            if (e.NewValue == 0)
+            {
                 lblMoveInfo[index].Text = "None";
-            } else if (e.NewValue == -1) {
+            }
+            else if (e.NewValue == -1)
+            {
                 lblMoveInfo[index].Text = "Auto";
-            } else {
+            }
+            else
+            {
                 lblMoveInfo[index].Text = Moves.MoveHelper.Moves[e.NewValue].Name;
             }
         }
 
-        void nudForm_ValueChanged(object sender, ValueChangedEventArgs e) {
-
+        void nudForm_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
         }
 
-        void nudSpecies_ValueChanged(object sender, ValueChangedEventArgs e) {
-
+        void nudSpecies_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
         }
 
         #endregion
 
-        public void LoadNPC(string[] parse) {
-
+        public void LoadNPC(string[] parse)
+        {
             pnlNPCList.Visible = false;
             pnlNPCEditor.Visible = true;
             this.Size = pnlNPCEditor.Size;
@@ -497,13 +512,15 @@ namespace Client.Logic.Windows.Editors
 
             int n = 13;
             // Load npc moves
-            for (int i = 0; i < npc.Moves.Length; i++) {
+            for (int i = 0; i < npc.Moves.Length; i++)
+            {
                 npc.Moves[i] = parse[n].ToInt();
 
                 n += 1;
             }
             // Load npc drops
-            for (int i = 0; i < npc.Drops.Length; i++) {
+            for (int i = 0; i < npc.Drops.Length; i++)
+            {
                 npc.Drops[i] = new Logic.Editors.NPCs.EditableNpcDrop();
                 npc.Drops[i].ItemNum = parse[n].ToInt();
                 npc.Drops[i].ItemValue = parse[n + 1].ToInt();
@@ -525,7 +542,8 @@ namespace Client.Logic.Windows.Editors
             cmbBehaviour.SelectItem(npc.Behavior.ToString());
 
             nudRecruitRate.Value = npc.RecruitRate;
-            for (int i = 0; i < npc.Moves.Length; i++) {
+            for (int i = 0; i < npc.Moves.Length; i++)
+            {
                 nudMove[i].Value = npc.Moves[i];
             }
             nudDropSelector.Value = 1;
@@ -537,59 +555,73 @@ namespace Client.Logic.Windows.Editors
             btnEdit.Text = "Edit";
         }
 
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshNPCList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
-            if (currentTen < ((MaxInfo.MaxNpcs - 1) / 10)) {
-
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < ((MaxInfo.MaxNpcs - 1) / 10))
+            {
                 currentTen++;
             }
             RefreshNPCList();
         }
 
-        public void RefreshNPCList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < MaxInfo.MaxNpcs) {
+        public void RefreshNPCList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < MaxInfo.MaxNpcs)
+                {
                     ((ListBoxTextItem)lbxNPCList.Items[i]).Text = ((i + 10 * currentTen) + 1 + ": " + Npc.NpcHelper.Npcs[(i + 10 * currentTen) + 1].Name);
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxNPCList.Items[i]).Text = "---";
                 }
             }
         }
 
-        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxNPCList.SelectedItems.Count == 1) {
+        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxNPCList.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxNPCList.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     itemNum = index[0].ToInt();
                     Messenger.SendEditNpc(itemNum);
                 }
             }
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             return;
         }
 
-        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             itemNum = -1;
             pnlNPCEditor.Visible = false;
             pnlNPCList.Visible = true;
             this.Size = pnlNPCList.Size;
         }
 
-        void hsbPic_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void hsbPic_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             //pic.Image = Tools.CropImage(Logic.Graphics.GraphicsManager.Arrows, new Rectangle(0, hsbSpecies.Value * 32, 32, 32));
         }
 
-        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             npc.Name = txtName.Text;
             npc.AttackSay = txtAttackSay.Text;
             npc.Form = nudForm.Value;
@@ -604,7 +636,8 @@ namespace Client.Logic.Windows.Editors
             npc.RecruitRate = nudRecruitRate.Value;
 
             // Save npc moves
-            for (int i = 0; i < npc.Moves.Length; i++) {
+            for (int i = 0; i < npc.Moves.Length; i++)
+            {
                 npc.Moves[i] = nudMove[i].Value;
             }
             Messenger.SendSaveNpc(itemNum, npc);

@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,22 +20,18 @@
 
 namespace Client.Logic.Players
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class Friend
     {
         #region Properties
 
         public string Name
         {
-            get;set;
+            get; set;
         }
 
         public bool Online
         {
-            get;set;
+            get; set;
         }
 
         #endregion Properties

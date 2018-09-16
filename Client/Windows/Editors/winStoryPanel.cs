@@ -299,8 +299,8 @@ namespace Client.Logic.Windows.Editors
         #region Constructors
 
         public winStoryPanel()
-            : base("winStoryPanel") {
-
+            : base("winStoryPanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -320,7 +320,8 @@ namespace Client.Logic.Windows.Editors
             lbxStoryList = new ListBox("lbxStoryList");
             lbxStoryList.Location = new Point(10, 10);
             lbxStoryList.Size = new Size(180, 140);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 ListBoxTextItem lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": ");
                 lbxStoryList.Items.Add(lbiItem);
             }
@@ -523,7 +524,8 @@ namespace Client.Logic.Windows.Editors
             cmbSegmentTypes.Location = new Point(lblActions.X + lblActions.Width + 5, 5);
             cmbSegmentTypes.Size = new System.Drawing.Size(150, 16);
             string[] storySegmentActions = Enum.GetNames(typeof(Enums.StoryAction));
-            for (int i = 0; i < storySegmentActions.Length; i++) {
+            for (int i = 0; i < storySegmentActions.Length; i++)
+            {
                 cmbSegmentTypes.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), storySegmentActions[i]));
             }
             cmbSegmentTypes.ItemSelected += new EventHandler(cmbSegmentTypes_ItemSelected);
@@ -583,21 +585,26 @@ namespace Client.Logic.Windows.Editors
             RefreshStoryList();
         }
 
-        void btnRemoveExitAndContinue_Click(object sender, MouseButtonEventArgs e) {
-            if (lbxExitAndContinue.SelectedItems.Count == 1) {
+        void btnRemoveExitAndContinue_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxExitAndContinue.SelectedItems.Count == 1)
+            {
                 story.ExitAndContinue.RemoveAt(lbxExitAndContinue.SelectedIndex);
                 lbxExitAndContinue.Items.RemoveAt(lbxExitAndContinue.SelectedIndex);
             }
         }
 
-        void btnAddExitAndContinue_Click(object sender, MouseButtonEventArgs e) {
-            if (story.ExitAndContinue.Contains(nudExitAndContinueCheckpoint.Value) == false) {
+        void btnAddExitAndContinue_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (story.ExitAndContinue.Contains(nudExitAndContinueCheckpoint.Value) == false)
+            {
                 lbxExitAndContinue.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), nudExitAndContinueCheckpoint.Value.ToString()));
                 story.ExitAndContinue.Add(nudExitAndContinueCheckpoint.Value);
             }
         }
 
-        void btnSaveMaxSegments_Click(object sender, MouseButtonEventArgs e) {
+        void btnSaveMaxSegments_Click(object sender, MouseButtonEventArgs e)
+        {
             //nudActiveSegment.Maximum = nudMaxSegments.Value;
 
             //Logic.Editors.Stories.EditableStorySegment[] segmentsOld = new Logic.Editors.Stories.EditableStorySegment[story.Segments.Length];
@@ -623,10 +630,13 @@ namespace Client.Logic.Windows.Editors
         #endregion Constructors
 
         #region Segment Loading/Saving
-        void cmbSegmentTypes_ItemSelected(object sender, EventArgs e) {
-            if (cmbSegmentTypes.SelectedIndex > -1) {
+        void cmbSegmentTypes_ItemSelected(object sender, EventArgs e)
+        {
+            if (cmbSegmentTypes.SelectedIndex > -1)
+            {
                 Enums.StoryAction action = (Enums.StoryAction)Enum.Parse(typeof(Enums.StoryAction), cmbSegmentTypes.SelectedItem.TextIdentifier);
-                switch (action) {
+                switch (action)
+                {
                     case Enums.StoryAction.Say:
                         SwitchToSayOptions();
                         break;
@@ -847,7 +857,6 @@ namespace Client.Logic.Windows.Editors
             }
 
             RefreshSegmentList();
-
         }
 
         void btnRemoveSegment_Click(object sender, MouseButtonEventArgs e)
@@ -861,12 +870,14 @@ namespace Client.Logic.Windows.Editors
             RefreshSegmentList();
         }
 
-        void btnLoadSegment_Click(object sender, MouseButtonEventArgs e) {
+        void btnLoadSegment_Click(object sender, MouseButtonEventArgs e)
+        {
             if (lbxSegments.SelectedIndex < 0 || lbxSegments.SelectedIndex >= story.Segments.Count)
             {
                 return;
             }
-            if (story.Segments[lbxSegments.SelectedIndex] == null) {
+            if (story.Segments[lbxSegments.SelectedIndex] == null)
+            {
                 story.Segments[lbxSegments.SelectedIndex] = new Logic.Editors.Stories.EditableStorySegment();
             }
             switch (story.Segments[lbxSegments.SelectedIndex].Action)
@@ -970,16 +981,20 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnSaveSegment_Click(object sender, MouseButtonEventArgs e) {
+        void btnSaveSegment_Click(object sender, MouseButtonEventArgs e)
+        {
             if (cmbSegmentTypes.SelectedItem == null) return;
-            if (lbxSegments.SelectedIndex < 0 || lbxSegments.SelectedIndex >= story.Segments.Count) {
+            if (lbxSegments.SelectedIndex < 0 || lbxSegments.SelectedIndex >= story.Segments.Count)
+            {
                 return;
             }
-            if (story.Segments[lbxSegments.SelectedIndex] == null) {
+            if (story.Segments[lbxSegments.SelectedIndex] == null)
+            {
                 story.Segments[lbxSegments.SelectedIndex] = new Logic.Editors.Stories.EditableStorySegment();
             }
             Enums.StoryAction action = (Enums.StoryAction)Enum.Parse(typeof(Enums.StoryAction), cmbSegmentTypes.SelectedItem.TextIdentifier);
-            switch (action) {
+            switch (action)
+            {
                 case Enums.StoryAction.Say:
                     SaveSayOptions();
                     break;
@@ -1090,7 +1105,8 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void HideAllOptionPanels() {
+        void HideAllOptionPanels()
+        {
             HideIfLoaded(pnlSayAction);
             HideIfLoaded(pnlPauseAction);
             HideIfLoaded(pnlMapVisibilityAction);
@@ -1128,8 +1144,10 @@ namespace Client.Logic.Windows.Editors
 
         #region Action Widget Loading
         #region Say
-        public void SwitchToSayOptions() {
-            if (pnlSayAction == null) {
+        public void SwitchToSayOptions()
+        {
+            if (pnlSayAction == null)
+            {
                 pnlSayAction = new Panel("pnlSayAction");
                 pnlSayAction.Size = new Size(300, 180);
                 pnlSayAction.Location = new Point(0, 30);
@@ -1203,20 +1221,28 @@ namespace Client.Logic.Windows.Editors
             pnlSayAction.Show();
         }
 
-        void nudSayMugshot_ValueChanged(object sender, ValueChangedEventArgs e) {
-            if (e.NewValue > 0) {
+        void nudSayMugshot_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            if (e.NewValue > 0)
+            {
                 Mugshot mugshot = Logic.Graphics.GraphicsManager.GetMugshot(e.NewValue, 0, 0, 0);
-                if (mugshot != null) {
+                if (mugshot != null)
+                {
                     pbxSayMugshot.Image = mugshot.GetEmote(0);
-                } else {
+                }
+                else
+                {
                     pbxSayMugshot.Image = null;
                 }
-            } else {
+            }
+            else
+            {
                 pbxSayMugshot.Image = null;
             }
         }
 
-        public void SaveSayOptions() {
+        public void SaveSayOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.Say;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Text", txtSayText.Text);
@@ -1225,7 +1251,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("PauseLocation", nudSayPause.Value.ToString());
         }
 
-        public void LoadSayOptions() {
+        public void LoadSayOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtSayText.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Text") ?? "";
             nudSayMugshot.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Mugshot").ToInt();
@@ -1234,8 +1261,10 @@ namespace Client.Logic.Windows.Editors
         }
         #endregion
         #region Pause
-        public void SwitchToPauseOptions() {
-            if (pnlPauseAction == null) {
+        public void SwitchToPauseOptions()
+        {
+            if (pnlPauseAction == null)
+            {
                 pnlPauseAction = new Panel("pnlPauseAction");
                 pnlPauseAction.Size = new Size(300, 180);
                 pnlPauseAction.Location = new Point(0, 30);
@@ -1263,20 +1292,24 @@ namespace Client.Logic.Windows.Editors
             pnlPauseAction.Show();
         }
 
-        public void SavePauseOptions() {
+        public void SavePauseOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.Pause;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Length", nudPauseLength.Value.ToString());
         }
 
-        public void LoadPauseOptions() {
+        public void LoadPauseOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             nudPauseLength.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Length").ToInt();
         }
         #endregion
         #region Map Visibility
-        public void SwitchToMapVisibilityOptions() {
-            if (pnlMapVisibilityAction == null) {
+        public void SwitchToMapVisibilityOptions()
+        {
+            if (pnlMapVisibilityAction == null)
+            {
                 pnlMapVisibilityAction = new Panel("pnlMapVisibilityAction");
                 pnlMapVisibilityAction.Size = new Size(300, 180);
                 pnlMapVisibilityAction.Location = new Point(0, 30);
@@ -1299,20 +1332,24 @@ namespace Client.Logic.Windows.Editors
             pnlMapVisibilityAction.Show();
         }
 
-        public void SaveMapVisibilityOptions() {
+        public void SaveMapVisibilityOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.MapVisibility;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Visible", chkMapVisibilityVisible.Checked.ToString());
         }
 
-        public void LoadMapVisibilityOptions() {
+        public void LoadMapVisibilityOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             chkMapVisibilityVisible.Checked = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Visible").ToBool();
         }
         #endregion
         #region Padlock
-        public void SwitchToPadlockOptions() {
-            if (pnlPadlockAction == null) {
+        public void SwitchToPadlockOptions()
+        {
+            if (pnlPadlockAction == null)
+            {
                 pnlPadlockAction = new Panel("pnlPadlockAction");
                 pnlPadlockAction.Size = new Size(300, 180);
                 pnlPadlockAction.Location = new Point(0, 30);
@@ -1335,20 +1372,24 @@ namespace Client.Logic.Windows.Editors
             pnlPadlockAction.Show();
         }
 
-        public void SavePadlockOptions() {
+        public void SavePadlockOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.Padlock;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("State", chkPadlockState.Checked ? "Lock" : "Unlock");
         }
 
-        public void LoadPadlockOptions() {
+        public void LoadPadlockOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             chkPadlockState.Checked = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("State") == "Lock";
         }
         #endregion
         #region Play Music
-        public void SwitchToPlayMusicOptions() {
-            if (pnlPlayMusicAction == null) {
+        public void SwitchToPlayMusicOptions()
+        {
+            if (pnlPlayMusicAction == null)
+            {
                 pnlPlayMusicAction = new Panel("pnlPlayMusicAction");
                 pnlPlayMusicAction.Size = new Size(300, 180);
                 pnlPlayMusicAction.Location = new Point(0, 30);
@@ -1360,7 +1401,8 @@ namespace Client.Logic.Windows.Editors
                 lbxPlayMusicPicker.Size = new System.Drawing.Size(200, 100);
                 SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("tahoma", 10);
                 string[] musicFiles = System.IO.Directory.GetFiles(IO.Paths.MusicPath);
-                for (int i = 0; i < musicFiles.Length; i++) {
+                for (int i = 0; i < musicFiles.Length; i++)
+                {
                     lbxPlayMusicPicker.Items.Add(new ListBoxTextItem(font, System.IO.Path.GetFileName(musicFiles[i])));
                 }
 
@@ -1405,38 +1447,48 @@ namespace Client.Logic.Windows.Editors
             pnlPlayMusicAction.Show();
         }
 
-        public void SavePlayMusicOptions() {
+        public void SavePlayMusicOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.PlayMusic;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
-            if (lbxPlayMusicPicker.SelectedItems.Count == 1) {
+            if (lbxPlayMusicPicker.SelectedItems.Count == 1)
+            {
                 story.Segments[lbxSegments.SelectedIndex].AddParameter("File", ((ListBoxTextItem)lbxPlayMusicPicker.SelectedItems[0]).Text);
-            } else {
+            }
+            else
+            {
                 story.Segments[lbxSegments.SelectedIndex].AddParameter("File", "");
             }
             story.Segments[lbxSegments.SelectedIndex].AddParameter("HonorSettings", chkPlayMusicHonorSettings.Checked.ToString());
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Loop", chkPlayMusicLoop.Checked.ToString());
         }
 
-        public void LoadPlayMusicOptions() {
+        public void LoadPlayMusicOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             lbxPlayMusicPicker.SelectItem(story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("File"));
             chkPlayMusicHonorSettings.Checked = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("HonorSettings").ToBool();
             chkPlayMusicLoop.Checked = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Loop").ToBool();
         }
 
-        void btnPlayMusicPlay_Click(object sender, MouseButtonEventArgs e) {
-            if (lbxPlayMusicPicker.SelectedItems.Count == 1) {
+        void btnPlayMusicPlay_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lbxPlayMusicPicker.SelectedItems.Count == 1)
+            {
                 Logic.Music.Music.AudioPlayer.PlayMusic(((ListBoxTextItem)lbxPlayMusicPicker.SelectedItems[0]).Text, 1, true, false);
             }
         }
 
-        void btnPlayMusicStop_Click(object sender, MouseButtonEventArgs e) {
+        void btnPlayMusicStop_Click(object sender, MouseButtonEventArgs e)
+        {
             Logic.Music.Music.AudioPlayer.StopMusic();
         }
         #endregion
         #region Stop Music
-        public void SwitchToStopMusicOptions() {
-            if (pnlStopMusicAction == null) {
+        public void SwitchToStopMusicOptions()
+        {
+            if (pnlStopMusicAction == null)
+            {
                 pnlStopMusicAction = new Panel("pnlStopMusicAction");
                 pnlStopMusicAction.Size = new Size(300, 180);
                 pnlStopMusicAction.Location = new Point(0, 30);
@@ -1450,18 +1502,22 @@ namespace Client.Logic.Windows.Editors
             pnlStopMusicAction.Show();
         }
 
-        public void SaveStopMusicOptions() {
+        public void SaveStopMusicOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.StopMusic;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
         }
 
-        public void LoadStopMusicOptions() {
+        public void LoadStopMusicOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
         }
         #endregion
         #region Show Image
-        public void SwitchToShowImageOptions() {
-            if (pnlShowImageAction == null) {
+        public void SwitchToShowImageOptions()
+        {
+            if (pnlShowImageAction == null)
+            {
                 pnlShowImageAction = new Panel("pnlShowImageAction");
                 pnlShowImageAction.Size = new Size(300, 180);
                 pnlShowImageAction.Location = new Point(0, 30);
@@ -1473,7 +1529,8 @@ namespace Client.Logic.Windows.Editors
                 lbxShowImageFiles.Size = new System.Drawing.Size(200, 100);
                 SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("tahoma", 10);
                 string[] imageFiles = System.IO.Directory.GetFiles(IO.Paths.StartupPath + "Story/Images/");
-                for (int i = 0; i < imageFiles.Length; i++) {
+                for (int i = 0; i < imageFiles.Length; i++)
+                {
                     lbxShowImageFiles.Items.Add(new ListBoxTextItem(font, System.IO.Path.GetFileName(imageFiles[i])));
                 }
 
@@ -1524,12 +1581,16 @@ namespace Client.Logic.Windows.Editors
             pnlShowImageAction.Show();
         }
 
-        public void SaveShowImageOptions() {
+        public void SaveShowImageOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.ShowImage;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
-            if (lbxShowImageFiles.SelectedItems.Count == 1) {
+            if (lbxShowImageFiles.SelectedItems.Count == 1)
+            {
                 story.Segments[lbxSegments.SelectedIndex].AddParameter("File", ((ListBoxTextItem)lbxShowImageFiles.SelectedItems[0]).Text);
-            } else {
+            }
+            else
+            {
                 story.Segments[lbxSegments.SelectedIndex].AddParameter("File", "");
             }
             story.Segments[lbxSegments.SelectedIndex].AddParameter("ImageID", txtShowImageID.Text);
@@ -1537,7 +1598,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Y", nudShowImageY.Value.ToString());
         }
 
-        public void LoadShowImageOptions() {
+        public void LoadShowImageOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             lbxShowImageFiles.SelectItem(story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("File"));
             txtShowImageID.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ImageID") ?? "";
@@ -1546,8 +1608,10 @@ namespace Client.Logic.Windows.Editors
         }
         #endregion
         #region Hide Image
-        public void SwitchToHideImageOptions() {
-            if (pnlHideImageAction == null) {
+        public void SwitchToHideImageOptions()
+        {
+            if (pnlHideImageAction == null)
+            {
                 pnlHideImageAction = new Panel("pnlHideImageAction");
                 pnlHideImageAction.Size = new Size(300, 180);
                 pnlHideImageAction.Location = new Point(0, 30);
@@ -1574,20 +1638,24 @@ namespace Client.Logic.Windows.Editors
             pnlHideImageAction.Show();
         }
 
-        public void SaveHideImageOptions() {
+        public void SaveHideImageOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.HideImage;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("ImageID", txtHideImageID.Text);
         }
 
-        public void LoadHideImageOptions() {
+        public void LoadHideImageOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtHideImageID.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ImageID") ?? "";
         }
         #endregion
         #region Warp
-        public void SwitchToWarpOptions() {
-            if (pnlWarpAction == null) {
+        public void SwitchToWarpOptions()
+        {
+            if (pnlWarpAction == null)
+            {
                 pnlWarpAction = new Panel("pnlWarpAction");
                 pnlWarpAction.Size = new Size(300, 180);
                 pnlWarpAction.Location = new Point(0, 30);
@@ -1640,7 +1708,8 @@ namespace Client.Logic.Windows.Editors
             pnlWarpAction.Show();
         }
 
-        public void SaveWarpOptions() {
+        public void SaveWarpOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.Warp;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("MapID", txtWarpMap.Text);
@@ -1648,7 +1717,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Y", nudWarpY.Value.ToString());
         }
 
-        public void LoadWarpOptions() {
+        public void LoadWarpOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtWarpMap.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("MapID") ?? "";
             nudWarpX.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("X").ToInt();
@@ -1656,8 +1726,10 @@ namespace Client.Logic.Windows.Editors
         }
         #endregion
         #region Player Padlock
-        public void SwitchToPlayerPadlockOptions() {
-            if (pnlPlayerPadlockAction == null) {
+        public void SwitchToPlayerPadlockOptions()
+        {
+            if (pnlPlayerPadlockAction == null)
+            {
                 pnlPlayerPadlockAction = new Panel("pnlPlayerPadlockAction");
                 pnlPlayerPadlockAction.Size = new Size(300, 180);
                 pnlPlayerPadlockAction.Location = new Point(0, 30);
@@ -1680,20 +1752,24 @@ namespace Client.Logic.Windows.Editors
             pnlPlayerPadlockAction.Show();
         }
 
-        public void SavePlayerPadlockOptions() {
+        public void SavePlayerPadlockOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.PlayerPadlock;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("MovementState", chkPlayerPadlockState.Checked ? "Lock" : "Unlock");
         }
 
-        public void LoadPlayerPadlockOptions() {
+        public void LoadPlayerPadlockOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             chkPlayerPadlockState.Checked = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("MovementState") == "Lock";
         }
         #endregion
         #region Show Background
-        public void SwitchToShowBackgroundOptions() {
-            if (pnlShowBackgroundAction == null) {
+        public void SwitchToShowBackgroundOptions()
+        {
+            if (pnlShowBackgroundAction == null)
+            {
                 pnlShowBackgroundAction = new Panel("pnlShowBackgroundAction");
                 pnlShowBackgroundAction.Size = new Size(300, 180);
                 pnlShowBackgroundAction.Location = new Point(0, 30);
@@ -1705,7 +1781,8 @@ namespace Client.Logic.Windows.Editors
                 lbxShowBackgroundFiles.Size = new System.Drawing.Size(200, 100);
                 SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("tahoma", 10);
                 string[] imageFiles = System.IO.Directory.GetFiles(IO.Paths.StartupPath + "Story/Backgrounds/");
-                for (int i = 0; i < imageFiles.Length; i++) {
+                for (int i = 0; i < imageFiles.Length; i++)
+                {
                     lbxShowBackgroundFiles.Items.Add(new ListBoxTextItem(font, System.IO.Path.GetFileName(imageFiles[i])));
                 }
 
@@ -1718,24 +1795,31 @@ namespace Client.Logic.Windows.Editors
             pnlShowBackgroundAction.Show();
         }
 
-        public void SaveShowBackgroundOptions() {
+        public void SaveShowBackgroundOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.ShowBackground;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
-            if (lbxShowBackgroundFiles.SelectedItems.Count == 1) {
+            if (lbxShowBackgroundFiles.SelectedItems.Count == 1)
+            {
                 story.Segments[lbxSegments.SelectedIndex].AddParameter("File", ((ListBoxTextItem)lbxShowBackgroundFiles.SelectedItems[0]).Text);
-            } else {
+            }
+            else
+            {
                 story.Segments[lbxSegments.SelectedIndex].AddParameter("File", "");
             }
         }
 
-        public void LoadShowBackgroundOptions() {
+        public void LoadShowBackgroundOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             lbxShowBackgroundFiles.SelectItem(story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("File"));
         }
         #endregion
         #region Hide Background
-        public void SwitchToHideBackgroundOptions() {
-            if (pnlHideBackgroundAction == null) {
+        public void SwitchToHideBackgroundOptions()
+        {
+            if (pnlHideBackgroundAction == null)
+            {
                 pnlHideBackgroundAction = new Panel("pnlHideBackgroundAction");
                 pnlHideBackgroundAction.Size = new Size(300, 180);
                 pnlHideBackgroundAction.Location = new Point(0, 30);
@@ -1749,18 +1833,22 @@ namespace Client.Logic.Windows.Editors
             pnlHideBackgroundAction.Show();
         }
 
-        public void SaveHideBackgroundOptions() {
+        public void SaveHideBackgroundOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.HideBackground;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
         }
 
-        public void LoadHideBackgroundOptions() {
+        public void LoadHideBackgroundOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
         }
         #endregion
         #region Create FNPC
-        public void SwitchToCreateFNPCOptions() {
-            if (pnlCreateFNPCAction == null) {
+        public void SwitchToCreateFNPCOptions()
+        {
+            if (pnlCreateFNPCAction == null)
+            {
                 pnlCreateFNPCAction = new Panel("pnlCreateFNPCAction");
                 pnlCreateFNPCAction.Size = new Size(300, 180);
                 pnlCreateFNPCAction.Location = new Point(0, 30);
@@ -1844,7 +1932,8 @@ namespace Client.Logic.Windows.Editors
             pnlCreateFNPCAction.Show();
         }
 
-        public void SaveCreateFNPCOptions() {
+        public void SaveCreateFNPCOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.CreateFNPC;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("ID", txtCreateFNPCID.Text);
@@ -1854,7 +1943,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Sprite", nudCreateFNPCSprite.Value.ToString());
         }
 
-        public void LoadCreateFNPCOptions() {
+        public void LoadCreateFNPCOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtCreateFNPCID.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ID") ?? "";
             txtCreateFNPCMap.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ParentMapID") ?? "";
@@ -1863,17 +1953,21 @@ namespace Client.Logic.Windows.Editors
             nudCreateFNPCSprite.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Sprite").ToInt();
         }
 
-        void nudCreateFNPCSprite_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudCreateFNPCSprite_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             SpriteSheet sheet = Logic.Graphics.GraphicsManager.GetSpriteSheet(e.NewValue);
-            if (sheet != null) {
+            if (sheet != null)
+            {
                 pbxCreateFNPCSprite.Size = new Size(32, 64);
                 pbxCreateFNPCSprite.BlitToBuffer(sheet.GetSheet(FrameType.Idle, Enums.Direction.Down), new Rectangle(96, 0, 32, 64));
             }
         }
         #endregion
         #region Move FNPC
-        public void SwitchToMoveFNPCOptions() {
-            if (pnlMoveFNPCAction == null) {
+        public void SwitchToMoveFNPCOptions()
+        {
+            if (pnlMoveFNPCAction == null)
+            {
                 pnlMoveFNPCAction = new Panel("pnlMoveFNPCAction");
                 pnlMoveFNPCAction.Size = new Size(300, 180);
                 pnlMoveFNPCAction.Location = new Point(0, 30);
@@ -1922,7 +2016,8 @@ namespace Client.Logic.Windows.Editors
                 cbxMoveFNPCSpeed.Location = new Point(75, 65);
                 cbxMoveFNPCSpeed.Size = new System.Drawing.Size(125, 15);
                 string[] values = Enum.GetNames(typeof(Enums.MovementSpeed));
-                for (int i = 0; i < values.Length; i++) {
+                for (int i = 0; i < values.Length; i++)
+                {
                     cbxMoveFNPCSpeed.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), values[i]));
                 }
                 cbxMoveFNPCSpeed.SelectItem(0);
@@ -1950,7 +2045,8 @@ namespace Client.Logic.Windows.Editors
             pnlMoveFNPCAction.Show();
         }
 
-        public void SaveMoveFNPCOptions() {
+        public void SaveMoveFNPCOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.MoveFNPC;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("ID", txtMoveFNPCID.Text);
@@ -1960,7 +2056,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Pause", chkMoveFNPCPause.Checked.ToString());
         }
 
-        public void LoadMoveFNPCOptions() {
+        public void LoadMoveFNPCOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtMoveFNPCID.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ID") ?? "";
             nudMoveFNPCX.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("X").ToInt();
@@ -1970,8 +2067,10 @@ namespace Client.Logic.Windows.Editors
         }
         #endregion
         #region Warp FNPC
-        public void SwitchToWarpFNPCOptions() {
-            if (pnlWarpFNPCAction == null) {
+        public void SwitchToWarpFNPCOptions()
+        {
+            if (pnlWarpFNPCAction == null)
+            {
                 pnlWarpFNPCAction = new Panel("pnlWarpFNPCAction");
                 pnlWarpFNPCAction.Size = new Size(300, 180);
                 pnlWarpFNPCAction.Location = new Point(0, 30);
@@ -2024,7 +2123,8 @@ namespace Client.Logic.Windows.Editors
             pnlWarpFNPCAction.Show();
         }
 
-        public void SaveWarpFNPCOptions() {
+        public void SaveWarpFNPCOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.WarpFNPC;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("ID", txtWarpFNPCID.Text);
@@ -2032,7 +2132,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Y", nudWarpFNPCY.Value.ToString());
         }
 
-        public void LoadWarpFNPCOptions() {
+        public void LoadWarpFNPCOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtShowImageID.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ID") ?? "";
             nudWarpFNPCX.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("X").ToInt();
@@ -2040,8 +2141,10 @@ namespace Client.Logic.Windows.Editors
         }
         #endregion
         #region Change FNPC Dir
-        public void SwitchToChangeFNPCDirOptions() {
-            if (pnlChangeFNPCDirAction == null) {
+        public void SwitchToChangeFNPCDirOptions()
+        {
+            if (pnlChangeFNPCDirAction == null)
+            {
                 pnlChangeFNPCDirAction = new Panel("pnlChangeFNPCDirAction");
                 pnlChangeFNPCDirAction.Size = new Size(300, 180);
                 pnlChangeFNPCDirAction.Location = new Point(0, 30);
@@ -2062,7 +2165,8 @@ namespace Client.Logic.Windows.Editors
                 cbxChangeFNPCDirDirection.Location = new Point(5, 25);
                 cbxChangeFNPCDirDirection.Size = new System.Drawing.Size(200, 15);
                 string[] values = Enum.GetNames(typeof(Enums.Direction));
-                for (int i = 0; i < values.Length; i++) {
+                for (int i = 0; i < values.Length; i++)
+                {
                     cbxChangeFNPCDirDirection.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), values[i]));
                 }
                 cbxChangeFNPCDirDirection.SelectItem(0);
@@ -2078,22 +2182,26 @@ namespace Client.Logic.Windows.Editors
             pnlChangeFNPCDirAction.Show();
         }
 
-        public void SaveChangeFNPCDirOptions() {
+        public void SaveChangeFNPCDirOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.ChangeFNPCDir;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("ID", txtChangeFNPCDirID.Text);
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Direction", cbxChangeFNPCDirDirection.SelectedIndex.ToString());
         }
 
-        public void LoadChangeFNPCDirOptions() {
+        public void LoadChangeFNPCDirOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtChangeFNPCDirID.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ID") ?? "";
             cbxChangeFNPCDirDirection.SelectItem(story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Direction").ToInt());
         }
         #endregion
         #region Delete FNPC
-        public void SwitchToDeleteFNPCOptions() {
-            if (pnlDeleteFNPCAction == null) {
+        public void SwitchToDeleteFNPCOptions()
+        {
+            if (pnlDeleteFNPCAction == null)
+            {
                 pnlDeleteFNPCAction = new Panel("pnlDeleteFNPCAction");
                 pnlDeleteFNPCAction.Size = new Size(300, 180);
                 pnlDeleteFNPCAction.Location = new Point(0, 30);
@@ -2120,20 +2228,24 @@ namespace Client.Logic.Windows.Editors
             pnlDeleteFNPCAction.Show();
         }
 
-        public void SaveDeleteFNPCOptions() {
+        public void SaveDeleteFNPCOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.DeleteFNPC;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("ID", txtDeleteFNPCID.Text);
         }
 
-        public void LoadDeleteFNPCOptions() {
+        public void LoadDeleteFNPCOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtDeleteFNPCID.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ID") ?? "";
         }
         #endregion
         #region Story Script
-        public void SwitchToStoryScriptOptions() {
-            if (pnlStoryScriptAction == null) {
+        public void SwitchToStoryScriptOptions()
+        {
+            if (pnlStoryScriptAction == null)
+            {
                 pnlStoryScriptAction = new Panel("pnlStoryScriptAction");
                 pnlStoryScriptAction.Size = new Size(300, 180);
                 pnlStoryScriptAction.Location = new Point(0, 30);
@@ -2206,7 +2318,8 @@ namespace Client.Logic.Windows.Editors
             pnlStoryScriptAction.Show();
         }
 
-        public void SaveStoryScriptOptions() {
+        public void SaveStoryScriptOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.RunScript;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("ScriptIndex", nudStoryScriptIndex.Value.ToString());
@@ -2216,7 +2329,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Pause", chkStoryScriptPause.Checked.ToString());
         }
 
-        public void LoadStoryScriptOptions() {
+        public void LoadStoryScriptOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             nudStoryScriptIndex.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ScriptIndex").ToInt();
             txtStoryScriptParam1.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ScriptParam1");
@@ -2226,8 +2340,10 @@ namespace Client.Logic.Windows.Editors
         }
         #endregion
         #region Hide Players
-        public void SwitchToHidePlayersOptions() {
-            if (pnlHidePlayersAction == null) {
+        public void SwitchToHidePlayersOptions()
+        {
+            if (pnlHidePlayersAction == null)
+            {
                 pnlHidePlayersAction = new Panel("pnlHidePlayersAction");
                 pnlHidePlayersAction.Size = new Size(300, 180);
                 pnlHidePlayersAction.Location = new Point(0, 30);
@@ -2241,18 +2357,22 @@ namespace Client.Logic.Windows.Editors
             pnlHidePlayersAction.Show();
         }
 
-        public void SaveHidePlayersOptions() {
+        public void SaveHidePlayersOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.HidePlayers;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
         }
 
-        public void LoadHidePlayersOptions() {
+        public void LoadHidePlayersOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
         }
         #endregion
         #region Show Players
-        public void SwitchToShowPlayersOptions() {
-            if (pnlShowPlayersAction == null) {
+        public void SwitchToShowPlayersOptions()
+        {
+            if (pnlShowPlayersAction == null)
+            {
                 pnlShowPlayersAction = new Panel("pnlShowPlayersAction");
                 pnlShowPlayersAction.Size = new Size(300, 180);
                 pnlShowPlayersAction.Location = new Point(0, 30);
@@ -2266,18 +2386,22 @@ namespace Client.Logic.Windows.Editors
             pnlShowPlayersAction.Show();
         }
 
-        public void SaveShowPlayersOptions() {
+        public void SaveShowPlayersOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.ShowPlayers;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
         }
 
-        public void LoadShowPlayersOptions() {
+        public void LoadShowPlayersOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
         }
         #endregion
         #region FNPC Emotion
-        public void SwitchToFNPCEmotionOptions() {
-            if (pnlFNPCEmotionAction == null) {
+        public void SwitchToFNPCEmotionOptions()
+        {
+            if (pnlFNPCEmotionAction == null)
+            {
                 pnlFNPCEmotionAction = new Panel("pnlFNPCEmotionAction");
                 pnlFNPCEmotionAction.Size = new Size(300, 180);
                 pnlFNPCEmotionAction.Location = new Point(0, 30);
@@ -2317,22 +2441,26 @@ namespace Client.Logic.Windows.Editors
             pnlFNPCEmotionAction.Show();
         }
 
-        public void SaveFNPCEmotionOptions() {
+        public void SaveFNPCEmotionOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.FNPCEmotion;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("ID", txtFNPCEmotionID.Text);
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Emotion", nudFNPCEmotionNum.Value.ToString());
         }
 
-        public void LoadFNPCEmotionOptions() {
+        public void LoadFNPCEmotionOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtFNPCEmotionID.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("ID") ?? "";
             nudFNPCEmotionNum.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Emotion").ToInt();
         }
         #endregion
         #region Weather
-        public void SwitchToChangeWeatherOptions() {
-            if (pnlWeatherAction == null) {
+        public void SwitchToChangeWeatherOptions()
+        {
+            if (pnlWeatherAction == null)
+            {
                 pnlWeatherAction = new Panel("pnlWeatherAction");
                 pnlWeatherAction.Size = new Size(300, 180);
                 pnlWeatherAction.Location = new Point(0, 30);
@@ -2349,7 +2477,8 @@ namespace Client.Logic.Windows.Editors
                 cbxWeatherType.Location = new Point(75, 5);
                 cbxWeatherType.Size = new System.Drawing.Size(125, 15);
                 string[] value = Enum.GetNames(typeof(Enums.Weather));
-                for (int i = 0; i < value.Length; i++) {
+                for (int i = 0; i < value.Length; i++)
+                {
                     cbxWeatherType.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), value[i]));
                 }
                 cbxWeatherType.SelectItem(0);
@@ -2364,20 +2493,24 @@ namespace Client.Logic.Windows.Editors
             pnlWeatherAction.Show();
         }
 
-        public void SaveChangeWeatherOptions() {
+        public void SaveChangeWeatherOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.ChangeWeather;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Weather", cbxWeatherType.SelectedIndex.ToString());
         }
 
-        public void LoadChangeWeatherOptions() {
+        public void LoadChangeWeatherOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             cbxWeatherType.SelectItem(story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Weather").ToInt());
         }
         #endregion
         #region Hide NPCs
-        public void SwitchToHideNPCsOptions() {
-            if (pnlHideNPCsAction == null) {
+        public void SwitchToHideNPCsOptions()
+        {
+            if (pnlHideNPCsAction == null)
+            {
                 pnlHideNPCsAction = new Panel("pnlHideNPCsAction");
                 pnlHideNPCsAction.Size = new Size(300, 180);
                 pnlHideNPCsAction.Location = new Point(0, 30);
@@ -2391,18 +2524,22 @@ namespace Client.Logic.Windows.Editors
             pnlHideNPCsAction.Show();
         }
 
-        public void SaveHideNPCsOptions() {
+        public void SaveHideNPCsOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.HideNPCs;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
         }
 
-        public void LoadHideNPCsOptions() {
+        public void LoadHideNPCsOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
         }
         #endregion
         #region Show NPCs
-        public void SwitchToShowNPCsOptions() {
-            if (pnlShowNPCsAction == null) {
+        public void SwitchToShowNPCsOptions()
+        {
+            if (pnlShowNPCsAction == null)
+            {
                 pnlShowNPCsAction = new Panel("pnlShowNPCsAction");
                 pnlShowNPCsAction.Size = new Size(300, 180);
                 pnlShowNPCsAction.Location = new Point(0, 30);
@@ -2416,18 +2553,22 @@ namespace Client.Logic.Windows.Editors
             pnlShowNPCsAction.Show();
         }
 
-        public void SaveShowNPCsOptions() {
+        public void SaveShowNPCsOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.ShowNPCs;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
         }
 
-        public void LoadShowNPCsOptions() {
+        public void LoadShowNPCsOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
         }
         #endregion
         #region Wait For Map
-        public void SwitchToWaitForMapOptions() {
-            if (pnlWaitForMapAction == null) {
+        public void SwitchToWaitForMapOptions()
+        {
+            if (pnlWaitForMapAction == null)
+            {
                 pnlWaitForMapAction = new Panel("pnlWaitForMapAction");
                 pnlWaitForMapAction.Size = new Size(300, 180);
                 pnlWaitForMapAction.Location = new Point(0, 30);
@@ -2454,20 +2595,24 @@ namespace Client.Logic.Windows.Editors
             pnlWaitForMapAction.Show();
         }
 
-        public void SaveWaitForMapOptions() {
+        public void SaveWaitForMapOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.WaitForMap;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("MapID", txtWaitForMapMap.Text);
         }
 
-        public void LoadWaitForMapOptions() {
+        public void LoadWaitForMapOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtWaitForMapMap.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("MapID") ?? "";
         }
         #endregion
         #region Wait For Loc
-        public void SwitchToWaitForLocOptions() {
-            if (pnlWaitForLocAction == null) {
+        public void SwitchToWaitForLocOptions()
+        {
+            if (pnlWaitForLocAction == null)
+            {
                 pnlWaitForLocAction = new Panel("pnlWaitForLocAction");
                 pnlWaitForLocAction.Size = new Size(300, 180);
                 pnlWaitForLocAction.Location = new Point(0, 30);
@@ -2520,7 +2665,8 @@ namespace Client.Logic.Windows.Editors
             pnlWaitForLocAction.Show();
         }
 
-        public void SaveWaitForLocOptions() {
+        public void SaveWaitForLocOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.WaitForLoc;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("MapID", txtWaitForLocMap.Text);
@@ -2528,7 +2674,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Y", nudWaitForLocY.Value.ToString());
         }
 
-        public void LoadWaitForLocOptions() {
+        public void LoadWaitForLocOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtWaitForLocMap.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("MapID") ?? "";
             nudWaitForLocX.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("X").ToInt();
@@ -2536,8 +2683,10 @@ namespace Client.Logic.Windows.Editors
         }
         #endregion
         #region Ask Question
-        public void SwitchToAskQuestionOptions() {
-            if (pnlAskQuestionAction == null) {
+        public void SwitchToAskQuestionOptions()
+        {
+            if (pnlAskQuestionAction == null)
+            {
                 pnlAskQuestionAction = new Panel("pnlAskQuestionAction");
                 pnlAskQuestionAction.Size = new Size(300, 180);
                 pnlAskQuestionAction.Location = new Point(0, 30);
@@ -2612,7 +2761,8 @@ namespace Client.Logic.Windows.Editors
             pnlAskQuestionAction.Show();
         }
 
-        public void SaveAskQuestionOptions() {
+        public void SaveAskQuestionOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.AskQuestion;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Question", txtAskQuestionQuestion.Text);
@@ -2621,7 +2771,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Mugshot", nudAskQuestionMugshot.Value.ToString());
         }
 
-        public void LoadAskQuestionOptions() {
+        public void LoadAskQuestionOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             txtAskQuestionQuestion.Text = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Question") ?? "";
             nudAskQuestionSegmentOnYes.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("SegmentOnYes").ToInt();
@@ -2629,16 +2780,20 @@ namespace Client.Logic.Windows.Editors
             nudAskQuestionMugshot.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Mugshot").ToInt();
         }
 
-        void nudAskQuestionMugshot_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudAskQuestionMugshot_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             Mugshot mugshot = Logic.Graphics.GraphicsManager.GetMugshot(e.NewValue, 0, 0, 0);
-            if (mugshot != null) {
+            if (mugshot != null)
+            {
                 pbxAskQuestionMugshot.Image = mugshot.GetEmote(0);
             }
         }
         #endregion
         #region Go To Segment
-        public void SwitchToGoToSegmentOptions() {
-            if (pnlGoToSegmentAction == null) {
+        public void SwitchToGoToSegmentOptions()
+        {
+            if (pnlGoToSegmentAction == null)
+            {
                 pnlGoToSegmentAction = new Panel("pnlGoToSegmentAction");
                 pnlGoToSegmentAction.Size = new Size(300, 180);
                 pnlGoToSegmentAction.Location = new Point(0, 30);
@@ -2667,20 +2822,24 @@ namespace Client.Logic.Windows.Editors
             pnlGoToSegmentAction.Show();
         }
 
-        public void SaveGoToSegmentOptions() {
+        public void SaveGoToSegmentOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.GoToSegment;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Segment", nudGoToSegmentSegment.Value.ToString());
         }
 
-        public void LoadGoToSegmentOptions() {
+        public void LoadGoToSegmentOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             nudGoToSegmentSegment.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Segment").ToInt();
         }
         #endregion
         #region Scroll Camera
-        public void SwitchToScrollCameraOptions() {
-            if (pnlScrollCameraAction == null) {
+        public void SwitchToScrollCameraOptions()
+        {
+            if (pnlScrollCameraAction == null)
+            {
                 pnlScrollCameraAction = new Panel("pnlScrollCameraAction");
                 pnlScrollCameraAction.Size = new Size(300, 180);
                 pnlScrollCameraAction.Location = new Point(0, 30);
@@ -2742,7 +2901,8 @@ namespace Client.Logic.Windows.Editors
             pnlScrollCameraAction.Show();
         }
 
-        public void SaveScrollCameraOptions() {
+        public void SaveScrollCameraOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.ScrollCamera;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("X", nudScrollCameraX.Value.ToString());
@@ -2751,7 +2911,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Pause", chkScrollCameraPause.Checked.ToString());
         }
 
-        public void LoadScrollCameraOptions() {
+        public void LoadScrollCameraOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             nudScrollCameraX.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("X").ToInt();
             nudScrollCameraY.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Y").ToInt();
@@ -2760,8 +2921,10 @@ namespace Client.Logic.Windows.Editors
         }
         #endregion
         #region Hide NPCs
-        public void SwitchToResetCameraOptions() {
-            if (pnlResetCameraAction == null) {
+        public void SwitchToResetCameraOptions()
+        {
+            if (pnlResetCameraAction == null)
+            {
                 pnlResetCameraAction = new Panel("pnlResetCameraAction");
                 pnlResetCameraAction.Size = new Size(300, 180);
                 pnlResetCameraAction.Location = new Point(0, 30);
@@ -2775,19 +2938,23 @@ namespace Client.Logic.Windows.Editors
             pnlResetCameraAction.Show();
         }
 
-        public void SaveResetCameraOptions() {
+        public void SaveResetCameraOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.ResetCamera;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
         }
 
-        public void LoadResetCameraOptions() {
+        public void LoadResetCameraOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
         }
         #endregion
 
         #region Move Player
-        public void SwitchToMovePlayerOptions() {
-            if (pnlMovePlayerAction == null) {
+        public void SwitchToMovePlayerOptions()
+        {
+            if (pnlMovePlayerAction == null)
+            {
                 pnlMovePlayerAction = new Panel("pnlMovePlayerAction");
                 pnlMovePlayerAction.Size = new Size(300, 180);
                 pnlMovePlayerAction.Location = new Point(0, 30);
@@ -2826,7 +2993,8 @@ namespace Client.Logic.Windows.Editors
                 cbxMovePlayerSpeed.Location = new Point(75, 45);
                 cbxMovePlayerSpeed.Size = new System.Drawing.Size(125, 15);
                 string[] values = Enum.GetNames(typeof(Enums.MovementSpeed));
-                for (int i = 0; i < values.Length; i++) {
+                for (int i = 0; i < values.Length; i++)
+                {
                     cbxMovePlayerSpeed.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), values[i]));
                 }
                 cbxMovePlayerSpeed.SelectItem(0);
@@ -2852,7 +3020,8 @@ namespace Client.Logic.Windows.Editors
             pnlMovePlayerAction.Show();
         }
 
-        public void SaveMovePlayerOptions() {
+        public void SaveMovePlayerOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.MovePlayer;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("X", nudMovePlayerX.Value.ToString());
@@ -2861,7 +3030,8 @@ namespace Client.Logic.Windows.Editors
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Pause", chkMovePlayerPause.Checked.ToString());
         }
 
-        public void LoadMovePlayerOptions() {
+        public void LoadMovePlayerOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             nudMovePlayerX.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("X").ToInt();
             nudMovePlayerY.Value = story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Y").ToInt();
@@ -2870,8 +3040,10 @@ namespace Client.Logic.Windows.Editors
         }
         #endregion
         #region Change Player Dir
-        public void SwitchToChangePlayerDirOptions() {
-            if (pnlChangePlayerDirAction == null) {
+        public void SwitchToChangePlayerDirOptions()
+        {
+            if (pnlChangePlayerDirAction == null)
+            {
                 pnlChangePlayerDirAction = new Panel("pnlChangePlayerDirAction");
                 pnlChangePlayerDirAction.Size = new Size(300, 180);
                 pnlChangePlayerDirAction.Location = new Point(0, 30);
@@ -2882,7 +3054,8 @@ namespace Client.Logic.Windows.Editors
                 cbxChangePlayerDirDirection.Location = new Point(5, 5);
                 cbxChangePlayerDirDirection.Size = new System.Drawing.Size(200, 15);
                 string[] values = Enum.GetNames(typeof(Enums.Direction));
-                for (int i = 0; i < values.Length; i++) {
+                for (int i = 0; i < values.Length; i++)
+                {
                     cbxChangePlayerDirDirection.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), values[i]));
                 }
 
@@ -2895,13 +3068,15 @@ namespace Client.Logic.Windows.Editors
             pnlChangePlayerDirAction.Show();
         }
 
-        public void SaveChangePlayerDirOptions() {
+        public void SaveChangePlayerDirOptions()
+        {
             story.Segments[lbxSegments.SelectedIndex].Action = Enums.StoryAction.ChangePlayerDir;
             story.Segments[lbxSegments.SelectedIndex].Parameters.Clear();
             story.Segments[lbxSegments.SelectedIndex].AddParameter("Direction", cbxChangePlayerDirDirection.SelectedIndex.ToString());
         }
 
-        public void LoadChangePlayerDirOptions() {
+        public void LoadChangePlayerDirOptions()
+        {
             cmbSegmentTypes.SelectItem(story.Segments[lbxSegments.SelectedIndex].Action.ToString());
             cbxChangePlayerDirDirection.SelectItem(story.Segments[lbxSegments.SelectedIndex].Parameters.GetValue("Direction").ToInt());
         }
@@ -2913,13 +3088,15 @@ namespace Client.Logic.Windows.Editors
         //    return nudActiveSegment.Value - 1;
         //}
 
-        void HideIfLoaded(Panel pnl) {
+        void HideIfLoaded(Panel pnl)
+        {
             if (pnl != null)
                 pnl.Hide();
         }
 
         #region General
-        void btnSegments_Click(object sender, MouseButtonEventArgs e) {
+        void btnSegments_Click(object sender, MouseButtonEventArgs e)
+        {
             pnlEditorGeneral.Hide();
             pnlEditorSegments.Show();
             this.Size = pnlEditorSegments.Size;
@@ -2927,15 +3104,16 @@ namespace Client.Logic.Windows.Editors
         #endregion
 
         #region Segments
-        void btnGeneral_Click(object sender, MouseButtonEventArgs e) {
+        void btnGeneral_Click(object sender, MouseButtonEventArgs e)
+        {
             pnlEditorGeneral.Show();
             pnlEditorSegments.Hide();
             this.Size = pnlEditorGeneral.Size;
         }
         #endregion
 
-        public void LoadStory(string[] parse) {
-
+        public void LoadStory(string[] parse)
+        {
             pnlStoryList.Visible = false;
             pnlEditorGeneral.Visible = true;
             this.Size = new System.Drawing.Size(pnlEditorGeneral.Width, pnlEditorGeneral.Height);
@@ -2946,12 +3124,14 @@ namespace Client.Logic.Windows.Editors
             story.StoryStart = parse[4].ToInt();
             //story.Segments = new Logic.Editors.Stories.EditableStorySegment[parse[5].ToInt()];
             int n = 6;
-            for (int i = 0; i < parse[5].ToInt(); i++) {
+            for (int i = 0; i < parse[5].ToInt(); i++)
+            {
                 int paramCount = parse[n].ToInt();
                 Logic.Editors.Stories.EditableStorySegment segment = new Logic.Editors.Stories.EditableStorySegment();
                 segment.Action = (Enums.StoryAction)parse[n + 1].ToInt();
                 n += 2;
-                for (int z = 0; z < paramCount; z++) {
+                for (int z = 0; z < paramCount; z++)
+                {
                     segment.AddParameter(parse[n], parse[n + 1]);
 
                     n += 2;
@@ -2960,7 +3140,8 @@ namespace Client.Logic.Windows.Editors
             }
             int exitAndContinueCount = parse[n].ToInt();
             n++;
-            for (int i = 0; i < exitAndContinueCount; i++) {
+            for (int i = 0; i < exitAndContinueCount; i++)
+            {
                 story.ExitAndContinue.Add(parse[n].ToInt());
 
                 n += 1;
@@ -2978,42 +3159,55 @@ namespace Client.Logic.Windows.Editors
             //nudActiveSegment.Maximum = nudMaxSegments.Value;
             nudExitAndContinueCheckpoint.Maximum = story.Segments.Count;
             lbxExitAndContinue.Items.Clear();
-            for (int i = 0; i < story.ExitAndContinue.Count; i++) {
+            for (int i = 0; i < story.ExitAndContinue.Count; i++)
+            {
                 lbxExitAndContinue.Items.Add(new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), story.ExitAndContinue[i].ToString()));
             }
 
             btnEdit.Text = "Edit";
         }
 
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshStoryList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen < (MaxInfo.MaxMoves / 10)) {
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < (MaxInfo.MaxMoves / 10))
+            {
                 currentTen++;
             }
             RefreshStoryList();
         }
 
-        public void RefreshStoryList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < MaxInfo.MaxStories) {
+        public void RefreshStoryList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < MaxInfo.MaxStories)
+                {
                     ((ListBoxTextItem)lbxStoryList.Items[i]).Text = (((i + 1) + 10 * currentTen) + ": " + Stories.StoryHelper.Stories[(i) + 10 * currentTen].Name);
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxStoryList.Items[i]).Text = "---";
                 }
             }
         }
 
 
-        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxStoryList.SelectedItems.Count == 1) {
+        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxStoryList.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxStoryList.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     storyNum = index[0].ToInt() - 1;
                     btnEdit.Text = "Loading...";
                 }
@@ -3022,20 +3216,22 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             return;
         }
 
-        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             storyNum = -1;
             pnlEditorGeneral.Visible = false;
             pnlStoryList.Visible = true;
             this.Size = new System.Drawing.Size(pnlStoryList.Width, pnlStoryList.Height);
-
         }
 
-        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             story.Name = txtName.Text;
             story.StoryStart = nudStoryStart.Value;
 
@@ -3044,8 +3240,6 @@ namespace Client.Logic.Windows.Editors
             pnlEditorGeneral.Visible = false;
             pnlStoryList.Visible = true;
             this.Size = new System.Drawing.Size(pnlStoryList.Width, pnlStoryList.Height);
-
-
         }
     }
 }

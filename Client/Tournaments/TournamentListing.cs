@@ -28,19 +28,23 @@ namespace Client.Logic.Tournaments
         string name;
         string mainAdmin;
 
-        public string Name {
+        public string Name
+        {
             get { return name; }
         }
 
-        public string TournamentID {
+        public string TournamentID
+        {
             get { return tournamentID; }
         }
 
-        public string MainAdmin {
-            get { return this.mainAdmin; }
+        public string MainAdmin
+        {
+            get { return mainAdmin; }
         }
 
-        public TournamentListing(string name, string tournamentID, string mainAdmin) {
+        public TournamentListing(string name, string tournamentID, string mainAdmin)
+        {
             this.name = name;
             this.tournamentID = tournamentID;
             this.mainAdmin = mainAdmin;

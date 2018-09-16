@@ -37,7 +37,8 @@ namespace Client.Logic.Windows
         int charSlot;
 
         public winNewCharacter(int charSlot)
-            : base("winNewCharacter") {
+            : base("winNewCharacter")
+        {
             this.charSlot = charSlot;
 
             this.Windowed = true;
@@ -64,7 +65,7 @@ namespace Client.Logic.Windows
             lblCreateChar.Location = new Point(40, 130);
             lblCreateChar.AutoSize = true;
             lblCreateChar.Text = "Create Character";
-            lblCreateChar.Click +=new EventHandler<MouseButtonEventArgs>(lblCreateChar_Click);
+            lblCreateChar.Click += new EventHandler<MouseButtonEventArgs>(lblCreateChar_Click);
 
             lblBack = new Label("btnBack");
             lblBack.Font = Graphics.FontManager.LoadFont("PMDCP", 18);
@@ -98,13 +99,15 @@ namespace Client.Logic.Windows
             this.LoadComplete();
         }
 
-        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             Messenger.SendCharListRequest();
         }
 
         //This is made not to decide rather the player is male or female, but only for sending the new name.
-        void lblCreateChar_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblCreateChar_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             string name = txtName.Text;
             Enums.Sex sex = Enums.Sex.Male;
             if (optFemale.Checked) sex = Enums.Sex.Female;

@@ -31,7 +31,8 @@ namespace Client.Logic.Dungeons
 
         #region Constructors
 
-        internal DungeonCollection() {
+        internal DungeonCollection()
+        {
             mDungeons = new PMDCP.Core.ListPair<int, Dungeon>();
         }
 
@@ -39,7 +40,8 @@ namespace Client.Logic.Dungeons
 
         #region Indexers
 
-        public Dungeon this[int index] {
+        public Dungeon this[int index]
+        {
             get { return mDungeons[index]; }
             set { mDungeons[index] = value; }
         }
@@ -48,11 +50,13 @@ namespace Client.Logic.Dungeons
 
         #region Methods
 
-        public void AddDungeon(int index, Dungeon RDungeonToAdd) {
+        public void AddDungeon(int index, Dungeon RDungeonToAdd)
+        {
             mDungeons.Add(index, RDungeonToAdd);
         }
 
-        public void ClearDungeons() {
+        public void ClearDungeons()
+        {
             mDungeons.Clear();
         }
 

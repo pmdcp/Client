@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.IO
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// 
     /// </summary>
@@ -32,14 +31,16 @@ namespace Client.Logic.IO
         /// <summary>
         /// Initializes the IO class
         /// </summary>
-        public static void Init() {
+        public static void Init()
+        {
             Paths.Initialize();
         }
 
         /// <summary>
         /// Checks if the game folders exist, and creates the ones that dont exist.
         /// </summary>
-        public static void CheckFolders() {
+        public static void CheckFolders()
+        {
             CreateDir(Paths.MapPath);
             CreateDir(Paths.GfxPath);
             CreateDir(Paths.SfxPath);
@@ -52,8 +53,10 @@ namespace Client.Logic.IO
         /// Creates a directory.
         /// </summary>
         /// <param name="dir">The directory.</param>
-        public static void CreateDir(string dir) {
-            if (DirExists(dir) == false) {
+        public static void CreateDir(string dir)
+        {
+            if (DirExists(dir) == false)
+            {
                 System.IO.Directory.CreateDirectory(Paths.CreateOSPath(dir));
             }
         }
@@ -63,7 +66,8 @@ namespace Client.Logic.IO
         /// </summary>
         /// <param name="dir">The directory to check.</param>
         /// <returns>True if the directory exists; otherwise, false.</returns>
-        public static bool DirExists(string dir) {
+        public static bool DirExists(string dir)
+        {
             return System.IO.Directory.Exists(Paths.CreateOSPath(dir));
         }
 
@@ -72,7 +76,8 @@ namespace Client.Logic.IO
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns>True if the file exists; otherwise, false.</returns>
-        public static bool FileExists(string fileName) {
+        public static bool FileExists(string fileName)
+        {
             return System.IO.File.Exists(Paths.CreateOSPath(fileName));
         }
 
@@ -81,7 +86,8 @@ namespace Client.Logic.IO
         /// </summary>
         /// <param name="filename">The filename. (without directory name)</param>
         /// <returns></returns>
-        public static string GetGfxPath(string filename) {
+        public static string GetGfxPath(string filename)
+        {
             return Paths.CreateOSPath(Paths.GfxPath + filename);
         }
 

@@ -26,10 +26,12 @@ namespace Client.Logic.Events
     {
         int newSlot;
 
-        public int NewSlot {
+        public int NewSlot
+        {
             get { return newSlot; }
         }
-        public ActiveRecruitChangedEventArgs(int newSlot) {
+        public ActiveRecruitChangedEventArgs(int newSlot)
+        {
             this.newSlot = newSlot;
         }
     }

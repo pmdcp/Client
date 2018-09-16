@@ -38,36 +38,43 @@ namespace Client.Logic.Players.Mail
 
         #region Properties
 
-        public InventoryItem AttachedItem {
+        public InventoryItem AttachedItem
+        {
             get { return attachedItem; }
             set { attachedItem = value; }
         }
 
-        public string RecieverID {
+        public string RecieverID
+        {
             get { return recieverID; }
             set { recieverID = value; }
         }
 
-        public string SenderID {
+        public string SenderID
+        {
             get { return senderID; }
             set { senderID = value; }
         }
 
-        public string Text {
+        public string Text
+        {
             get { return text; }
             set { text = value; }
         }
 
-        public string Title {
+        public string Title
+        {
             get { return title; }
             set { title = value; }
         }
 
-        public MailType Type {
+        public MailType Type
+        {
             get { return MailType.Message; }
         }
 
-        public bool Unread {
+        public bool Unread
+        {
             get;
             set;
         }
@@ -75,24 +82,26 @@ namespace Client.Logic.Players.Mail
         #endregion Properties
 
 
-        public SdlDotNet.Widgets.Panel MailInterfacePanel {
-            get {
+        public SdlDotNet.Widgets.Panel MailInterfacePanel
+        {
+            get
+            {
                 CheckMailInterfacePanel();
                 return pnlMailInterface;
             }
         }
 
-        private void CheckMailInterfacePanel() {
-            if (pnlMailInterface == null) {
-
+        private void CheckMailInterfacePanel()
+        {
+            if (pnlMailInterface == null)
+            {
             }
         }
 
-        private void CreateMailInterfacePanel() {
+        private void CreateMailInterfacePanel()
+        {
             pnlMailInterface = new Panel("pnlMailInterface");
             pnlMailInterface.Size = new System.Drawing.Size(300, 400);
-
-
         }
     }
 }

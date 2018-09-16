@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic.Moves
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using PMDCP.Core;
-
     class MoveHelper
     {
         #region Fields
@@ -55,9 +54,11 @@ namespace Client.Logic.Moves
 
         public static void LoadMovesFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n = 1;
-                for (int i = 1; i <= MaxInfo.MaxMoves; i++) {
+                for (int i = 1; i <= MaxInfo.MaxMoves; i++)
+                {
                     dataLoadPercent = System.Math.Min(99, Logic.MathFunctions.CalculatePercent(i, MaxInfo.MaxMoves));
                     mMoves[i] = new Move();
                     mMoves[i].Name = parse[n + 1];
@@ -70,7 +71,9 @@ namespace Client.Logic.Moves
                     ((Windows.winLoading)Windows.WindowSwitcher.FindWindow("winLoading")).UpdateLoadText("Recieving Data... " + DataManager.AverageLoadPercent().ToString() + "%");
                 }
                 dataLoadPercent = 100;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }

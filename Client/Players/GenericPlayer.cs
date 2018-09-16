@@ -25,16 +25,19 @@ namespace Client.Logic.Players
 {
     class GenericPlayer : IPlayer
     {
-        public PlayerType PlayerType {
+        public PlayerType PlayerType
+        {
             get { return Players.PlayerType.Generic; }
         }
 
-        public Logic.Graphics.SpriteSheet SpriteSheet {
+        public Logic.Graphics.SpriteSheet SpriteSheet
+        {
             get;
             set;
         }
 
-        public string Name {
+        public string Name
+        {
             get;
             set;
         }
@@ -44,42 +47,50 @@ namespace Client.Logic.Players
         public int LastWalkTime { get; set; }
         public int WalkingFrame { get; set; }
 
-        public string MapID {
+        public string MapID
+        {
             get;
             set;
         }
 
-        public int X {
+        public int X
+        {
             get { return Location.X; }
             set { Location = new Point(value, Location.Y); }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return Location.Y; }
             set { Location = new Point(Location.X, value); }
         }
 
-        public Point Location {
+        public Point Location
+        {
             get;
             set;
         }
 
-        public string Guild {
+        public string Guild
+        {
             get;
             set;
         }
 
-        public Enums.GuildRank GuildAccess {
+        public Enums.GuildRank GuildAccess
+        {
             get;
             set;
         }
 
-        public string Status {
+        public string Status
+        {
             get;
             set;
         }
 
-        public int Sprite {
+        public int Sprite
+        {
             get;
             set;
         }
@@ -87,34 +98,39 @@ namespace Client.Logic.Players
         public Enums.Coloration Shiny { get; set; }
         public Enums.Sex Sex { get; set; }
 
-        public bool Hunted {
+        public bool Hunted
+        {
             get;
             set;
         }
 
-        public bool Dead {
+        public bool Dead
+        {
             get;
             set;
         }
 
-        public Enums.Rank Access {
+        public Enums.Rank Access
+        {
             get;
             set;
         }
 
-        public Enums.Direction Direction {
+        public Enums.Direction Direction
+        {
             get;
             set;
         }
 
-        public string ID {
+        public string ID
+        {
             get;
             set;
         }
 
         public Enums.MovementSpeed MovementSpeed { get; set; }
 
-        
+
         public Enums.StatusAilment StatusAilment { get; set; }
 
         public List<int> VolatileStatus
@@ -123,13 +139,15 @@ namespace Client.Logic.Players
             set;
         }
 
-        public bool Attacking {
+        public bool Attacking
+        {
             get;
             set;
         }
         public int TotalAttackTime { get; set; }
 
-        public int AttackTimer {
+        public int AttackTimer
+        {
             get;
             set;
         }
@@ -146,12 +164,14 @@ namespace Client.Logic.Players
 
         public bool ScreenActive { get; set; }
 
-        public int SleepTimer {
+        public int SleepTimer
+        {
             get;
             set;
         }
 
-        public int SleepFrame {
+        public int SleepFrame
+        {
             get;
             set;
         }
@@ -163,7 +183,8 @@ namespace Client.Logic.Players
 
         public PlayerPet[] Pets { get; set; }
 
-        public GenericPlayer() {
+        public GenericPlayer()
+        {
             Pets = new PlayerPet[MaxInfo.MAX_ACTIVETEAM];
             VolatileStatus = new List<int>();
         }

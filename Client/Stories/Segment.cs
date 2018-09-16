@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using PMDCP.Core;
+using Client.Logic.Stories.Segments;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,38 +22,38 @@
 
 namespace Client.Logic.Stories
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using PMDCP.Core;
-    using Client.Logic.Stories.Segments;
-
     class Segment
     {
         ListPair<string, string> parameters;
 
-        public Segment() {
+        public Segment()
+        {
             parameters = new ListPair<string, string>();
         }
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get;
             set;
         }
 
-        public ListPair<string, string> Parameters {
+        public ListPair<string, string> Parameters
+        {
             get { return parameters; }
         }
 
-        public void AddParameter(string paramID, string value) {
+        public void AddParameter(string paramID, string value)
+        {
             parameters.Add(paramID, value);
         }
 
-        public ISegment ToSpecific() {
+        public ISegment ToSpecific()
+        {
             ISegment specific = null;
-            switch (Action) {
+            switch (Action)
+            {
                 case Enums.StoryAction.Say:
                     specific = new SaySegment();
                     break;
@@ -122,11 +127,11 @@ namespace Client.Logic.Stories
                     specific = new ChangePlayerDirectionSegment();
                     break;
             }
-            if (specific != null) {
+            if (specific != null)
+            {
                 specific.LoadFromSegmentData(parameters);
             }
             return specific;
-
         }
 
         #endregion Properties

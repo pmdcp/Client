@@ -36,7 +36,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether the client will auto save.
         /// </summary>
         /// <value><c>true</c> if the client will auto save; otherwise, <c>false</c>.</value>
-        public static bool AutoSave {
+        public static bool AutoSave
+        {
             get;
             set;
         }
@@ -44,7 +45,8 @@ namespace Client.Logic.IO
         /// <summary>
         /// gets or sets whether or not to ask for ping
         /// </summary>
-        public static bool Ping {
+        public static bool Ping
+        {
             get;
             set;
         }
@@ -52,7 +54,8 @@ namespace Client.Logic.IO
         /// <summary>
         /// gets or sets whether or not to ask for FPS
         /// </summary>
-        public static bool FPS {
+        public static bool FPS
+        {
             get;
             set;
         }
@@ -61,7 +64,8 @@ namespace Client.Logic.IO
         /// Gets or sets the auto save speed.
         /// </summary>
         /// <value>The auto save speed.</value>
-        public static int AutoSaveSpeed {
+        public static int AutoSaveSpeed
+        {
             get;
             set;
         }
@@ -70,7 +74,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether the client will auto scroll.
         /// </summary>
         /// <value><c>true</c> if the client will auto scroll; otherwise, <c>false</c>.</value>
-        public static bool AutoScroll {
+        public static bool AutoScroll
+        {
             get;
             set;
         }
@@ -107,7 +112,8 @@ namespace Client.Logic.IO
         /// Gets or sets the connection port.
         /// </summary>
         /// <value>The connection port.</value>
-        public static int ConnectionPort {
+        public static int ConnectionPort
+        {
             get;
             set;
         }
@@ -116,22 +122,26 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether [map grid].
         /// </summary>
         /// <value><c>true</c> if [map grid]; otherwise, <c>false</c>.</value>
-        public static bool MapGrid {
+        public static bool MapGrid
+        {
             get;
             set;
         }
 
-        public static bool DisplayAttributes {
+        public static bool DisplayAttributes
+        {
             get;
             set;
         }
 
-        public static bool DisplayDungeonValues {
+        public static bool DisplayDungeonValues
+        {
             get;
             set;
         }
 
-        public static bool DragAndPlace {
+        public static bool DragAndPlace
+        {
             get;
             set;
         }
@@ -140,7 +150,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether music is enabled.
         /// </summary>
         /// <value><c>true</c> if music is enabled; otherwise, <c>false</c>.</value>
-        public static bool Music {
+        public static bool Music
+        {
             get;
             set;
         }
@@ -149,7 +160,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether NPC bar's are enabled.
         /// </summary>
         /// <value><c>true</c> if NPC bar's are enabled; otherwise, <c>false</c>.</value>
-        public static bool NpcBar {
+        public static bool NpcBar
+        {
             get;
             set;
         }
@@ -158,7 +170,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether NPC damage is displayed.
         /// </summary>
         /// <value><c>true</c> if NPC damage is displayed; otherwise, <c>false</c>.</value>
-        public static bool NpcDamage {
+        public static bool NpcDamage
+        {
             get;
             set;
         }
@@ -167,7 +180,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether NPC name's are displayed.
         /// </summary>
         /// <value><c>true</c> if NPC name's are displayed; otherwise, <c>false</c>.</value>
-        public static bool NpcName {
+        public static bool NpcName
+        {
             get;
             set;
         }
@@ -176,7 +190,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether the player health bar is displayed.
         /// </summary>
         /// <value><c>true</c> if the player health bar is displayed; otherwise, <c>false</c>.</value>
-        public static bool PlayerBar {
+        public static bool PlayerBar
+        {
             get;
             set;
         }
@@ -185,7 +200,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether the player's damage is displayed.
         /// </summary>
         /// <value><c>true</c> if the player's damage is displayed; otherwise, <c>false</c>.</value>
-        public static bool PlayerDamage {
+        public static bool PlayerDamage
+        {
             get;
             set;
         }
@@ -194,7 +210,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether the player's name is displayed.
         /// </summary>
         /// <value><c>true</c> if the player's name is displayed; otherwise, <c>false</c>.</value>
-        public static bool PlayerName {
+        public static bool PlayerName
+        {
             get;
             set;
         }
@@ -203,7 +220,8 @@ namespace Client.Logic.IO
         /// Gets or sets the saved account.
         /// </summary>
         /// <value>The saved account.</value>
-        public static string SavedAccount {
+        public static string SavedAccount
+        {
             get;
             set;
         }
@@ -212,7 +230,8 @@ namespace Client.Logic.IO
         /// Gets or sets the saved password.
         /// </summary>
         /// <value>The saved password.</value>
-        public static string SavedPassword {
+        public static string SavedPassword
+        {
             get;
             set;
         }
@@ -221,7 +240,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether sound is enabled.
         /// </summary>
         /// <value><c>true</c> if sound is enabled; otherwise, <c>false</c>.</value>
-        public static bool Sound {
+        public static bool Sound
+        {
             get;
             set;
         }
@@ -230,7 +250,8 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether speech bubbles are enabled.
         /// </summary>
         /// <value><c>true</c> if speech bubbles are enabled; otherwise, <c>false</c>.</value>
-        public static bool SpeechBubbles {
+        public static bool SpeechBubbles
+        {
             get;
             set;
         }
@@ -239,12 +260,14 @@ namespace Client.Logic.IO
         /// Gets or sets a value indicating whether timestamps are enabled.
         /// </summary>
         /// <value><c>true</c> if timestamps are enabled; otherwise, <c>false</c>.</value>
-        public static bool Timestamps {
+        public static bool Timestamps
+        {
             get;
             set;
         }
 
-        public static string ActiveSkin {
+        public static string ActiveSkin
+        {
             get;
             set;
         }
@@ -255,9 +278,10 @@ namespace Client.Logic.IO
 
         #region Methods
 
-        public static void Initialize() {
-            XmlWriterSettings = new System.Xml.XmlWriterSettings();   
-            XmlWriterSettings.OmitXmlDeclaration = false; 
+        public static void Initialize()
+        {
+            XmlWriterSettings = new System.Xml.XmlWriterSettings();
+            XmlWriterSettings.OmitXmlDeclaration = false;
             XmlWriterSettings.IndentChars = "  ";
             XmlWriterSettings.Indent = true;
             XmlWriterSettings.NewLineChars = System.Environment.NewLine;
@@ -266,76 +290,99 @@ namespace Client.Logic.IO
         /// <summary>
         /// Loads the options.
         /// </summary>
-        public static void LoadOptions() {
-            if (IO.FileExists(Paths.CreateOSPath("settings.xml")) == false) {
+        public static void LoadOptions()
+        {
+            if (IO.FileExists(Paths.CreateOSPath("settings.xml")) == false)
+            {
                 SaveXml();
             }
-            try {
-                using (XmlReader reader = XmlReader.Create(Paths.CreateOSPath("settings.xml"))) {
-                    while (reader.Read()) {
-                        if (reader.IsStartElement()) {
-                            switch (reader.Name) {
-                                case "AutoSave": {
+            try
+            {
+                using (XmlReader reader = XmlReader.Create(Paths.CreateOSPath("settings.xml")))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.IsStartElement())
+                        {
+                            switch (reader.Name)
+                            {
+                                case "AutoSave":
+                                    {
                                         AutoSave = reader.ReadString().ToBool();
                                     }
                                     break;
-                                case "AutoSaveSpeed": {
+                                case "AutoSaveSpeed":
+                                    {
                                         AutoSaveSpeed = reader.ReadString().ToInt();
                                     }
                                     break;
-                                case "AutoScroll": {
+                                case "AutoScroll":
+                                    {
                                         AutoScroll = reader.ReadString().ToBool();
                                     }
                                     break;
-                                case "Music": {
+                                case "Music":
+                                    {
                                         Music = reader.ReadString().ToBool();
                                     }
                                     break;
-                                case "NpcBar": {
+                                case "NpcBar":
+                                    {
                                         NpcBar = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "NpcDamage": {
+                                case "NpcDamage":
+                                    {
                                         NpcDamage = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "NpcName": {
+                                case "NpcName":
+                                    {
                                         NpcName = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "PlayerBar": {
+                                case "PlayerBar":
+                                    {
                                         PlayerBar = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "PlayerDamage": {
+                                case "PlayerDamage":
+                                    {
                                         PlayerDamage = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "PlayerName": {
+                                case "PlayerName":
+                                    {
                                         PlayerName = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "SavedAccount": {
+                                case "SavedAccount":
+                                    {
                                         SavedAccount = reader.ReadString();
                                     }
                                     break;
-                                case "SavedPassword": {
+                                case "SavedPassword":
+                                    {
                                         SavedPassword = reader.ReadString();
                                     }
                                     break;
-                                case "Sound": {
+                                case "Sound":
+                                    {
                                         Sound = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "SpeechBubbles": {
+                                case "SpeechBubbles":
+                                    {
                                         SpeechBubbles = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "Timestamps": {
+                                case "Timestamps":
+                                    {
                                         Timestamps = reader.ReadString().ToBool();
                                     }
                                     break;
-                                case "Port": {
+                                case "Port":
+                                    {
                                         ConnectionPort = reader.ReadString().ToInt(4001);
                                     }
                                     break;
@@ -359,19 +406,23 @@ namespace Client.Logic.IO
                                         SoundAddress = reader.ReadString();
                                     }
                                     break;
-                                case "MapGrid": {
+                                case "MapGrid":
+                                    {
                                         MapGrid = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "DisplayAttributes": {
+                                case "DisplayAttributes":
+                                    {
                                         DisplayAttributes = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "DragAndPlace": {
+                                case "DragAndPlace":
+                                    {
                                         DragAndPlace = reader.ReadString().ToBool(true);
                                     }
                                     break;
-                                case "ActiveSkin": {
+                                case "ActiveSkin":
+                                    {
                                         ActiveSkin = reader.ReadString();
                                     }
                                     break;
@@ -379,7 +430,9 @@ namespace Client.Logic.IO
                         }
                     }
                 }
-            } catch (XmlException) {
+            }
+            catch (XmlException)
+            {
                 // Fix for root element missing errors
                 SaveXml();
             }
@@ -387,10 +440,12 @@ namespace Client.Logic.IO
             // Verify all options are correct
             if (AutoSaveSpeed < 0 /*|| AutoSaveSpeed > 10*/)
                 AutoSaveSpeed = 0;
-            if (ConnectionPort == 0) {
+            if (ConnectionPort == 0)
+            {
                 ConnectionPort = 4001;
             }
-            if (string.IsNullOrEmpty(ActiveSkin)) {
+            if (string.IsNullOrEmpty(ActiveSkin))
+            {
                 ActiveSkin = "Main Theme";
             }
             // TODO: Remove when unneeded (Autoswitch to localhost server if compiled under DEBUG)
@@ -402,8 +457,10 @@ namespace Client.Logic.IO
         /// <summary>
         /// Saves the XML document.
         /// </summary>
-        public static void SaveXml() {
-            using (XmlWriter writer = XmlWriter.Create(Paths.CreateOSPath("settings.xml"), XmlWriterSettings)) {
+        public static void SaveXml()
+        {
+            using (XmlWriter writer = XmlWriter.Create(Paths.CreateOSPath("settings.xml"), XmlWriterSettings))
+            {
                 writer.WriteStartDocument();
                 writer.WriteStartElement("Options");
 
@@ -449,11 +506,16 @@ namespace Client.Logic.IO
             }
         }
 
-        public static void UpdateActiveOptions() {
-            if (Music == false) {
+        public static void UpdateActiveOptions()
+        {
+            if (Music == false)
+            {
                 Logic.Music.Music.AudioPlayer.StopMusic();
-            } else {
-                if (Maps.MapHelper.ActiveMap != null) {
+            }
+            else
+            {
+                if (Maps.MapHelper.ActiveMap != null)
+                {
                     //Logic.Music.Music.AudioPlayer.PlayMusic(Maps.MapHelper.ActiveMap.Music);
                     ((Client.Logic.Music.Bass.BassAudioPlayer)Logic.Music.Music.AudioPlayer).FadeToNext(Maps.MapHelper.ActiveMap.Music, 1000);
                 }

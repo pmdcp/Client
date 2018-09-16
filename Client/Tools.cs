@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows.Forms;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Forms;
-
     /// <summary>
     /// Provides misc. methods
     /// </summary>
@@ -71,14 +70,15 @@ namespace Client.Logic
         {
             MessageBox(Constants.GameName, text, MessageBoxButtons.OK, MessageBoxIcon.None);
         }
-        
+
         /// <summary>
         /// Crops a surface from the specified surface.
         /// </summary>
         /// <param name="surfaceToCrop">The surface to crop.</param>
         /// <param name="cropRectangle">The rectangle bounds to crop.</param>
         /// <returns>The cropped surface.</returns>
-        public static SdlDotNet.Graphics.Surface CropImage(SdlDotNet.Graphics.Surface surfaceToCrop, System.Drawing.Rectangle cropRectangle) {
+        public static SdlDotNet.Graphics.Surface CropImage(SdlDotNet.Graphics.Surface surfaceToCrop, System.Drawing.Rectangle cropRectangle)
+        {
             SdlDotNet.Graphics.Surface returnSurf = new SdlDotNet.Graphics.Surface(cropRectangle.Size);
             returnSurf.Transparent = surfaceToCrop.Transparent;
             //returnSurf.Fill(System.Drawing.Color.Transparent);
@@ -86,20 +86,21 @@ namespace Client.Logic
             returnSurf.Blit(surfaceToCrop, new System.Drawing.Point(0, 0), cropRectangle);
             return returnSurf;
         }
-        
+
         /// <summary>
         /// Combines two surfaces together.
         /// </summary>
         /// <param name="bottomImage">The surface that will be used as the background.</param>
         /// <param name="topImage">The surface that will be used as the foreground.</param>
         /// <returns>The combined surface.</returns>
-        public static SdlDotNet.Graphics.Surface CombineImage(SdlDotNet.Graphics.Surface bottomImage, SdlDotNet.Graphics.Surface topImage) {
+        public static SdlDotNet.Graphics.Surface CombineImage(SdlDotNet.Graphics.Surface bottomImage, SdlDotNet.Graphics.Surface topImage)
+        {
             SdlDotNet.Graphics.Surface returnSurf = new SdlDotNet.Graphics.Surface(new System.Drawing.Size(System.Math.Max(bottomImage.Width, topImage.Width), System.Math.Max(bottomImage.Height, topImage.Height)));
             returnSurf.Blit(bottomImage, new System.Drawing.Point(0, 0));
             returnSurf.Blit(topImage, new System.Drawing.Point(0, 0));
             return returnSurf;
         }
-        
+
         #endregion Methods
     }
 }

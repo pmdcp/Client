@@ -48,13 +48,12 @@ namespace Client.Logic.Menus
 
         public List<Players.InventoryItem> BankItems
         {
-
             get;
             set;
         }
-        
-        public List<int> SortedItems {
 
+        public List<int> SortedItems
+        {
             get;
             set;
         }
@@ -65,7 +64,7 @@ namespace Client.Logic.Menus
             get { return this; }
         }
 
-        
+
 
         public mnuBank(string name, int itemSelected)
             : base(name)
@@ -75,8 +74,8 @@ namespace Client.Logic.Menus
             base.Location = new Point(10, 32);
 
             currentTen = itemSelected / 10;
-            
-            
+
+
 
             itemPicker = new Widgets.MenuItemPicker("itemPicker");
             itemPicker.Location = new Point(18, 63);
@@ -114,7 +113,7 @@ namespace Client.Logic.Menus
             btnFind.Font = Graphics.FontManager.LoadFont("PMDCP", 16);
             btnFind.Text = "Find";
             Skins.SkinManager.LoadButtonGui(btnFind);
-            btnFind.Click +=new EventHandler<MouseButtonEventArgs>(btnFind_Click);
+            btnFind.Click += new EventHandler<MouseButtonEventArgs>(btnFind_Click);
 
             lblVisibleItems = new Label[10];
             for (int i = 0; i < lblVisibleItems.Length; i++)
@@ -139,20 +138,18 @@ namespace Client.Logic.Menus
             this.AddWidget(itemPicker);
 
             tempSelected = itemSelected % 10;
-                //DisplayItems(currentTen * 10 + 1);
-                //ChangeSelected((itemSelected - 1) % 10);
-                //UpdateSelectedItemInfo();
-                //loaded = true;
+            //DisplayItems(currentTen * 10 + 1);
+            //ChangeSelected((itemSelected - 1) % 10);
+            //UpdateSelectedItemInfo();
+            //loaded = true;
             lblVisibleItems[0].Text = "Loading...";
-            
-            
         }
 
         public void LoadBankItems(string[] parse)
         {
             BankItems = new List<Players.InventoryItem>();
             int maxBank = (parse.Length - 1) / 2;
-            
+
             for (int i = 1; i <= maxBank; i++)
             {
                 Players.InventoryItem invItem = new Players.InventoryItem();
@@ -161,7 +158,6 @@ namespace Client.Logic.Menus
                 invItem.Value = parse[(i - 1) * 2 + 2].ToInt();
 
                 BankItems.Add(invItem);
-                
             }
             DisplayItems(currentTen * 10);
             ChangeSelected(tempSelected);
@@ -169,20 +165,27 @@ namespace Client.Logic.Menus
             loaded = true;
         }
 
-        void btnFind_Click(object sender, MouseButtonEventArgs e) {
-            if (SortedItems == null) {
-                if (txtFind.Text.Trim() != "") {
+        void btnFind_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (SortedItems == null)
+            {
+                if (txtFind.Text.Trim() != "")
+                {
                     SortedItems = new List<int>();
 
-                    for (int i = 0; i < BankItems.Count; i++) {
-                        if (BankItems[i].Num > 0 && Items.ItemHelper.Items[BankItems[i].Num].Name.ToLower().Contains(txtFind.Text.ToLower())) {
+                    for (int i = 0; i < BankItems.Count; i++)
+                    {
+                        if (BankItems[i].Num > 0 && Items.ItemHelper.Items[BankItems[i].Num].Name.ToLower().Contains(txtFind.Text.ToLower()))
+                        {
                             SortedItems.Add(i);
                         }
                     }
 
                     btnFind.Text = "Cancel";
                 }
-            } else {
+            }
+            else
+            {
                 SortedItems = null;
                 btnFind.Text = "Find";
             }
@@ -196,12 +199,15 @@ namespace Client.Logic.Menus
         {
             if (loaded)
             {
-                if (SortedItems == null) {
-                    if (BankItems[currentTen * 10 + Array.IndexOf(lblVisibleItems, sender)].Num > 0) {
+                if (SortedItems == null)
+                {
+                    if (BankItems[currentTen * 10 + Array.IndexOf(lblVisibleItems, sender)].Num > 0)
+                    {
                         ChangeSelected(Array.IndexOf(lblVisibleItems, sender));
 
                         mnuBankItemSelected selectedMenu = (mnuBankItemSelected)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBankItemSelected");
-                        if (selectedMenu != null) {
+                        if (selectedMenu != null)
+                        {
                             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(selectedMenu);
                             //selectedMenu.ItemSlot = GetSelectedItemSlot();
                             //selectedMenu.ItemNum = BankItems[GetSelectedItemSlot()].Num;
@@ -211,12 +217,16 @@ namespace Client.Logic.Menus
 
                         UpdateSelectedItemInfo();
                     }
-                } else {
-                    if (currentTen * 10 + Array.IndexOf(lblVisibleItems, sender) < SortedItems.Count && BankItems[SortedItems[currentTen * 10 + Array.IndexOf(lblVisibleItems, sender)]].Num > 0) {
+                }
+                else
+                {
+                    if (currentTen * 10 + Array.IndexOf(lblVisibleItems, sender) < SortedItems.Count && BankItems[SortedItems[currentTen * 10 + Array.IndexOf(lblVisibleItems, sender)]].Num > 0)
+                    {
                         ChangeSelected(Array.IndexOf(lblVisibleItems, sender));
 
                         mnuBankItemSelected selectedMenu = (mnuBankItemSelected)Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuBankItemSelected");
-                        if (selectedMenu != null) {
+                        if (selectedMenu != null)
+                        {
                             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(selectedMenu);
                             //selectedMenu.ItemSlot = GetSelectedItemSlot();
                             //selectedMenu.ItemNum = BankItems[GetSelectedItemSlot()].Num;
@@ -235,42 +245,55 @@ namespace Client.Logic.Menus
             this.BeginUpdate();
             for (int i = 0; i < lblVisibleItems.Length; i++)
             {
-                
                 //withdraw menu; lists bank items
-                if (SortedItems == null) {
-                    if (BankItems[startNum + i].Num > 0) {
+                if (SortedItems == null)
+                {
+                    if (BankItems[startNum + i].Num > 0)
+                    {
                         string itemName = Items.ItemHelper.Items[BankItems[startNum + i].Num].Name;
-                        if (!string.IsNullOrEmpty(itemName)) {
+                        if (!string.IsNullOrEmpty(itemName))
+                        {
                             int itemAmount = BankItems[startNum + i].Value;
-                            if (itemAmount > 0) {
+                            if (itemAmount > 0)
+                            {
                                 itemName += " (" + itemAmount + ")";
                             }
                             lblVisibleItems[i].Text = itemName;
-                        } else {
+                        }
+                        else
+                        {
                             lblVisibleItems[i].Text = "";
                         }
-
-                    } else {
-                        lblVisibleItems[i].Text = "-----";
                     }
-                } else {
-                    if (startNum + i < SortedItems.Count && BankItems[SortedItems[startNum + i]].Num > 0) {
-                        string itemName = Items.ItemHelper.Items[BankItems[SortedItems[startNum + i]].Num].Name;
-                        if (!string.IsNullOrEmpty(itemName)) {
-                            int itemAmount = BankItems[SortedItems[startNum + i]].Value;
-                            if (itemAmount > 0) {
-                                itemName += " (" + itemAmount + ")";
-                            }
-                            lblVisibleItems[i].Text = itemName;
-                        } else {
-                            lblVisibleItems[i].Text = "";
-                        }
-
-                    } else {
+                    else
+                    {
                         lblVisibleItems[i].Text = "-----";
                     }
                 }
-                
+                else
+                {
+                    if (startNum + i < SortedItems.Count && BankItems[SortedItems[startNum + i]].Num > 0)
+                    {
+                        string itemName = Items.ItemHelper.Items[BankItems[SortedItems[startNum + i]].Num].Name;
+                        if (!string.IsNullOrEmpty(itemName))
+                        {
+                            int itemAmount = BankItems[SortedItems[startNum + i]].Value;
+                            if (itemAmount > 0)
+                            {
+                                itemName += " (" + itemAmount + ")";
+                            }
+                            lblVisibleItems[i].Text = itemName;
+                        }
+                        else
+                        {
+                            lblVisibleItems[i].Text = "";
+                        }
+                    }
+                    else
+                    {
+                        lblVisibleItems[i].Text = "-----";
+                    }
+                }
             }
             this.EndUpdate();
         }
@@ -294,23 +317,32 @@ namespace Client.Logic.Menus
         private void UpdateSelectedItemInfo()
         {
             //withdraw; shows bank item
-            if (SortedItems == null) {
-                if (BankItems[GetSelectedItemSlot()].Num > 0) {
+            if (SortedItems == null)
+            {
+                if (BankItems[GetSelectedItemSlot()].Num > 0)
+                {
                     picPreview.Visible = true;
                     picPreview.Image = Tools.CropImage(GraphicsManager.Items, new Rectangle((Items.ItemHelper.Items[BankItems[GetSelectedItemSlot()].Num].Pic - (int)(Items.ItemHelper.Items[BankItems[GetSelectedItemSlot()].Num].Pic / 6) * 6) * Constants.TILE_WIDTH, (int)(Items.ItemHelper.Items[BankItems[GetSelectedItemSlot()].Num].Pic / 6) * Constants.TILE_WIDTH, Constants.TILE_WIDTH, Constants.TILE_HEIGHT));
-                } else {
-                    picPreview.Visible = false;
                 }
-            } else {
-                if (GetSelectedItemSlot() < SortedItems.Count && BankItems[SortedItems[GetSelectedItemSlot()]].Num > 0) {
-                    picPreview.Visible = true;
-                    picPreview.Image = Tools.CropImage(GraphicsManager.Items, new Rectangle((Items.ItemHelper.Items[BankItems[SortedItems[GetSelectedItemSlot()]].Num].Pic - (int)(Items.ItemHelper.Items[BankItems[SortedItems[GetSelectedItemSlot()]].Num].Pic / 6) * 6) * Constants.TILE_WIDTH, (int)(Items.ItemHelper.Items[BankItems[SortedItems[GetSelectedItemSlot()]].Num].Pic / 6) * Constants.TILE_WIDTH, Constants.TILE_WIDTH, Constants.TILE_HEIGHT));
-                } else {
+                else
+                {
                     picPreview.Visible = false;
                 }
             }
-                
-            
+            else
+            {
+                if (GetSelectedItemSlot() < SortedItems.Count && BankItems[SortedItems[GetSelectedItemSlot()]].Num > 0)
+                {
+                    picPreview.Visible = true;
+                    picPreview.Image = Tools.CropImage(GraphicsManager.Items, new Rectangle((Items.ItemHelper.Items[BankItems[SortedItems[GetSelectedItemSlot()]].Num].Pic - (int)(Items.ItemHelper.Items[BankItems[SortedItems[GetSelectedItemSlot()]].Num].Pic / 6) * 6) * Constants.TILE_WIDTH, (int)(Items.ItemHelper.Items[BankItems[SortedItems[GetSelectedItemSlot()]].Num].Pic / 6) * Constants.TILE_WIDTH, Constants.TILE_WIDTH, Constants.TILE_HEIGHT));
+                }
+                else
+                {
+                    picPreview.Visible = false;
+                }
+            }
+
+
             lblItemNum.Text = (currentTen + 1) + "/" + ((BankItems.Count - 1) / 10 + 1);
         }
 
@@ -330,7 +362,6 @@ namespace Client.Logic.Menus
                             }
                             else
                             {
-
                                 ChangeSelected(itemPicker.SelectedItem + 1);
                             }
                             UpdateSelectedItemInfo();
@@ -385,14 +416,19 @@ namespace Client.Logic.Menus
                         break;
                     case SdlDotNet.Input.Key.Return:
                         {
-                            if (SortedItems == null) {
-                                if (BankItems[GetSelectedItemSlot()].Num > 0) {
+                            if (SortedItems == null)
+                            {
+                                if (BankItems[GetSelectedItemSlot()].Num > 0)
+                                {
                                     Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuBankItemSelected("mnuBankItemSelected", BankItems[GetSelectedItemSlot()].Num, BankItems[GetSelectedItemSlot()].Value, GetSelectedItemSlot(), Enums.InvMenuType.Take));
                                     Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuBankItemSelected");
                                     Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                                 }
-                            } else {
-                                if (GetSelectedItemSlot() < SortedItems.Count && BankItems[SortedItems[GetSelectedItemSlot()]].Num > 0) {
+                            }
+                            else
+                            {
+                                if (GetSelectedItemSlot() < SortedItems.Count && BankItems[SortedItems[GetSelectedItemSlot()]].Num > 0)
+                                {
                                     Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuBankItemSelected("mnuBankItemSelected", BankItems[SortedItems[GetSelectedItemSlot()]].Num, BankItems[SortedItems[GetSelectedItemSlot()]].Value, SortedItems[GetSelectedItemSlot()], Enums.InvMenuType.Take));
                                     Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuBankItemSelected");
                                     Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
@@ -402,7 +438,8 @@ namespace Client.Logic.Menus
                         break;
                     case SdlDotNet.Input.Key.Backspace:
                         {
-                            if (!txtFind.Focused) {
+                            if (!txtFind.Focused)
+                            {
                                 Menus.MenuSwitcher.OpenBankOptions();
                                 Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                             }
@@ -411,8 +448,5 @@ namespace Client.Logic.Menus
                 }
             }
         }
-
-        
-
     }
 }

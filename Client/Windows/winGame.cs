@@ -1,4 +1,11 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using Client.Logic.Widgets;
+using Client.Logic.Network;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,14 +25,6 @@
 
 namespace Client.Logic.Windows
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using Client.Logic.Widgets;
-    using Client.Logic.Network;
-
     partial class winGame
     {
         #region Fields
@@ -44,7 +43,8 @@ namespace Client.Logic.Windows
 
         #region Constructors
 
-        public winGame() {
+        public winGame()
+        {
             //this.Windowed = false;
             //this.Size = SdlDotNet.Graphics.Video.Screen.Size;
             //this.Location = new System.Drawing.Point(0, 0);
@@ -112,7 +112,8 @@ namespace Client.Logic.Windows
             //base.Tick += new EventHandler<SdlDotNet.Core.TickEventArgs>(winGame_Tick);
         }
 
-        public void ShowWidgets() {
+        public void ShowWidgets()
+        {
             pnlTeam.Show();
             lblStats.Show();
             mapViewer.Show();
@@ -120,16 +121,22 @@ namespace Client.Logic.Windows
         }
 
         int lastSaveTick = 0;
-        void winGame_Tick(object sender, SdlDotNet.Core.TickEventArgs e) {
-            if (Globals.InGame) {
-                if (IO.Options.AutoSaveSpeed > 0) {
-                    if (e.Tick > lastSaveTick + (100 * 60000 / IO.Options.AutoSaveSpeed)) {
+        void winGame_Tick(object sender, SdlDotNet.Core.TickEventArgs e)
+        {
+            if (Globals.InGame)
+            {
+                if (IO.Options.AutoSaveSpeed > 0)
+                {
+                    if (e.Tick > lastSaveTick + (100 * 60000 / IO.Options.AutoSaveSpeed))
+                    {
                         Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("checkcommands", "/save"));
                         lastSaveTick = e.Tick;
                     }
                 }
-                if (IO.Options.Ping) {
-                    if (e.Tick > tickSinceLastPing + 1000 && !MessageProcessor.PingStopwatch.IsRunning) {
+                if (IO.Options.Ping)
+                {
+                    if (e.Tick > tickSinceLastPing + 1000 && !MessageProcessor.PingStopwatch.IsRunning)
+                    {
                         MessageProcessor.PingStopwatch.Reset();
                         MessageProcessor.PingStopwatch.Start();
                         Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("ping"));
@@ -137,8 +144,10 @@ namespace Client.Logic.Windows
                     }
                 }
 
-                if (Players.PlayerManager.MyPlayer.MovementPacketCache != null) {
-                    if (Globals.Tick > Players.PlayerManager.MyPlayer.LastMovementCacheSend + Constants.MovementClusteringFrquency && Players.PlayerManager.MyPlayer.MovementPacketCache.Packets.Count > 0) {
+                if (Players.PlayerManager.MyPlayer.MovementPacketCache != null)
+                {
+                    if (Globals.Tick > Players.PlayerManager.MyPlayer.LastMovementCacheSend + Constants.MovementClusteringFrquency && Players.PlayerManager.MyPlayer.MovementPacketCache.Packets.Count > 0)
+                    {
                         NetworkManager.SendData(Players.PlayerManager.MyPlayer.MovementPacketCache);
                         Players.PlayerManager.MyPlayer.MovementPacketCache = new PacketList();
                         Players.PlayerManager.MyPlayer.LastMovementCacheSend = Globals.Tick;
@@ -147,12 +156,17 @@ namespace Client.Logic.Windows
             }
         }
 
-        void menuManager_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (menuManager.OpenMenus.Count == 0) {
-                if (!menuManager.BlockInput) {
+        void menuManager_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (menuManager.OpenMenus.Count == 0)
+            {
+                if (!menuManager.BlockInput)
+                {
                     mapViewer.Focus();
                 }
-            } else {
+            }
+            else
+            {
                 menuManager.Focus();
             }
         }
@@ -164,9 +178,11 @@ namespace Client.Logic.Windows
         //    }
         //}
 
-        void mapViewer_KeyUp(object sender, SdlDotNet.Input.KeyboardEventArgs e) {
+        void mapViewer_KeyUp(object sender, SdlDotNet.Input.KeyboardEventArgs e)
+        {
             Input.InputProcessor.OnKeyUp(e);
-            if (menuManager.Visible && !(menuManager.Visible && !menuManager.BlockInput)) {
+            if (menuManager.Visible && !(menuManager.Visible && !menuManager.BlockInput))
+            {
                 Input.InputProcessor.Attacking = false;
                 Input.InputProcessor.MoveUp = false;
                 Input.InputProcessor.MoveDown = false;
@@ -175,7 +191,8 @@ namespace Client.Logic.Windows
             }
         }
 
-        void menuManager_KeyDown(object sender, SdlDotNet.Input.KeyboardEventArgs e) {
+        void menuManager_KeyDown(object sender, SdlDotNet.Input.KeyboardEventArgs e)
+        {
             Menus.Core.MenuInputProcessor.OnKeyDown(e);
             menuManagerKeyDownTick = Globals.Tick;
             Input.InputProcessor.Attacking = false;
@@ -185,10 +202,12 @@ namespace Client.Logic.Windows
             Input.InputProcessor.MoveRight = false;
         }
 
-        void menuManager_KeyUp(object sender, SdlDotNet.Input.KeyboardEventArgs e) {
+        void menuManager_KeyUp(object sender, SdlDotNet.Input.KeyboardEventArgs e)
+        {
             Menus.Core.MenuInputProcessor.OnKeyUp(e);
 
-            if (menuManager.Visible && !(menuManager.Visible && !menuManager.BlockInput)) {
+            if (menuManager.Visible && !(menuManager.Visible && !menuManager.BlockInput))
+            {
                 Input.InputProcessor.Attacking = false;
                 Input.InputProcessor.MoveUp = false;
                 Input.InputProcessor.MoveDown = false;
@@ -198,20 +217,27 @@ namespace Client.Logic.Windows
         }
 
 
-        void mapViewer_KeyDown(object sender, SdlDotNet.Input.KeyboardEventArgs e) {
-            if (Globals.Tick < menuManagerKeyDownTick + 200) {
+        void mapViewer_KeyDown(object sender, SdlDotNet.Input.KeyboardEventArgs e)
+        {
+            if (Globals.Tick < menuManagerKeyDownTick + 200)
+            {
                 return;
             }
-            if (!menuManager.Visible || (menuManager.Visible && !menuManager.BlockInput)) {
+            if (!menuManager.Visible || (menuManager.Visible && !menuManager.BlockInput))
+            {
                 Input.InputProcessor.OnKeyDown(e);
-            } else if (menuManager.Visible && !menuManager.BlockInput) {
+            }
+            else if (menuManager.Visible && !menuManager.BlockInput)
+            {
                 Input.InputProcessor.Attacking = false;
                 Input.InputProcessor.MoveUp = false;
                 Input.InputProcessor.MoveDown = false;
                 Input.InputProcessor.MoveLeft = false;
                 Input.InputProcessor.MoveRight = false;
                 Menus.Core.MenuInputProcessor.OnKeyDown(e);
-            } else {
+            }
+            else
+            {
                 Input.InputProcessor.Attacking = false;
                 Input.InputProcessor.MoveUp = false;
                 Input.InputProcessor.MoveDown = false;
@@ -220,17 +246,25 @@ namespace Client.Logic.Windows
             }
         }
 
-        void mapViewer_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (inMapEditor) {
+        void mapViewer_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (inMapEditor)
+            {
                 Editor_mapViewer_Click(sender, e);
-            } else {
-                if (Globals.InGame && Maps.MapHelper.ActiveMap != null) {
+            }
+            else
+            {
+                if (Globals.InGame && Maps.MapHelper.ActiveMap != null)
+                {
                     int newX = (e.RelativePosition.X / Constants.TILE_WIDTH) + Logic.Graphics.Renderers.Screen.ScreenRenderer.Camera.X;
                     int newY = (e.RelativePosition.Y / Constants.TILE_HEIGHT) + Logic.Graphics.Renderers.Screen.ScreenRenderer.Camera.Y;
-                    if ((Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Mapper) || Maps.MapHelper.ActiveMap.MapID.StartsWith("h-")) && (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.LeftShift) && e.MouseEventArgs.Button == SdlDotNet.Input.MouseButton.SecondaryButton)) {
+                    if ((Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Mapper) || Maps.MapHelper.ActiveMap.MapID.StartsWith("h-")) && (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.LeftShift) && e.MouseEventArgs.Button == SdlDotNet.Input.MouseButton.SecondaryButton))
+                    {
                         Messenger.WarpLoc(newX, newY);
                         return;
-                    } else {
+                    }
+                    else
+                    {
                         Messenger.SendSearch(newX, newY);
                     }
                 }
@@ -241,23 +275,28 @@ namespace Client.Logic.Windows
 
         #region Properties
 
-        public ActiveTeamPanel ActiveTeam {
+        public ActiveTeamPanel ActiveTeam
+        {
             get { return pnlTeam; }
         }
 
-        public StatLabel StatLabel {
+        public StatLabel StatLabel
+        {
             get { return lblStats; }
         }
 
-        public MapViewer MapViewer {
+        public MapViewer MapViewer
+        {
             get { return mapViewer; }
         }
 
-        public Menus.Core.MenuManager MenuManager {
+        public Menus.Core.MenuManager MenuManager
+        {
             get { return menuManager; }
         }
 
-        public BattleLog BattleLog {
+        public BattleLog BattleLog
+        {
             get { return battleLog; }
         }
 
@@ -265,13 +304,15 @@ namespace Client.Logic.Windows
 
         #region Methods
 
-        void pnlTeam_ActiveRecruitChanged(object sender, Events.ActiveRecruitChangedEventArgs e) {
+        void pnlTeam_ActiveRecruitChanged(object sender, Events.ActiveRecruitChangedEventArgs e)
+        {
             Messenger.SendActiveCharSwap(e.NewSlot);
         }
 
-        public void EnableMapEditorWidgets(Enums.MapEditorLimitTypes limitType, bool liveMode) {
-            this.limiter = limitType;
-            this.inLiveMode = liveMode;
+        public void EnableMapEditorWidgets(Enums.MapEditorLimitTypes limitType, bool liveMode)
+        {
+            limiter = limitType;
+            inLiveMode = liveMode;
             mapEditor_Menu.Visible = true;
             btnAttributes.Visible = true;
             btnTerrain.Visible = true;
@@ -279,19 +320,22 @@ namespace Client.Logic.Windows
             EnforceMapEditorLimits();
         }
 
-        public void DisableMapEditorWidgets() {
+        public void DisableMapEditorWidgets()
+        {
             mapEditor_Menu.Visible = false;
             pnlAttributes.Visible = false;
             btnAttributes.Visible = false;
             btnTerrain.Visible = false;
             tilesetViewer.Visible = false;
-            this.inLiveMode = false;
+            inLiveMode = false;
             this.HideAutoHiddenPanels();
             Messenger.SendExitMapEditor();
         }
 
-        public void AddToBattleLog(string text, Color color) {
-            if (!battleLog.Visible && !menuManager.Visible && inMapEditor == false) {
+        public void AddToBattleLog(string text, Color color)
+        {
+            if (!battleLog.Visible && !menuManager.Visible && inMapEditor == false)
+            {
                 battleLog.Visible = true;
             }
             battleLog.tmrHide.Start();

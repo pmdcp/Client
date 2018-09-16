@@ -33,13 +33,15 @@ namespace Client.Logic.Updater.Widgets
         Surface installedSurf;
         bool installed;
 
-        public IPackageInfo AttachedPackage {
+        public IPackageInfo AttachedPackage
+        {
             get { return attachedPackage; }
             set { attachedPackage = value; }
         }
 
         public PackageButton(string name, IPackageInfo attachedPackage)
-            : base(name) {
+            : base(name)
+        {
             this.attachedPackage = attachedPackage;
             this.Size = new Size(200, 50);
             base.Font = Graphics.FontManager.LoadFont("tahoma", 12);
@@ -54,17 +56,22 @@ namespace Client.Logic.Updater.Widgets
             base.Paint += new EventHandler(PackageButton_Paint);
         }
 
-        public bool Installed {
+        public bool Installed
+        {
             get { return installed; }
-            set { 
+            set
+            {
                 installed = value;
                 RequestRedraw();
             }
         }
 
-        void PackageButton_Paint(object sender, EventArgs e) {
-            if (installed) {
-                if (installedSurf != null) {
+        void PackageButton_Paint(object sender, EventArgs e)
+        {
+            if (installed)
+            {
+                if (installedSurf != null)
+                {
                     base.Buffer.Blit(installedSurf, new Point(5, (this.Height / 2) - (installedSurf.Height / 2)));
                 }
             }

@@ -26,40 +26,50 @@ namespace Client.Logic.Graphics.Renderers.Maps
 {
     class SeamlessWorldHelper
     {
-        public static void ConvertCoordinatesToBorderless(Map activeMap, Enums.MapID targetMapID, ref int x, ref int y) {
-            switch (targetMapID) {
-                case Enums.MapID.Right: {
+        public static void ConvertCoordinatesToBorderless(Map activeMap, Enums.MapID targetMapID, ref int x, ref int y)
+        {
+            switch (targetMapID)
+            {
+                case Enums.MapID.Right:
+                    {
                         x += activeMap.MaxX + 1;
                     }
                     break;
-                case Enums.MapID.Left: {
+                case Enums.MapID.Left:
+                    {
                         x -= MapHelper.Maps[targetMapID].MaxX + 1;
                     }
                     break;
-                case Enums.MapID.Down: {
+                case Enums.MapID.Down:
+                    {
                         y += activeMap.MaxY + 1;
                     }
                     break;
-                case Enums.MapID.Up: {
+                case Enums.MapID.Up:
+                    {
                         y -= MapHelper.Maps[targetMapID].MaxY + 1;
                     }
                     break;
-                case Enums.MapID.TopLeft: {
+                case Enums.MapID.TopLeft:
+                    {
                         y -= MapHelper.Maps[targetMapID].MaxY + 1;
                         x -= MapHelper.Maps[targetMapID].MaxX + 1;
                     }
                     break;
-                case Enums.MapID.TopRight: {
+                case Enums.MapID.TopRight:
+                    {
                         y -= MapHelper.Maps[targetMapID].MaxY + 1;
                         x += activeMap.MaxX + 1;
                     }
                     break;
-                case Enums.MapID.BottomLeft: {
+                case Enums.MapID.BottomLeft:
+                    {
                         y += activeMap.MaxY + 1;
                         x -= MapHelper.Maps[targetMapID].MaxX + 1;
                     }
                     break;
-                case Enums.MapID.BottomRight: {
+                case Enums.MapID.BottomRight:
+                    {
                         y += activeMap.MaxY + 1;
                         x += activeMap.MaxX + 1;
                     }
@@ -67,70 +77,93 @@ namespace Client.Logic.Graphics.Renderers.Maps
             }
         }
 
-        public static Enums.MapID GetVisibleData(ref int x, ref int y) {
+        public static Enums.MapID GetVisibleData(ref int x, ref int y)
+        {
             Enums.MapID tileOwnerMap = Enums.MapID.Active;
             Map activeMap = MapHelper.Maps[Enums.MapID.Active];
-            if (x > activeMap.MaxX) {
-                if (IsMapSeamless(Enums.MapID.Right)) {
+            if (x > activeMap.MaxX)
+            {
+                if (IsMapSeamless(Enums.MapID.Right))
+                {
                     // The camera x value is greater than the active map bounds
                     // Tile is on the map to the right of the active map
                     x -= activeMap.MaxX + 1;
                     tileOwnerMap = Enums.MapID.Right;
-                } else {
+                }
+                else
+                {
                     x = -1;
                     y = -1;
                 }
             }
-            if (x < 0) {
-                if (IsMapSeamless(Enums.MapID.Left)) {
+            if (x < 0)
+            {
+                if (IsMapSeamless(Enums.MapID.Left))
+                {
                     // The camera x value is smaller than the active map bounds
                     // Tile is on the map to the left of the active map
                     x += MapHelper.Maps[Enums.MapID.Left].MaxX + 1;
                     tileOwnerMap = Enums.MapID.Left;
-                } else {
+                }
+                else
+                {
                     x = -1;
                     y = -1;
                 }
             }
-            if (y < 0) {
-                if (IsMapSeamless(Enums.MapID.Up)) {
+            if (y < 0)
+            {
+                if (IsMapSeamless(Enums.MapID.Up))
+                {
                     bool changed = false;
-                    if (tileOwnerMap == Enums.MapID.Left) {
+                    if (tileOwnerMap == Enums.MapID.Left)
+                    {
                         tileOwnerMap = Enums.MapID.TopLeft;
                         changed = true;
                     }
-                    if (tileOwnerMap == Enums.MapID.Right) {
+                    if (tileOwnerMap == Enums.MapID.Right)
+                    {
                         tileOwnerMap = Enums.MapID.TopRight;
                         changed = true;
                     }
 
-                    if (!changed) {
+                    if (!changed)
+                    {
                         tileOwnerMap = Enums.MapID.Up;
                     }
                     y += MapHelper.Maps[Enums.MapID.Up].MaxY + 1;
-                } else {
+                }
+                else
+                {
                     x = -1;
                     y = -1;
                 }
             }
 
-            if (y > activeMap.MaxY) {
-                if (IsMapSeamless(Enums.MapID.Down)) {
+            if (y > activeMap.MaxY)
+            {
+                if (IsMapSeamless(Enums.MapID.Down))
+                {
                     bool changed = false;
-                    if (tileOwnerMap == Enums.MapID.Left) {
+                    if (tileOwnerMap == Enums.MapID.Left)
+                    {
                         tileOwnerMap = Enums.MapID.BottomLeft;
                         changed = true;
                     }
-                    if (tileOwnerMap == Enums.MapID.Right) {
+                    if (tileOwnerMap == Enums.MapID.Right)
+                    {
                         tileOwnerMap = Enums.MapID.BottomRight;
                         changed = true;
                     }
 
-                    if (!changed) {
+                    if (!changed)
+                    {
                         tileOwnerMap = Enums.MapID.Down;
                     }
                     y -= activeMap.MaxY + 1;
-                } else {
+                }
+                else
+                {
                     x = -1;
                     y = -1;
                 }
@@ -139,82 +172,110 @@ namespace Client.Logic.Graphics.Renderers.Maps
             return tileOwnerMap;
         }
 
-        public static Tile GetVisibleTile(int x, int y) {
+        public static Tile GetVisibleTile(int x, int y)
+        {
             Enums.MapID tileOwnerMap = Enums.MapID.Active;
             Map activeMap = MapHelper.Maps[Enums.MapID.Active];
-            if (x > activeMap.MaxX) {
-                if (IsMapSeamless(Enums.MapID.Right)) {
+            if (x > activeMap.MaxX)
+            {
+                if (IsMapSeamless(Enums.MapID.Right))
+                {
                     // The camera x value is greater than the active map bounds
                     // Tile is on the map to the right of the active map
                     x -= activeMap.MaxX + 1;
                     tileOwnerMap = Enums.MapID.Right;
-                } else {
+                }
+                else
+                {
                     return new Tile();
                 }
             }
-            if (x < 0) {
-                if (IsMapSeamless(Enums.MapID.Left)) {
+            if (x < 0)
+            {
+                if (IsMapSeamless(Enums.MapID.Left))
+                {
                     // The camera x value is smaller than the active map bounds
                     // Tile is on the map to the left of the active map
                     x += MapHelper.Maps[Enums.MapID.Left].MaxX + 1;
                     tileOwnerMap = Enums.MapID.Left;
-                } else {
+                }
+                else
+                {
                     return new Tile();
                 }
             }
-            if (y < 0) {
-                if (IsMapSeamless(Enums.MapID.Up)) {
+            if (y < 0)
+            {
+                if (IsMapSeamless(Enums.MapID.Up))
+                {
                     bool changed = false;
-                    if (tileOwnerMap == Enums.MapID.Left) {
+                    if (tileOwnerMap == Enums.MapID.Left)
+                    {
                         tileOwnerMap = Enums.MapID.TopLeft;
                         changed = true;
                     }
-                    if (tileOwnerMap == Enums.MapID.Right) {
+                    if (tileOwnerMap == Enums.MapID.Right)
+                    {
                         tileOwnerMap = Enums.MapID.TopRight;
                         changed = true;
                     }
 
-                    if (!changed) {
+                    if (!changed)
+                    {
                         tileOwnerMap = Enums.MapID.Up;
                     }
                     y += MapHelper.Maps[Enums.MapID.Up].MaxY + 1;
-                } else {
+                }
+                else
+                {
                     return new Tile();
                 }
             }
 
-            if (y > activeMap.MaxY) {
-                if (IsMapSeamless(Enums.MapID.Down)) {
+            if (y > activeMap.MaxY)
+            {
+                if (IsMapSeamless(Enums.MapID.Down))
+                {
                     bool changed = false;
-                    if (tileOwnerMap == Enums.MapID.Left) {
+                    if (tileOwnerMap == Enums.MapID.Left)
+                    {
                         tileOwnerMap = Enums.MapID.BottomLeft;
                         changed = true;
                     }
-                    if (tileOwnerMap == Enums.MapID.Right) {
+                    if (tileOwnerMap == Enums.MapID.Right)
+                    {
                         tileOwnerMap = Enums.MapID.BottomRight;
                         changed = true;
                     }
 
-                    if (!changed) {
+                    if (!changed)
+                    {
                         tileOwnerMap = Enums.MapID.Down;
                     }
                     y -= activeMap.MaxY + 1;
-                } else {
+                }
+                else
+                {
                     return new Tile();
                 }
             }
 
             Map map = MapHelper.Maps[tileOwnerMap];
-            if (map != null) {
+            if (map != null)
+            {
                 return MapHelper.Maps[tileOwnerMap].Tile[x, y];
-            } else {
+            }
+            else
+            {
                 return new Tile();
             }
         }
 
-        public static bool IsMapSeamless(Enums.MapID direction) {
+        public static bool IsMapSeamless(Enums.MapID direction)
+        {
             Map map = MapHelper.Maps[direction];
-            if (map != null && map.Loaded) {
+            if (map != null && map.Loaded)
+            {
                 return true;
             }
 

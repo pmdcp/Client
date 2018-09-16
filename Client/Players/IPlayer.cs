@@ -35,6 +35,6 @@ namespace Client.Logic.Players
         bool Dead { get; set; }
         Enums.Rank Access { get; set; }
         string ID { get; set; }
-        PlayerPet[] Pets {get;set;}
+        PlayerPet[] Pets { get; set; }
     }
 }

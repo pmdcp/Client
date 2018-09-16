@@ -31,18 +31,20 @@ namespace Client.Logic.Stories.Components
         public delegate void OptionSelectedDelegate(string option);
         public event OptionSelectedDelegate OptionSelected;
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
 
         public OptionSelectionMenu(string name, Size storyBounds, string[] options)
-            : base(name) {
-
+            : base(name)
+        {
             lblOptions = new Label[options.Length];
 
             itemPicker = new Widgets.MenuItemPicker("itemPicker");
@@ -50,15 +52,17 @@ namespace Client.Logic.Stories.Components
 
             int maxWidth = 140;
 
-            for (int i = 0; i < options.Length; i++) {
+            for (int i = 0; i < options.Length; i++)
+            {
                 lblOptions[i] = new Label("lblOptions" + i);
-                lblOptions[i].Font = Graphics.FontManager.LoadFont("PMDCP", 24);
+                lblOptions[i].Font = Graphics.FontManager.LoadFont("PMDCP", 32);
                 lblOptions[i].Location = new Point(15, i * 26);
                 lblOptions[i].AutoSize = true;
                 lblOptions[i].ForeColor = Color.WhiteSmoke;
                 lblOptions[i].Text = options[i];
 
-                if (lblOptions[i].Width > maxWidth) {
+                if (lblOptions[i].Width > maxWidth)
+                {
                     maxWidth = lblOptions[i].Width;
                 }
 
@@ -86,45 +90,60 @@ namespace Client.Logic.Stories.Components
         }
         Widgets.MenuItemPicker itemPicker;
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(0, 15 + (22 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == lblOptions.Length - 1) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == lblOptions.Length - 1)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(lblOptions.Length - 1);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectOption(itemPicker.SelectedItem);
                     }
                     break;
             }
         }
 
-        private void SelectOption(int optionSlot) {
+        private void SelectOption(int optionSlot)
+        {
             if (OptionSelected != null)
                 OptionSelected(lblOptions[optionSlot].Text);
         }
 
-        public override void Close() {
+        public override void Close()
+        {
             base.Close();
-            if (this.ParentContainer != null) {
+            if (this.ParentContainer != null)
+            {
                 this.ParentContainer.RemoveWidget(this.GroupedWidget.Name);
             }
         }

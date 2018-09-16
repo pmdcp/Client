@@ -180,22 +180,23 @@ namespace Client.Logic.Windows
 
         #endregion
 
-        public void InitMapEditorWidgets() {
+        public void InitMapEditorWidgets()
+        {
             mapEditor_Menu = new Panel("mapEditor_Menu");
-            mapEditor_Menu.Location = new Point(0, this.shortcutBar.Y);
-            mapEditor_Menu.Size = this.shortcutBar.Size;
+            mapEditor_Menu.Location = new Point(0, shortcutBar.Y);
+            mapEditor_Menu.Size = shortcutBar.Size;
             mapEditor_Menu.BackColor = Color.Transparent;
 
             tilesetViewer = new Widgets.TilesetViewer("tilesetViewer");
-            tilesetViewer.Location = new Point(0, this.pnlTeam.Height + 32);
-            tilesetViewer.Size = new Size(this.mapViewer.X, Screen.Height - pnlTeam.Height - shortcutBar.Height - 32);
+            tilesetViewer.Location = new Point(0, pnlTeam.Height + 32);
+            tilesetViewer.Size = new Size(mapViewer.X, Screen.Height - pnlTeam.Height - shortcutBar.Height - 32);
             tilesetViewer.ActiveTilesetSurface = Graphics.GraphicsManager.Tiles[0];
             tilesetViewer.Visible = false;
 
             btnTerrain = new Button("btnTerrain");
             btnTerrain.Font = Graphics.FontManager.LoadFont("PMDCP", 18);
-            btnTerrain.Location = new Point(0, this.pnlTeam.Height);
-            btnTerrain.Size = new System.Drawing.Size(this.mapViewer.X / 2, 32);
+            btnTerrain.Location = new Point(0, pnlTeam.Height);
+            btnTerrain.Size = new System.Drawing.Size(mapViewer.X / 2, 32);
             btnTerrain.Text = "Terrain";
             btnTerrain.Selected = true;
             btnTerrain.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnTerrain_Click);
@@ -204,8 +205,8 @@ namespace Client.Logic.Windows
 
             btnAttributes = new Button("btnAttributes");
             btnAttributes.Font = Graphics.FontManager.LoadFont("PMDCP", 18);
-            btnAttributes.Location = new Point(this.mapViewer.X / 2, this.pnlTeam.Height);
-            btnAttributes.Size = new System.Drawing.Size(this.mapViewer.X / 2, 32);
+            btnAttributes.Location = new Point(mapViewer.X / 2, pnlTeam.Height);
+            btnAttributes.Size = new System.Drawing.Size(mapViewer.X / 2, 32);
             btnAttributes.Text = "Attributes";
             btnAttributes.Selected = false;
             btnAttributes.Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(btnAttributes_Click);
@@ -224,7 +225,7 @@ namespace Client.Logic.Windows
 
             pnlAttOptions = new Panel("pnlAttOptions");
             pnlAttOptions.Size = tilesetViewer.Size;
-            pnlAttOptions.Location = new Point(0, this.pnlTeam.Height);
+            pnlAttOptions.Location = new Point(0, pnlTeam.Height);
             pnlAttOptions.BackColor = Color.White;
             pnlAttOptions.Visible = false;
 
@@ -292,7 +293,7 @@ namespace Client.Logic.Windows
             picSprite = new PictureBox("picSprite");
             picSprite.Size = new Size(32, 64);
             picSprite.BlitToBuffer(Graphics.GraphicsManager.GetSpriteSheet(hsb1.Value).GetSheet(Graphics.FrameType.Idle, Enums.Direction.Down), new Rectangle(96, 0, 32, 64));
-            
+
             picSprite.Location = new Point(140, 35);
             picSprite.BackColor = Color.White;
             picSprite.BorderStyle = SdlDotNet.Widgets.BorderStyle.FixedSingle;
@@ -313,7 +314,8 @@ namespace Client.Logic.Windows
             {
                 SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("PMDCP", 18);
                 string[] sfxFiles = System.IO.Directory.GetFiles(IO.Paths.SfxPath);
-                for (int i = 0; i < sfxFiles.Length; i++) {
+                for (int i = 0; i < sfxFiles.Length; i++)
+                {
                     lstSound.Items.Add(new ListBoxTextItem(font, System.IO.Path.GetFileName(sfxFiles[i])));
                 }
             }
@@ -356,8 +358,8 @@ namespace Client.Logic.Windows
             optBlock.CheckChanged += new EventHandler(optBlock_CheckChanged);
 
             btnOK = new Button("btnOK");
-            btnOK.Location = new Point(this.mapViewer.X / 4, Screen.Height - shortcutBar.Height - 32);
-            btnOK.Size = new System.Drawing.Size(this.mapViewer.X / 2, 32);
+            btnOK.Location = new Point(mapViewer.X / 4, Screen.Height - shortcutBar.Height - 32);
+            btnOK.Size = new System.Drawing.Size(mapViewer.X / 2, 32);
             btnOK.Font = Graphics.FontManager.LoadFont("PMDCP", 18);
             btnOK.Text = "Ok";
             btnOK.Visible = false;
@@ -918,7 +920,8 @@ namespace Client.Logic.Windows
 
             picTilesetPreview = new PictureBox[8];
 
-            for (int i = 0; i < picTilesetPreview.Length; i++) {
+            for (int i = 0; i < picTilesetPreview.Length; i++)
+            {
                 picTilesetPreview[i] = new PictureBox("picTilesetPreview" + i);
                 picTilesetPreview[i].Location = new Point(5 + (i * 37), 10);
                 picTilesetPreview[i].Size = new System.Drawing.Size(32, 32);
@@ -930,7 +933,8 @@ namespace Client.Logic.Windows
             pnlTileset.AddWidget(lblSelectedTileset);
             pnlTileset.AddWidget(btnLoadTileset);
 
-            for (int i = 0; i < picTilesetPreview.Length; i++) {
+            for (int i = 0; i < picTilesetPreview.Length; i++)
+            {
                 pnlTileset.AddWidget(picTilesetPreview[i]);
             }
 
@@ -1039,9 +1043,12 @@ namespace Client.Logic.Windows
             hTilesetSelect_ValueChanged(hTilesetSelect, new ValueChangedEventArgs(0, 0));
         }
 
-        void EnforceMapEditorLimits() {
-            switch (limiter) {
-                case Enums.MapEditorLimitTypes.Full: {
+        void EnforceMapEditorLimits()
+        {
+            switch (limiter)
+            {
+                case Enums.MapEditorLimitTypes.Full:
+                    {
                         optBlocked.Show();
                         optWarp.Show();
                         optItem.Show();
@@ -1081,7 +1088,8 @@ namespace Client.Logic.Windows
                         Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayLocation = true;
                     }
                     break;
-                case Enums.MapEditorLimitTypes.House: {
+                case Enums.MapEditorLimitTypes.House:
+                    {
                         HideAllAttributes();
                         optBlocked.Show();
                         optRoad.Show();
@@ -1093,7 +1101,8 @@ namespace Client.Logic.Windows
             }
         }
 
-        void HideAllAttributes() {
+        void HideAllAttributes()
+        {
             optBlocked.Hide();
             optWarp.Hide();
             optItem.Hide();
@@ -1130,25 +1139,34 @@ namespace Client.Logic.Windows
             nudDungeonTileValue.Hide();
         }
 
-        void btnEyeDropper_Click(object sender, MouseButtonEventArgs e) {
-            if (limiter == Enums.MapEditorLimitTypes.Full) {
-                if (ActiveTool == MappingTool.EyeDropper) {
+        void btnEyeDropper_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (limiter == Enums.MapEditorLimitTypes.Full)
+            {
+                if (ActiveTool == MappingTool.EyeDropper)
+                {
                     SetActiveTool(MappingTool.Editor);
                     btnEyeDropper.Selected = false;
-                } else {
+                }
+                else
+                {
                     SetActiveTool(MappingTool.EyeDropper);
                     btnEyeDropper.Selected = true;
                 }
             }
         }
 
-        public void SetActiveTool(MappingTool tool) {
-            switch (tool) {
-                case MappingTool.Editor: {
+        public void SetActiveTool(MappingTool tool)
+        {
+            switch (tool)
+            {
+                case MappingTool.Editor:
+                    {
                         DisableActiveTool();
                     }
                     break;
-                case MappingTool.EyeDropper: {
+                case MappingTool.EyeDropper:
+                    {
                         btnEyeDropper.Selected = true;
                     }
                     break;
@@ -1156,10 +1174,14 @@ namespace Client.Logic.Windows
             ActiveTool = tool;
         }
 
-        public void DisableActiveTool() {
-            switch (ActiveTool) {
-                case MappingTool.EyeDropper: {
-                        if (btnEyeDropper.Selected) {
+        public void DisableActiveTool()
+        {
+            switch (ActiveTool)
+            {
+                case MappingTool.EyeDropper:
+                    {
+                        if (btnEyeDropper.Selected)
+                        {
                             btnEyeDropper.Selected = false;
                         }
                     }
@@ -1168,45 +1190,60 @@ namespace Client.Logic.Windows
             ActiveTool = MappingTool.Editor;
         }
 
-        void btnExit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnExit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Editors.EditorManager.CloseMapEditor();
             HideAutoHiddenPanels();
             btnAttributes.Selected = false;
             Messenger.SendRefresh();
         }
 
-        void btnMapProperties_Click(object sender, MouseButtonEventArgs e) {
-            if (SdlDotNet.Widgets.WindowManager.Windows.Contains("winProperties") == false) {
+        void btnMapProperties_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (SdlDotNet.Widgets.WindowManager.Windows.Contains("winProperties") == false)
+            {
                 SdlDotNet.Widgets.WindowManager.AddWindow(new Editors.MapEditor.winProperties());
-            } else {
+            }
+            else
+            {
                 SdlDotNet.Widgets.WindowManager.BringWindowToFront(SdlDotNet.Widgets.WindowManager.FindWindow("winProperties"));
             }
             // TODO: Map Properties [Map Editor] (and uncomment all of it)
         }
 
-        void btnHouseProperties_Click(object sender, MouseButtonEventArgs e) {
-            if (SdlDotNet.Widgets.WindowManager.Windows.Contains("winHouseProperties") == false) {
+        void btnHouseProperties_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (SdlDotNet.Widgets.WindowManager.Windows.Contains("winHouseProperties") == false)
+            {
                 SdlDotNet.Widgets.WindowManager.AddWindow(new Editors.MapEditor.winHouseProperties());
-            } else {
+            }
+            else
+            {
                 SdlDotNet.Widgets.WindowManager.BringWindowToFront(SdlDotNet.Widgets.WindowManager.FindWindow("winHouseProperties"));
             }
         }
 
-        void btnTakeScreenshot_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (SdlDotNet.Widgets.WindowManager.Windows.Contains("winScreenshotOptions") == false) {
+        void btnTakeScreenshot_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (SdlDotNet.Widgets.WindowManager.Windows.Contains("winScreenshotOptions") == false)
+            {
                 SdlDotNet.Widgets.WindowManager.AddWindow(new Editors.MapEditor.winScreenshotOptions());
-            } else {
+            }
+            else
+            {
                 SdlDotNet.Widgets.WindowManager.BringWindowToFront(SdlDotNet.Widgets.WindowManager.FindWindow("winScreenshotOptions"));
             }
         }
 
-        void btnSaveMap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnSaveMap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             Messenger.SendSaveMap(Maps.MapHelper.ActiveMap);
             btnAttributes.Selected = false;
             optBlocked.Checked = true;
         }
 
-        void btnLoadMap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnLoadMap_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             // TODO: Load Map [Map Editor]
             //System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
             //ofd.Filter = "PMDCP Map|*.pmumap";
@@ -1219,8 +1256,10 @@ namespace Client.Logic.Windows
             //}
         }
 
-        void btnAttributes_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!btnAttributes.Selected) {
+        void btnAttributes_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!btnAttributes.Selected)
+            {
                 btnAttributes.Selected = true;
                 btnTerrain.Selected = false;
                 tilesetViewer.Visible = false;
@@ -1228,8 +1267,10 @@ namespace Client.Logic.Windows
             }
         }
 
-        void btnTerrain_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!btnTerrain.Selected) {
+        void btnTerrain_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!btnTerrain.Selected)
+            {
                 btnAttributes.Selected = false;
                 btnTerrain.Selected = true;
                 tilesetViewer.Visible = true;
@@ -1237,60 +1278,80 @@ namespace Client.Logic.Windows
             }
         }
 
-        void btnClear_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (btnTerrain.Selected) {
+        void btnClear_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (btnTerrain.Selected)
+            {
                 FillLayer(GetActiveLayer(), 0, 0);
-                if (inLiveMode) {
+                if (inLiveMode)
+                {
                     Messenger.SendLayerFillData(GetActiveLayer(), 0, 0);
                 }
-            } else if (btnAttributes.Selected) {
+            }
+            else if (btnAttributes.Selected)
+            {
                 FillAttributes(Enums.TileType.Walkable, 0, 0, 0, "", "", "", 0);
-                if (inLiveMode) {
+                if (inLiveMode)
+                {
                     Messenger.SendAttributeFillData(Enums.TileType.Walkable, 0, 0, 0, "", "", "", 0);
                 }
             }
         }
 
-        void btnFill_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (btnTerrain.Selected) {
+        void btnFill_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (btnTerrain.Selected)
+            {
                 FillLayer(GetActiveLayer(), tilesetViewer.ActiveTilesetSurface.TilesetNumber, tilesetViewer.SelectedTile.Y * (tilesetViewer.ActiveTilesetSurface.Size.Width / Constants.TILE_WIDTH) + tilesetViewer.SelectedTile.X);
-                if (inLiveMode) {
+                if (inLiveMode)
+                {
                     Messenger.SendLayerFillData(GetActiveLayer(), tilesetViewer.ActiveTilesetSurface.TilesetNumber, tilesetViewer.SelectedTile.Y * (tilesetViewer.ActiveTilesetSurface.Size.Width / Constants.TILE_WIDTH) + tilesetViewer.SelectedTile.X);
                 }
-            } else if (btnAttributes.Selected) {
+            }
+            else if (btnAttributes.Selected)
+            {
                 FillAttributesFromSettings(true);
             }
         }
 
-        void chkDisplayMapGrid_CheckChanged(object sender, EventArgs e) {
+        void chkDisplayMapGrid_CheckChanged(object sender, EventArgs e)
+        {
             IO.Options.MapGrid = chkDisplayMapGrid.Checked;
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayMapGrid = chkDisplayMapGrid.Checked;
         }
 
-        void chkDisplayAttributes_CheckChanged(object sender, EventArgs e) {
+        void chkDisplayAttributes_CheckChanged(object sender, EventArgs e)
+        {
             IO.Options.DisplayAttributes = chkDisplayAttributes.Checked;
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayAttributes = chkDisplayAttributes.Checked;
         }
 
-        void chkDisplayDungeonValues_CheckChanged(object sender, EventArgs e) {
+        void chkDisplayDungeonValues_CheckChanged(object sender, EventArgs e)
+        {
             IO.Options.DisplayDungeonValues = chkDisplayDungeonValues.Checked;
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayDungeonValues = chkDisplayDungeonValues.Checked;
         }
 
-        void chkDragAndPlace_CheckChanged(object sender, EventArgs e) {
+        void chkDragAndPlace_CheckChanged(object sender, EventArgs e)
+        {
             IO.Options.DragAndPlace = chkDragAndPlace.Checked;
         }
 
-        void btnLoadTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnLoadTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             HideAutoHiddenPanels();
             tilesetViewer.ActiveTilesetSurface = Graphics.GraphicsManager.Tiles[hTilesetSelect.Value];
         }
 
-        void hTilesetSelect_ValueChanged(object sender, ValueChangedEventArgs e) {
-            if (lblSelectedTileset.Text != "Tileset " + e.NewValue.ToString()) {
+        void hTilesetSelect_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            if (lblSelectedTileset.Text != "Tileset " + e.NewValue.ToString())
+            {
                 lblSelectedTileset.Text = "Tileset " + e.NewValue.ToString();
-                for (int i = 0; i < picTilesetPreview.Length; i++) {
-                    if (picTilesetPreview[i].Image != null) {
+                for (int i = 0; i < picTilesetPreview.Length; i++)
+                {
+                    if (picTilesetPreview[i].Image != null)
+                    {
                         picTilesetPreview[i].Image.Dispose();
                         picTilesetPreview[i].Image = null;
                     }
@@ -1299,201 +1360,262 @@ namespace Client.Logic.Windows
             }
         }
 
-        void btnTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnTileset_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             ShowTilesetPanel();
         }
 
-        void btnLayers_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnLayers_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             ShowLayersPanel();
         }
 
-        void btnMapping_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnMapping_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             ShowMappingPanel();
         }
 
-        void btnMapping_MouseHover(object sender, EventArgs e) {
+        void btnMapping_MouseHover(object sender, EventArgs e)
+        {
             ShowMappingPanel();
         }
 
-        void btnLayers_MouseHover(object sender, EventArgs e) {
+        void btnLayers_MouseHover(object sender, EventArgs e)
+        {
             ShowLayersPanel();
         }
 
-        void btnTileset_MouseHover(object sender, EventArgs e) {
+        void btnTileset_MouseHover(object sender, EventArgs e)
+        {
             ShowTilesetPanel();
         }
 
-        void btnSettings_MouseHover(object sender, EventArgs e) {
+        void btnSettings_MouseHover(object sender, EventArgs e)
+        {
             ShowOptionsPanel();
         }
 
-        void btnSettings_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnSettings_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             ShowOptionsPanel();
         }
 
-        private void ShowMappingPanel() {
-            if (pnlMapping.Visible == false) {
+        private void ShowMappingPanel()
+        {
+            if (pnlMapping.Visible == false)
+            {
                 HideAutoHiddenPanels();
                 pnlMapping.ShowHidden();
             }
         }
 
-        private void ShowLayersPanel() {
-            if (pnlLayers.Visible == false) {
+        private void ShowLayersPanel()
+        {
+            if (pnlLayers.Visible == false)
+            {
                 HideAutoHiddenPanels();
                 pnlLayers.ShowHidden();
             }
         }
 
-        private void ShowTilesetPanel() {
-            if (pnlTileset.Visible == false) {
+        private void ShowTilesetPanel()
+        {
+            if (pnlTileset.Visible == false)
+            {
                 HideAutoHiddenPanels();
                 pnlTileset.ShowHidden();
             }
         }
 
-        private void ShowOptionsPanel() {
-            if (pnlSettings.Visible == false) {
+        private void ShowOptionsPanel()
+        {
+            if (pnlSettings.Visible == false)
+            {
                 HideAutoHiddenPanels();
                 pnlSettings.ShowHidden();
             }
         }
 
-        private void HideAutoHiddenPanels() {
+        private void HideAutoHiddenPanels()
+        {
             pnlMapping.HideHidden();
             pnlLayers.HideHidden();
             pnlTileset.HideHidden();
             pnlSettings.HideHidden();
         }
 
-        void optWarp_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optWarp_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("warp");
             }
         }
 
-        void optItem_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optItem_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("item");
             }
         }
 
-        void optKey_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optKey_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("key");
             }
         }
 
-        void optKeyOpen_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optKeyOpen_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("keyopen");
             }
         }
 
-        void optSound_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optSound_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("sound");
             }
         }
 
-        void optScripted_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optScripted_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("scripted");
             }
         }
 
-        void optNotice_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optNotice_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("notice");
             }
         }
 
-        void optSign_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optSign_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("sign");
             }
         }
 
-        void optSpriteChange_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optSpriteChange_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("sprite");
             }
         }
 
-        void optShop_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optShop_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("shop");
             }
         }
 
-        void optArena_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optArena_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("arena");
             }
         }
 
-        void optBank_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optBank_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("bank");
             }
         }
 
-        void optGuildBlock_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optGuildBlock_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("guildblock");
             }
         }
 
-        void optSpriteBlock_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optSpriteBlock_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("spriteblock");
             }
         }
 
-        void optMobileBlock_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optMobileBlock_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("mobileblock");
             }
         }
 
-        void optLevelBlock_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optLevelBlock_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("levelblock");
             }
         }
 
-        void optStory_CheckChanged(object sender, EventArgs e) {//TODO
-            if (((RadioButton)sender).Checked) {
+        void optStory_CheckChanged(object sender, EventArgs e)
+        {//TODO
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("story");
             }
         }
 
-        void optLinkShop_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optLinkShop_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("linkshop");
             }
         }
 
-        void optScriptedSign_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optScriptedSign_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("scriptedsign");
             }
         }
 
-        void optSlippery_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optSlippery_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("slippery");
             }
         }
 
-        void optSlow_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optSlow_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("slow");
             }
         }
 
-        void optDropShop_CheckChanged(object sender, EventArgs e) {
-            if (((RadioButton)sender).Checked) {
+        void optDropShop_CheckChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
                 OptionPanel("dropshop");
             }
         }
@@ -1502,15 +1624,20 @@ namespace Client.Logic.Windows
 
         #region OptionPanel
 
-        void OptionPanel(string option) {
-            switch (option.ToLower()) {
-                case "warp": {
+        void OptionPanel(string option)
+        {
+            switch (option.ToLower())
+            {
+                case "warp":
+                    {
                         lbl1.Text = "Maps:";
                         nudStoryLevel.Location = new Point(9, 60);
-                        if (hsb1.Value > 50) {
+                        if (hsb1.Value > 50)
+                        {
                             hsb1.Value = 50;
                         }
-                        if (hsb2.Value > 50) {
+                        if (hsb2.Value > 50)
+                        {
                             hsb2.Value = 50;
                         }
                         lbl2.Text = "X: " + hsb1.Value;
@@ -1532,12 +1659,18 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Warp Map Attribute";
                     }
                     break;
-                case "item": {
-                        if (hsb1.Value == 0) {
+                case "item":
+                    {
+                        if (hsb1.Value == 0)
+                        {
                             lbl1.Text = "Item 0: None";
-                        } else if (hsb1.Value > MaxInfo.MaxItems) {
+                        }
+                        else if (hsb1.Value > MaxInfo.MaxItems)
+                        {
                             hsb1.Value = MaxInfo.MaxItems;
-                        } else {
+                        }
+                        else
+                        {
                             lbl1.Text = "Item " + hsb1.Value + ": " + Items.ItemHelper.Items[hsb1.Value].Name;
                         }
                         lbl2.Text = "Value: " + hsb2.Value;
@@ -1561,12 +1694,18 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Item Attribute";
                     }
                     break;
-                case "key": {
-                        if (hsb1.Value == 0) {
+                case "key":
+                    {
+                        if (hsb1.Value == 0)
+                        {
                             lbl1.Text = "Item 0: None";
-                        } else if (hsb1.Value > MaxInfo.MaxItems) {
+                        }
+                        else if (hsb1.Value > MaxInfo.MaxItems)
+                        {
                             hsb1.Value = MaxInfo.MaxItems;
-                        } else {
+                        }
+                        else
+                        {
                             lbl1.Text = "Item " + hsb1.Value + ": " + Items.ItemHelper.Items[hsb1.Value].Name;
                         }
                         hsb1.Maximum = MaxInfo.MaxItems;
@@ -1579,11 +1718,14 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Key Attribute";
                     }
                     break;
-                case "keyopen": {
-                        if (hsb1.Value > 50) {
+                case "keyopen":
+                    {
+                        if (hsb1.Value > 50)
+                        {
                             hsb1.Value = 50;
                         }
-                        if (hsb2.Value > 50) {
+                        if (hsb2.Value > 50)
+                        {
                             hsb2.Value = 50;
                         }
                         lbl1.Text = "X: " + hsb1.Value;
@@ -1605,20 +1747,24 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Key Open Attribute";
                     }
                     break;
-                case "sound": {
+                case "sound":
+                    {
                         lstSound.Visible = true;
-                        if (lstSound.SelectedItems.Count == 0) {
+                        if (lstSound.SelectedItems.Count == 0)
+                        {
                             lstSound.SelectItem(0);
                         }
                         OpenOptionsPanel();
                         btnTitle.Text = "Sound Attribute";
                     }
                     break;
-                case "scripted": {
-                        if (hsb1.Value > 100) {
+                case "scripted":
+                    {
+                        if (hsb1.Value > 100)
+                        {
                             hsb1.Value = 100;
                         }
-                        lbl1.Text = "Script " + hsb1.Value + ": (Needs work)"; 
+                        lbl1.Text = "Script " + hsb1.Value + ": (Needs work)";
                         Messenger.SendScriptedTileInfoRequest(hsb1.Value);
                         lbl2.Text = "Param 1:";
                         lbl3.Text = "Param 2:";
@@ -1642,7 +1788,8 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Scripted Tile Attribute";
                     }
                     break;
-                case "notice": {
+                case "notice":
+                    {
                         lbl1.Text = "Sound:";
                         txt1.Location = new Point(9, 220);
                         lbl2.Text = "Title:";
@@ -1655,19 +1802,26 @@ namespace Client.Logic.Windows
                         txt1.Visible = true;
                         txt2.Visible = true;
                         lstSound.Visible = true;
-                        if (lstSound.SelectedItems.Count == 0) {
+                        if (lstSound.SelectedItems.Count == 0)
+                        {
                             lstSound.SelectItem(0);
                         }
                         OpenOptionsPanel();
                         btnTitle.Text = "Notice Attribute";
                     }
                     break;
-                case "linkshop": {
-                        if (hsb1.Value == 0) {
+                case "linkshop":
+                    {
+                        if (hsb1.Value == 0)
+                        {
                             lbl1.Text = "Item Paid: 0 (None)";
-                        } else if (hsb1.Value > MaxInfo.MaxItems) {
+                        }
+                        else if (hsb1.Value > MaxInfo.MaxItems)
+                        {
                             hsb1.Value = MaxInfo.MaxItems;
-                        } else {
+                        }
+                        else
+                        {
                             lbl1.Text = "Item Paid: " + hsb1.Value + " (" + Items.ItemHelper.Items[hsb1.Value].Name + ")";
                         }
                         lbl2.Text = "Value: " + hsb2.Value;
@@ -1687,7 +1841,8 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Link Shop Attribute";
                     }
                     break;
-                case "sign": {
+                case "sign":
+                    {
                         lbl1.Text = "Line 1:";
                         lbl2.Text = "Line 2:";
                         lbl3.Text = "Line 3:";
@@ -1705,14 +1860,19 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Sign Attribute";
                     }
                     break;
-                case "sprite": {
+                case "sprite":
+                    {
                         lbl1.Text = "Sprite: " + hsb1.Value;
-                        if (hsb1.Value > 1000) {
+                        if (hsb1.Value > 1000)
+                        {
                             hsb1.Value = 1000;
                         }
-                        if (hsb2.Value > MaxInfo.MaxItems || hsb2.Value == 0) {
+                        if (hsb2.Value > MaxInfo.MaxItems || hsb2.Value == 0)
+                        {
                             lbl2.Text = "Item 0: None";
-                        } else {
+                        }
+                        else
+                        {
                             lbl2.Text = "Item " + hsb2.Value + ": " + Items.ItemHelper.Items[hsb2.Value].Name;
                         }
                         hsb1.Maximum = 718;
@@ -1735,10 +1895,14 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Sprite Change Attribute";
                     }
                     break;
-                case "shop": {
-                        if (hsb1.Value > MaxInfo.MaxShops || hsb1.Value == 0) {
+                case "shop":
+                    {
+                        if (hsb1.Value > MaxInfo.MaxShops || hsb1.Value == 0)
+                        {
                             lbl1.Text = "Shop num 0- None";
-                        } else {
+                        }
+                        else
+                        {
                             lbl1.Text = "Shop num " + hsb1.Value + "- " + Shops.ShopHelper.Shops[hsb1.Value].Name;
                         }
                         hsb1.Maximum = MaxInfo.MaxShops;
@@ -1748,16 +1912,20 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Shop Attribute";
                     }
                     break;
-                case "arena": {
+                case "arena":
+                    {
                         lbl1.Text = "Maps: " + hsb3.Value;
                         hsb1.Location = new Point(9, 99);
-                        if (hsb1.Value > 50) {
+                        if (hsb1.Value > 50)
+                        {
                             hsb1.Value = 50;
                         }
-                        if (hsb2.Value > 50) {
+                        if (hsb2.Value > 50)
+                        {
                             hsb2.Value = 50;
                         }
-                        if (hsb3.Value > 2000) {
+                        if (hsb3.Value > 2000)
+                        {
                             hsb3.Value = 2000;
                         }
                         lbl2.Text = "X: " + hsb1.Value;
@@ -1780,7 +1948,8 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Arena Attribute";
                     }
                     break;
-                case "guildblock": {
+                case "guildblock":
+                    {
                         lbl1.Text = "Guild Name to Pass Block:";
                         txt1.Location = new Point(9, 55);
                         txt1.Visible = true;
@@ -1789,7 +1958,8 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Guild Block Attribute";
                     }
                     break;
-                case "spriteblock": {
+                case "spriteblock":
+                    {
                         lbl1.Text = "Allow Sprite: " + hsb1.Value;
                         lbl2.Text = "Allow Sprite: " + hsb2.Value;
                         hsb1.Maximum = 1000;
@@ -1817,8 +1987,10 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Sprite Block Attribute";
                     }
                     break;
-                case "mobileblock": {
-                        if (hsb1.Value > 31) {
+                case "mobileblock":
+                    {
+                        if (hsb1.Value > 31)
+                        {
                             hsb1.Value = 31;
                         }
                         lbl1.Text = "Mobility Flag #" + ": Loading..."; //Needs work
@@ -1834,8 +2006,10 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Mobile Block Attribute";
                     }
                     break;
-                case "levelblock": {
-                        if (nudStoryLevel.Value > 100) {
+                case "levelblock":
+                    {
+                        if (nudStoryLevel.Value > 100)
+                        {
                             nudStoryLevel.Value = 100;
                         }
                         lbl1.Text = "Select a level. All levels equal to or";
@@ -1850,7 +2024,8 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Level Block Attribute";
                     }
                     break;
-                case "story": {
+                case "story":
+                    {
                         lbl1.Text = "Chapter";
                         nudStoryLevel.Location = new Point(9, 55);
                         nudStoryLevel.Minimum = 1;
@@ -1860,8 +2035,10 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Story Attribute";
                     }
                     break;
-                case "scriptedsign": {
-                        if (hsb1.Value > 100) {
+                case "scriptedsign":
+                    {
+                        if (hsb1.Value > 100)
+                        {
                             hsb1.Value = 100;
                         }
                         lbl1.Text = "Script " + hsb1.Value + ": (Needs work)"; //Needs work
@@ -1888,8 +2065,10 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Scripted Sign Attribute";
                     }
                     break;
-                case "slippery": {
-                        if (hsb1.Value > 31) {
+                case "slippery":
+                    {
+                        if (hsb1.Value > 31)
+                        {
                             hsb1.Value = 31;
                         }
                         lbl1.Text = "Mobility Flag #" + ": Loading..."; //Needs work
@@ -1905,8 +2084,10 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Slippery Attribute";
                     }
                     break;
-                case "slow": {
-                        if (hsb1.Value > 15) {
+                case "slow":
+                    {
+                        if (hsb1.Value > 15)
+                        {
                             hsb1.Value = 15;
                         }
                         lbl1.Text = "Mobility Flag #" + ": Loading..."; //Needs work
@@ -1922,7 +2103,8 @@ namespace Client.Logic.Windows
                         lbl2.Location = new Point(0, 115);
                         lbl2.Visible = true;
 
-                        if (hsb2.Value > 7) {
+                        if (hsb2.Value > 7)
+                        {
                             hsb2.Value = 7;
                         }
                         hsb2.Maximum = 8;
@@ -1933,12 +2115,18 @@ namespace Client.Logic.Windows
                         btnTitle.Text = "Slow Attribute";
                     }
                     break;
-                case "dropshop": {
-                        if (hsb1.Value == 0) {
+                case "dropshop":
+                    {
+                        if (hsb1.Value == 0)
+                        {
                             lbl1.Text = "Item 0: None";
-                        } else if (hsb1.Value > MaxInfo.MaxItems) {
+                        }
+                        else if (hsb1.Value > MaxInfo.MaxItems)
+                        {
                             hsb1.Value = MaxInfo.MaxItems;
-                        } else {
+                        }
+                        else
+                        {
                             lbl1.Text = "Item " + hsb1.Value + ": " + Items.ItemHelper.Items[hsb1.Value].Name;
                         }
                         lbl2.Text = "Value: " + hsb2.Value;
@@ -1967,94 +2155,146 @@ namespace Client.Logic.Windows
 
         #endregion OptionPanel
 
-        void hsb1_ValueChanged(object sender, ValueChangedEventArgs e) {
-            if (btnTitle.Text == "Sprite Change Attribute" || btnTitle.Text == "Sprite Block Attribute") {
+        void hsb1_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            if (btnTitle.Text == "Sprite Change Attribute" || btnTitle.Text == "Sprite Block Attribute")
+            {
                 lbl1.Text = "Sprite: " + hsb1.Value;
                 picSprite.Size = new Size(32, 64);
                 picSprite.BlitToBuffer(Graphics.GraphicsManager.GetSpriteSheet(hsb1.Value).GetSheet(Graphics.FrameType.Idle, Enums.Direction.Down), new Rectangle(96, 0, 32, 64));
-            } else if (btnTitle.Text == "Warp Map Attribute" || btnTitle.Text == "Arena Attribute") {
+            }
+            else if (btnTitle.Text == "Warp Map Attribute" || btnTitle.Text == "Arena Attribute")
+            {
                 lbl2.Text = "X: " + hsb1.Value;
-            } else if (btnTitle.Text == "Link Shop Attribute") {
-                if (hsb1.Value == 0) {
+            }
+            else if (btnTitle.Text == "Link Shop Attribute")
+            {
+                if (hsb1.Value == 0)
+                {
                     lbl1.Text = "Item Paid: 0 (None)";
-                } else {
+                }
+                else
+                {
                     lbl1.Text = "Item Paid: " + hsb1.Value + " (" + Items.ItemHelper.Items[hsb1.Value].Name + ")";
                 }
-            } else if (btnTitle.Text == "Item Attribute" || btnTitle.Text == "Key Attribute" || btnTitle.Text == "Drop Shop Attribute") {
-                if (hsb1.Value == 0) {
+            }
+            else if (btnTitle.Text == "Item Attribute" || btnTitle.Text == "Key Attribute" || btnTitle.Text == "Drop Shop Attribute")
+            {
+                if (hsb1.Value == 0)
+                {
                     lbl1.Text = "Item 0: None";
-                } else {
+                }
+                else
+                {
                     lbl1.Text = "Item " + hsb1.Value + ": " + Items.ItemHelper.Items[hsb1.Value].Name;
                 }
-            } else if (btnTitle.Text == "Key Open Attribute") {
+            }
+            else if (btnTitle.Text == "Key Open Attribute")
+            {
                 lbl1.Text = "X: " + hsb1.Value;
-            } else if (btnTitle.Text == "Scripted Tile Attribute") {
+            }
+            else if (btnTitle.Text == "Scripted Tile Attribute")
+            {
                 lbl1.Text = "Script " + hsb1.Value + ": Loading..."; //something goes here.
                 Messenger.SendScriptedTileInfoRequest(hsb1.Value);
-            } else if (btnTitle.Text == "Scripted Sign Attribute") {
+            }
+            else if (btnTitle.Text == "Scripted Sign Attribute")
+            {
                 lbl1.Text = "Script " + hsb1.Value + ": Loading..."; //something goes here.
                 Messenger.SendScriptedSignInfoRequest(hsb1.Value);
-            } else if (btnTitle.Text == "Mobile Block Attribute" || btnTitle.Text == "Slippery Attribute" || btnTitle.Text == "Slow Attribute") {
+            }
+            else if (btnTitle.Text == "Mobile Block Attribute" || btnTitle.Text == "Slippery Attribute" || btnTitle.Text == "Slow Attribute")
+            {
                 lbl1.Text = "Mobility Flag #" + hsb1.Value + ": Loading..."; //something goes here.
                 Messenger.SendMobilityInfoRequest(hsb1.Value);
                 chkHidden.Checked = tempArrayForMobility[hsb1.Value];
-            } else if (btnTitle.Text == "Shop Attribute") {
-                if (hsb1.Value == 0) {
+            }
+            else if (btnTitle.Text == "Shop Attribute")
+            {
+                if (hsb1.Value == 0)
+                {
                     lbl1.Text = "Shop num 0: None";
-                } else {
+                }
+                else
+                {
                     lbl1.Text = "Shop num " + hsb1.Value + "- " + Shops.ShopHelper.Shops[hsb1.Value].Name;
                 }
             }
         }
 
-        void hsb2_ValueChanged(object sender, ValueChangedEventArgs e) {
-            if (btnTitle.Text == "Sprite Change Attribute") {
-                if (hsb2.Value == 0) {
+        void hsb2_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            if (btnTitle.Text == "Sprite Change Attribute")
+            {
+                if (hsb2.Value == 0)
+                {
                     lbl2.Text = "Item 0: None";
-                } else {
+                }
+                else
+                {
                     lbl2.Text = "Item " + hsb2.Value + ": " + Items.ItemHelper.Items[hsb2.Value].Name;
                 }
-            } else if (btnTitle.Text == "Warp Map Attribute" || btnTitle.Text == "Arena Attribute") {
+            }
+            else if (btnTitle.Text == "Warp Map Attribute" || btnTitle.Text == "Arena Attribute")
+            {
                 lbl3.Text = "Y: " + hsb2.Value;
-            } else if (btnTitle.Text == "Item Attribute" || btnTitle.Text == "Link Shop Attribute" || btnTitle.Text == "Drop Shop Attribute") {
+            }
+            else if (btnTitle.Text == "Item Attribute" || btnTitle.Text == "Link Shop Attribute" || btnTitle.Text == "Drop Shop Attribute")
+            {
                 lbl2.Text = "Value: " + hsb2.Value;
-            } else if (btnTitle.Text == "Key Open Attribute") {
+            }
+            else if (btnTitle.Text == "Key Open Attribute")
+            {
                 lbl2.Text = "Y: " + hsb2.Value;
-            } else if (btnTitle.Text == "Sprite Block Attribute") {
+            }
+            else if (btnTitle.Text == "Sprite Block Attribute")
+            {
                 lbl2.Text = "Sprite: " + hsb2.Value;
                 picSprite2.Size = new Size(32, 64);
                 picSprite2.BlitToBuffer(Graphics.GraphicsManager.GetSpriteSheet(hsb2.Value).GetSheet(Graphics.FrameType.Idle, Enums.Direction.Down), new Rectangle(96, 0, 32, 64));
-                
-            } else if (btnTitle.Text == "Slow Attribute") {
+            }
+            else if (btnTitle.Text == "Slow Attribute")
+            {
                 lbl2.Text = "Speed: " + (Enums.MovementSpeed)hsb2.Value;
             }
         }
 
-        void hsb3_ValueChanged(object sender, ValueChangedEventArgs e) {
-            if (btnTitle.Text == "Sprite Change Attribute") {
+        void hsb3_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            if (btnTitle.Text == "Sprite Change Attribute")
+            {
                 lbl3.Text = "Value: " + hsb3.Value;
-            } else if (btnTitle.Text == "Arena Attribute") {
+            }
+            else if (btnTitle.Text == "Arena Attribute")
+            {
                 lbl1.Text = "Maps: " + hsb3.Value;
-            } else if (btnTitle.Text == "Drop Shop Attribute") {
+            }
+            else if (btnTitle.Text == "Drop Shop Attribute")
+            {
                 lbl3.Text = "Given Value: " + hsb3.Value;
             }
         }
 
-        void optAllow_CheckChanged(object sender, EventArgs e) {
+        void optAllow_CheckChanged(object sender, EventArgs e)
+        {
             Mode = 1;
         }
 
-        void optBlock_CheckChanged(object sender, EventArgs e) {
+        void optBlock_CheckChanged(object sender, EventArgs e)
+        {
             Mode = 2;
         }
 
-        void chkHidden_CheckChanged(object sender, EventArgs e) {
-            if (btnTitle.Text == "Mobile Block Attribute" || btnTitle.Text == "Slippery Attribute" || btnTitle.Text == "Slow Attribute") {
+        void chkHidden_CheckChanged(object sender, EventArgs e)
+        {
+            if (btnTitle.Text == "Mobile Block Attribute" || btnTitle.Text == "Slippery Attribute" || btnTitle.Text == "Slow Attribute")
+            {
                 tempArrayForMobility[hsb1.Value] = chkHidden.Checked;
             }
         }
 
-        void OpenOptionsPanel() {
+        void OpenOptionsPanel()
+        {
             pnlAttributes.Visible = false;
             pnlAttOptions.Visible = true;
             btnTerrain.Visible = false;
@@ -2069,12 +2309,14 @@ namespace Client.Logic.Windows
             txt1.Text = "1";
             txt2.Text = "1";
             txt3.Text = "1";
-            if (optSound.Checked == false) {
+            if (optSound.Checked == false)
+            {
                 lbl1.Visible = true;
             }
         }
 
-        void CloseOptionsPanel() {
+        void CloseOptionsPanel()
+        {
             pnlAttOptions.Visible = false;
             pnlAttributes.Visible = true;
             btnTerrain.Visible = true;
@@ -2128,7 +2370,8 @@ namespace Client.Logic.Windows
         }*/
         #endregion
 
-        void btnOK_Click(object sender, MouseButtonEventArgs e) {
+        void btnOK_Click(object sender, MouseButtonEventArgs e)
+        {
             lbl1.Visible = false;
             lbl2.Visible = false;
             lbl3.Visible = false;
@@ -2155,46 +2398,61 @@ namespace Client.Logic.Windows
 
         Maps.Tile selectedTile;
 
-        void Editor_mapViewer_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if ((Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Mapper) || Maps.MapHelper.ActiveMap.MapID.StartsWith("h-")) && (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.LeftShift) && e.MouseEventArgs.Button == SdlDotNet.Input.MouseButton.SecondaryButton)) {
+        void Editor_mapViewer_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if ((Ranks.IsAllowed(Players.PlayerManager.MyPlayer, Enums.Rank.Mapper) || Maps.MapHelper.ActiveMap.MapID.StartsWith("h-")) && (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.LeftShift) && e.MouseEventArgs.Button == SdlDotNet.Input.MouseButton.SecondaryButton))
+            {
                 int newX = (e.RelativePosition.X / Constants.TILE_WIDTH) + Logic.Graphics.Renderers.Screen.ScreenRenderer.Camera.X;
                 int newY = (e.RelativePosition.Y / Constants.TILE_HEIGHT) + Logic.Graphics.Renderers.Screen.ScreenRenderer.Camera.Y;
                 Messenger.WarpLoc(newX, newY);
                 return;
             }
-            if (inMapEditor) {
-                switch (ActiveTool) {
-                    case MappingTool.Editor: {
+            if (inMapEditor)
+            {
+                switch (ActiveTool)
+                {
+                    case MappingTool.Editor:
+                        {
                             //Point location = mapViewer.ScreenLocation;
                             //Point relPoint = new Point(e.Position.X - location.X, e.Position.Y - location.Y);
-                            if (btnTerrain.Selected) {
+                            if (btnTerrain.Selected)
+                            {
                                 PlaceLayer(e.RelativePosition, e.MouseEventArgs.Button);
-                            } else if (btnAttributes.Selected) {
+                            }
+                            else if (btnAttributes.Selected)
+                            {
                                 PlaceAttribute(e.RelativePosition, e.MouseEventArgs.Button);
                             }
                         }
                         break;
-                    case MappingTool.EyeDropper: {
+                    case MappingTool.EyeDropper:
+                        {
                             Point location = mapViewer.ScreenLocation;
                             Point relPoint = new Point(e.Position.X - location.X, e.Position.Y - location.Y);
                             int X = (relPoint.X / Constants.TILE_WIDTH) + Graphics.Renderers.Screen.ScreenRenderer.Camera.X;
                             int Y = (relPoint.Y / Constants.TILE_HEIGHT) + Graphics.Renderers.Screen.ScreenRenderer.Camera.Y;
-                            if (X <= mapViewer.ActiveMap.MaxX && Y <= mapViewer.ActiveMap.MaxY && X >= 0 && Y >= 0) {
-                                if (btnAttributes.Selected) {
+                            if (X <= mapViewer.ActiveMap.MaxX && Y <= mapViewer.ActiveMap.MaxY && X >= 0 && Y >= 0)
+                            {
+                                if (btnAttributes.Selected)
+                                {
                                     Maps.Tile tile = mapViewer.ActiveMap.Tile[X, Y];
-                                    switch (tile.Type) {
-                                        case Enums.TileType.Blocked: {
+                                    switch (tile.Type)
+                                    {
+                                        case Enums.TileType.Blocked:
+                                            {
                                                 optBlocked.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.Warp: {
+                                        case Enums.TileType.Warp:
+                                            {
                                                 optWarp.Checked = true;
                                                 nudStoryLevel.Value = tile.Data1;
                                                 hsb1.Value = tile.Data2;
                                                 hsb2.Value = tile.Data3;
                                             }
                                             break;
-                                        case Enums.TileType.Item: {
+                                        case Enums.TileType.Item:
+                                            {
                                                 optItem.Checked = true;
                                                 hsb1.Value = tile.Data1;
                                                 hsb2.Value = tile.Data2;
@@ -2203,37 +2461,44 @@ namespace Client.Logic.Windows
                                                 txt1.Text = tile.String2;
                                             }
                                             break;
-                                        case Enums.TileType.NPCAvoid: {
+                                        case Enums.TileType.NPCAvoid:
+                                            {
                                                 optNpcAvoid.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.Key: {
+                                        case Enums.TileType.Key:
+                                            {
                                                 optKey.Checked = true;
                                                 hsb1.Value = tile.Data1;
                                                 chkTake.Checked = tile.Data2.ToString().ToBool();
                                             }
                                             break;
-                                        case Enums.TileType.KeyOpen: {
+                                        case Enums.TileType.KeyOpen:
+                                            {
                                                 optKeyOpen.Checked = true;
                                                 hsb1.Value = tile.Data1;
                                                 hsb2.Value = tile.Data2;
                                                 txt1.Text = tile.String1;
                                             }
                                             break;
-                                        case Enums.TileType.Heal: {
+                                        case Enums.TileType.Heal:
+                                            {
                                                 optHeal.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.Kill: {
+                                        case Enums.TileType.Kill:
+                                            {
                                                 optKill.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.Sound: {
+                                        case Enums.TileType.Sound:
+                                            {
                                                 optSound.Checked = true;
                                                 lstSound.SelectItem(tile.String1);
                                             }
                                             break;
-                                        case Enums.TileType.Scripted: {
+                                        case Enums.TileType.Scripted:
+                                            {
                                                 optScripted.Checked = true;
                                                 hsb1.Value = tile.Data1;
                                                 txt1.Text = tile.String1;
@@ -2241,70 +2506,82 @@ namespace Client.Logic.Windows
                                                 txt3.Text = tile.String3;
                                             }
                                             break;
-                                        case Enums.TileType.Notice: {
+                                        case Enums.TileType.Notice:
+                                            {
                                                 optNotice.Checked = true;
                                                 txt1.Text = tile.String1;
                                                 txt2.Text = tile.String2;
                                                 lstSound.SelectItem(tile.String3);
                                             }
                                             break;
-                                        case Enums.TileType.LinkShop: {
+                                        case Enums.TileType.LinkShop:
+                                            {
                                                 optLinkShop.Checked = true;
                                                 hsb1.Value = tile.Data1;
                                                 hsb2.Value = tile.Data2;
                                                 chkTake.Checked = tile.Data3.ToString().ToBool();
                                             }
                                             break;
-                                        case Enums.TileType.Door: {
+                                        case Enums.TileType.Door:
+                                            {
                                                 optDoor.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.Sign: {
+                                        case Enums.TileType.Sign:
+                                            {
                                                 optSign.Checked = true;
                                                 txt1.Text = tile.String1;
                                                 txt2.Text = tile.String2;
                                                 txt3.Text = tile.String3;
                                             }
                                             break;
-                                        case Enums.TileType.SpriteChange: {
+                                        case Enums.TileType.SpriteChange:
+                                            {
                                                 optSpriteChange.Checked = true;
                                                 hsb1.Value = tile.Data1;
                                                 hsb2.Value = tile.Data2;
                                                 hsb3.Value = tile.Data3;
                                             }
                                             break;
-                                        case Enums.TileType.Shop: {
+                                        case Enums.TileType.Shop:
+                                            {
                                                 optShop.Checked = true;
                                                 hsb1.Value = tile.Data1;
                                             }
                                             break;
-                                        case Enums.TileType.Arena: {
+                                        case Enums.TileType.Arena:
+                                            {
                                                 optArena.Checked = true;
                                                 hsb1.Value = tile.Data1;
                                                 hsb2.Value = tile.Data2;
                                                 hsb3.Value = tile.Data3;
                                             }
                                             break;
-                                        case Enums.TileType.Bank: {
+                                        case Enums.TileType.Bank:
+                                            {
                                                 optBank.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.LevelBlock: {
+                                        case Enums.TileType.LevelBlock:
+                                            {
                                                 optLevelBlock.Checked = true;
                                                 nudStoryLevel.Value = tile.Data1;
                                             }
                                             break;
-                                        case Enums.TileType.SpriteBlock: {
+                                        case Enums.TileType.SpriteBlock:
+                                            {
                                                 optSpriteBlock.Checked = true;
                                                 Mode = tile.Data1;
                                                 hsb1.Value = tile.Data2;
                                                 hsb3.Value = tile.Data3;
                                             }
                                             break;
-                                        case Enums.TileType.MobileBlock: {
+                                        case Enums.TileType.MobileBlock:
+                                            {
                                                 optMobileBlock.Checked = true;
                                                 int mobility = tile.Data1;
-                                                for (int i = 0; i < 16; i++) {
+                                                for (int i = 0; i < 16; i++)
+                                                {
                                                     tempArrayForMobility[i] = (mobility % 2).ToString().ToBool();
                                                     mobility /= 2;
                                                 }
@@ -2314,27 +2591,33 @@ namespace Client.Logic.Windows
                                                 //hsb3.Value = tile.Data3;
                                             }
                                             break;
-                                        case Enums.TileType.Guild: {
+                                        case Enums.TileType.Guild:
+                                            {
                                                 optGuildBlock.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.Assembly: {
+                                        case Enums.TileType.Assembly:
+                                            {
                                                 optAssembly.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.Evolution: {
+                                        case Enums.TileType.Evolution:
+                                            {
                                                 optEvolution.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.Story: {
+                                        case Enums.TileType.Story:
+                                            {
                                                 optStory.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.MissionBoard: {
+                                        case Enums.TileType.MissionBoard:
+                                            {
                                                 optMission.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.ScriptedSign: {
+                                        case Enums.TileType.ScriptedSign:
+                                            {
                                                 optScriptedSign.Checked = true;
                                                 hsb1.Value = tile.Data1;
                                                 txt1.Text = tile.String1;
@@ -2342,14 +2625,17 @@ namespace Client.Logic.Windows
                                                 txt3.Text = tile.String3;
                                             }
                                             break;
-                                        case Enums.TileType.Ambiguous: {
+                                        case Enums.TileType.Ambiguous:
+                                            {
                                                 optAmbiguous.Checked = true;
                                             }
                                             break;
-                                        case Enums.TileType.Slippery: {
+                                        case Enums.TileType.Slippery:
+                                            {
                                                 optSlippery.Checked = true;
                                                 int mobility = tile.Data1;
-                                                for (int i = 0; i < 16; i++) {
+                                                for (int i = 0; i < 16; i++)
+                                                {
                                                     tempArrayForMobility[i] = (mobility % 2).ToString().ToBool();
                                                     mobility /= 2;
                                                 }
@@ -2357,10 +2643,12 @@ namespace Client.Logic.Windows
                                                 chkHidden.Checked = tempArrayForMobility[0];
                                             }
                                             break;
-                                        case Enums.TileType.Slow: {
+                                        case Enums.TileType.Slow:
+                                            {
                                                 optSlow.Checked = true;
                                                 int mobility = tile.Data1;
-                                                for (int i = 0; i < 16; i++) {
+                                                for (int i = 0; i < 16; i++)
+                                                {
                                                     tempArrayForMobility[i] = (mobility % 2).ToString().ToBool();
                                                     mobility /= 2;
                                                 }
@@ -2369,7 +2657,8 @@ namespace Client.Logic.Windows
                                                 hsb2.Value = tile.Data2;
                                             }
                                             break;
-                                        case Enums.TileType.DropShop: {
+                                        case Enums.TileType.DropShop:
+                                            {
                                                 optDropShop.Checked = true;
                                                 hsb1.Value = tile.Data2;
                                                 hsb2.Value = tile.Data3;
@@ -2392,23 +2681,31 @@ namespace Client.Logic.Windows
             }
         }
 
-        void mapViewer_MouseMotion(object sender, SdlDotNet.Input.MouseMotionEventArgs e) {
-            if (inMapEditor) {
-                if (mapViewer.ActiveMap != null && mapViewer.ActiveMap.Loaded) {
+        void mapViewer_MouseMotion(object sender, SdlDotNet.Input.MouseMotionEventArgs e)
+        {
+            if (inMapEditor)
+            {
+                if (mapViewer.ActiveMap != null && mapViewer.ActiveMap.Loaded)
+                {
                     Point location = mapViewer.ScreenLocation;
                     Point relPoint = new Point(e.Position.X - location.X, e.Position.Y - location.Y);
                     int X = (relPoint.X / Constants.TILE_WIDTH) + Graphics.Renderers.Screen.ScreenRenderer.Camera.X;
                     int Y = (relPoint.Y / Constants.TILE_HEIGHT) + Graphics.Renderers.Screen.ScreenRenderer.Camera.Y;
-                    if (X <= mapViewer.ActiveMap.MaxX && Y <= mapViewer.ActiveMap.MaxY && X >= 0 && Y >= 0) {
+                    if (X <= mapViewer.ActiveMap.MaxX && Y <= mapViewer.ActiveMap.MaxY && X >= 0 && Y >= 0)
+                    {
                         //Graphics.Renderers.Screen.ScreenRenderer.Camera.X = X;
                         //Graphics.Renderers.Screen.ScreenRenderer.Camera.Y = Y;
                         //if (tabControl1.SelectedIndex == 1) {
                         //    ShowAttribInfo(X, Y);
                         //}
-                        if (IO.Options.DragAndPlace && (SdlDotNet.Input.Mouse.IsButtonPressed(SdlDotNet.Input.MouseButton.PrimaryButton) || SdlDotNet.Input.Mouse.IsButtonPressed(SdlDotNet.Input.MouseButton.SecondaryButton))) {
-                            if (btnTerrain.Selected) {
+                        if (IO.Options.DragAndPlace && (SdlDotNet.Input.Mouse.IsButtonPressed(SdlDotNet.Input.MouseButton.PrimaryButton) || SdlDotNet.Input.Mouse.IsButtonPressed(SdlDotNet.Input.MouseButton.SecondaryButton)))
+                        {
+                            if (btnTerrain.Selected)
+                            {
                                 PlaceLayer(relPoint, e.Button);
-                            } else if (btnAttributes.Selected) {
+                            }
+                            else if (btnAttributes.Selected)
+                            {
                                 PlaceAttribute(relPoint, e.Button);
                             }
                         }
@@ -2417,43 +2714,71 @@ namespace Client.Logic.Windows
             }
         }
 
-        private Enums.LayerType GetActiveLayer() {
-            if (optGround.Checked) {
-                if (!chkAnim.Checked){
+        private Enums.LayerType GetActiveLayer()
+        {
+            if (optGround.Checked)
+            {
+                if (!chkAnim.Checked)
+                {
                     return Enums.LayerType.Ground;
-                }else{
+                }
+                else
+                {
                     return Enums.LayerType.GroundAnim;
                 }
-            } else if (optMask.Checked) {
-                if (!chkAnim.Checked) {
+            }
+            else if (optMask.Checked)
+            {
+                if (!chkAnim.Checked)
+                {
                     return Enums.LayerType.Mask;
-                } else {
+                }
+                else
+                {
                     return Enums.LayerType.MaskAnim;
                 }
-            } else if (optMask2.Checked) {
-                if (!chkAnim.Checked) {
+            }
+            else if (optMask2.Checked)
+            {
+                if (!chkAnim.Checked)
+                {
                     return Enums.LayerType.Mask2;
-                } else {
+                }
+                else
+                {
                     return Enums.LayerType.Mask2Anim;
                 }
-            } else if (optFringe.Checked) {
-                if (!chkAnim.Checked) {
+            }
+            else if (optFringe.Checked)
+            {
+                if (!chkAnim.Checked)
+                {
                     return Enums.LayerType.Fringe;
-                } else {
+                }
+                else
+                {
                     return Enums.LayerType.FringeAnim;
                 }
-            } else if (optFringe2.Checked) {
-                if (!chkAnim.Checked) {
+            }
+            else if (optFringe2.Checked)
+            {
+                if (!chkAnim.Checked)
+                {
                     return Enums.LayerType.Fringe2;
-                } else {
+                }
+                else
+                {
                     return Enums.LayerType.Fringe2Anim;
                 }
-            } else {
+            }
+            else
+            {
                 return Enums.LayerType.None;
             }
         }
 
-        private Enums.TileType GetActiveAttribute() {
+        private Enums.TileType GetActiveAttribute()
+        {
             if (optBlocked.Checked)
                 return Enums.TileType.Blocked;
             if (optWarp.Checked)
@@ -2529,7 +2854,7 @@ namespace Client.Logic.Windows
             {
                 for (int j = startY; j <= endY; j++)
                 {
-                    SetMapLayer(x + i - startX, y + j - startY, layer, set, length*j + i);
+                    SetMapLayer(x + i - startX, y + j - startY, layer, set, length * j + i);
                 }
             }
         }
@@ -2538,7 +2863,8 @@ namespace Client.Logic.Windows
         {
             if (x < 0 || x > mapViewer.ActiveMap.MaxX || y < 0 || y > mapViewer.ActiveMap.MaxY) return;
 
-            switch (layer) {
+            switch (layer)
+            {
                 case Enums.LayerType.Ground:
                     mapViewer.ActiveMap.Tile[x, y].GroundSet = set;
                     mapViewer.ActiveMap.Tile[x, y].Ground = tile;
@@ -2582,8 +2908,10 @@ namespace Client.Logic.Windows
             }
         }
 
-        public int GetActiveLayerTileset(int x, int y) {
-            switch (GetActiveLayer()) {
+        public int GetActiveLayerTileset(int x, int y)
+        {
+            switch (GetActiveLayer())
+            {
                 case Enums.LayerType.Ground:
                     return mapViewer.ActiveMap.Tile[x, y].GroundSet;
                 case Enums.LayerType.Mask:
@@ -2607,8 +2935,10 @@ namespace Client.Logic.Windows
             }
         }
 
-        public int GetActiveLayerTile(int x, int y) {
-            switch (GetActiveLayer()) {
+        public int GetActiveLayerTile(int x, int y)
+        {
+            switch (GetActiveLayer())
+            {
                 case Enums.LayerType.Ground:
                     return mapViewer.ActiveMap.Tile[x, y].Ground;
                 case Enums.LayerType.GroundAnim:
@@ -2635,8 +2965,8 @@ namespace Client.Logic.Windows
         }
 
         public void SetMapAttribute(int x, int y, Enums.TileType tileType, int data1, int data2, int data3,
-            string string1, string string2, string string3, int dungeonValue) {
-
+            string string1, string string2, string string3, int dungeonValue)
+        {
             Maps.Tile tile = mapViewer.ActiveMap.Tile[x, y];
 
             tile.Type = tileType;
@@ -2649,11 +2979,14 @@ namespace Client.Logic.Windows
             tile.RDungeonMapValue = dungeonValue;
         }
 
-        private void PlaceLayer(Point relPoint, SdlDotNet.Input.MouseButton button) {
+        private void PlaceLayer(Point relPoint, SdlDotNet.Input.MouseButton button)
+        {
             int X = (relPoint.X / Constants.TILE_WIDTH) + Graphics.Renderers.Screen.ScreenRenderer.Camera.X;
             int Y = (relPoint.Y / Constants.TILE_HEIGHT) + Graphics.Renderers.Screen.ScreenRenderer.Camera.Y;
-            if (X <= mapViewer.ActiveMap.MaxX && Y <= mapViewer.ActiveMap.MaxY && X >= 0 && Y >= 0) {
-                if (button == SdlDotNet.Input.MouseButton.PrimaryButton) {
+            if (X <= mapViewer.ActiveMap.MaxX && Y <= mapViewer.ActiveMap.MaxY && X >= 0 && Y >= 0)
+            {
+                if (button == SdlDotNet.Input.MouseButton.PrimaryButton)
+                {
                     if (tilesetViewer.SelectedTile == tilesetViewer.EndTile)
                     {
                         SetMapLayer(X, Y, GetActiveLayer(), tilesetViewer.ActiveTilesetSurface.TilesetNumber, tilesetViewer.SelectedTile.Y * (tilesetViewer.ActiveTilesetSurface.Size.Width / Constants.TILE_WIDTH) + tilesetViewer.SelectedTile.X);
@@ -2662,19 +2995,29 @@ namespace Client.Logic.Windows
                     {
                         SetMapLayer(X, Y, GetActiveLayer(), tilesetViewer.ActiveTilesetSurface.TilesetNumber, tilesetViewer.SelectedTile.X, tilesetViewer.SelectedTile.Y, tilesetViewer.EndTile.X, tilesetViewer.EndTile.Y);
                     }
-                } else if (button == SdlDotNet.Input.MouseButton.SecondaryButton) {
+                }
+                else if (button == SdlDotNet.Input.MouseButton.SecondaryButton)
+                {
                     SetMapLayer(X, Y, GetActiveLayer(), 0, 0);
                 }
-                if (inLiveMode) {
-                    if (tilesetViewer.SelectedTile == tilesetViewer.EndTile) {
+                if (inLiveMode)
+                {
+                    if (tilesetViewer.SelectedTile == tilesetViewer.EndTile)
+                    {
                         Messenger.SendTilePlacedData(X, Y, GetActiveLayer(), GetActiveLayerTileset(X, Y), GetActiveLayerTile(X, Y));
-                    } else {
-                        for (int x = tilesetViewer.SelectedTile.X; x <= tilesetViewer.EndTile.X; x++) {
-                            for (int y = tilesetViewer.SelectedTile.Y; y <= tilesetViewer.EndTile.Y; y++) {
+                    }
+                    else
+                    {
+                        for (int x = tilesetViewer.SelectedTile.X; x <= tilesetViewer.EndTile.X; x++)
+                        {
+                            for (int y = tilesetViewer.SelectedTile.Y; y <= tilesetViewer.EndTile.Y; y++)
+                            {
                                 if (X + x - tilesetViewer.SelectedTile.X < 0 || X + x - tilesetViewer.SelectedTile.X > mapViewer.ActiveMap.MaxX ||
-                                    Y + y - tilesetViewer.SelectedTile.Y < 0 || Y + y - tilesetViewer.SelectedTile.Y > mapViewer.ActiveMap.MaxY) {
-
-                                } else {
+                                    Y + y - tilesetViewer.SelectedTile.Y < 0 || Y + y - tilesetViewer.SelectedTile.Y > mapViewer.ActiveMap.MaxY)
+                                {
+                                }
+                                else
+                                {
                                     Messenger.SendTilePlacedData(X + x - tilesetViewer.SelectedTile.X, Y + y - tilesetViewer.SelectedTile.Y, GetActiveLayer(), GetActiveLayerTileset(X + x - tilesetViewer.SelectedTile.X, Y + y - tilesetViewer.SelectedTile.Y), GetActiveLayerTile(X + x - tilesetViewer.SelectedTile.X, Y + y - tilesetViewer.SelectedTile.Y));
                                 }
                             }
@@ -2686,7 +3029,8 @@ namespace Client.Logic.Windows
             }
         }
 
-        private void FillAttributesFromSettings(bool sendLiveModeData) {
+        private void FillAttributesFromSettings(bool sendLiveModeData)
+        {
             Enums.TileType tileType = Enums.TileType.Walkable;
             int data1 = 0;
             int data2 = 0;
@@ -2695,8 +3039,10 @@ namespace Client.Logic.Windows
             string string2 = "";
             string string3 = "";
             int dungeonValue = 0;
-            switch (GetActiveAttribute()) {
-                case Enums.TileType.Blocked: {
+            switch (GetActiveAttribute())
+            {
+                case Enums.TileType.Blocked:
+                    {
                         tileType = Enums.TileType.Blocked;
                         data1 = 0;
                         data2 = 0;
@@ -2706,7 +3052,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Warp: {
+                case Enums.TileType.Warp:
+                    {
                         tileType = Enums.TileType.Warp;
                         data1 = nudStoryLevel.Value;
                         data2 = hsb1.Value;
@@ -2716,7 +3063,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Item: {
+                case Enums.TileType.Item:
+                    {
                         tileType = Enums.TileType.Item;
                         data1 = hsb1.Value;
                         data2 = hsb2.Value;
@@ -2726,7 +3074,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.NPCAvoid: {
+                case Enums.TileType.NPCAvoid:
+                    {
                         tileType = Enums.TileType.NPCAvoid;
                         data1 = 0;
                         data2 = 0;
@@ -2736,7 +3085,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Key: {
+                case Enums.TileType.Key:
+                    {
                         tileType = Enums.TileType.Key;
                         data1 = hsb1.Value;
                         data2 = chkTake.Checked.ToIntString().ToInt();
@@ -2746,7 +3096,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.KeyOpen: {
+                case Enums.TileType.KeyOpen:
+                    {
                         tileType = Enums.TileType.KeyOpen;
                         data1 = hsb1.Value;
                         data2 = hsb2.Value;
@@ -2756,7 +3107,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Heal: {
+                case Enums.TileType.Heal:
+                    {
                         tileType = Enums.TileType.Heal;
                         data1 = 0;
                         data2 = 0;
@@ -2766,7 +3118,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Kill: {
+                case Enums.TileType.Kill:
+                    {
                         tileType = Enums.TileType.Kill;
                         data1 = 0;
                         data2 = 0;
@@ -2776,7 +3129,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Sound: {
+                case Enums.TileType.Sound:
+                    {
                         tileType = Enums.TileType.Sound;
                         data1 = 0;
                         data2 = 0;
@@ -2786,7 +3140,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Scripted: {
+                case Enums.TileType.Scripted:
+                    {
                         tileType = Enums.TileType.Scripted;
                         data1 = hsb1.Value;
                         data2 = 0;
@@ -2796,7 +3151,8 @@ namespace Client.Logic.Windows
                         string3 = txt3.Text;
                     }
                     break;
-                case Enums.TileType.Notice: {
+                case Enums.TileType.Notice:
+                    {
                         tileType = Enums.TileType.Notice;
                         data1 = 0;
                         data2 = 0;
@@ -2806,7 +3162,8 @@ namespace Client.Logic.Windows
                         string3 = ((ListBoxTextItem)lstSound.SelectedItems[0]).Text;
                     }
                     break;
-                case Enums.TileType.LinkShop: {
+                case Enums.TileType.LinkShop:
+                    {
                         tileType = Enums.TileType.LinkShop;
                         data1 = hsb1.Value;
                         data2 = hsb2.Value;
@@ -2816,7 +3173,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Door: {
+                case Enums.TileType.Door:
+                    {
                         tileType = Enums.TileType.Door;
                         data1 = 0;
                         data2 = 0;
@@ -2826,7 +3184,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Sign: {
+                case Enums.TileType.Sign:
+                    {
                         tileType = Enums.TileType.Sign;
                         data1 = 0;
                         data2 = 0;
@@ -2836,7 +3195,8 @@ namespace Client.Logic.Windows
                         string3 = txt3.Text;
                     }
                     break;
-                case Enums.TileType.SpriteChange: {
+                case Enums.TileType.SpriteChange:
+                    {
                         tileType = Enums.TileType.SpriteChange;
                         data1 = hsb1.Value;
                         data2 = hsb2.Value;
@@ -2846,7 +3206,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Shop: {
+                case Enums.TileType.Shop:
+                    {
                         tileType = Enums.TileType.Shop;
                         data1 = hsb1.Value;
                         data2 = 0;
@@ -2856,7 +3217,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Arena: {
+                case Enums.TileType.Arena:
+                    {
                         tileType = Enums.TileType.Arena;
                         data1 = hsb1.Value;
                         data2 = hsb2.Value;
@@ -2866,7 +3228,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Bank: {
+                case Enums.TileType.Bank:
+                    {
                         tileType = Enums.TileType.Bank;
                         data1 = 0;
                         data2 = 0;
@@ -2876,7 +3239,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.LevelBlock: {
+                case Enums.TileType.LevelBlock:
+                    {
                         tileType = Enums.TileType.LevelBlock;
                         data1 = nudStoryLevel.Value;
                         data2 = 0;
@@ -2886,7 +3250,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.SpriteBlock: {
+                case Enums.TileType.SpriteBlock:
+                    {
                         tileType = Enums.TileType.SpriteBlock;
                         data1 = Mode;
                         data2 = hsb1.Value;
@@ -2896,11 +3261,14 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.MobileBlock: {
+                case Enums.TileType.MobileBlock:
+                    {
                         tileType = Enums.TileType.MobileBlock;
                         int mobility = 0;
-                        for (int i = 15; i >= 0; i--) {
-                            if (tempArrayForMobility[i]) {
+                        for (int i = 15; i >= 0; i--)
+                        {
+                            if (tempArrayForMobility[i])
+                            {
                                 mobility += (int)System.Math.Pow(2, i);
                             }
                         }
@@ -2912,7 +3280,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Guild: {
+                case Enums.TileType.Guild:
+                    {
                         tileType = Enums.TileType.Guild;
                         data1 = 0;
                         data2 = 0;
@@ -2922,7 +3291,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Assembly: {
+                case Enums.TileType.Assembly:
+                    {
                         tileType = Enums.TileType.Assembly;
                         data1 = 0;
                         data2 = 0;
@@ -2932,7 +3302,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Evolution: {
+                case Enums.TileType.Evolution:
+                    {
                         tileType = Enums.TileType.Evolution;
                         data1 = 0;
                         data2 = 0;
@@ -2942,7 +3313,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Story: {
+                case Enums.TileType.Story:
+                    {
                         tileType = Enums.TileType.Story;
                         data1 = nudStoryLevel.Value - 1;
                         data2 = 0;
@@ -2952,7 +3324,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.MissionBoard: {
+                case Enums.TileType.MissionBoard:
+                    {
                         tileType = Enums.TileType.MissionBoard;
                         data1 = 0;
                         data2 = 0;
@@ -2962,7 +3335,8 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.ScriptedSign: {
+                case Enums.TileType.ScriptedSign:
+                    {
                         tileType = Enums.TileType.ScriptedSign;
                         data1 = hsb1.Value;
                         data2 = 0;
@@ -2972,7 +3346,8 @@ namespace Client.Logic.Windows
                         string3 = txt3.Text;
                     }
                     break;
-                case Enums.TileType.Ambiguous: {
+                case Enums.TileType.Ambiguous:
+                    {
                         tileType = Enums.TileType.Ambiguous;
                         data1 = 0;
                         data2 = 0;
@@ -2982,11 +3357,14 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Slippery: {
+                case Enums.TileType.Slippery:
+                    {
                         tileType = Enums.TileType.Slippery;
                         int mobility = 0;
-                        for (int i = 15; i >= 0; i--) {
-                            if (tempArrayForMobility[i]) {
+                        for (int i = 15; i >= 0; i--)
+                        {
+                            if (tempArrayForMobility[i])
+                            {
                                 mobility += (int)System.Math.Pow(2, i);
                             }
                         }
@@ -2998,11 +3376,14 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.Slow: {
+                case Enums.TileType.Slow:
+                    {
                         tileType = Enums.TileType.Slow;
                         int mobility = 0;
-                        for (int i = 15; i >= 0; i--) {
-                            if (tempArrayForMobility[i]) {
+                        for (int i = 15; i >= 0; i--)
+                        {
+                            if (tempArrayForMobility[i])
+                            {
                                 mobility += (int)System.Math.Pow(2, i);
                             }
                         }
@@ -3014,8 +3395,9 @@ namespace Client.Logic.Windows
                         string3 = "";
                     }
                     break;
-                case Enums.TileType.DropShop: {
-                    tileType = Enums.TileType.DropShop;
+                case Enums.TileType.DropShop:
+                    {
+                        tileType = Enums.TileType.DropShop;
                         data2 = hsb1.Value;
                         data3 = hsb2.Value;
                         data1 = hsb3.Value;
@@ -3037,39 +3419,55 @@ namespace Client.Logic.Windows
             }
             dungeonValue = nudDungeonTileValue.Value;
             FillAttributes(tileType, data1, data2, data3, string1, string2, string3, dungeonValue);
-            if (sendLiveModeData) {
-                if (inLiveMode) {
+            if (sendLiveModeData)
+            {
+                if (inLiveMode)
+                {
                     Messenger.SendAttributeFillData(tileType, data1, data2, data3, string1, string2, string3, dungeonValue);
                 }
             }
         }
 
-        public void FillAttributes(Enums.TileType tileType, int data1, int data2, int data3, string string1, string string2, string string3, int dungeonValue) {
-            if (mapViewer.ActiveMap != null && mapViewer.ActiveMap.Loaded) {
-                for (int X = 0; X <= mapViewer.ActiveMap.MaxX; X++) {
-                    for (int Y = 0; Y <= mapViewer.ActiveMap.MaxY; Y++) {
+        public void FillAttributes(Enums.TileType tileType, int data1, int data2, int data3, string string1, string string2, string string3, int dungeonValue)
+        {
+            if (mapViewer.ActiveMap != null && mapViewer.ActiveMap.Loaded)
+            {
+                for (int X = 0; X <= mapViewer.ActiveMap.MaxX; X++)
+                {
+                    for (int Y = 0; Y <= mapViewer.ActiveMap.MaxY; Y++)
+                    {
                         SetMapAttribute(X, Y, tileType, data1, data2, data3, string1, string2, string3, dungeonValue);
                     }
                 }
             }
         }
 
-        public void FillLayer(Enums.LayerType layer, int tileSet, int tileNum) {
-            if (mapViewer.ActiveMap != null && mapViewer.ActiveMap.Loaded) {
-                for (int X = 0; X <= mapViewer.ActiveMap.MaxX; X++) {
-                    for (int Y = 0; Y <= mapViewer.ActiveMap.MaxY; Y++) {
+        public void FillLayer(Enums.LayerType layer, int tileSet, int tileNum)
+        {
+            if (mapViewer.ActiveMap != null && mapViewer.ActiveMap.Loaded)
+            {
+                for (int X = 0; X <= mapViewer.ActiveMap.MaxX; X++)
+                {
+                    for (int Y = 0; Y <= mapViewer.ActiveMap.MaxY; Y++)
+                    {
                         SetMapLayer(X, Y, layer, tileSet, tileNum);
                     }
                 }
             }
         }
 
-        private void ClearLayer() {
-            if (mapViewer.ActiveMap != null && mapViewer.ActiveMap.Loaded) {
-                for (int X = 0; X <= mapViewer.ActiveMap.MaxX; X++) {
-                    for (int Y = 0; Y <= mapViewer.ActiveMap.MaxY; Y++) {
-                        if (btnTerrain.Selected) {
-                            switch (GetActiveLayer()) {
+        private void ClearLayer()
+        {
+            if (mapViewer.ActiveMap != null && mapViewer.ActiveMap.Loaded)
+            {
+                for (int X = 0; X <= mapViewer.ActiveMap.MaxX; X++)
+                {
+                    for (int Y = 0; Y <= mapViewer.ActiveMap.MaxY; Y++)
+                    {
+                        if (btnTerrain.Selected)
+                        {
+                            switch (GetActiveLayer())
+                            {
                                 case Enums.LayerType.Ground:
                                     mapViewer.ActiveMap.Tile[X, Y].GroundSet = 0;
                                     mapViewer.ActiveMap.Tile[X, Y].Ground = 0;
@@ -3111,7 +3509,9 @@ namespace Client.Logic.Windows
                                     mapViewer.ActiveMap.Tile[X, Y].F2Anim = 0;
                                     break;
                             }
-                        } else if (btnAttributes.Selected) {
+                        }
+                        else if (btnAttributes.Selected)
+                        {
                             mapViewer.ActiveMap.Tile[X, Y].Type = Enums.TileType.Walkable;
                             mapViewer.ActiveMap.Tile[X, Y].Data1 = 0;
                             mapViewer.ActiveMap.Tile[X, Y].Data2 = 0;
@@ -3126,14 +3526,19 @@ namespace Client.Logic.Windows
             }
         }
 
-        private void PlaceAttribute(Point relPoint, SdlDotNet.Input.MouseButton button) {
+        private void PlaceAttribute(Point relPoint, SdlDotNet.Input.MouseButton button)
+        {
             int X = (relPoint.X / Constants.TILE_WIDTH) + Graphics.Renderers.Screen.ScreenRenderer.Camera.X;
             int Y = (relPoint.Y / Constants.TILE_HEIGHT) + Graphics.Renderers.Screen.ScreenRenderer.Camera.Y;
-            if (X <= mapViewer.ActiveMap.MaxX && Y <= mapViewer.ActiveMap.MaxY && X >= 0 && Y >= 0) {
+            if (X <= mapViewer.ActiveMap.MaxX && Y <= mapViewer.ActiveMap.MaxY && X >= 0 && Y >= 0)
+            {
                 Maps.Tile tile = mapViewer.ActiveMap.Tile[X, Y];
-                if (button == SdlDotNet.Input.MouseButton.PrimaryButton) {
-                    switch (GetActiveAttribute()) {
-                        case Enums.TileType.Blocked: {
+                if (button == SdlDotNet.Input.MouseButton.PrimaryButton)
+                {
+                    switch (GetActiveAttribute())
+                    {
+                        case Enums.TileType.Blocked:
+                            {
                                 tile.Type = Enums.TileType.Blocked;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3143,7 +3548,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Warp: {
+                        case Enums.TileType.Warp:
+                            {
                                 tile.Type = Enums.TileType.Warp;
                                 tile.Data1 = nudStoryLevel.Value;
                                 tile.Data2 = hsb1.Value;
@@ -3153,7 +3559,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Item: {
+                        case Enums.TileType.Item:
+                            {
                                 tile.Type = Enums.TileType.Item;
                                 tile.Data1 = hsb1.Value;
                                 tile.Data2 = hsb2.Value;
@@ -3163,7 +3570,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.NPCAvoid: {
+                        case Enums.TileType.NPCAvoid:
+                            {
                                 tile.Type = Enums.TileType.NPCAvoid;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3173,7 +3581,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Key: {
+                        case Enums.TileType.Key:
+                            {
                                 tile.Type = Enums.TileType.Key;
                                 tile.Data1 = hsb1.Value;
                                 tile.Data2 = chkTake.Checked.ToIntString().ToInt();
@@ -3183,7 +3592,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.KeyOpen: {
+                        case Enums.TileType.KeyOpen:
+                            {
                                 tile.Type = Enums.TileType.KeyOpen;
                                 tile.Data1 = hsb1.Value;
                                 tile.Data2 = hsb2.Value;
@@ -3193,7 +3603,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Heal: {
+                        case Enums.TileType.Heal:
+                            {
                                 tile.Type = Enums.TileType.Heal;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3203,7 +3614,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Kill: {
+                        case Enums.TileType.Kill:
+                            {
                                 tile.Type = Enums.TileType.Kill;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3213,7 +3625,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Sound: {
+                        case Enums.TileType.Sound:
+                            {
                                 tile.Type = Enums.TileType.Sound;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3223,7 +3636,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Scripted: {
+                        case Enums.TileType.Scripted:
+                            {
                                 tile.Type = Enums.TileType.Scripted;
                                 tile.Data1 = hsb1.Value;
                                 tile.Data2 = 0;
@@ -3233,7 +3647,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = txt3.Text;
                             }
                             break;
-                        case Enums.TileType.Notice: {
+                        case Enums.TileType.Notice:
+                            {
                                 tile.Type = Enums.TileType.Notice;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3243,7 +3658,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = ((ListBoxTextItem)lstSound.SelectedItems[0]).Text;
                             }
                             break;
-                        case Enums.TileType.LinkShop: {
+                        case Enums.TileType.LinkShop:
+                            {
                                 tile.Type = Enums.TileType.LinkShop;
                                 tile.Data1 = hsb1.Value;
                                 tile.Data2 = hsb2.Value;
@@ -3253,7 +3669,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Door: {
+                        case Enums.TileType.Door:
+                            {
                                 tile.Type = Enums.TileType.Door;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3263,7 +3680,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Sign: {
+                        case Enums.TileType.Sign:
+                            {
                                 tile.Type = Enums.TileType.Sign;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3273,7 +3691,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = txt3.Text;
                             }
                             break;
-                        case Enums.TileType.SpriteChange: {
+                        case Enums.TileType.SpriteChange:
+                            {
                                 tile.Type = Enums.TileType.SpriteChange;
                                 tile.Data1 = hsb1.Value;
                                 tile.Data2 = hsb2.Value;
@@ -3283,7 +3702,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Shop: {
+                        case Enums.TileType.Shop:
+                            {
                                 tile.Type = Enums.TileType.Shop;
                                 tile.Data1 = hsb1.Value;
                                 tile.Data2 = 0;
@@ -3293,7 +3713,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Arena: {
+                        case Enums.TileType.Arena:
+                            {
                                 tile.Type = Enums.TileType.Arena;
                                 tile.Data1 = hsb1.Value;
                                 tile.Data2 = hsb2.Value;
@@ -3303,7 +3724,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Bank: {
+                        case Enums.TileType.Bank:
+                            {
                                 tile.Type = Enums.TileType.Bank;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3313,7 +3735,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.LevelBlock: {
+                        case Enums.TileType.LevelBlock:
+                            {
                                 tile.Type = Enums.TileType.LevelBlock;
                                 tile.Data1 = nudStoryLevel.Value;
                                 tile.Data2 = 0;
@@ -3323,7 +3746,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.SpriteBlock: {
+                        case Enums.TileType.SpriteBlock:
+                            {
                                 tile.Type = Enums.TileType.SpriteBlock;
                                 tile.Data1 = Mode;
                                 tile.Data2 = hsb1.Value;
@@ -3333,11 +3757,14 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.MobileBlock: {
+                        case Enums.TileType.MobileBlock:
+                            {
                                 tile.Type = Enums.TileType.MobileBlock;
                                 int mobility = 0;
-                                for (int i = 15; i >= 0; i--) {
-                                    if (tempArrayForMobility[i]) {
+                                for (int i = 15; i >= 0; i--)
+                                {
+                                    if (tempArrayForMobility[i])
+                                    {
                                         mobility += (int)System.Math.Pow(2, i);
                                     }
                                 }
@@ -3349,7 +3776,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Guild: {
+                        case Enums.TileType.Guild:
+                            {
                                 tile.Type = Enums.TileType.Guild;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3359,7 +3787,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Assembly: {
+                        case Enums.TileType.Assembly:
+                            {
                                 tile.Type = Enums.TileType.Assembly;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3369,7 +3798,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Evolution: {
+                        case Enums.TileType.Evolution:
+                            {
                                 tile.Type = Enums.TileType.Evolution;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3379,7 +3809,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Story: {
+                        case Enums.TileType.Story:
+                            {
                                 tile.Type = Enums.TileType.Story;
                                 tile.Data1 = nudStoryLevel.Value - 1;
                                 tile.Data2 = 0;
@@ -3389,7 +3820,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.MissionBoard: {
+                        case Enums.TileType.MissionBoard:
+                            {
                                 tile.Type = Enums.TileType.MissionBoard;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3399,7 +3831,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.ScriptedSign: {
+                        case Enums.TileType.ScriptedSign:
+                            {
                                 tile.Type = Enums.TileType.ScriptedSign;
                                 tile.Data1 = hsb1.Value;
                                 tile.Data2 = 0;
@@ -3409,7 +3842,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = txt3.Text;
                             }
                             break;
-                        case Enums.TileType.Ambiguous: {
+                        case Enums.TileType.Ambiguous:
+                            {
                                 tile.Type = Enums.TileType.Ambiguous;
                                 tile.Data1 = 0;
                                 tile.Data2 = 0;
@@ -3419,11 +3853,14 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Slippery: {
+                        case Enums.TileType.Slippery:
+                            {
                                 tile.Type = Enums.TileType.Slippery;
                                 int mobility = 0;
-                                for (int i = 15; i >= 0; i--) {
-                                    if (tempArrayForMobility[i]) {
+                                for (int i = 15; i >= 0; i--)
+                                {
+                                    if (tempArrayForMobility[i])
+                                    {
                                         mobility += (int)System.Math.Pow(2, i);
                                     }
                                 }
@@ -3435,11 +3872,14 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.Slow: {
+                        case Enums.TileType.Slow:
+                            {
                                 tile.Type = Enums.TileType.Slow;
                                 int mobility = 0;
-                                for (int i = 15; i >= 0; i--) {
-                                    if (tempArrayForMobility[i]) {
+                                for (int i = 15; i >= 0; i--)
+                                {
+                                    if (tempArrayForMobility[i])
+                                    {
                                         mobility += (int)System.Math.Pow(2, i);
                                     }
                                 }
@@ -3451,7 +3891,8 @@ namespace Client.Logic.Windows
                                 tile.String3 = "";
                             }
                             break;
-                        case Enums.TileType.DropShop: {
+                        case Enums.TileType.DropShop:
+                            {
                                 tile.Type = Enums.TileType.DropShop;
                                 tile.Data2 = hsb1.Value;
                                 tile.Data3 = hsb2.Value;
@@ -3473,7 +3914,9 @@ namespace Client.Logic.Windows
                             break;
                     }
                     tile.RDungeonMapValue = nudDungeonTileValue.Value;
-                } else if (button == SdlDotNet.Input.MouseButton.SecondaryButton) {
+                }
+                else if (button == SdlDotNet.Input.MouseButton.SecondaryButton)
+                {
                     tile.Type = Enums.TileType.Walkable;
                     tile.Data1 = 0;
                     tile.Data2 = 0;
@@ -3483,14 +3926,16 @@ namespace Client.Logic.Windows
                     tile.String3 = "";
                     tile.RDungeonMapValue = 0;
                 }
-                if (inLiveMode) {
+                if (inLiveMode)
+                {
                     Messenger.SendAttributePlacedData(X, Y, tile.Type, tile.Data1, tile.Data2, tile.Data3,
                         tile.String1, tile.String2, tile.String3, tile.RDungeonMapValue);
                 }
             }
         }
 
-        public int GetSelectedTileNumber() {
+        public int GetSelectedTileNumber()
+        {
             return tilesetViewer.SelectedTile.Y * (tilesetViewer.ActiveTilesetSurface.Size.Width / Constants.TILE_WIDTH) + tilesetViewer.SelectedTile.X;
         }
     }

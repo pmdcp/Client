@@ -38,7 +38,8 @@ namespace Client.Logic.Windows
         #region Constructors
 
         public winLoading()
-            : base("winLoading") {
+            : base("winLoading")
+        {
             this.BackgroundImageSizeMode = ImageSizeMode.AutoSize;
             this.BackgroundImage = Skins.SkinManager.LoadGui("Loading Bar");
             this.Location = Gfx.DrawingSupport.GetCenter(SdlDotNet.Graphics.Video.Screen.Size, this.Size);
@@ -64,7 +65,8 @@ namespace Client.Logic.Windows
 
         #region Methods
 
-        public void UpdateLoadText(string newText) {
+        public void UpdateLoadText(string newText)
+        {
             lblInfo.Text = newText;
         }
 

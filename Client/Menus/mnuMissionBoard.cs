@@ -1,4 +1,15 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using Client.Logic.Graphics;
+using PMDCP.Core;
+using SdlDotNet.Widgets;
+using Client.Logic.Widgets;
+using Client.Logic.Missions;
+using Client.Logic.Network;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,18 +28,6 @@
 
 namespace Client.Logic.Menus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using Client.Logic.Graphics;
-    using PMDCP.Core;
-    using SdlDotNet.Widgets;
-    using Client.Logic.Widgets;
-    using Client.Logic.Missions;
-    using Client.Logic.Network;
-
     class mnuMissionBoard : Logic.Widgets.BorderedPanel, Core.IMenu
     {
         #region Fields
@@ -46,7 +45,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuMissionBoard(string name, string[] parse)
-            : base(name) {
+            : base(name)
+        {
             base.Size = new Size(280, 460);
             base.MenuDirection = Enums.MenuDirection.Vertical;
             base.Location = new Point(15, 10);
@@ -71,15 +71,15 @@ namespace Client.Logic.Menus
             items = new MissionTitle[8];
             int lastY = 58;
 
-            for (int i = 0; i < items.Length; i++) {
+            for (int i = 0; i < items.Length; i++)
+            {
                 items[i] = new MissionTitle("item" + i, this.Width);
                 items[i].Location = new Point(15, lastY);
 
-                
+
                 this.AddWidget(items[i]);
 
                 lastY += items[i].Height + 8;
-
             }
 
             this.AddWidget(itemPicker);
@@ -93,11 +93,13 @@ namespace Client.Logic.Menus
 
         #region Properties
 
-        public Logic.Widgets.BorderedPanel MenuPanel {
+        public Logic.Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -106,40 +108,43 @@ namespace Client.Logic.Menus
 
         #region Methods
 
-        public void LoadMissionsFromPacket(string[] parse) {
-            
+        public void LoadMissionsFromPacket(string[] parse)
+        {
             int count = parse[1].ToInt();
             int n = 2;
             jobs = new List<Job>();
-            for (int i = 0; i < count; i++) {
-                
-                    Job job = new Job();
-                    job.Title = parse[n];
-                    job.Summary = parse[n + 1];
-                    job.GoalName = parse[n + 2];
-                    job.ClientSpecies = parse[n + 3].ToInt();
-                    job.ClientForm = parse[n + 4].ToInt();
-                    job.MissionType = (Enums.MissionType)parse[n + 5].ToInt();
-                    job.Data1 = parse[n + 6].ToInt();
-                    job.Data2 = parse[n + 7].ToInt();
-                    job.Difficulty = (Enums.JobDifficulty)parse[n + 8].ToInt();
-                    job.RewardNum = parse[n + 9].ToInt();
-                    job.RewardAmount = parse[n + 10].ToInt();
-                    jobs.Add(job);
-                
+            for (int i = 0; i < count; i++)
+            {
+                Job job = new Job();
+                job.Title = parse[n];
+                job.Summary = parse[n + 1];
+                job.GoalName = parse[n + 2];
+                job.ClientSpecies = parse[n + 3].ToInt();
+                job.ClientForm = parse[n + 4].ToInt();
+                job.MissionType = (Enums.MissionType)parse[n + 5].ToInt();
+                job.Data1 = parse[n + 6].ToInt();
+                job.Data2 = parse[n + 7].ToInt();
+                job.Difficulty = (Enums.JobDifficulty)parse[n + 8].ToInt();
+                job.RewardNum = parse[n + 9].ToInt();
+                job.RewardAmount = parse[n + 10].ToInt();
+                jobs.Add(job);
+
                 n += 12;
             }
             RefreshMissionList();
         }
 
-        public void RemoveJob(int index) {
+        public void RemoveJob(int index)
+        {
             jobs.RemoveAt(index);
             RefreshMissionList();
         }
 
-        public void AddJob(string[] parse) {
-            if (jobs.Count >= 8) {
-                jobs.RemoveAt(jobs.Count-1);
+        public void AddJob(string[] parse)
+        {
+            if (jobs.Count >= 8)
+            {
+                jobs.RemoveAt(jobs.Count - 1);
             }
             int n = 1;
             Job job = new Job();
@@ -158,73 +163,92 @@ namespace Client.Logic.Menus
             jobs.Insert(0, job);
             RefreshMissionList();
         }
-        
 
-        private void RefreshMissionList() {
-            
-            for (int i = 0; i < items.Length; i++) {
-                
 
-                if (jobs.Count > i) {
-                    
+        private void RefreshMissionList()
+        {
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (jobs.Count > i)
+                {
                     items[i].SetJob(jobs[i]);
-                } else {
+                }
+                else
+                {
                     items[i].SetJob(null);
                 }
-                
             }
             ReloadJobDescription();
         }
 
-        private void ReloadJobDescription() {
+        private void ReloadJobDescription()
+        {
             Menus.Core.IMenu mnuJobDesc = Windows.WindowSwitcher.GameWindow.MenuManager.FindMenu("mnuJobDescription");
             Job job = null;
-            if (itemPicker.SelectedItem < jobs.Count) {
+            if (itemPicker.SelectedItem < jobs.Count)
+            {
                 job = jobs[itemPicker.SelectedItem];
             }
-            if (mnuJobDesc == null) {
+            if (mnuJobDesc == null)
+            {
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuJobDescription("mnuJobDescription", job, true));
-            } else {
+            }
+            else
+            {
                 ((mnuJobDescription)mnuJobDesc).UpdateJob(job);
             }
         }
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(20, 64 + ((items[0].Height + 8) * itemNum));
             itemPicker.SelectedItem = itemNum;
             ReloadJobDescription();
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                     }
                     break;
             }
         }
 
-        private void SelectItem(int itemNum) {
-            if (jobs.Count > itemNum) {
+        private void SelectItem(int itemNum)
+        {
+            if (jobs.Count > itemNum)
+            {
                 Messenger.SendAcceptMission(itemNum);
                 //Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
             }
@@ -250,7 +274,7 @@ namespace Client.Logic.Menus
 
         //public mnuMissionBoard(string name, string[] parse)
         //    : base(name) {
-            
+
 
         //    base.Size = new Size(300, 300);
         //    base.MenuDirection = Enums.MenuDirection.Vertical;
@@ -354,7 +378,5 @@ namespace Client.Logic.Menus
         //}
 
         #endregion
-
-
     }
 }

@@ -28,7 +28,6 @@ namespace Client.Logic.Graphics.Effects.Weather
 {
     class Hail : IWeather
     {
-
         #region Fields
 
         bool disposed;
@@ -39,10 +38,12 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Constructors
 
-        public Hail() {
+        public Hail()
+        {
             disposed = false;
 
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 50; i++)
+            {
                 hailstones.Add(new Hailstone());
             }
         }
@@ -51,7 +52,8 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Properties
 
-        public bool Disposed {
+        public bool Disposed
+        {
             get { return disposed; }
         }
 
@@ -59,16 +61,20 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Methods
 
-        public void FreeResources() {
+        public void FreeResources()
+        {
             disposed = true;
-            for (int i = hailstones.Count - 1; i >= 0; i--) {
+            for (int i = hailstones.Count - 1; i >= 0; i--)
+            {
                 hailstones[i].Dispose();
                 hailstones.RemoveAt(i);
             }
         }
 
-        public void Render(Renderers.RendererDestinationData destData, int tick) {
-            for (int i = 0; i < hailstones.Count; i++) {
+        public void Render(Renderers.RendererDestinationData destData, int tick)
+        {
+            for (int i = 0; i < hailstones.Count; i++)
+            {
                 hailstones[i].UpdateLocation();
                 destData.Blit(hailstones[i], new Point(hailstones[i].X, hailstones[i].Y));
             }
@@ -77,7 +83,8 @@ namespace Client.Logic.Graphics.Effects.Weather
         #endregion Methods
 
 
-        public Enums.Weather ID {
+        public Enums.Weather ID
+        {
             get { return Enums.Weather.Hail; }
         }
     }

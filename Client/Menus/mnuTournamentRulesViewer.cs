@@ -27,7 +27,8 @@ namespace Client.Logic.Menus
 {
     class mnuTournamentRulesViewer : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -42,13 +43,14 @@ namespace Client.Logic.Menus
         Label lblOHKOClause;
         Label lblSelfKOClause;
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
         public mnuTournamentRulesViewer(string name, TournamentRules rules)
-            : base(name) {
-
+            : base(name)
+        {
             this.rules = rules;
 
             base.Size = new Size(315, 360);
@@ -119,15 +121,17 @@ namespace Client.Logic.Menus
             this.AddWidget(lblViewRules);
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.Backspace: {
-                    Menus.MenuSwitcher.CloseAllMenus();
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
+                        Menus.MenuSwitcher.CloseAllMenus();
                     }
                     break;
             }
         }
-
     }
 }

@@ -46,7 +46,6 @@ namespace Client.Logic.Graphics.Effects.Weather
             {
                 for (int y = 0; y < 15; y++)
                 {
-
                     buffer.Blit(GraphicsManager.Tiles[10][76 + 14 * (x % 4)], new Point(x * Constants.TILE_WIDTH, y * Constants.TILE_HEIGHT));
                 }
             }

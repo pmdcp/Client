@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class WarpSegment : ISegment
     {
         #region Fields
@@ -38,18 +37,21 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public WarpSegment(string map, int x, int y) {
+        public WarpSegment(string map, int x, int y)
+        {
             Load(map, x, y);
         }
 
-        public WarpSegment() {
+        public WarpSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.Warp; }
         }
 
@@ -58,22 +60,26 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return y; }
             set { y = value; }
         }
 
-        public int X {
+        public int X
+        {
             get { return x; }
             set { x = value; }
         }
 
-        public string Map {
+        public string Map
+        {
             get { return map; }
             set { map = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -81,7 +87,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(string map, int x, int y) {
+        public void Load(string map, int x, int y)
+        {
             this.map = map;
             this.x = x;
             this.y = y;
@@ -93,7 +100,8 @@ namespace Client.Logic.Stories.Segments
             Load(parameters.GetValue("MapID"), parameters.GetValue("X").ToInt(), parameters.GetValue("Y").ToInt());
         }
 
-        public void Process(StoryState state) {
+        public void Process(StoryState state)
+        {
             Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("actonaction"));
 
             state.StoryPaused = true;

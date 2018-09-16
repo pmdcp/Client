@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Client.Logic.Players;
+using Client.Logic.Algorithms.Pathfinder;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Maps
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Client.Logic.Players;
-    using Client.Logic.Algorithms.Pathfinder;
-
     [Serializable]
     class Map
     {
@@ -31,7 +30,8 @@ namespace Client.Logic.Maps
 
         #region Constructors
 
-        public Map(string mapID) {
+        public Map(string mapID)
+        {
             MapID = mapID;
             Tile = new Tile[20, 15];
             OriginalTiles = new Maps.Tile[20, 15];
@@ -39,10 +39,12 @@ namespace Client.Logic.Maps
             MapItems = new MapItem[MaxInfo.MaxMapItems];
             MapNpcs = new MapNpc[MaxInfo.MAX_MAP_NPCS];
             Loaded = false;
-            for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++) {
+            for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++)
+            {
                 MapNpcs[i] = new MapNpc();
             }
-            for (int i = 0; i < MaxInfo.MaxMapItems; i++) {
+            for (int i = 0; i < MaxInfo.MaxMapItems; i++)
+            {
                 MapItems[i] = new MapItem();
             }
         }
@@ -51,14 +53,18 @@ namespace Client.Logic.Maps
 
         #region Properties
 
-        public MapItem[] MapItems {
+        public MapItem[] MapItems
+        {
             get;
             set;
         }
 
-        public IPathfinder Pathfinder {
-            get {
-                if (pathfinder == null) {
+        public IPathfinder Pathfinder
+        {
+            get
+            {
+                if (pathfinder == null)
+                {
                     pathfinder = new Algorithms.Pathfinder.AStarPathfinder(this);
                 }
                 return pathfinder;
@@ -70,179 +76,217 @@ namespace Client.Logic.Maps
 
         public int NpcSpawnTime { get; set; }
 
-        public MapNpc[] MapNpcs {
+        public MapNpc[] MapNpcs
+        {
             get;
             set;
         }
 
-        public int Down {
+        public int Down
+        {
             get;
             set;
         }
 
-        public bool Indoors {
+        public bool Indoors
+        {
             get;
             set;
         }
 
-        public int Left {
+        public int Left
+        {
             get;
             set;
         }
 
-        public string MapID {
+        public string MapID
+        {
             get;
             set;
         }
 
-        public int MaxX {
+        public int MaxX
+        {
             get;
             set;
         }
 
-        public int MaxY {
+        public int MaxY
+        {
             get;
             set;
         }
 
-        public Enums.MapMoral Moral {
+        public Enums.MapMoral Moral
+        {
             get;
             set;
         }
 
-        public string Music {
+        public string Music
+        {
             get;
             set;
         }
 
-        public string Name {
+        public string Name
+        {
             get;
             set;
         }
 
-        public List<MapNpcSettings> Npc {
+        public List<MapNpcSettings> Npc
+        {
             get;
             set;
         }
 
-        public int Darkness {
+        public int Darkness
+        {
             get;
             set;
         }
 
-        public string Owner {
+        public string Owner
+        {
             get;
             set;
         }
 
-        public int Revision {
+        public int Revision
+        {
             get;
             set;
         }
 
-        public int Right {
+        public int Right
+        {
             get;
             set;
         }
 
         //Public Shop As Integer
-        public Tile[,] Tile {
+        public Tile[,] Tile
+        {
             get;
             set;
         }
 
-        public Tile[,] OriginalTiles {
+        public Tile[,] OriginalTiles
+        {
             get;
             set;
         }
 
-        public int Up {
+        public int Up
+        {
             get;
             set;
         }
 
-        public Enums.Weather Weather {
+        public Enums.Weather Weather
+        {
             get;
             set;
         }
 
-        public bool Loaded {
-            get;
-            set;
-        }
-
-
-        public int DungeonIndex {
-            get;
-            set;
-        }
-
-        public bool HungerEnabled {
-            get;
-            set;
-        }
-
-        public bool RecruitEnabled {
-            get;
-            set;
-        }
-
-        public bool ExpEnabled {
-            get;
-            set;
-        }
-
-        public int TimeLimit {
-            get;
-            set;
-        }
-
-        public bool Cacheable {
-            get;
-            set;
-        }
-
-        public bool Instanced {
+        public bool Loaded
+        {
             get;
             set;
         }
 
 
-
-        public string ImpersonatingMap {
+        public int DungeonIndex
+        {
             get;
             set;
         }
+
+        public bool HungerEnabled
+        {
+            get;
+            set;
+        }
+
+        public bool RecruitEnabled
+        {
+            get;
+            set;
+        }
+
+        public bool ExpEnabled
+        {
+            get;
+            set;
+        }
+
+        public int TimeLimit
+        {
+            get;
+            set;
+        }
+
+        public bool Cacheable
+        {
+            get;
+            set;
+        }
+
+        public bool Instanced
+        {
+            get;
+            set;
+        }
+
+
+
+        public string ImpersonatingMap
+        {
+            get;
+            set;
+        }
+
+        public string YouTubeMusicID { get; set; }
 
         #endregion Properties
 
-        public List<IPlayer> Players {
+        public List<IPlayer> Players
+        {
             get;
             set;
         }
 
-        public void DoOverlayChecks() {
+        public void DoOverlayChecks()
+        {
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetOverlay(Enums.Overlay.None);
-            if (Indoors == false) {
+            if (Indoors == false)
+            {
                 //Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetWeather(Weather);
-            } else {
+            }
+            else
+            {
                 //Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetOverlay(Enums.Overlay.None);
                 //Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetWeather(Enums.Weather.None);
                 Globals.ActiveWeather = Enums.Weather.None;
             }
         }
 
-        public void LoadFromHouseClass(HouseProperties properties) {
+        public void LoadFromHouseClass(HouseProperties properties)
+        {
             Music = properties.Music;
         }
 
-        public void LoadFromPropertiesClass(MapProperties properties) {
+        public void LoadFromPropertiesClass(MapProperties properties)
+        {
             Name = properties.Name;
             Right = properties.Right;
             Left = properties.Left;
             Up = properties.Up;
             Down = properties.Down;
             Music = properties.Music;
+            YouTubeMusicID = properties.YouTubeMusicID;
             MaxX = properties.MaxX;
             MaxY = properties.MaxY;
             Moral = properties.Moral;
@@ -261,7 +305,8 @@ namespace Client.Logic.Maps
 
 
             Npc = new List<MapNpcSettings>();
-            for (int i = 0; i < properties.Npcs.Count; i++) {
+            for (int i = 0; i < properties.Npcs.Count; i++)
+            {
                 Npc.Add(new MapNpcSettings());
                 Npc[i].NpcNum = properties.Npcs[i].NpcNum;
                 Npc[i].SpawnX = properties.Npcs[i].SpawnX;
@@ -275,13 +320,15 @@ namespace Client.Logic.Maps
             }
         }
 
-        public HouseProperties ExportToHouseClass() {
+        public HouseProperties ExportToHouseClass()
+        {
             HouseProperties properties = new HouseProperties();
             properties.Music = Music;
             return properties;
         }
 
-        public MapProperties ExportToPropertiesClass() {
+        public MapProperties ExportToPropertiesClass()
+        {
             MapProperties properties = new MapProperties();
             properties.Name = Name;
             properties.Right = Right;
@@ -289,6 +336,7 @@ namespace Client.Logic.Maps
             properties.Up = Up;
             properties.Down = Down;
             properties.Music = Music;
+            properties.YouTubeMusicID = YouTubeMusicID;
             properties.MaxX = MaxX;
             properties.MaxY = MaxY;
             properties.Moral = Moral;
@@ -306,7 +354,8 @@ namespace Client.Logic.Maps
             properties.NpcSpawnTime = NpcSpawnTime;
 
 
-            for (int i = 0; i < Npc.Count; i++) {
+            for (int i = 0; i < Npc.Count; i++)
+            {
                 properties.Npcs.Add(new MapNpcSettings());
                 properties.Npcs[i].NpcNum = Npc[i].NpcNum;
                 properties.Npcs[i].SpawnX = Npc[i].SpawnX;

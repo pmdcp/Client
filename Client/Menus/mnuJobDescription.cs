@@ -1,4 +1,14 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using Client.Logic.Graphics;
+
+using SdlDotNet.Widgets;
+using Client.Logic.Missions;
+using Client.Logic.Network;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,17 +28,6 @@
 
 namespace Client.Logic.Menus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using Client.Logic.Graphics;
-
-    using SdlDotNet.Widgets;
-    using Client.Logic.Missions;
-    using Client.Logic.Network;
-
     class mnuJobDescription : Logic.Widgets.BorderedPanel, Core.IMenu
     {
         #region Fields
@@ -52,13 +51,16 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuJobDescription(string name, Job job, bool missionBoardView)
-            : base(name) {
-
+            : base(name)
+        {
             base.Size = new Size(300, 460);
             base.MenuDirection = Enums.MenuDirection.Vertical;
-            if (missionBoardView) {
+            if (missionBoardView)
+            {
                 base.Location = new Point(305, 10);
-            } else {
+            }
+            else
+            {
                 base.Location = new Point(160, 10);
             }
 
@@ -122,7 +124,7 @@ namespace Client.Logic.Menus
             picReward.Size = new Size(32, 32);
             picReward.BackColor = Color.Transparent;
             picReward.Location = new Point(lblNullTitle.X, lblDifficulty.Y + 24);
-            
+
 
             lblReward = new Label("lblMissionReward");
             lblReward.Font = FontManager.LoadFont("PMDCP", 16);
@@ -148,7 +150,8 @@ namespace Client.Logic.Menus
             this.AddWidget(lblDifficulty);
             this.AddWidget(picReward);
             this.AddWidget(lblReward);
-            if (missionBoardView) {
+            if (missionBoardView)
+            {
                 this.AddWidget(lblPressEnter);
             }
 
@@ -159,11 +162,13 @@ namespace Client.Logic.Menus
 
         #region Properties
 
-        public Logic.Widgets.BorderedPanel MenuPanel {
+        public Logic.Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -172,8 +177,10 @@ namespace Client.Logic.Menus
 
         #region Methods
 
-        public void UpdateJob(Job job) {
-            if (job == null) {
+        public void UpdateJob(Job job)
+        {
+            if (job == null)
+            {
                 lblDifficulty.Visible = false;
                 picCreator.Visible = false;
                 lblCreatorName.Visible = false;
@@ -184,7 +191,9 @@ namespace Client.Logic.Menus
                 picReward.Visible = false;
                 lblReward.Visible = false;
                 lblPressEnter.Visible = false;
-            } else {
+            }
+            else
+            {
                 lblDifficulty.Visible = true;
                 lblDifficulty.Text = "Difficulty: " + MissionManager.DifficultyToString(job.Difficulty) + " (" + MissionManager.DetermineMissionExpReward(job.Difficulty) + " Explorer Points)";
                 picCreator.Visible = true;
@@ -192,34 +201,41 @@ namespace Client.Logic.Menus
                 lblTitle.Visible = true;
                 lblTitle.Text = "Title: " + job.Title;
                 lblCreatorName.Visible = true;
-                lblCreatorName.Text = "From: " + Pokedex.PokemonHelper.Pokemon[job.ClientSpecies-1].Name;
+                lblCreatorName.Text = "From: " + Pokedex.PokemonHelper.Pokemon[job.ClientSpecies - 1].Name;
                 lblNullTitle.Visible = false;
                 lblSummary.Visible = true;
                 lblSummary.Text = "Summary: \n" + job.Summary;
-                
+
                 lblGoal.Visible = true;
                 lblGoal.Text = "Place: " + job.GoalName;
                 picReward.Visible = true;
                 picReward.Image = Tools.CropImage(GraphicsManager.Items, new Rectangle((Items.ItemHelper.Items[job.RewardNum].Pic - (int)(Items.ItemHelper.Items[job.RewardNum].Pic / 6) * 6) * Constants.TILE_WIDTH, (int)(Items.ItemHelper.Items[job.RewardNum].Pic / 6) * Constants.TILE_WIDTH, Constants.TILE_WIDTH, Constants.TILE_HEIGHT));
                 lblReward.Visible = true;
-                if (Items.ItemHelper.Items[job.RewardNum].StackCap > 0) {
+                if (Items.ItemHelper.Items[job.RewardNum].StackCap > 0)
+                {
                     lblReward.Text = "Reward:\n" + job.RewardAmount + " " + Items.ItemHelper.Items[job.RewardNum].Name;
-                } else {
+                }
+                else
+                {
                     lblReward.Text = "Reward:\n" + Items.ItemHelper.Items[job.RewardNum].Name;
                 }
                 lblPressEnter.Visible = true;
             }
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.Backspace: {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         Menus.MenuSwitcher.ShowJobListMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         Menus.MenuSwitcher.ShowJobListMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                     }

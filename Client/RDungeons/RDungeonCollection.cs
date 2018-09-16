@@ -17,17 +17,17 @@
 
 
 using System;
-    using System.Collections.Generic;
-    using System.Text;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Client.Logic.RDungeons
 {
-	/// <summary>
-	/// Description of RDungeonCollection.
-	/// </summary>
-	class RDungeonCollection
-	{
-		#region Fields
+    /// <summary>
+    /// Description of RDungeonCollection.
+    /// </summary>
+    class RDungeonCollection
+    {
+        #region Fields
 
         private PMDCP.Core.ListPair<int, RDungeon> mRDungeons;
 
@@ -65,5 +65,5 @@ namespace Client.Logic.RDungeons
         }
 
         #endregion Methods
-	}
+    }
 }

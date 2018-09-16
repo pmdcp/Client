@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,41 +21,39 @@
 
 namespace Client.Logic.Items
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Text;
+    class ItemCollection
+    {
+        #region Fields
 
-	class ItemCollection
-	{
-		#region Fields
+        private PMDCP.Core.ListPair<int, Item> mItems;
 
-		private PMDCP.Core.ListPair<int, Item> mItems;
+        #endregion Fields
 
-		#endregion Fields
+        #region Constructors
 
-		#region Constructors
+        internal ItemCollection(int maxItems)
+        {
+            mItems = new PMDCP.Core.ListPair<int, Item>();
+        }
 
-		internal ItemCollection(int maxItems)
-		{
-			mItems = new PMDCP.Core.ListPair<int, Item>();
-		}
+        #endregion Constructors
 
-		#endregion Constructors
+        #region Indexers
 
-		#region Indexers
+        public Item this[int index]
+        {
+            get { return mItems[index]; }
+            set
+            {
+                mItems[index] = value;
+            }
+        }
 
-		public Item this[int index]
-		{
-			get { return mItems[index]; }
-			set {
-				mItems[index] = value;
-			}
-		}
+        #endregion Indexers
 
-		#endregion Indexers
-		
-		public void AddItem(int index, Item value) {
-			mItems.Add(index, value);
-		}
-	}
+        public void AddItem(int index, Item value)
+        {
+            mItems.Add(index, value);
+        }
+    }
 }

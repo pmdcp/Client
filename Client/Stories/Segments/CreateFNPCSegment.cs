@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class CreateFNPCSegment : ISegment
     {
         #region Fields
@@ -43,22 +42,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public CreateFNPCSegment(string id, string parentMapID, int x, int y, int sprite, int form, Enums.Coloration shiny, Enums.Sex gender) {
+        public CreateFNPCSegment(string id, string parentMapID, int x, int y, int sprite, int form, Enums.Coloration shiny, Enums.Sex gender)
+        {
             Load(id, parentMapID, x, y, sprite, form, shiny, gender);
         }
 
-        public CreateFNPCSegment() {
+        public CreateFNPCSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.CreateFNPC; }
         }
 
-        public string ID {
+        public string ID
+        {
             get { return id; }
             set { id = value; }
         }
@@ -68,42 +71,50 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public string ParentMapID {
+        public string ParentMapID
+        {
             get { return parentMapID; }
             set { parentMapID = value; }
         }
 
-        public int X {
+        public int X
+        {
             get { return x; }
             set { x = value; }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return y; }
             set { y = value; }
         }
 
-        public int Sprite {
+        public int Sprite
+        {
             get { return sprite; }
             set { sprite = value; }
         }
 
-        public int Form {
+        public int Form
+        {
             get { return form; }
             set { form = value; }
         }
 
-        public Enums.Sex Gender {
+        public Enums.Sex Gender
+        {
             get { return gender; }
             set { gender = value; }
         }
 
-        public Enums.Coloration Shiny {
+        public Enums.Coloration Shiny
+        {
             get { return shiny; }
             set { shiny = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -111,7 +122,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(string id, string parentMapID, int x, int y, int sprite, int form, Enums.Coloration shiny, Enums.Sex gender) {
+        public void Load(string id, string parentMapID, int x, int y, int sprite, int form, Enums.Coloration shiny, Enums.Sex gender)
+        {
             this.id = id;
             this.parentMapID = parentMapID;
             this.x = x;
@@ -121,7 +133,8 @@ namespace Client.Logic.Stories.Segments
             this.shiny = shiny;
             this.gender = gender;
 
-            if (this.parentMapID == "s-2") {
+            if (this.parentMapID == "s-2")
+            {
                 this.parentMapID = "-2";
             }
         }
@@ -134,8 +147,9 @@ namespace Client.Logic.Stories.Segments
                 parameters.GetValue("Sprite").ToInt(), 0, Enums.Coloration.Normal, Enums.Sex.Genderless);
         }
 
-        public void Process(StoryState state) {
-            this.storyState = state;
+        public void Process(StoryState state)
+        {
+            storyState = state;
             FNPCs.FNPC fnpc = new FNPCs.FNPC();
             fnpc.MapID = parentMapID;
             fnpc.X = x;

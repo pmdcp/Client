@@ -1,4 +1,6 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Threading;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,15 +20,13 @@
 
 namespace Client.Logic
 {
-    using System;
-    using System.Threading;
-
     internal sealed class Program
     {
         #region Methods
 
         [STAThread]
-        private static void Main(string[] args) {
+        private static void Main(string[] args)
+        {
             //System.Windows.Forms.Application.EnableVisualStyles();
             //System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
             Client.Logic.Loader.InitLoader(args);

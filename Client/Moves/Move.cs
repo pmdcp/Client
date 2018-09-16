@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,42 +21,44 @@
 
 namespace Client.Logic.Moves
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class Move
     {
         #region Properties
 
-        public string Name {
+        public string Name
+        {
             get;
             set;
         }
 
-        public Enums.MoveRange RangeType {
+        public Enums.MoveRange RangeType
+        {
             get;
             set;
         }
 
-        public int Range {
+        public int Range
+        {
             get;
             set;
         }
 
-        public Enums.MoveTarget TargetType {
+        public Enums.MoveTarget TargetType
+        {
             get;
             set;
         }
 
 
-        public int HitTime {
+        public int HitTime
+        {
             get;
             set;
         }
 
 
-        public bool HitFreeze {
+        public bool HitFreeze
+        {
             get;
             set;
         }

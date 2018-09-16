@@ -1,10 +1,10 @@
-# PMDCP Core Client
+# PMD: Shift! Core Client
 
 ## Downloading
 
 To download this repository, run:
 ```
-git clone --recursive https://github.com/pmdcp/Client
+git clone --recursive https://github.com/PMDShift/Client
 ```
 This will download the core client files, as well as all dependancies.
 

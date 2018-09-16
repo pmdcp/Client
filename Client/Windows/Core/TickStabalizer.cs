@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.Windows.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class TickStabalizer
     {
         #region Fields
@@ -36,10 +35,13 @@ namespace Client.Logic.Windows.Core
         {
             float val = 1.0f / 1000 * e.TicksElapsed * Constants.FRAME_RATE;
             val += lastVal;
-            if (val > 1) {
+            if (val > 1)
+            {
                 lastVal = 0;
                 return true;
-            } else {
+            }
+            else
+            {
                 lastVal = val;
                 return false;
             }

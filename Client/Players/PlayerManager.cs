@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic.Players
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
     class PlayerManager
     {
         #region Fields
@@ -36,12 +35,14 @@ namespace Client.Logic.Players
 
         #region Properties
 
-        public static string MyConnectionID {
+        public static string MyConnectionID
+        {
             get { return myConnectionID; }
             set { myConnectionID = value; }
         }
 
-        public static PlayerCollection Players {
+        public static PlayerCollection Players
+        {
             get { return players; }
         }
 
@@ -49,7 +50,8 @@ namespace Client.Logic.Players
 
         #region Methods
 
-        public static void Initialize() {
+        public static void Initialize()
+        {
             players = new PlayerCollection();
         }
 
@@ -57,21 +59,28 @@ namespace Client.Logic.Players
         //    return (!string.IsNullOrEmpty(players[index].Name));
         //}
 
-        public static bool IsPlaying(string id) {
-            foreach (IPlayer player in players.GetAllPlayers()) { 
-                if (player.ID == id) {
+        public static bool IsPlaying(string id)
+        {
+            foreach (IPlayer player in players.GetAllPlayers())
+            {
+                if (player.ID == id)
+                {
                     return true;
                 }
             }
             return false;
         }
 
-        public static MyPlayer MyPlayer {
-            get {
-                if (players == null) {
+        public static MyPlayer MyPlayer
+        {
+            get
+            {
+                if (players == null)
+                {
                     return null;
                 }
-                if (myPlayer == null) {
+                if (myPlayer == null)
+                {
                     myPlayer = players[myConnectionID] as MyPlayer;
                 }
                 return myPlayer;

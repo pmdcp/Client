@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     public class BytePacker
     {
         #region Fields
@@ -32,7 +31,8 @@ namespace Client.Logic.Core
 
         #region Constructors
 
-        public BytePacker() {
+        public BytePacker()
+        {
             items = new List<BytePackerItem>();
         }
 
@@ -40,7 +40,8 @@ namespace Client.Logic.Core
 
         #region Properties
 
-        public List<BytePackerItem> Items {
+        public List<BytePackerItem> Items
+        {
             get { return items; }
         }
 
@@ -48,14 +49,17 @@ namespace Client.Logic.Core
 
         #region Methods
 
-        public void AddItem(int highestRangeValue, int value) {
+        public void AddItem(int highestRangeValue, int value)
+        {
             items.Add(new BytePackerItem(highestRangeValue, value));
         }
 
-        public int PackItems() {
+        public int PackItems()
+        {
             int baseNumber = 1;
             int packedNumber = 0;
-            for (int i = 0; i < items.Count; i++) {
+            for (int i = 0; i < items.Count; i++)
+            {
                 packedNumber += items[i].Value * baseNumber;
                 baseNumber *= items[i].HighestRangeValue;
             }

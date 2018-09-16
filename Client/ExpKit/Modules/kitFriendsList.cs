@@ -34,7 +34,8 @@ namespace Client.Logic.ExpKit.Modules
         List<PictureBox> friendOnlineStatus;
 
         public kitFriendsList(string name)
-            : base(name) {
+            : base(name)
+        {
             enabled = true;
 
             friendNames = new List<Label>();
@@ -44,29 +45,37 @@ namespace Client.Logic.ExpKit.Modules
         }
 
 
-        public void SwitchOut() {
+        public void SwitchOut()
+        {
         }
 
-        public void Initialize(Size containerSize) {
+        public void Initialize(Size containerSize)
+        {
             this.containerSize = containerSize;
             UpdateList(Players.PlayerManager.MyPlayer.FriendsList);
         }
 
-        public void UpdateList(List<Players.Friend> friends) {
-            if (friends.Count < friendNames.Count) {
+        public void UpdateList(List<Players.Friend> friends)
+        {
+            if (friends.Count < friendNames.Count)
+            {
                 int widgetsToRemove = -1;
                 widgetsToRemove = friendNames.Count - friends.Count;
                 widgetsToRemove *= 2;
-                for (int i = widgetsToRemove - 1; i >= 0; i--) {
+                for (int i = widgetsToRemove - 1; i >= 0; i--)
+                {
                     this.RemoveWidget(ChildWidgets[(ChildWidgets.Count - 1) - i].Name);
                 }
-                for (int i = (widgetsToRemove / 2) - 1; i >= 0; i--) {
+                for (int i = (widgetsToRemove / 2) - 1; i >= 0; i--)
+                {
                     friendNames.RemoveAt(i);
                     friendOnlineStatus.RemoveAt(i);
                 }
             }
-            for (int i = 0; i < friends.Count; i++) {
-                if (friendNames.Count <= i) {
+            for (int i = 0; i < friends.Count; i++)
+            {
+                if (friendNames.Count <= i)
+                {
                     Label lblName = new Label("lblName" + i);
                     lblName.Location = new Point(5, i * 25);
                     lblName.AutoSize = true;
@@ -85,34 +94,43 @@ namespace Client.Logic.ExpKit.Modules
                     friendOnlineStatus.Add(picOnlineStatus);
                 }
                 friendNames[i].Text = friends[i].Name;
-                if (friends[i].Online) {
+                if (friends[i].Online)
+                {
                     friendOnlineStatus[i].BackColor = Color.Green;
-                } else {
+                }
+                else
+                {
                     friendOnlineStatus[i].BackColor = Color.Red;
                 }
             }
         }
 
-        public int ModuleIndex {
+        public int ModuleIndex
+        {
             get { return moduleIndex; }
         }
 
-        public string ModuleName {
+        public string ModuleName
+        {
             get { return "Friends List"; }
         }
 
-        public void Created(int index) {
+        public void Created(int index)
+        {
             moduleIndex = index;
         }
 
-        public Panel ModulePanel {
+        public Panel ModulePanel
+        {
             get { return this; }
         }
 
 
-        public bool Enabled {
+        public bool Enabled
+        {
             get { return enabled; }
-            set {
+            set
+            {
                 enabled = value;
                 if (EnabledChanged != null)
                     EnabledChanged(this, EventArgs.Empty);
@@ -122,7 +140,8 @@ namespace Client.Logic.ExpKit.Modules
         public event EventHandler EnabledChanged;
 
 
-        public Enums.ExpKitModules ModuleID {
+        public Enums.ExpKitModules ModuleID
+        {
             get { return Enums.ExpKitModules.FriendsList; }
         }
     }

@@ -1,4 +1,10 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using SdlDotNet.Graphics;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,13 +24,6 @@
 
 namespace Client.Logic.Graphics.Renderers.Moves
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using SdlDotNet.Graphics;
-
     class MoveRenderer
     {
         #region Fields
@@ -39,7 +38,8 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
         #region Properties
 
-        public static List<Moves.IMoveAnimation> ActiveAnimations {
+        public static List<Moves.IMoveAnimation> ActiveAnimations
+        {
             get { return activeAnimations; }
         }
 
@@ -47,7 +47,8 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
         #region Methods
 
-        public static void Initialize() {
+        public static void Initialize()
+        {
             activeAnimations = new List<Moves.IMoveAnimation>();
             srfcMoveTargetTile = new Surface(Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
             srfcMoveTargetTile.Blit(GraphicsManager.Tiles[10][77], new Point(0, 0));
@@ -56,7 +57,7 @@ namespace Client.Logic.Graphics.Renderers.Moves
             //srfcMoveTargetTile.AlphaBlending = true;
 
             srfcMoveTargetTileHit = new Surface(Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
-            srfcMoveTargetTileHit.Blit(GraphicsManager.Tiles[10][91], new Point(0,0));
+            srfcMoveTargetTileHit.Blit(GraphicsManager.Tiles[10][91], new Point(0, 0));
             srfcMoveTargetTileHit.Transparent = true;
             //srfcMoveTargetTileHit.Alpha = 150;
             //srfcMoveTargetTileHit.AlphaBlending = true;
@@ -73,25 +74,31 @@ namespace Client.Logic.Graphics.Renderers.Moves
             srfcMoveTargetUnknown.Transparent = true;
             srfcMoveTargetUnknown.Alpha = 150;
             srfcMoveTargetUnknown.AlphaBlending = true;
-            
         }
 
-        public static void RenderMoveAnimation(RendererDestinationData destData, Moves.IMoveAnimation animation, Point pinnedPoint) {
+        public static void RenderMoveAnimation(RendererDestinationData destData, Moves.IMoveAnimation animation, Point pinnedPoint)
+        {
             int animTime = 400;
-            switch (animation.AnimType) {
-                case Enums.MoveAnimationType.Normal: {
+            switch (animation.AnimType)
+            {
+                case Enums.MoveAnimationType.Normal:
+                    {
                         #region Normal
                         NormalMoveAnimation specifiedAnim = animation as NormalMoveAnimation;
-                        if (specifiedAnim.CompletedLoops < specifiedAnim.RenderLoops) {
+                        if (specifiedAnim.CompletedLoops < specifiedAnim.RenderLoops)
+                        {
                             SpellSheet spriteSheet = GraphicsManager.GetSpellSheet(Enums.StationaryAnimType.Spell, specifiedAnim.AnimationIndex, false);
                             Surface spriteToBlit = null;
-                            if (spriteSheet != null) {
+                            if (spriteSheet != null)
+                            {
                                 spriteToBlit = spriteSheet.Sheet;
-                            } else {
+                            }
+                            else
+                            {
                                 specifiedAnim.Active = false;
                                 return;
                             }
-                            
+
                             Rectangle sourceRec = new Rectangle(specifiedAnim.Frame * spriteToBlit.Height,
                                 0, spriteToBlit.Height, spriteToBlit.Height);
 
@@ -100,35 +107,41 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                             //blit
                             destData.Blit(spriteToBlit, pinnedPoint, sourceRec);
-                            
-                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength) {
+
+                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength)
+                            {
                                 specifiedAnim.MoveTime = Globals.Tick;
                                 specifiedAnim.Frame++;
                             }
 
-                            if (specifiedAnim.Frame >= spriteToBlit.Width / spriteToBlit.Height) {
+                            if (specifiedAnim.Frame >= spriteToBlit.Width / spriteToBlit.Height)
+                            {
                                 specifiedAnim.CompletedLoops++;
                                 specifiedAnim.Frame = 0;
                             }
-
-                            
-                        } else {
+                        }
+                        else
+                        {
                             specifiedAnim.Active = false;
                         }
                         #endregion
                     }
                     break;
-                case Enums.MoveAnimationType.Arrow: {
+                case Enums.MoveAnimationType.Arrow:
+                    {
                         #region Arrow
                         ArrowMoveAnimation specifiedAnim = animation as ArrowMoveAnimation;
                         int time = Globals.Tick - specifiedAnim.TotalMoveTime;
-                        if (time < animTime) {
-
+                        if (time < animTime)
+                        {
                             SpellSheet spriteSheet = GraphicsManager.GetSpellSheet(Enums.StationaryAnimType.Arrow, specifiedAnim.AnimationIndex, false);
                             Surface spriteToBlit = null;
-                            if (spriteSheet != null) {
+                            if (spriteSheet != null)
+                            {
                                 spriteToBlit = spriteSheet.Sheet;
-                            } else {
+                            }
+                            else
+                            {
                                 specifiedAnim.Active = false;
                                 return;
                             }
@@ -141,20 +154,25 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             pinnedPoint.X = pinnedPoint.X + Constants.TILE_WIDTH / 2 - spriteToBlit.Height / 2 / 8;
                             pinnedPoint.Y = pinnedPoint.Y + Constants.TILE_HEIGHT / 2 - spriteToBlit.Height / 2 / 8;
 
-                            switch (specifiedAnim.Direction) {
-                                case Enums.Direction.Up: {
+                            switch (specifiedAnim.Direction)
+                            {
+                                case Enums.Direction.Up:
+                                    {
                                         pinnedPoint.Y -= specifiedAnim.Distance * Constants.TILE_HEIGHT * time / animTime;
                                     }
                                     break;
-                                case Enums.Direction.Down: {
+                                case Enums.Direction.Down:
+                                    {
                                         pinnedPoint.Y += specifiedAnim.Distance * Constants.TILE_HEIGHT * time / animTime;
                                     }
                                     break;
-                                case Enums.Direction.Left: {
+                                case Enums.Direction.Left:
+                                    {
                                         pinnedPoint.X -= specifiedAnim.Distance * Constants.TILE_WIDTH * time / animTime;
                                     }
                                     break;
-                                case Enums.Direction.Right: {
+                                case Enums.Direction.Right:
+                                    {
                                         pinnedPoint.X += specifiedAnim.Distance * Constants.TILE_WIDTH * time / animTime;
                                     }
                                     break;
@@ -168,34 +186,40 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             //blit
                             destData.Blit(spriteToBlit, pinnedPoint, sourceRec);
 
-                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength) {
+                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength)
+                            {
                                 specifiedAnim.MoveTime = Globals.Tick;
                                 specifiedAnim.Frame++;
                             }
 
-                            if (specifiedAnim.Frame >= spriteToBlit.Width / (spriteToBlit.Height / 8)) {
+                            if (specifiedAnim.Frame >= spriteToBlit.Width / (spriteToBlit.Height / 8))
+                            {
                                 specifiedAnim.CompletedLoops++;
                                 specifiedAnim.Frame = 0;
                             }
-
-
-                        } else {
+                        }
+                        else
+                        {
                             specifiedAnim.Active = false;
                         }
-#endregion
+                        #endregion
                     }
                     break;
-                case Enums.MoveAnimationType.Throw: {
+                case Enums.MoveAnimationType.Throw:
+                    {
                         #region Throw
                         ThrowMoveAnimation specifiedAnim = animation as ThrowMoveAnimation;
                         int time = Globals.Tick - specifiedAnim.TotalMoveTime;
-                        if (time < animTime) {
-
+                        if (time < animTime)
+                        {
                             SpellSheet spriteSheet = GraphicsManager.GetSpellSheet(Enums.StationaryAnimType.Spell, specifiedAnim.AnimationIndex, false);
                             Surface spriteToBlit = null;
-                            if (spriteSheet != null) {
+                            if (spriteSheet != null)
+                            {
                                 spriteToBlit = spriteSheet.Sheet;
-                            } else {
+                            }
+                            else
+                            {
                                 specifiedAnim.Active = false;
                                 return;
                             }
@@ -215,32 +239,39 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             //blit
                             destData.Blit(spriteToBlit, new Point(x, y), sourceRec);
 
-                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength) {
+                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength)
+                            {
                                 specifiedAnim.MoveTime = Globals.Tick;
                                 specifiedAnim.Frame++;
                             }
 
-                            if (specifiedAnim.Frame >= spriteToBlit.Width / spriteToBlit.Height) {
+                            if (specifiedAnim.Frame >= spriteToBlit.Width / spriteToBlit.Height)
+                            {
                                 specifiedAnim.CompletedLoops++;
                                 specifiedAnim.Frame = 0;
                             }
-
-
-                        } else {
+                        }
+                        else
+                        {
                             specifiedAnim.Active = false;
                         }
-#endregion
+                        #endregion
                     }
                     break;
-                case Enums.MoveAnimationType.Beam: {
+                case Enums.MoveAnimationType.Beam:
+                    {
                         #region Beam
                         BeamMoveAnimation specifiedAnim = animation as BeamMoveAnimation;
-                        if (specifiedAnim.CompletedLoops < specifiedAnim.RenderLoops + specifiedAnim.Distance) {
+                        if (specifiedAnim.CompletedLoops < specifiedAnim.RenderLoops + specifiedAnim.Distance)
+                        {
                             SpellSheet spriteSheet = GraphicsManager.GetSpellSheet(Enums.StationaryAnimType.Beam, specifiedAnim.AnimationIndex, false);
                             Surface spriteToBlit = null;
-                            if (spriteSheet != null) {
+                            if (spriteSheet != null)
+                            {
                                 spriteToBlit = spriteSheet.Sheet;
-                            } else {
+                            }
+                            else
+                            {
                                 specifiedAnim.Active = false;
                                 return;
                             }
@@ -248,20 +279,29 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             int curDistance = specifiedAnim.Distance;
                             Rectangle sourceRec = new Rectangle();
                             if (specifiedAnim.CompletedLoops < specifiedAnim.Distance) curDistance = specifiedAnim.CompletedLoops;
-                            for (int i = 0; i <= curDistance; i++) {
-                                if (i == 0) {
+                            for (int i = 0; i <= curDistance; i++)
+                            {
+                                if (i == 0)
+                                {
                                     //draw beginning
                                     sourceRec = new Rectangle(specifiedAnim.Frame * spriteToBlit.Height / 32,
                                 GraphicsManager.GetAnimDirInt(specifiedAnim.Direction) * 4 * spriteToBlit.Height / 32, spriteToBlit.Height / 32, spriteToBlit.Height / 32);
-                                } else if (i == curDistance) {
-                                    if (curDistance == specifiedAnim.Distance) {
+                                }
+                                else if (i == curDistance)
+                                {
+                                    if (curDistance == specifiedAnim.Distance)
+                                    {
                                         sourceRec = new Rectangle(specifiedAnim.Frame * spriteToBlit.Height / 32,
                                 (GraphicsManager.GetAnimDirInt(specifiedAnim.Direction) * 4 + 3) * spriteToBlit.Height / 32, spriteToBlit.Height / 32, spriteToBlit.Height / 32);
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         sourceRec = new Rectangle(specifiedAnim.Frame * spriteToBlit.Height / 32,
                                 (GraphicsManager.GetAnimDirInt(specifiedAnim.Direction) * 4 + 2) * spriteToBlit.Height / 32, spriteToBlit.Height / 32, spriteToBlit.Height / 32);
                                     }
-                                } else {
+                                }
+                                else
+                                {
                                     //draw body
                                     sourceRec = new Rectangle(specifiedAnim.Frame * spriteToBlit.Height / 32,
                                 (GraphicsManager.GetAnimDirInt(specifiedAnim.Direction) * 4 + 1) * spriteToBlit.Height / 32, spriteToBlit.Height / 32, spriteToBlit.Height / 32);
@@ -269,21 +309,26 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                                 Point blitPoint = new Point();
 
-                                switch (specifiedAnim.Direction) {
-                                    case Enums.Direction.Up: {
-                                        blitPoint = new Point(pinnedPoint.X, pinnedPoint.Y - i * Constants.TILE_HEIGHT);
+                                switch (specifiedAnim.Direction)
+                                {
+                                    case Enums.Direction.Up:
+                                        {
+                                            blitPoint = new Point(pinnedPoint.X, pinnedPoint.Y - i * Constants.TILE_HEIGHT);
                                         }
                                         break;
-                                    case Enums.Direction.Down: {
-                                        blitPoint = new Point(pinnedPoint.X, pinnedPoint.Y + i * Constants.TILE_HEIGHT);
+                                    case Enums.Direction.Down:
+                                        {
+                                            blitPoint = new Point(pinnedPoint.X, pinnedPoint.Y + i * Constants.TILE_HEIGHT);
                                         }
                                         break;
-                                    case Enums.Direction.Left: {
-                                        blitPoint = new Point(pinnedPoint.X - i * Constants.TILE_WIDTH, pinnedPoint.Y);
+                                    case Enums.Direction.Left:
+                                        {
+                                            blitPoint = new Point(pinnedPoint.X - i * Constants.TILE_WIDTH, pinnedPoint.Y);
                                         }
                                         break;
-                                    case Enums.Direction.Right: {
-                                        blitPoint = new Point(pinnedPoint.X + i * Constants.TILE_WIDTH, pinnedPoint.Y);
+                                    case Enums.Direction.Right:
+                                        {
+                                            blitPoint = new Point(pinnedPoint.X + i * Constants.TILE_WIDTH, pinnedPoint.Y);
                                         }
                                         break;
                                     case Enums.Direction.UpRight:
@@ -300,36 +345,43 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                 destData.Blit(spriteToBlit, blitPoint, sourceRec);
                             }
 
-                            
 
-                            
 
-                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength) {
+
+
+                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength)
+                            {
                                 specifiedAnim.MoveTime = Globals.Tick;
                                 specifiedAnim.Frame++;
                             }
 
-                            if (specifiedAnim.Frame >= spriteToBlit.Width / (spriteToBlit.Height / 32)) {
+                            if (specifiedAnim.Frame >= spriteToBlit.Width / (spriteToBlit.Height / 32))
+                            {
                                 specifiedAnim.CompletedLoops++;
                                 specifiedAnim.Frame = 0;
                             }
-
-
-                        } else {
+                        }
+                        else
+                        {
                             specifiedAnim.Active = false;
                         }
-#endregion
+                        #endregion
                     }
                     break;
-                case Enums.MoveAnimationType.Overlay: {
+                case Enums.MoveAnimationType.Overlay:
+                    {
                         #region Overlay
                         OverlayMoveAnimation specifiedAnim = animation as OverlayMoveAnimation;
-                        if (specifiedAnim.CompletedLoops < specifiedAnim.RenderLoops) {
+                        if (specifiedAnim.CompletedLoops < specifiedAnim.RenderLoops)
+                        {
                             SpellSheet spriteSheet = GraphicsManager.GetSpellSheet(Enums.StationaryAnimType.Spell, specifiedAnim.AnimationIndex, true);
                             Surface spriteToBlit = null;
-                            if (spriteSheet != null) {
+                            if (spriteSheet != null)
+                            {
                                 spriteToBlit = spriteSheet.Sheet;
-                            } else {
+                            }
+                            else
+                            {
                                 specifiedAnim.Active = false;
                                 return;
                             }
@@ -338,37 +390,47 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                 0, spriteToBlit.Height, spriteToBlit.Height);
 
                             //blit
-                            for (int y = 0; y < Constants.TILE_HEIGHT * 15; y += spriteToBlit.Height) {
-                                for (int x = 0; x < Constants.TILE_WIDTH * 20; x += spriteToBlit.Height) {
+                            for (int y = 0; y < Constants.TILE_HEIGHT * 15; y += spriteToBlit.Height)
+                            {
+                                for (int x = 0; x < Constants.TILE_WIDTH * 20; x += spriteToBlit.Height)
+                                {
                                     destData.Blit(spriteToBlit, new Point(x, y), sourceRec);
                                 }
                             }
 
-                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength) {
+                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength)
+                            {
                                 specifiedAnim.MoveTime = Globals.Tick;
                                 specifiedAnim.Frame++;
                             }
 
-                            if (specifiedAnim.Frame >= spriteToBlit.Width / spriteToBlit.Height) {
+                            if (specifiedAnim.Frame >= spriteToBlit.Width / spriteToBlit.Height)
+                            {
                                 specifiedAnim.CompletedLoops++;
                                 specifiedAnim.Frame = 0;
                             }
-
-                        } else {
+                        }
+                        else
+                        {
                             specifiedAnim.Active = false;
                         }
-#endregion
+                        #endregion
                     }
                     break;
-                case Enums.MoveAnimationType.Tile: {
+                case Enums.MoveAnimationType.Tile:
+                    {
                         #region Tile
                         TileMoveAnimation specifiedAnim = animation as TileMoveAnimation;
-                        if (specifiedAnim.CompletedLoops < specifiedAnim.RenderLoops) {
+                        if (specifiedAnim.CompletedLoops < specifiedAnim.RenderLoops)
+                        {
                             SpellSheet spriteSheet = GraphicsManager.GetSpellSheet(Enums.StationaryAnimType.Spell, specifiedAnim.AnimationIndex, false);
                             Surface spriteToBlit = null;
-                            if (spriteSheet != null) {
+                            if (spriteSheet != null)
+                            {
                                 spriteToBlit = spriteSheet.Sheet;
-                            } else {
+                            }
+                            else
+                            {
                                 specifiedAnim.Active = false;
                                 return;
                             }
@@ -379,57 +441,69 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             Point blitPoint = new Point(pinnedPoint.X + Constants.TILE_WIDTH / 2 - spriteToBlit.Height / 2, pinnedPoint.Y + Constants.TILE_HEIGHT / 2 - spriteToBlit.Height / 2);
 
                             //blit
-                            switch (specifiedAnim.RangeType) {
+                            switch (specifiedAnim.RangeType)
+                            {
                                 case Enums.MoveRange.FrontOfUserUntil:
-                                case Enums.MoveRange.LineUntilHit: {
+                                case Enums.MoveRange.LineUntilHit:
+                                    {
                                         #region Front of user Until
-                                        switch (specifiedAnim.Direction) {
-                                            case Enums.Direction.Up: {
+                                        switch (specifiedAnim.Direction)
+                                        {
+                                            case Enums.Direction.Up:
+                                                {
                                                     int y = specifiedAnim.StartY;
-                                                    for (int i = 1; i <= specifiedAnim.Range; i++) {
-
+                                                    for (int i = 1; i <= specifiedAnim.Range; i++)
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X, blitPoint.Y - Constants.TILE_HEIGHT * i), sourceRec);
 
                                                         if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX, specifiedAnim.StartY - i)) {
+                                                            specifiedAnim.StartX, specifiedAnim.StartY - i))
+                                                        {
                                                             break;
                                                         }
                                                     }
                                                 }
                                                 break;
-                                            case Enums.Direction.Down: {
+                                            case Enums.Direction.Down:
+                                                {
                                                     int y = specifiedAnim.StartY;
-                                                    for (int i = 1; i <= specifiedAnim.Range; i++) {
+                                                    for (int i = 1; i <= specifiedAnim.Range; i++)
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X, blitPoint.Y + Constants.TILE_HEIGHT * i), sourceRec);
 
                                                         if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX, specifiedAnim.StartY + i)) {
+                                                            specifiedAnim.StartX, specifiedAnim.StartY + i))
+                                                        {
                                                             break;
                                                         }
                                                     }
                                                 }
                                                 break;
-                                            case Enums.Direction.Left: {
+                                            case Enums.Direction.Left:
+                                                {
                                                     int x = specifiedAnim.StartX;
-                                                    for (int i = 1; i <= specifiedAnim.Range; i++) {
-
+                                                    for (int i = 1; i <= specifiedAnim.Range; i++)
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X - Constants.TILE_WIDTH * i, blitPoint.Y), sourceRec);
 
                                                         if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX - i, specifiedAnim.StartY)) {
+                                                            specifiedAnim.StartX - i, specifiedAnim.StartY))
+                                                        {
                                                             break;
                                                         }
-
                                                     }
                                                 }
                                                 break;
-                                            case Enums.Direction.Right: {
+                                            case Enums.Direction.Right:
+                                                {
                                                     int x = specifiedAnim.StartX;
-                                                    for (int i = 1; i <= specifiedAnim.Range; i++) {
+                                                    for (int i = 1; i <= specifiedAnim.Range; i++)
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X + Constants.TILE_WIDTH * i, blitPoint.Y), sourceRec);
 
                                                         if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX + i, specifiedAnim.StartY)) {
+                                                            specifiedAnim.StartX + i, specifiedAnim.StartY))
+                                                        {
                                                             break;
                                                         }
                                                     }
@@ -440,40 +514,44 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                     }
                                     break;
                                 case Enums.MoveRange.StraightLine:
-                                case Enums.MoveRange.FrontOfUser: {
+                                case Enums.MoveRange.FrontOfUser:
+                                    {
                                         #region Front of user
-                                        switch (specifiedAnim.Direction) {
-                                            case Enums.Direction.Up: {
+                                        switch (specifiedAnim.Direction)
+                                        {
+                                            case Enums.Direction.Up:
+                                                {
                                                     int y = specifiedAnim.StartY;
-                                                    for (int i = 1; i <= specifiedAnim.Range; i++) {
-                                                        
+                                                    for (int i = 1; i <= specifiedAnim.Range; i++)
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X, blitPoint.Y - Constants.TILE_HEIGHT * i), sourceRec);
-
                                                     }
                                                 }
                                                 break;
-                                            case Enums.Direction.Down: {
+                                            case Enums.Direction.Down:
+                                                {
                                                     int y = specifiedAnim.StartY;
-                                                    for (int i = 1; i <= specifiedAnim.Range; i++) {
+                                                    for (int i = 1; i <= specifiedAnim.Range; i++)
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X, blitPoint.Y + Constants.TILE_HEIGHT * i), sourceRec);
-
                                                     }
                                                 }
                                                 break;
-                                            case Enums.Direction.Left: {
+                                            case Enums.Direction.Left:
+                                                {
                                                     int x = specifiedAnim.StartX;
-                                                    for (int i = 1; i <= specifiedAnim.Range; i++) {
-
+                                                    for (int i = 1; i <= specifiedAnim.Range; i++)
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X - Constants.TILE_WIDTH * i, blitPoint.Y), sourceRec);
-
                                                     }
                                                 }
                                                 break;
-                                            case Enums.Direction.Right: {
+                                            case Enums.Direction.Right:
+                                                {
                                                     int x = specifiedAnim.StartX;
-                                                    for (int i = 1; i <= specifiedAnim.Range; i++) {
+                                                    for (int i = 1; i <= specifiedAnim.Range; i++)
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X + Constants.TILE_WIDTH * i, blitPoint.Y), sourceRec);
-
                                                     }
                                                 }
                                                 break;
@@ -482,290 +560,306 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                     }
                                     break;
                                 case Enums.MoveRange.User:
-                                case Enums.MoveRange.Special: {
+                                case Enums.MoveRange.Special:
+                                    {
                                         #region user
                                         destData.Blit(spriteToBlit, blitPoint, sourceRec);
                                         #endregion
                                     }
                                     break;
-                                case Enums.MoveRange.Floor: {
+                                case Enums.MoveRange.Floor:
+                                    {
                                         #region Floor
-                                        
-                                        for (int x = 0; x < 20; x++) {
-                                            for (int y = 0; y < 15; y++) {
 
+                                        for (int x = 0; x < 20; x++)
+                                        {
+                                            for (int y = 0; y < 15; y++)
+                                            {
                                                 destData.Blit(spriteToBlit, new Point(x * Constants.TILE_WIDTH + Constants.TILE_WIDTH / 2 - spriteToBlit.Height / 2, y * Constants.TILE_HEIGHT + Constants.TILE_HEIGHT / 2 - spriteToBlit.Height / 2), sourceRec);
                                             }
                                         }
                                         #endregion
                                     }
                                     break;
-                                case Enums.MoveRange.Room: {
+                                case Enums.MoveRange.Room:
+                                    {
                                         #region Room
-                                        for (int x = (-specifiedAnim.Range); x <= specifiedAnim.Range; x++) {
-                                            for (int y = (-specifiedAnim.Range); y <= specifiedAnim.Range; y++) {
+                                        for (int x = (-specifiedAnim.Range); x <= specifiedAnim.Range; x++)
+                                        {
+                                            for (int y = (-specifiedAnim.Range); y <= specifiedAnim.Range; y++)
+                                            {
                                                 destData.Blit(spriteToBlit, new Point(blitPoint.X + x * Constants.TILE_WIDTH, blitPoint.Y + y * Constants.TILE_HEIGHT), sourceRec);
                                             }
                                         }
                                         #endregion
                                     }
                                     break;
-                                case Enums.MoveRange.FrontAndSides: {
+                                case Enums.MoveRange.FrontAndSides:
+                                    {
                                         #region Front and Sides
-                                        for (int r = 0; r <= specifiedAnim.Range; r++) {
-
+                                        for (int r = 0; r <= specifiedAnim.Range; r++)
+                                        {
                                             //check adjacent tiles
-                                            switch (specifiedAnim.Direction) {
-                                                case Enums.Direction.Down: {
-                                                        
+                                            switch (specifiedAnim.Direction)
+                                            {
+                                                case Enums.Direction.Down:
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X, blitPoint.Y + r * Constants.TILE_HEIGHT), sourceRec);
 
-                                                        for (int s = 1; s <= r; s++) {
-
+                                                        for (int s = 1; s <= r; s++)
+                                                        {
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X - s * Constants.TILE_WIDTH, blitPoint.Y + r * Constants.TILE_HEIGHT), sourceRec);
 
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X + s * Constants.TILE_WIDTH, blitPoint.Y + r * Constants.TILE_HEIGHT), sourceRec);
-
                                                         }
-
                                                     }
                                                     break;
-                                                case Enums.Direction.Up: {
-
+                                                case Enums.Direction.Up:
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X, blitPoint.Y - r * Constants.TILE_HEIGHT), sourceRec);
 
 
-                                                        for (int s = 1; s <= r; s++) {
-
+                                                        for (int s = 1; s <= r; s++)
+                                                        {
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X - s * Constants.TILE_WIDTH, blitPoint.Y - r * Constants.TILE_HEIGHT), sourceRec);
 
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X + s * Constants.TILE_WIDTH, blitPoint.Y - r * Constants.TILE_HEIGHT), sourceRec);
-
                                                         }
-
                                                     }
                                                     break;
-                                                case Enums.Direction.Left: {
-                                                    
+                                                case Enums.Direction.Left:
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X - r * Constants.TILE_WIDTH, blitPoint.Y), sourceRec);
 
-                                                        for (int s = 1; s <= r; s++) {
-
-
+                                                        for (int s = 1; s <= r; s++)
+                                                        {
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X - r * Constants.TILE_WIDTH, blitPoint.Y - s * Constants.TILE_HEIGHT), sourceRec);
 
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X - r * Constants.TILE_WIDTH, blitPoint.Y + s * Constants.TILE_HEIGHT), sourceRec);
-
-
                                                         }
                                                     }
                                                     break;
-                                                case Enums.Direction.Right: {
-
+                                                case Enums.Direction.Right:
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X + r * Constants.TILE_WIDTH, blitPoint.Y), sourceRec);
 
-                                                        for (int s = 1; s <= r; s++) {
-
-
+                                                        for (int s = 1; s <= r; s++)
+                                                        {
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X + r * Constants.TILE_WIDTH, blitPoint.Y - s * Constants.TILE_HEIGHT), sourceRec);
 
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X + r * Constants.TILE_WIDTH, blitPoint.Y + s * Constants.TILE_HEIGHT), sourceRec);
-
-
                                                         }
                                                     }
                                                     break;
                                             }
-
-
                                         }
                                         #endregion
                                     }
                                     break;
-                                case Enums.MoveRange.ArcThrow: {
+                                case Enums.MoveRange.ArcThrow:
+                                    {
                                         #region Arc Throw
                                         bool stopattile = false;
 
-                                        for (int r = 0; r <= specifiedAnim.Range; r++) {
-
+                                        for (int r = 0; r <= specifiedAnim.Range; r++)
+                                        {
                                             //check adjacent tiles
-                                            switch (specifiedAnim.Direction) {
-                                                case Enums.Direction.Down: {
-                                                        
+                                            switch (specifiedAnim.Direction)
+                                            {
+                                                case Enums.Direction.Down:
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X, blitPoint.Y + r * Constants.TILE_HEIGHT), sourceRec);
 
                                                         if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX, specifiedAnim.StartY + r)) {
-                                                                stopattile = true;
+                                                            specifiedAnim.StartX, specifiedAnim.StartY + r))
+                                                        {
+                                                            stopattile = true;
                                                         }
 
-                                                        if (stopattile) {
+                                                        if (stopattile)
+                                                        {
                                                             break;
                                                         }
 
-                                                        for (int s = 1; s <= r; s++) {
-
+                                                        for (int s = 1; s <= r; s++)
+                                                        {
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X - s * Constants.TILE_WIDTH, blitPoint.Y + r * Constants.TILE_HEIGHT), sourceRec);
 
                                                             if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX - s, specifiedAnim.StartY + r)) {
+                                                            specifiedAnim.StartX - s, specifiedAnim.StartY + r))
+                                                            {
                                                                 stopattile = true;
                                                             }
 
-                                                            if (stopattile) {
+                                                            if (stopattile)
+                                                            {
                                                                 break;
                                                             }
 
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X + s * Constants.TILE_WIDTH, blitPoint.Y + r * Constants.TILE_HEIGHT), sourceRec);
 
                                                             if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX + s, specifiedAnim.StartY + r)) {
+                                                            specifiedAnim.StartX + s, specifiedAnim.StartY + r))
+                                                            {
                                                                 stopattile = true;
                                                             }
 
-                                                            if (stopattile) {
+                                                            if (stopattile)
+                                                            {
                                                                 break;
                                                             }
                                                         }
 
-                                                        if (stopattile) {
+                                                        if (stopattile)
+                                                        {
                                                             break;
                                                         }
-
                                                     }
                                                     break;
-                                                case Enums.Direction.Up: {
-
+                                                case Enums.Direction.Up:
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X, blitPoint.Y - r * Constants.TILE_HEIGHT), sourceRec);
 
                                                         if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX, specifiedAnim.StartY - r)) {
+                                                            specifiedAnim.StartX, specifiedAnim.StartY - r))
+                                                        {
                                                             stopattile = true;
                                                         }
 
-                                                        if (stopattile) {
+                                                        if (stopattile)
+                                                        {
                                                             break;
                                                         }
 
-                                                        for (int s = 1; s <= r; s++) {
-
+                                                        for (int s = 1; s <= r; s++)
+                                                        {
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X - s * Constants.TILE_WIDTH, blitPoint.Y - r * Constants.TILE_HEIGHT), sourceRec);
 
                                                             if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX - s, specifiedAnim.StartY - r)) {
+                                                            specifiedAnim.StartX - s, specifiedAnim.StartY - r))
+                                                            {
                                                                 stopattile = true;
                                                             }
 
-                                                            if (stopattile) {
+                                                            if (stopattile)
+                                                            {
                                                                 break;
                                                             }
 
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X + s * Constants.TILE_WIDTH, blitPoint.Y - r * Constants.TILE_HEIGHT), sourceRec);
 
                                                             if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX + s, specifiedAnim.StartY - r)) {
+                                                            specifiedAnim.StartX + s, specifiedAnim.StartY - r))
+                                                            {
                                                                 stopattile = true;
                                                             }
 
-                                                            if (stopattile) {
+                                                            if (stopattile)
+                                                            {
                                                                 break;
                                                             }
-
                                                         }
-
                                                     }
                                                     break;
-                                                case Enums.Direction.Left: {
-                                                    
+                                                case Enums.Direction.Left:
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X - r * Constants.TILE_WIDTH, blitPoint.Y), sourceRec);
-                                                    
+
                                                         if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX - r, specifiedAnim.StartY)) {
+                                                            specifiedAnim.StartX - r, specifiedAnim.StartY))
+                                                        {
                                                             stopattile = true;
                                                         }
 
-                                                        if (stopattile) {
+                                                        if (stopattile)
+                                                        {
                                                             break;
                                                         }
 
-                                                        for (int s = 1; s <= r; s++) {
-
-
+                                                        for (int s = 1; s <= r; s++)
+                                                        {
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X - r * Constants.TILE_WIDTH, blitPoint.Y - s * Constants.TILE_HEIGHT), sourceRec);
 
                                                             if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX - r, specifiedAnim.StartY - s)) {
+                                                            specifiedAnim.StartX - r, specifiedAnim.StartY - s))
+                                                            {
                                                                 stopattile = true;
                                                             }
 
-                                                            if (stopattile) {
+                                                            if (stopattile)
+                                                            {
                                                                 break;
                                                             }
 
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X - r * Constants.TILE_WIDTH, blitPoint.Y + s * Constants.TILE_HEIGHT), sourceRec);
 
                                                             if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                            specifiedAnim.StartX - r, specifiedAnim.StartY + s)) {
+                                                            specifiedAnim.StartX - r, specifiedAnim.StartY + s))
+                                                            {
                                                                 stopattile = true;
                                                             }
 
-                                                            if (stopattile) {
+                                                            if (stopattile)
+                                                            {
                                                                 break;
                                                             }
-
-
                                                         }
                                                     }
                                                     break;
-                                                case Enums.Direction.Right: {
-
+                                                case Enums.Direction.Right:
+                                                    {
                                                         destData.Blit(spriteToBlit, new Point(blitPoint.X + r * Constants.TILE_WIDTH, blitPoint.Y), sourceRec);
 
                                                         if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                                specifiedAnim.StartX + r, specifiedAnim.StartY)) {
+                                                                specifiedAnim.StartX + r, specifiedAnim.StartY))
+                                                        {
                                                             stopattile = true;
                                                         }
 
-                                                        if (stopattile) {
+                                                        if (stopattile)
+                                                        {
                                                             break;
                                                         }
 
-                                                        for (int s = 1; s <= r; s++) {
-
+                                                        for (int s = 1; s <= r; s++)
+                                                        {
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X + r * Constants.TILE_WIDTH, blitPoint.Y - s * Constants.TILE_HEIGHT), sourceRec);
 
                                                             if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                                specifiedAnim.StartX + r, specifiedAnim.StartY - s)) {
+                                                                specifiedAnim.StartX + r, specifiedAnim.StartY - s))
+                                                            {
                                                                 stopattile = true;
                                                             }
 
-                                                            if (stopattile) {
+                                                            if (stopattile)
+                                                            {
                                                                 break;
                                                             }
 
                                                             destData.Blit(spriteToBlit, new Point(blitPoint.X + r * Constants.TILE_WIDTH, blitPoint.Y + s * Constants.TILE_HEIGHT), sourceRec);
 
                                                             if (IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                                                specifiedAnim.StartX + r, specifiedAnim.StartY + s)) {
+                                                                specifiedAnim.StartX + r, specifiedAnim.StartY + s))
+                                                            {
                                                                 stopattile = true;
                                                             }
 
-                                                            if (stopattile) {
+                                                            if (stopattile)
+                                                            {
                                                                 break;
                                                             }
-
                                                         }
                                                     }
                                                     break;
                                             }
 
 
-                                            if (stopattile) {
+                                            if (stopattile)
+                                            {
                                                 break;
                                             }
                                         }
 
-                                        
                                         #endregion
                                     }
                                     break;
@@ -774,7 +868,7 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                             //for (int y = specifiedAnim.StartY; y <= specifiedAnim.EndY; y++) {
                             //    for (int x = specifiedAnim.StartX; x <= specifiedAnim.EndX; x++) {
-                                    
+
                             //        Point blitPoint = Screen.ScreenRenderer.ToTilePoint(new Point(x, y), useScrolling);
                             //        blitPoint.X = blitPoint.X + Constants.TILE_WIDTH / 2 - spriteToBlit.Height / 2;
                             //        blitPoint.Y = blitPoint.Y + Constants.TILE_HEIGHT / 2 - spriteToBlit.Height / 2;
@@ -783,30 +877,34 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             //    }
                             //}
 
-                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength) {
+                            if (Globals.Tick > specifiedAnim.MoveTime + specifiedAnim.FrameLength)
+                            {
                                 specifiedAnim.MoveTime = Globals.Tick;
                                 specifiedAnim.Frame++;
                             }
 
-                            if (specifiedAnim.Frame >= spriteToBlit.Width / spriteToBlit.Height) {
+                            if (specifiedAnim.Frame >= spriteToBlit.Width / spriteToBlit.Height)
+                            {
                                 specifiedAnim.CompletedLoops++;
                                 specifiedAnim.Frame = 0;
                             }
-
-
-                        } else {
+                        }
+                        else
+                        {
                             specifiedAnim.Active = false;
                         }
-#endregion
+                        #endregion
                     }
                     break;
-                case Enums.MoveAnimationType.ItemArrow: {
+                case Enums.MoveAnimationType.ItemArrow:
+                    {
                         #region ItemArrow
                         ItemArrowMoveAnimation specifiedAnim = animation as ItemArrowMoveAnimation;
                         int time = Globals.Tick - specifiedAnim.TotalMoveTime;
-                        if (time < animTime) {
-
-                            if (specifiedAnim.AnimationIndex < 0) {
+                        if (time < animTime)
+                        {
+                            if (specifiedAnim.AnimationIndex < 0)
+                            {
                                 specifiedAnim.Active = false;
                                 return;
                             }
@@ -814,22 +912,27 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             Rectangle sourceRec = new Rectangle((specifiedAnim.AnimationIndex - (specifiedAnim.AnimationIndex / 6) * 6) * Constants.TILE_WIDTH,
                                                (specifiedAnim.AnimationIndex / 6) * Constants.TILE_HEIGHT, Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
 
-                            
 
-                            switch (specifiedAnim.Direction) {
-                                case Enums.Direction.Up: {
+
+                            switch (specifiedAnim.Direction)
+                            {
+                                case Enums.Direction.Up:
+                                    {
                                         pinnedPoint.Y -= specifiedAnim.Distance * Constants.TILE_HEIGHT * time / animTime;
                                     }
                                     break;
-                                case Enums.Direction.Down: {
+                                case Enums.Direction.Down:
+                                    {
                                         pinnedPoint.Y += specifiedAnim.Distance * Constants.TILE_HEIGHT * time / animTime;
                                     }
                                     break;
-                                case Enums.Direction.Left: {
+                                case Enums.Direction.Left:
+                                    {
                                         pinnedPoint.X -= specifiedAnim.Distance * Constants.TILE_WIDTH * time / animTime;
                                     }
                                     break;
-                                case Enums.Direction.Right: {
+                                case Enums.Direction.Right:
+                                    {
                                         pinnedPoint.X += specifiedAnim.Distance * Constants.TILE_WIDTH * time / animTime;
                                     }
                                     break;
@@ -839,7 +942,7 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                 case Enums.Direction.UpLeft:
                                     break;
                             }
-                            
+
                             //blit
                             destData.Blit(GraphicsManager.Items, pinnedPoint, sourceRec);
 
@@ -852,21 +955,23 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             //    specifiedAnim.CompletedLoops++;
                             //    specifiedAnim.Frame = 0;
                             //}
-
-
-                        } else {
+                        }
+                        else
+                        {
                             specifiedAnim.Active = false;
                         }
                         #endregion
                     }
                     break;
-                case Enums.MoveAnimationType.ItemThrow: {
+                case Enums.MoveAnimationType.ItemThrow:
+                    {
                         #region ItemThrow
                         ItemThrowMoveAnimation specifiedAnim = animation as ItemThrowMoveAnimation;
                         int time = Globals.Tick - specifiedAnim.TotalMoveTime;
-                        if (time < animTime) {
-
-                            if (specifiedAnim.AnimationIndex < 0) {
+                        if (time < animTime)
+                        {
+                            if (specifiedAnim.AnimationIndex < 0)
+                            {
                                 specifiedAnim.Active = false;
                                 return;
                             }
@@ -893,22 +998,21 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             //    specifiedAnim.CompletedLoops++;
                             //    specifiedAnim.Frame = 0;
                             //}
-
-
-                        } else {
+                        }
+                        else
+                        {
                             specifiedAnim.Active = false;
                         }
                         #endregion
                     }
                     break;
             }
-            
-
         }
 
-        public static void RenderMoveTargettingDisplay(RendererDestinationData destData, Sprites.ISprite attacker, Logic.Moves.Move move) {
-           
-            switch (move.RangeType) {
+        public static void RenderMoveTargettingDisplay(RendererDestinationData destData, Sprites.ISprite attacker, Logic.Moves.Move move)
+        {
+            switch (move.RangeType)
+            {
                 case Enums.MoveRange.FrontOfUserUntil:
                 case Enums.MoveRange.LineUntilHit:
                     {
@@ -928,8 +1032,9 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                         if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, y), Enums.MapID.Active))
                                         {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X, y))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X, y))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
                                         }
@@ -951,10 +1056,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                         //    attacker.X, y)) {
                                         //    break;
                                         //}
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X, y))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X, y))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
                                         }
@@ -976,10 +1083,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                         //     x, attacker.Y)) {
                                         //    break;
                                         //}
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, attacker.Y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, attacker.Y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            x, attacker.Y))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          x, attacker.Y))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
                                         }
@@ -1001,10 +1110,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                         //    x, attacker.Y)) {
                                         //    break;
                                         //}
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, attacker.Y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, attacker.Y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            x, attacker.Y))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          x, attacker.Y))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
                                         }
@@ -1021,80 +1132,110 @@ namespace Client.Logic.Graphics.Renderers.Moves
                     }
                     break;
                 case Enums.MoveRange.StraightLine:
-                case Enums.MoveRange.FrontOfUser: {
+                case Enums.MoveRange.FrontOfUser:
+                    {
                         #region Front of user
-                        switch (attacker.Direction) {
-                            case Enums.Direction.Up: {
+                        switch (attacker.Direction)
+                        {
+                            case Enums.Direction.Up:
+                                {
                                     int y = attacker.Y;
-                                    for (int i = 1; i <= move.Range; i++) {
+                                    for (int i = 1; i <= move.Range; i++)
+                                    {
                                         y = attacker.Y - i;
                                         //if (!ShouldContinueRenderingTargettingDisplay(Logic.Maps.MapHelper.ActiveMap,
                                         //    attacker.X, y)) {
                                         //    break;
                                         //}
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X, y)) {
-                                                destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
-                                        } else {
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X, y))
+                                        {
+                                            destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
+                                        }
+                                        else
+                                        {
                                             destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
                                         }
                                     }
                                 }
                                 break;
-                            case Enums.Direction.Down: {
+                            case Enums.Direction.Down:
+                                {
                                     int y = attacker.Y;
-                                    for (int i = 1; i <= move.Range; i++) {
+                                    for (int i = 1; i <= move.Range; i++)
+                                    {
                                         y = attacker.Y + i;
                                         //if (!ShouldContinueRenderingTargettingDisplay(Logic.Maps.MapHelper.ActiveMap,
                                         //    attacker.X, y)) {
                                         //    break;
                                         //}
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X, y)) {
-                                                destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
-                                        } else {
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X, y))
+                                        {
+                                            destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
+                                        }
+                                        else
+                                        {
                                             destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X), Screen.ScreenRenderer.ToTileY(y) + Logic.Players.PlayerManager.MyPlayer.Offset.Y));
                                         }
                                     }
                                 }
                                 break;
-                            case Enums.Direction.Left: {
+                            case Enums.Direction.Left:
+                                {
                                     int x = attacker.X;
-                                    for (int i = 1; i <= move.Range; i++) {
+                                    for (int i = 1; i <= move.Range; i++)
+                                    {
                                         x = attacker.X - i;
                                         //if (!ShouldContinueRenderingTargettingDisplay(Logic.Maps.MapHelper.ActiveMap,
                                         //     x, attacker.Y)) {
                                         //    break;
                                         //}
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, attacker.Y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, attacker.Y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            x, attacker.Y)) {
-                                                destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
-                                        } else {
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          x, attacker.Y))
+                                        {
+                                            destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
+                                        }
+                                        else
+                                        {
                                             destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
                                         }
                                     }
                                 }
                                 break;
-                            case Enums.Direction.Right: {
+                            case Enums.Direction.Right:
+                                {
                                     int x = attacker.X;
-                                    for (int i = 1; i <= move.Range; i++) {
+                                    for (int i = 1; i <= move.Range; i++)
+                                    {
                                         x = attacker.X + i;
                                         //if (!ShouldContinueRenderingTargettingDisplay(Logic.Maps.MapHelper.ActiveMap,
                                         //    x, attacker.Y)) {
                                         //    break;
                                         //}
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, attacker.Y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, attacker.Y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            x, attacker.Y)) {
-                                                destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
-                                        } else {
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          x, attacker.Y))
+                                        {
+                                            destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
+                                        }
+                                        else
+                                        {
                                             destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(x) + Logic.Players.PlayerManager.MyPlayer.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y)));
                                         }
                                     }
@@ -1104,7 +1245,8 @@ namespace Client.Logic.Graphics.Renderers.Moves
                         #endregion
                     }
                     break;
-                case Enums.MoveRange.User: {
+                case Enums.MoveRange.User:
+                    {
                         #region user
                         destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y) + attacker.Offset.Y));
                         #endregion
@@ -1144,10 +1286,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                         {
                             for (int y = startY; y < startY + 15; y++)
                             {
-                                if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, y), Enums.MapID.Active)) {
+                                if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, y), Enums.MapID.Active))
+                                {
                                     destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(x), Screen.ScreenRenderer.ToTileY(y)));
-                                } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                    x, y))
+                                }
+                                else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                  x, y))
                                 {
                                     destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(x), Screen.ScreenRenderer.ToTileY(y)));
                                 }
@@ -1167,10 +1311,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                         {
                             for (int y = attacker.Y - move.Range; y <= attacker.Y + move.Range; y++)
                             {
-                                if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, y), Enums.MapID.Active)) {
+                                if (!Screen.ScreenRenderer.CanBeSeen(new Point(x, y), Enums.MapID.Active))
+                                {
                                     destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(x), Screen.ScreenRenderer.ToTileY(y)));
-                                } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                    x, y))
+                                }
+                                else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                  x, y))
                                 {
                                     destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(x) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(y) + attacker.Offset.Y));
                                 }
@@ -1188,16 +1334,17 @@ namespace Client.Logic.Graphics.Renderers.Moves
                         #region Front and Sides
                         for (int r = 0; r <= move.Range; r++)
                         {
-
                             //check adjacent tiles
                             switch (attacker.Direction)
                             {
                                 case Enums.Direction.Down:
                                     {
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, attacker.Y + r), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, attacker.Y + r), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X, attacker.Y + r))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X, attacker.Y + r))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
                                         }
@@ -1210,11 +1357,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                                         for (int s = 1; s <= r; s++)
                                         {
-
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - s, attacker.Y + r), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - s, attacker.Y + r), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - s, attacker.Y + r))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - s, attacker.Y + r))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
                                             }
@@ -1223,10 +1371,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                                 destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
                                             }
 
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + s, attacker.Y + r), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + s, attacker.Y + r), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + s, attacker.Y + r))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + s, attacker.Y + r))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
                                             }
@@ -1234,17 +1384,17 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                             {
                                                 destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
                                             }
-
                                         }
-
                                     }
                                     break;
                                 case Enums.Direction.Up:
                                     {
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, attacker.Y - r), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, attacker.Y - r), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X, attacker.Y - r))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X, attacker.Y - r))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
                                         }
@@ -1257,11 +1407,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                                         for (int s = 1; s <= r; s++)
                                         {
-
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - s, attacker.Y - r), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - s, attacker.Y - r), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - s, attacker.Y - r))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - s, attacker.Y - r))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
                                             }
@@ -1270,10 +1421,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                                 destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
                                             }
 
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + s, attacker.Y - r), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + s, attacker.Y - r), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + s, attacker.Y - r))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + s, attacker.Y - r))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
                                             }
@@ -1281,17 +1434,17 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                             {
                                                 destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
                                             }
-
                                         }
-
                                     }
                                     break;
                                 case Enums.Direction.Left:
                                     {
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y) + attacker.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - r, attacker.Y))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - r, attacker.Y))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y) + attacker.Offset.Y));
                                         }
@@ -1304,11 +1457,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                                         for (int s = 1; s <= r; s++)
                                         {
-
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y - s), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y - s), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - r, attacker.Y - s))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - r, attacker.Y - s))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
                                             }
@@ -1317,10 +1471,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                                 destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
                                             }
 
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y + s), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y + s), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - r, attacker.Y + s))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - r, attacker.Y + s))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
                                             }
@@ -1328,16 +1484,17 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                             {
                                                 destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
                                             }
-
                                         }
                                     }
                                     break;
                                 case Enums.Direction.Right:
                                     {
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y) + attacker.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + r, attacker.Y))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + r, attacker.Y))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y) + attacker.Offset.Y));
                                         }
@@ -1350,11 +1507,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                                         for (int s = 1; s <= r; s++)
                                         {
-
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y - s), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y - s), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + r, attacker.Y - s))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + r, attacker.Y - s))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
                                             }
@@ -1363,10 +1521,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                                 destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
                                             }
 
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y + s), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y + s), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + r, attacker.Y + s))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + r, attacker.Y + s))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
                                             }
@@ -1374,13 +1534,10 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                             {
                                                 destData.Blit(srfcMoveTargetTileHit, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
                                             }
-
                                         }
                                     }
                                     break;
                             }
-
-
                         }
                         #endregion
                     }
@@ -1391,16 +1548,17 @@ namespace Client.Logic.Graphics.Renderers.Moves
                         bool stopattile = false;
                         for (int r = 0; r <= move.Range; r++)
                         {
-                            
                             //check adjacent tiles
                             switch (attacker.Direction)
                             {
                                 case Enums.Direction.Down:
                                     {
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, attacker.Y + r), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, attacker.Y + r), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X, attacker.Y + r))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X, attacker.Y + r))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
                                         }
@@ -1417,11 +1575,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                                         for (int s = 1; s <= r; s++)
                                         {
-
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - s, attacker.Y + r), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - s, attacker.Y + r), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - s, attacker.Y + r))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - s, attacker.Y + r))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
                                             }
@@ -1436,10 +1595,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                                 break;
                                             }
 
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + s, attacker.Y + r), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + s, attacker.Y + r), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + s, attacker.Y + r))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + s, attacker.Y + r))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + r) + attacker.Offset.Y));
                                             }
@@ -1453,17 +1614,17 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                             {
                                                 break;
                                             }
-
                                         }
-
                                     }
                                     break;
                                 case Enums.Direction.Up:
                                     {
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, attacker.Y - r), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X, attacker.Y - r), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X, attacker.Y - r))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X, attacker.Y - r))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
                                         }
@@ -1480,11 +1641,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                                         for (int s = 1; s <= r; s++)
                                         {
-
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - s, attacker.Y - r), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - s, attacker.Y - r), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - s, attacker.Y - r))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - s, attacker.Y - r))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
                                             }
@@ -1499,10 +1661,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                                 break;
                                             }
 
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + s, attacker.Y - r), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + s, attacker.Y - r), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + s, attacker.Y - r))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + s, attacker.Y - r))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + s) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - r) + attacker.Offset.Y));
                                             }
@@ -1516,17 +1680,17 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                             {
                                                 break;
                                             }
-
                                         }
-
                                     }
                                     break;
                                 case Enums.Direction.Left:
                                     {
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y) + attacker.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - r, attacker.Y))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - r, attacker.Y))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y) + attacker.Offset.Y));
                                         }
@@ -1543,11 +1707,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                                         for (int s = 1; s <= r; s++)
                                         {
-
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y - s), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y - s), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - r, attacker.Y - s))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - r, attacker.Y - s))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
                                             }
@@ -1562,10 +1727,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                                 break;
                                             }
 
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y + s), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X - r, attacker.Y + s), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X - r, attacker.Y + s))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X - r, attacker.Y + s))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X - r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
                                             }
@@ -1579,16 +1746,17 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                             {
                                                 break;
                                             }
-
                                         }
                                     }
                                     break;
                                 case Enums.Direction.Right:
                                     {
-                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y), Enums.MapID.Active)) {
+                                        if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y), Enums.MapID.Active))
+                                        {
                                             destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y) + attacker.Offset.Y));
-                                        } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + r, attacker.Y))
+                                        }
+                                        else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + r, attacker.Y))
                                         {
                                             destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y) + attacker.Offset.Y));
                                         }
@@ -1605,11 +1773,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
 
                                         for (int s = 1; s <= r; s++)
                                         {
-
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y - s), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y - s), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + r, attacker.Y - s))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + r, attacker.Y - s))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y - s) + attacker.Offset.Y));
                                             }
@@ -1624,10 +1793,12 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                                 break;
                                             }
 
-                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y + s), Enums.MapID.Active)) {
+                                            if (!Screen.ScreenRenderer.CanBeSeen(new Point(attacker.X + r, attacker.Y + s), Enums.MapID.Active))
+                                            {
                                                 destData.Blit(srfcMoveTargetTileDark, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
-                                            } else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
-                                            attacker.X + r, attacker.Y + s))
+                                            }
+                                            else if (!IsRenderingTargetOnSprite(Logic.Maps.MapHelper.ActiveMap,
+                                          attacker.X + r, attacker.Y + s))
                                             {
                                                 destData.Blit(srfcMoveTargetTile, new Point(Screen.ScreenRenderer.ToTileX(attacker.X + r) + attacker.Offset.X, Screen.ScreenRenderer.ToTileY(attacker.Y + s) + attacker.Offset.Y));
                                             }
@@ -1641,7 +1812,6 @@ namespace Client.Logic.Graphics.Renderers.Moves
                                             {
                                                 break;
                                             }
-
                                         }
                                     }
                                     break;
@@ -1651,7 +1821,6 @@ namespace Client.Logic.Graphics.Renderers.Moves
                             {
                                 break;
                             }
-
                         }
                         #endregion
                     }
@@ -1659,30 +1828,41 @@ namespace Client.Logic.Graphics.Renderers.Moves
             }
         }
 
-        static bool ShouldContinueRenderingTargettingDisplay(Logic.Maps.Map activeMap, int x, int y) {
-            if (x < 0 || y < 0 || x > activeMap.MaxX || y > activeMap.MaxY) {
+        static bool ShouldContinueRenderingTargettingDisplay(Logic.Maps.Map activeMap, int x, int y)
+        {
+            if (x < 0 || y < 0 || x > activeMap.MaxX || y > activeMap.MaxY)
+            {
                 return false;
             }
-            if (GameProcessor.IsBlocked(activeMap, x, y)) {
+            if (GameProcessor.IsBlocked(activeMap, x, y))
+            {
                 return false;
-            } else {
+            }
+            else
+            {
                 return true;
             }
         }
 
-        static bool IsRenderingTargetOnSprite(Logic.Maps.Map activeMap, int x, int y) {
-            for (int i = 0; i < activeMap.MapNpcs.Length; i++) {
+        static bool IsRenderingTargetOnSprite(Logic.Maps.Map activeMap, int x, int y)
+        {
+            for (int i = 0; i < activeMap.MapNpcs.Length; i++)
+            {
                 if (activeMap.MapNpcs[i].Num > 0 && activeMap.MapNpcs[i].ScreenActive &&
                     activeMap.MapNpcs[i].X == x &&
-                    activeMap.MapNpcs[i].Y == y) {
+                    activeMap.MapNpcs[i].Y == y)
+                {
                     return true;
                 }
             }
 
-            if (activeMap.Players != null) {
-                for (int i = 0; i < activeMap.Players.Count; i++) {
+            if (activeMap.Players != null)
+            {
+                for (int i = 0; i < activeMap.Players.Count; i++)
+                {
                     if (activeMap.Players[i].ScreenActive && activeMap.Players[i].X == x &&
-                        activeMap.Players[i].Y == y) {
+                        activeMap.Players[i].Y == y)
+                    {
                         return true;
                     }
                 }
@@ -1692,6 +1872,5 @@ namespace Client.Logic.Graphics.Renderers.Moves
         }
 
         #endregion Methods
-
     }
 }

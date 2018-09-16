@@ -29,7 +29,8 @@ namespace Client.Logic.Menus
 {
     class mnuTeam : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -50,7 +51,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuTeam(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(280, 188);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(10, 40);
@@ -66,7 +68,8 @@ namespace Client.Logic.Menus
             lblPoke.Text = "Team";
 
             lblAllPoke = new Label[4];
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 4; i++)
+            {
                 lblAllPoke[i] = new Label("lblAllPoke" + i);
                 lblAllPoke[i].AutoSize = true;
                 lblAllPoke[i].Font = FontManager.LoadFont("PMDCP", 32);
@@ -75,10 +78,6 @@ namespace Client.Logic.Menus
                 lblAllPoke[i].ForeColor = Color.WhiteSmoke;
                 lblAllPoke[i].Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(team_Click);
                 this.AddWidget(lblAllPoke[i]);
-
-
-
-
             }
 
 
@@ -126,7 +125,8 @@ namespace Client.Logic.Menus
             ChangeSelected(0);
         }
 
-        void team_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void team_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(Array.IndexOf(lblAllPoke, sender));
         }
 
@@ -134,37 +134,50 @@ namespace Client.Logic.Menus
 
         #region Methods
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 63 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
-            				Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
-                    	Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
+                        Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         MenuSwitcher.ShowMainMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                     }
@@ -172,20 +185,26 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void SelectItem(int itemNum) {
-            if (!string.IsNullOrEmpty(Players.PlayerManager.MyPlayer.Team[itemNum].Name)) {
+        private void SelectItem(int itemNum)
+        {
+            if (!string.IsNullOrEmpty(Players.PlayerManager.MyPlayer.Team[itemNum].Name))
+            {
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuTeamSelected("mnuTeamSelected", itemNum));
                 Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuTeamSelected");
                 Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
             }
         }
 
-        public void DisplayTeam() {
-            for (int i = 0; i < 4; i++) {
-                if (!string.IsNullOrEmpty(Players.PlayerManager.MyPlayer.Team[i].Name)) {
+        public void DisplayTeam()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (!string.IsNullOrEmpty(Players.PlayerManager.MyPlayer.Team[i].Name))
+                {
                     lblAllPoke[i].Text = Players.PlayerManager.MyPlayer.Team[i].Name;
-
-                } else {
+                }
+                else
+                {
                     lblAllPoke[i].Text = "-----";
                     //lblAllMovesPP[i].Text = "--/--";
                 }
@@ -197,11 +216,10 @@ namespace Client.Logic.Menus
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
-
-
 
         #endregion Methods
     }

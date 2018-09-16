@@ -17,16 +17,15 @@
 
 
 using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using PMDCP.Core;
+using System.Collections.Generic;
+using System.Text;
+using PMDCP.Core;
 
 namespace Client.Logic.Pokedex
 {
-	
-	class PokemonHelper
-	{
-		#region Fields
+    class PokemonHelper
+    {
+        #region Fields
 
         private static int dataLoadPercent = 0;
         private static PokemonCollection mPokemon;
@@ -56,12 +55,15 @@ namespace Client.Logic.Pokedex
 
         public static void LoadPokemonFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n = 2;
                 MaxInfo.TotalPokemon = parse[1].ToInt();
                 mPokemon.ClearPokemon();
-                if (MaxInfo.TotalPokemon > 0) {
-                    for (int i = 0; i < MaxInfo.TotalPokemon; i++) {
+                if (MaxInfo.TotalPokemon > 0)
+                {
+                    for (int i = 0; i < MaxInfo.TotalPokemon; i++)
+                    {
                         dataLoadPercent = System.Math.Min(99, Logic.MathFunctions.CalculatePercent(i, MaxInfo.TotalPokemon));
                         mPokemon.AddPokemon(i, new Pokemon());
                         mPokemon[i].Name = parse[n];
@@ -75,11 +77,13 @@ namespace Client.Logic.Pokedex
                     }
                     dataLoadPercent = 100;
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }
 
         #endregion Methods
-	}
+    }
 }

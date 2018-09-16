@@ -32,17 +32,19 @@ namespace Client.Logic.Algorithms.Pathfinder
 
         Maps.Map map;
 
-        public AStarPathfinder(Maps.Map map) {
+        public AStarPathfinder(Maps.Map map)
+        {
             this.map = map;
 
-            this.maxX = map.MaxX;
-            this.maxY = map.MaxY;
+            maxX = map.MaxX;
+            maxY = map.MaxY;
 
             InitMovements();
             InitSquares();
         }
 
-        private void InitMovements() {
+        private void InitMovements()
+        {
             mMovements = new Point[]
             {
                 new Point(0, -1),
@@ -52,11 +54,14 @@ namespace Client.Logic.Algorithms.Pathfinder
             };
         }
 
-        private void InitSquares() {
+        private void InitSquares()
+        {
             mSquares = new PathfinderSquare[maxX + 1, maxY + 1];
 
-            for (int x = 0; x <= maxX; x++) {
-                for (int y = 0; y <= maxY; y++) {
+            for (int x = 0; x <= maxX; x++)
+            {
+                for (int y = 0; y <= maxY; y++)
+                {
                     mSquares[x, y] = new PathfinderSquare();
                     mSquares[x, y].TileType = map.Tile[x, y].Type;
                     mSquares[x, y].DistanceSteps = 10000;
@@ -65,8 +70,10 @@ namespace Client.Logic.Algorithms.Pathfinder
             }
         }
 
-        public PathfinderResult FindPath(int startX, int startY, int endX, int endY) {
-            if (ValidCoordinates(startX, startY) == false || ValidCoordinates(endX, endY) == false) {
+        public PathfinderResult FindPath(int startX, int startY, int endX, int endY)
+        {
+            if (ValidCoordinates(startX, startY) == false || ValidCoordinates(endX, endY) == false)
+            {
                 return new PathfinderResult(new List<Enums.Direction>(), false);
             }
 
@@ -84,33 +91,40 @@ namespace Client.Logic.Algorithms.Pathfinder
             mSquares[startX, startY].SessionID = findPathID;
 
 
-            while (true) {
+            while (true)
+            {
                 bool madeProgress = false;
 
-                foreach (Point mainPoint in AllSquares()) {
+                foreach (Point mainPoint in AllSquares())
+                {
                     int x = mainPoint.X;
                     int y = mainPoint.Y;
-                    if (mSquares[x, y].SessionID != findPathID) {
+                    if (mSquares[x, y].SessionID != findPathID)
+                    {
                         mSquares[x, y].DistanceSteps = 10000;
                         mSquares[x, y].IsPath = false;
                         mSquares[x, y].SessionID = findPathID;
                     }
-                    if (IsSquareOpen(x, y)) {
+                    if (IsSquareOpen(x, y))
+                    {
                         int passHere = mSquares[x, y].DistanceSteps;
 
-                        foreach (Point movePoint in ValidMoves(x, y)) {
+                        foreach (Point movePoint in ValidMoves(x, y))
+                        {
                             int newX = movePoint.X;
                             int newY = movePoint.Y;
                             int newPass = passHere + 1;
 
-                            if (mSquares[newX, newY].DistanceSteps > newPass) {
+                            if (mSquares[newX, newY].DistanceSteps > newPass)
+                            {
                                 mSquares[newX, newY].DistanceSteps = newPass;
                                 madeProgress = true;
                             }
                         }
                     }
                 }
-                if (!madeProgress) {
+                if (!madeProgress)
+                {
                     break;
                 }
             }
@@ -123,60 +137,82 @@ namespace Client.Logic.Algorithms.Pathfinder
             int lastPointY = endY;
 
             List<Enums.Direction> pathList = new List<Enums.Direction>();
-            while (true) {
+            while (true)
+            {
                 Point lowestPoint = Point.Empty;
                 int lowest = 10000;
 
-                foreach (Point movePoint in ValidMoves(pointX, pointY)) {
+                foreach (Point movePoint in ValidMoves(pointX, pointY))
+                {
                     int count = mSquares[movePoint.X, movePoint.Y].DistanceSteps;
-                    if (count < lowest) {
+                    if (count < lowest)
+                    {
                         lowest = count;
                         lowestPoint.X = movePoint.X;
                         lowestPoint.Y = movePoint.Y;
                     }
                 }
-                if (lowest != 10000) {
+                if (lowest != 10000)
+                {
                     // Mark the square as part of the path if it is the lowest
                     // number. Set the current position as the square with
                     // that number of steps.
                     mSquares[lowestPoint.X, lowestPoint.Y].IsPath = true;
                     pointX = lowestPoint.X;
                     pointY = lowestPoint.Y;
-                    if (lastPointX > pointX) {
+                    if (lastPointX > pointX)
+                    {
                         pathList.Add(Enums.Direction.Left);
-                    } else if (lastPointX < pointX) {
+                    }
+                    else if (lastPointX < pointX)
+                    {
                         pathList.Add(Enums.Direction.Right);
-                    } else if (lastPointY > pointY) {
+                    }
+                    else if (lastPointY > pointY)
+                    {
                         pathList.Add(Enums.Direction.Up);
-                    } else if (lastPointY < pointY) {
+                    }
+                    else if (lastPointY < pointY)
+                    {
                         pathList.Add(Enums.Direction.Down);
                     }
                     lastPointX = pointX;
                     lastPointY = pointY;
-                } else {
+                }
+                else
+                {
                     break;
                 }
-                if (pointX == startX && pointY == startY) {
+                if (pointX == startX && pointY == startY)
+                {
                     // We went from monster to hero, so we're finished.
                     break;
                 }
             }
-            if (pathList.Count > 0) {
+            if (pathList.Count > 0)
+            {
                 //pathList.Reverse();
                 return new PathfinderResult(pathList, true);
-            } else {
+            }
+            else
+            {
                 return new PathfinderResult(pathList, false);
             }
         }
 
-        private bool IsSquareOpen(int x, int y) {
-            if (GameProcessor.IsBlocked(map, x, y)) {
+        private bool IsSquareOpen(int x, int y)
+        {
+            if (GameProcessor.IsBlocked(map, x, y))
+            {
                 return false;
-            } else {
+            }
+            else
+            {
                 return true;
             }
             // First check the tile types
-            switch (mSquares[x, y].TileType) {
+            switch (mSquares[x, y].TileType)
+            {
                 case Enums.TileType.Walkable:
                 case Enums.TileType.Item:
                     // Do nothing since it's walkable
@@ -200,40 +236,51 @@ namespace Client.Logic.Algorithms.Pathfinder
             return true;
         }
 
-        private IEnumerable<Point> ValidMoves(int x, int y) {
+        private IEnumerable<Point> ValidMoves(int x, int y)
+        {
             // Return each valid square we can move to.
-            foreach (Point movePoint in mMovements) {
+            foreach (Point movePoint in mMovements)
+            {
                 int newX = x + movePoint.X;
                 int newY = y + movePoint.Y;
 
                 if (ValidCoordinates(newX, newY) &&
-                    IsSquareOpen(newX, newY)) {
+                    IsSquareOpen(newX, newY))
+                {
                     yield return new Point(newX, newY);
                 }
             }
         }
 
-        private bool ValidCoordinates(int x, int y) {
+        private bool ValidCoordinates(int x, int y)
+        {
             // Our coordinates are constrained between 0 and 14.
-            if (x < 0) {
+            if (x < 0)
+            {
                 return false;
             }
-            if (y < 0) {
+            if (y < 0)
+            {
                 return false;
             }
-            if (x > maxX) {
+            if (x > maxX)
+            {
                 return false;
             }
-            if (y > maxY) {
+            if (y > maxY)
+            {
                 return false;
             }
             return true;
         }
 
-        private IEnumerable<Point> AllSquares() {
+        private IEnumerable<Point> AllSquares()
+        {
             // Return every point on the board in order.
-            for (int x = 0; x <= maxX; x++) {
-                for (int y = 0; y <= maxY; y++) {
+            for (int x = 0; x <= maxX; x++)
+            {
+                for (int y = 0; y <= maxY; y++)
+                {
                     yield return new Point(x, y);
                 }
             }

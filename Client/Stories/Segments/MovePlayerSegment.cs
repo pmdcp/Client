@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,12 +22,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class MovePlayerSegment : ISegment
     {
         #region Fields
@@ -38,18 +37,21 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public MovePlayerSegment(int x, int y, int speed, bool pause) {
+        public MovePlayerSegment(int x, int y, int speed, bool pause)
+        {
             Load(x, y, speed, pause);
         }
 
-        public MovePlayerSegment() {
+        public MovePlayerSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.MovePlayer; }
         }
 
@@ -58,27 +60,32 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool Pause {
+        public bool Pause
+        {
             get { return pause; }
             set { pause = value; }
         }
 
-        public int X {
+        public int X
+        {
             get { return x; }
             set { x = value; }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return y; }
             set { y = value; }
         }
 
-        public int Speed {
+        public int Speed
+        {
             get { return speed; }
             set { speed = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -86,7 +93,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(int x, int y, int speed, bool pause) {
+        public void Load(int x, int y, int speed, bool pause)
+        {
             this.x = x;
             this.y = y;
             this.speed = speed;
@@ -100,15 +108,17 @@ namespace Client.Logic.Stories.Segments
             Load(parameters.GetValue("X").ToInt(), parameters.GetValue("Y").ToInt(), parameters.GetValue("Speed").ToInt(), parameters.GetValue("Pause").ToBool());
         }
 
-        public void Process(StoryState state) {
-            this.storyState = state;
+        public void Process(StoryState state)
+        {
+            storyState = state;
 
             Players.MyPlayer myPlayer = Players.PlayerManager.MyPlayer;
             myPlayer.TargetX = x;
             myPlayer.TargetY = y;
             myPlayer.StoryMovementSpeed = (Enums.MovementSpeed)speed;
 
-            if (this.pause) {
+            if (pause)
+            {
                 state.StoryPaused = true;
                 state.Pause();
                 state.StoryPaused = false;

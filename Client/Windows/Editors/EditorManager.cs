@@ -25,12 +25,17 @@ namespace Client.Logic.Windows.Editors
 {
     class EditorManager
     {
-        public static winAdminPanel AdminPanel {
-            get {
+        public static winAdminPanel AdminPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winAdminPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winAdminPanel)window;
-                } else {
+                }
+                else
+                {
                     winAdminPanel adminPanel = new winAdminPanel();
                     return adminPanel;
                 }
@@ -38,24 +43,34 @@ namespace Client.Logic.Windows.Editors
         }
 
 
-        public static winGuildPanel GuildPanel {
-            get {
+        public static winGuildPanel GuildPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winGuildPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winGuildPanel)window;
-                } else {
+                }
+                else
+                {
                     winGuildPanel guildPanel = new winGuildPanel();
                     return guildPanel;
                 }
             }
         }
 
-        public static winItemPanel ItemPanel {
-            get {
+        public static winItemPanel ItemPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winItemPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winItemPanel)window;
-                } else {
+                }
+                else
+                {
                     winItemPanel itemPanel = new winItemPanel();
 
                     return itemPanel;
@@ -63,12 +78,17 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        public static winMovePanel MovePanel {
-            get {
+        public static winMovePanel MovePanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winMovePanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winMovePanel)window;
-                } else {
+                }
+                else
+                {
                     winMovePanel movePanel = new winMovePanel();
 
                     return movePanel;
@@ -76,24 +96,34 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        public static winArrowPanel ArrowPanel {
-            get {
+        public static winArrowPanel ArrowPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winArrowPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winArrowPanel)window;
-                } else {
+                }
+                else
+                {
                     winArrowPanel ArrowPanel = new winArrowPanel();
                     return ArrowPanel;
                 }
             }
         }
 
-        public static winEmotionPanel EmotionPanel {
-            get {
+        public static winEmotionPanel EmotionPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winEmotionPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winEmotionPanel)window;
-                } else {
+                }
+                else
+                {
                     winEmotionPanel EmotionPanel = new winEmotionPanel();
                     return EmotionPanel;
                 }
@@ -101,12 +131,17 @@ namespace Client.Logic.Windows.Editors
         }
 
 
-        public static winDungeonPanel DungeonPanel {
-            get {
+        public static winDungeonPanel DungeonPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winDungeonPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winDungeonPanel)window;
-                } else {
+                }
+                else
+                {
                     winDungeonPanel DungeonPanel = new winDungeonPanel();
                     return DungeonPanel;
                 }
@@ -114,24 +149,34 @@ namespace Client.Logic.Windows.Editors
         }
 
 
-        public static winNPCPanel NPCPanel {
-            get {
+        public static winNPCPanel NPCPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winNPCPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winNPCPanel)window;
-                } else {
+                }
+                else
+                {
                     winNPCPanel NPCPanel = new winNPCPanel();
                     return NPCPanel;
                 }
             }
         }
 
-        public static winRDungeonPanel RDungeonPanel {
-            get {
+        public static winRDungeonPanel RDungeonPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winRDungeonPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winRDungeonPanel)window;
-                } else {
+                }
+                else
+                {
                     winRDungeonPanel RDungeonPanel = new winRDungeonPanel();
                     return RDungeonPanel;
                 }
@@ -139,63 +184,84 @@ namespace Client.Logic.Windows.Editors
         }
 
 
-        public static winMissionPanel MissionPanel {
-            get {
+        public static winMissionPanel MissionPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winMissionPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winMissionPanel)window;
-                } else {
+                }
+                else
+                {
                     winMissionPanel MissionPanel = new winMissionPanel();
                     return MissionPanel;
                 }
             }
         }
 
-        public static winEvolutionPanel EvolutionPanel {
-            get {
-
+        public static winEvolutionPanel EvolutionPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winEvolutionPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winEvolutionPanel)window;
-                } else {
+                }
+                else
+                {
                     winEvolutionPanel EvolutionPanel = new winEvolutionPanel();
                     return EvolutionPanel;
                 }
             }
         }
-                
 
-        public static winShopPanel ShopPanel {
-            get {
+
+        public static winShopPanel ShopPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winShopPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winShopPanel)window;
-                } else {
+                }
+                else
+                {
                     winShopPanel ShopPanel = new winShopPanel();
                     return ShopPanel;
                 }
             }
         }
 
-        public static winStoryPanel StoryPanel {
-            get {
+        public static winStoryPanel StoryPanel
+        {
+            get
+            {
                 Window window = WindowManager.FindWindow("winStoryPanel");
-                if (window != null) {
+                if (window != null)
+                {
                     return (winStoryPanel)window;
-                } else {
+                }
+                else
+                {
                     winStoryPanel StoryPanel = new winStoryPanel();
                     return StoryPanel;
                 }
             }
         }
 
-        public static Editors.ScriptEditor.frmScriptEditor ScriptEditor {
+        public static Editors.ScriptEditor.frmScriptEditor ScriptEditor
+        {
             get;
             set;
         }
 
 
-        public static void OpenMapEditor() {
+        public static void OpenMapEditor()
+        {
             WindowSwitcher.GameWindow.inMapEditor = true;
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayMapGrid = IO.Options.MapGrid;
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayAttributes = IO.Options.DisplayAttributes;
@@ -205,8 +271,10 @@ namespace Client.Logic.Windows.Editors
         }
 
 
-        public static void CloseMapEditor() {
-            if (WindowSwitcher.GameWindow.inMapEditor) {
+        public static void CloseMapEditor()
+        {
+            if (WindowSwitcher.GameWindow.inMapEditor)
+            {
                 WindowSwitcher.GameWindow.DisableMapEditorWidgets();
                 WindowSwitcher.FindWindow("winExpKit").Visible = true;
                 WindowSwitcher.GameWindow.inMapEditor = false;
@@ -216,7 +284,8 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        public static void OpenHouseEditor() {
+        public static void OpenHouseEditor()
+        {
             WindowSwitcher.GameWindow.inMapEditor = true;
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayMapGrid = IO.Options.MapGrid;
             Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.DisplayAttributes = IO.Options.DisplayAttributes;
@@ -226,8 +295,10 @@ namespace Client.Logic.Windows.Editors
         }
 
 
-        public static void CloseHouseEditor() {
-            if (WindowSwitcher.GameWindow.inMapEditor) {
+        public static void CloseHouseEditor()
+        {
+            if (WindowSwitcher.GameWindow.inMapEditor)
+            {
                 WindowSwitcher.GameWindow.DisableMapEditorWidgets();
                 WindowSwitcher.FindWindow("winExpKit").Visible = true;
                 WindowSwitcher.GameWindow.inMapEditor = false;
@@ -237,10 +308,8 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        public static void OpenItemList() {
-
-
-
+        public static void OpenItemList()
+        {
         }
 
         // TODO: StoryEditor Opening and Closing (Editor Manager)
@@ -248,9 +317,9 @@ namespace Client.Logic.Windows.Editors
         //WindowManager.AddWindow(new winStoryPanel());
         //}
 
-        public static void CloseStoryEditor() {
+        public static void CloseStoryEditor()
+        {
             WindowManager.FindWindow("winStoryPanel").Close();
         }
-
     }
 }

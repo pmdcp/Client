@@ -38,8 +38,8 @@ namespace Client.Logic.Windows
         TextBox txtRetypePassword;
 
         public winNewAccount()
-            : base("winNewAccount") {
-
+            : base("winNewAccount")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "New Account";
@@ -109,22 +109,27 @@ namespace Client.Logic.Windows
             this.LoadComplete();
         }
 
-        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowSwitcher.ShowMainMenu();
         }
 
-        void lblCreateNewAccount_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblCreateNewAccount_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             string account = txtAccountName.Text;
             string password = Security.Hash.GenerateMD5Hash(txtPassword.Text);
 
 
-            if (NetworkManager.TcpClient.Socket.Connected) {
+            if (NetworkManager.TcpClient.Socket.Connected)
+            {
                 Messenger.SendCreateAccountRequest(account, password);
                 this.Close();
                 WindowSwitcher.AddWindow(new winLoading());
                 ((Windows.winLoading)WindowManager.FindWindow("winLoading")).UpdateLoadText("Creating account...");
-            } else {
+            }
+            else
+            {
                 this.Close();
                 WindowSwitcher.ShowMainMenu();
                 SdlDotNet.Widgets.MessageBox.Show("You are not connected to the Server!", "----");

@@ -44,7 +44,8 @@ namespace Client.Logic.Graphics.Effects.Overlays.ScreenOverlays
 
         #region Constructors
 
-        public MapChangeInfoOverlay(string mapName, int minDisplayTime) {
+        public MapChangeInfoOverlay(string mapName, int minDisplayTime)
+        {
             disposed = false;
 
             this.mapName = mapName;
@@ -70,11 +71,13 @@ namespace Client.Logic.Graphics.Effects.Overlays.ScreenOverlays
 
         #region Properties
 
-        public SdlDotNet.Graphics.Surface Buffer {
+        public SdlDotNet.Graphics.Surface Buffer
+        {
             get { return buffer; }
         }
 
-        public bool Disposed {
+        public bool Disposed
+        {
             get { return disposed; }
         }
 
@@ -82,19 +85,23 @@ namespace Client.Logic.Graphics.Effects.Overlays.ScreenOverlays
 
         #region Methods
 
-        public void FreeResources() {
+        public void FreeResources()
+        {
             disposed = true;
             buffer.Dispose();
         }
 
-        public void Render(Renderers.RendererDestinationData destData, int tick) {
+        public void Render(Renderers.RendererDestinationData destData, int tick)
+        {
             // We don't need to render anything as this overlay isn't animated and always remains the same
             destData.Blit(buffer, new Point(0, 0));
-            if (tick > tickCount.Tick + minDisplayTime) {
+            if (tick > tickCount.Tick + minDisplayTime)
+            {
                 //if (Renderers.Screen.ScreenRenderer.RenderOptions.Map.Loaded && Renderers.Screen.ScreenRenderer.RenderOptions.Map == Maps.MapHelper.Maps[Enums.MapID.TempActive]) {
-                    if (Renderers.Screen.ScreenRenderer.RenderOptions.Map.Name == this.mapName) {
-                        Renderers.Screen.ScreenRenderer.RenderOptions.ScreenOverlay = null;
-                    }
+                if (Renderers.Screen.ScreenRenderer.RenderOptions.Map.Name == mapName)
+                {
+                    Renderers.Screen.ScreenRenderer.RenderOptions.ScreenOverlay = null;
+                }
                 //}
                 MinTimePassed = true;
             }

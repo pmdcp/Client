@@ -133,10 +133,8 @@ namespace Client.Logic.Windows.Editors
         #region Constructors
 
         public winMovePanel()
-            : base("winMovePanel") {
-
-
-
+            : base("winMovePanel")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.Size = new System.Drawing.Size(200, 230);
@@ -179,7 +177,8 @@ namespace Client.Logic.Windows.Editors
             lbxMoveList = new ListBox("lbxMoveList");
             lbxMoveList.Location = new Point(10, 10);
             lbxMoveList.Size = new Size(180, 140);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), (i + 1) + ": " + Moves.MoveHelper.Moves[(i + 1) + 10 * currentTen].Name);
                 lbxMoveList.Items.Add(lbiItem);
             }
@@ -267,7 +266,8 @@ namespace Client.Logic.Windows.Editors
             cbEffectType = new ComboBox("cbEffectType");
             cbEffectType.Location = new Point(10, 88);
             cbEffectType.Size = new Size(200, 16);
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 7; i++)
+            {
                 //lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), );
                 cbEffectType.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.MoveType), i)));
             }
@@ -281,7 +281,8 @@ namespace Client.Logic.Windows.Editors
             cbElement = new ComboBox("cbElement");
             cbElement.Location = new Point(10, 118);
             cbElement.Size = new Size(200, 16);
-            for (int i = 0; i < 19; i++) {
+            for (int i = 0; i < 19; i++)
+            {
                 //lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), );
                 cbElement.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.PokemonType), i)));
             }
@@ -295,7 +296,8 @@ namespace Client.Logic.Windows.Editors
             cbMoveCategory = new ComboBox("cbMoveCategory");
             cbMoveCategory.Location = new Point(10, 144);
             cbMoveCategory.Size = new Size(200, 16);
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++)
+            {
                 //lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), );
                 cbMoveCategory.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.MoveCategory), i)));
             }
@@ -309,7 +311,8 @@ namespace Client.Logic.Windows.Editors
             cbTargetType = new ComboBox("cbTargetType");
             cbTargetType.Location = new Point(10, 176);
             cbTargetType.Size = new Size(200, 16);
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 8; i++)
+            {
                 //lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), );
                 cbTargetType.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.MoveTarget), i)));
             }
@@ -323,7 +326,8 @@ namespace Client.Logic.Windows.Editors
             cbRangeType = new ComboBox("cbRangeType");
             cbRangeType.Location = new Point(10, 208);
             cbRangeType.Size = new Size(200, 16);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 //lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), "j");                
                 cbRangeType.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.MoveRange), i)));
             }
@@ -475,7 +479,7 @@ namespace Client.Logic.Windows.Editors
             nudSound.Location = new Point(340, 16);
             nudSound.Minimum = 0;
             nudSound.Maximum = Int32.MaxValue;
-            nudSound.ValueChanged +=new EventHandler<ValueChangedEventArgs>(nudSound_ValueChanged);
+            nudSound.ValueChanged += new EventHandler<ValueChangedEventArgs>(nudSound_ValueChanged);
 
             btnAttackerAnim = new Button("btnAttackerAnim");
             btnAttackerAnim.Location = new Point(340, 36);
@@ -483,7 +487,7 @@ namespace Client.Logic.Windows.Editors
             btnAttackerAnim.Size = new System.Drawing.Size(64, 16);
             btnAttackerAnim.Text = "Attacker";
             btnAttackerAnim.Click += new EventHandler<MouseButtonEventArgs>(btnAttackerAnim_Click);
-            
+
 
             btnTravelingAnim = new Button("btnTravelingAnim");
             btnTravelingAnim.Location = new Point(420, 36);
@@ -545,7 +549,8 @@ namespace Client.Logic.Windows.Editors
             cbTravelingAnimType = new ComboBox("cbTravelingAnimType");
             cbTravelingAnimType.Location = new Point(0, 22);
             cbTravelingAnimType.Size = new Size(200, 16);
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 8; i++)
+            {
                 //lbiItem = new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), "j");                
                 cbTravelingAnimType.Items.Add(new ListBoxTextItem(Graphics.FontManager.LoadFont("tahoma", 10), Enum.GetName(typeof(Enums.MoveAnimationType), i)));
             }
@@ -561,7 +566,7 @@ namespace Client.Logic.Windows.Editors
             nudTravelingAnimIndex.Location = new Point(0, 54);
             nudTravelingAnimIndex.Minimum = Int32.MinValue;
             nudTravelingAnimIndex.Maximum = Int32.MaxValue;
-            nudTravelingAnimIndex.ValueChanged +=new EventHandler<ValueChangedEventArgs>(nudTravelingAnimIndex_ValueChanged);
+            nudTravelingAnimIndex.ValueChanged += new EventHandler<ValueChangedEventArgs>(nudTravelingAnimIndex_ValueChanged);
 
             lblTravelingAnimTime = new Label("lblTravelingAnimTime");
             lblTravelingAnimTime.Font = Graphics.FontManager.LoadFont("Tahoma", 10);
@@ -599,7 +604,7 @@ namespace Client.Logic.Windows.Editors
             nudDefenderAnimIndex.Location = new Point(0, 22);
             nudDefenderAnimIndex.Minimum = Int32.MinValue;
             nudDefenderAnimIndex.Maximum = Int32.MaxValue;
-            nudDefenderAnimIndex.ValueChanged +=new EventHandler<ValueChangedEventArgs>(nudDefenderAnimIndex_ValueChanged);
+            nudDefenderAnimIndex.ValueChanged += new EventHandler<ValueChangedEventArgs>(nudDefenderAnimIndex_ValueChanged);
 
             lblDefenderAnimTime = new Label("lblDefenderAnimTime");
             lblDefenderAnimTime.Font = Graphics.FontManager.LoadFont("Tahoma", 10);
@@ -744,13 +749,12 @@ namespace Client.Logic.Windows.Editors
             this.AddWidget(pnlMoveEditor);
 
             //this.LoadComplete();
-
         }
 
         #endregion Constructors
 
-        public void LoadMove(string[] parse) {
-
+        public void LoadMove(string[] parse)
+        {
             pnlMoveList.Visible = false;
             pnlMoveEditor.Visible = true;
             this.Size = new System.Drawing.Size(pnlMoveEditor.Width, pnlMoveEditor.Height);
@@ -795,104 +799,129 @@ namespace Client.Logic.Windows.Editors
             btnEdit.Text = "Edit";
         }
 
-        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen > 0) {
+        void btnBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen > 0)
+            {
                 currentTen--;
             }
             RefreshMoveList();
         }
 
-        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (currentTen < (MaxInfo.MaxMoves / 10)) {
+        void btnForward_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (currentTen < (MaxInfo.MaxMoves / 10))
+            {
                 currentTen++;
             }
             RefreshMoveList();
         }
 
-        void btnAttackerAnim_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnAttackerAnim_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             pnlAttackerAnim.Visible = true;
             pnlTravelingAnim.Visible = false;
             pnlDefenderAnim.Visible = false;
         }
 
-        void btnTravelingAnim_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnTravelingAnim_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             pnlAttackerAnim.Visible = false;
             pnlTravelingAnim.Visible = true;
             pnlDefenderAnim.Visible = false;
         }
 
-        void btnDefenderAnim_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnDefenderAnim_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             pnlAttackerAnim.Visible = false;
             pnlTravelingAnim.Visible = false;
             pnlDefenderAnim.Visible = true;
         }
 
-        void nudSound_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudSound_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             ShowPreview();
         }
 
-        void nudAttackerAnimIndex_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudAttackerAnimIndex_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             ShowPreview();
         }
 
-        void nudTravelingAnimIndex_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudTravelingAnimIndex_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             ShowPreview();
         }
 
-        void nudDefenderAnimIndex_ValueChanged(object sender, ValueChangedEventArgs e) {
+        void nudDefenderAnimIndex_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
             ShowPreview();
         }
 
-        void btnPreview_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-
+        void btnPreview_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             ShowPreview();
         }
 
-        void ShowPreview() {
-
-            if (pnlAttackerAnim.Visible) {
+        void ShowPreview()
+        {
+            if (pnlAttackerAnim.Visible)
+            {
                 moveAnim = new Graphics.Renderers.Moves.NormalMoveAnimation(2, 2);
                 moveAnim.AnimationIndex = nudAttackerAnimIndex.Value;
                 moveAnim.MoveTime = nudAttackerAnimTime.Value;
                 moveAnim.RenderLoops = nudAttackerAnimCycle.Value;
                 tmrPreview.Interval = nudAttackerAnimTime.Value;
-            } else if (pnlDefenderAnim.Visible) {
+            }
+            else if (pnlDefenderAnim.Visible)
+            {
                 moveAnim = new Graphics.Renderers.Moves.NormalMoveAnimation(2, 2);
                 moveAnim.AnimationIndex = nudDefenderAnimIndex.Value;
                 moveAnim.MoveTime = nudDefenderAnimTime.Value;
                 moveAnim.RenderLoops = nudDefenderAnimCycle.Value;
                 tmrPreview.Interval = nudDefenderAnimTime.Value;
-            } else {
-                switch ((Enums.MoveAnimationType)cbTravelingAnimType.SelectedIndex) {
-                    case Enums.MoveAnimationType.Normal: {
+            }
+            else
+            {
+                switch ((Enums.MoveAnimationType)cbTravelingAnimType.SelectedIndex)
+                {
+                    case Enums.MoveAnimationType.Normal:
+                        {
                             moveAnim = new Graphics.Renderers.Moves.NormalMoveAnimation(2, 2);
                         }
                         break;
-                    case Enums.MoveAnimationType.Overlay: {
+                    case Enums.MoveAnimationType.Overlay:
+                        {
                             moveAnim = new Logic.Graphics.Renderers.Moves.OverlayMoveAnimation();
                         }
                         break;
-                    case Enums.MoveAnimationType.Tile: {
+                    case Enums.MoveAnimationType.Tile:
+                        {
                             moveAnim = new Logic.Graphics.Renderers.Moves.TileMoveAnimation(2, 2, (Enums.MoveRange)cbRangeType.SelectedIndex, Enums.Direction.Right, 3);
                         }
                         break;
-                    case Enums.MoveAnimationType.Arrow: {
+                    case Enums.MoveAnimationType.Arrow:
+                        {
                             moveAnim = new Logic.Graphics.Renderers.Moves.ArrowMoveAnimation(1, 2, Enums.Direction.Right, 4);
                         }
                         break;
-                    case Enums.MoveAnimationType.Throw: {
+                    case Enums.MoveAnimationType.Throw:
+                        {
                             moveAnim = new Logic.Graphics.Renderers.Moves.ThrowMoveAnimation(1, 4, 3, -1);
                         }
                         break;
-                    case Enums.MoveAnimationType.Beam: {
+                    case Enums.MoveAnimationType.Beam:
+                        {
                             moveAnim = new Logic.Graphics.Renderers.Moves.BeamMoveAnimation(1, 2, Enums.Direction.Right, 4);
                         }
                         break;
-                    case Enums.MoveAnimationType.ItemArrow: {
+                    case Enums.MoveAnimationType.ItemArrow:
+                        {
                             moveAnim = new Logic.Graphics.Renderers.Moves.ItemArrowMoveAnimation(1, 2, Enums.Direction.Right, 4);
                         }
                         break;
-                    case Enums.MoveAnimationType.ItemThrow: {
+                    case Enums.MoveAnimationType.ItemThrow:
+                        {
                             moveAnim = new Logic.Graphics.Renderers.Moves.ItemThrowMoveAnimation(1, 4, 3, -1);
                         }
                         break;
@@ -904,7 +933,7 @@ namespace Client.Logic.Windows.Editors
 
                 tmrPreview.Interval = nudTravelingAnimTime.Value;
             }
-            
+
 
 
             Music.Music.AudioPlayer.PlaySoundEffect("magic" + nudSound.Value + ".wav");
@@ -915,39 +944,50 @@ namespace Client.Logic.Windows.Editors
             tmrPreview.Start();
         }
 
-        void tmrPreview_Elapsed(object sender, EventArgs e) {
+        void tmrPreview_Elapsed(object sender, EventArgs e)
+        {
             picPreview.Image = new SdlDotNet.Graphics.Surface(196, 128);
             RenderAnimationToPictureBox(picPreview, moveAnim);
-            if (!moveAnim.Active) {
+            if (!moveAnim.Active)
+            {
                 tmrPreview.Stop();
             }
-
         }
 
-        public static void RenderAnimationToPictureBox(SdlDotNet.Widgets.PictureBox pic, Graphics.Renderers.Moves.IMoveAnimation animation) {
-            if (animation.Active) {
+        public static void RenderAnimationToPictureBox(SdlDotNet.Widgets.PictureBox pic, Graphics.Renderers.Moves.IMoveAnimation animation)
+        {
+            if (animation.Active)
+            {
                 Graphics.Renderers.RendererDestinationData destData = new Graphics.Renderers.RendererDestinationData(pic.Image, new Point(0, 0), pic.Size);
 
-                Graphics.Renderers.Moves.MoveRenderer.RenderMoveAnimation(destData, animation, new Point(32*animation.StartX,32*animation.StartY));
+                Graphics.Renderers.Moves.MoveRenderer.RenderMoveAnimation(destData, animation, new Point(32 * animation.StartX, 32 * animation.StartY));
                 pic.RequestRedraw();
             }
         }
 
-        public void RefreshMoveList() {
-            for (int i = 0; i < 10; i++) {
-                if ((i + currentTen * 10) < MaxInfo.MaxMoves) {
+        public void RefreshMoveList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if ((i + currentTen * 10) < MaxInfo.MaxMoves)
+                {
                     ((ListBoxTextItem)lbxMoveList.Items[i]).Text = (((i + 1) + 10 * currentTen) + ": " + Moves.MoveHelper.Moves[(i + 1) + 10 * currentTen].Name);
-                } else {
+                }
+                else
+                {
                     ((ListBoxTextItem)lbxMoveList.Items[i]).Text = "---";
                 }
             }
         }
 
 
-        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (lbxMoveList.SelectedItems.Count == 1) {
+        void btnEdit_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (lbxMoveList.SelectedItems.Count == 1)
+            {
                 string[] index = ((ListBoxTextItem)lbxMoveList.SelectedItems[0]).Text.Split(':');
-                if (index[0].IsNumeric()) {
+                if (index[0].IsNumeric())
+                {
                     moveNum = index[0].ToInt();
                     btnEdit.Text = "Loading...";
                 }
@@ -956,20 +996,22 @@ namespace Client.Logic.Windows.Editors
             }
         }
 
-        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             return;
         }
 
-        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorCancel_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             moveNum = -1;
             pnlMoveEditor.Visible = false;
             pnlMoveList.Visible = true;
             this.Size = new System.Drawing.Size(pnlMoveList.Width, pnlMoveList.Height);
-
         }
 
-        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnEditorOK_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             string[] moveToSend = new String[32];
 
 
@@ -1018,10 +1060,6 @@ namespace Client.Logic.Windows.Editors
             pnlMoveEditor.Visible = false;
             pnlMoveList.Visible = true;
             this.Size = new System.Drawing.Size(pnlMoveList.Width, pnlMoveList.Height);
-
-
         }
-
-
     }
 }

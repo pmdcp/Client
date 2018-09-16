@@ -16,16 +16,15 @@
 // along with Mystery Dungeon eXtended.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using PMDCP.Core;
+using System.Collections.Generic;
+using System.Text;
+using PMDCP.Core;
 
 namespace Client.Logic.RDungeons
 {
-	
-	class RDungeonHelper
-	{
-		#region Fields
+    class RDungeonHelper
+    {
+        #region Fields
 
         private static int dataLoadPercent = 0;
         private static RDungeonCollection mRDungeons;
@@ -55,12 +54,15 @@ namespace Client.Logic.RDungeons
 
         public static void LoadRDungeonsFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n = 2;
                 MaxInfo.MaxRDungeons = parse[1].ToInt();
                 mRDungeons.ClearRDungeons();
-                if (MaxInfo.MaxRDungeons > 0) {
-                    for (int i = 0; i < MaxInfo.MaxRDungeons; i++) {
+                if (MaxInfo.MaxRDungeons > 0)
+                {
+                    for (int i = 0; i < MaxInfo.MaxRDungeons; i++)
+                    {
                         dataLoadPercent = System.Math.Min(99, Logic.MathFunctions.CalculatePercent(i, MaxInfo.MaxRDungeons));
                         mRDungeons.AddRDungeon(i, new RDungeon());
                         mRDungeons[i].Name = parse[n];
@@ -69,11 +71,13 @@ namespace Client.Logic.RDungeons
                     }
                     dataLoadPercent = 100;
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }
 
         #endregion Methods
-	}
+    }
 }

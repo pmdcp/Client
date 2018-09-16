@@ -38,7 +38,8 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Constructors
 
-        public Sunny() {
+        public Sunny()
+        {
             disposed = false;
 
             buffer = new Surface[6];
@@ -52,29 +53,26 @@ namespace Client.Logic.Graphics.Effects.Weather
                 {
                     for (int y = 0; y < height; y++)
                     {
-
                         buffer[i].Blit(GraphicsManager.Tiles[10][7/*132 + 14 * (x % 4)*/], new Point(x * Constants.TILE_WIDTH, y * Constants.TILE_HEIGHT / ((int)System.Math.Pow(divide, i))));
                     }
                 }
                 buffer[i].AlphaBlending = true;
 
                 buffer[i].Alpha = 32;
-
-
             }
-
-            
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public SdlDotNet.Graphics.Surface Buffer {
+        public SdlDotNet.Graphics.Surface Buffer
+        {
             get { return buffer[0]; }
         }
 
-        public bool Disposed {
+        public bool Disposed
+        {
             get { return disposed; }
         }
 
@@ -82,7 +80,8 @@ namespace Client.Logic.Graphics.Effects.Weather
 
         #region Methods
 
-        public void FreeResources() {
+        public void FreeResources()
+        {
             disposed = true;
             for (int i = 0; i < buffer.Length; i++)
             {
@@ -90,9 +89,10 @@ namespace Client.Logic.Graphics.Effects.Weather
             }
         }
 
-        public void Render(Renderers.RendererDestinationData destData, int tick) {
+        public void Render(Renderers.RendererDestinationData destData, int tick)
+        {
             // We don't need to render anything as this overlay isn't animated and always remains the same
-            int add = (((tick / 4) % 8) - 4)*6;
+            int add = (((tick / 4) % 8) - 4) * 6;
             if (add < 0)
             {
                 add *= -1;

@@ -26,9 +26,12 @@ using Client.Logic.Graphics;
 using SdlDotNet.Widgets;
 using Client.Logic.Network;
 
-namespace Client.Logic.Menus {
-    class mnuAddNotice : Widgets.BorderedPanel, Core.IMenu {
-        public bool Modal {
+namespace Client.Logic.Menus
+{
+    class mnuAddNotice : Widgets.BorderedPanel, Core.IMenu
+    {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -46,7 +49,8 @@ namespace Client.Logic.Menus {
         int wordPrice;
 
         public mnuAddNotice(string name, int price, int wordPrice)
-            : base(name) {
+            : base(name)
+        {
             this.price = price;
             this.wordPrice = wordPrice;
 
@@ -83,15 +87,16 @@ namespace Client.Logic.Menus {
             lstSound = new ListBox("lstSound");
             lstSound.Location = new Point(lblAddTile2.X, lblAddTile2.Y + lblAddTile2.Height);
             lstSound.Size = new Size(180, 120);
-            
-                SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("PMDCP", 18);
-                lstSound.Items.Add(new ListBoxTextItem(font, "None"));
-                string[] sfxFiles = System.IO.Directory.GetFiles(IO.Paths.SfxPath);
-                for (int i = 0; i < sfxFiles.Length; i++) {
-                    lstSound.Items.Add(new ListBoxTextItem(font, System.IO.Path.GetFileName(sfxFiles[i])));
-                }
 
-                lstSound.ItemSelected += new EventHandler(lstSound_ItemSelected);
+            SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("PMDCP", 18);
+            lstSound.Items.Add(new ListBoxTextItem(font, "None"));
+            string[] sfxFiles = System.IO.Directory.GetFiles(IO.Paths.SfxPath);
+            for (int i = 0; i < sfxFiles.Length; i++)
+            {
+                lstSound.Items.Add(new ListBoxTextItem(font, System.IO.Path.GetFileName(sfxFiles[i])));
+            }
+
+            lstSound.ItemSelected += new EventHandler(lstSound_ItemSelected);
 
             lblPrice = new Label("lblPrice");
             lblPrice.Location = new Point(lblAddTile.X, lstSound.Y + lstSound.Height + 10);
@@ -126,11 +131,13 @@ namespace Client.Logic.Menus {
             this.AddWidget(btnCancel);
         }
 
-        void txtHouse_TextChanged(object sender, EventArgs e) {
+        void txtHouse_TextChanged(object sender, EventArgs e)
+        {
             lblPrice.Text = "Placing this tile will cost " + ((txtHouse1.Text.Length + txtHouse2.Text.Length) * wordPrice + price) + " " + Items.ItemHelper.Items[1].Name + ".";
         }
 
-        void btnAccept_Click(object sender, MouseButtonEventArgs e) {
+        void btnAccept_Click(object sender, MouseButtonEventArgs e)
+        {
             String sound = "";
             if (lstSound.SelectedItems.Count > 0) sound = ((ListBoxTextItem)lstSound.SelectedItems[0]).Text;
             Messenger.SendAddNoticeRequest(txtHouse1.Text, txtHouse2.Text, sound);
@@ -138,16 +145,19 @@ namespace Client.Logic.Menus {
             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
         }
 
-        void btnCancel_Click(object sender, MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
         }
 
-        void lstSound_ItemSelected(object sender, EventArgs e) {
+        void lstSound_ItemSelected(object sender, EventArgs e)
+        {
             Music.Music.AudioPlayer.PlaySoundEffect(((ListBoxTextItem)lstSound.SelectedItems[0]).Text);
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
     }

@@ -38,7 +38,8 @@ namespace Client.Logic.Music
         /// Gets the current song.
         /// </summary>
         /// <value>The current song.</value>
-        public static string CurrentSong {
+        public static string CurrentSong
+        {
             get { return currentSong; }
         }
 
@@ -46,7 +47,8 @@ namespace Client.Logic.Music
         /// Gets or sets the music volume.
         /// </summary>
         /// <value>The music volume.</value>
-        public static int Volume {
+        public static int Volume
+        {
             get { return SdlAudio.MusicPlayer.Volume; }
             set { SdlAudio.MusicPlayer.Volume = value; }
         }
@@ -60,7 +62,8 @@ namespace Client.Logic.Music
         /// </summary>
         /// <param name="numberOfTimes">The number of times.</param>
         /// <param name="milliseconds">The milliseconds.</param>
-        public static void FadeIn(int numberOfTimes, int milliseconds) {
+        public static void FadeIn(int numberOfTimes, int milliseconds)
+        {
             SdlAudio.MusicPlayer.FadeIn(numberOfTimes, milliseconds);
         }
 
@@ -70,11 +73,13 @@ namespace Client.Logic.Music
         /// <param name="numberOfTimes">The number of times.</param>
         /// <param name="milliseconds">The milliseconds.</param>
         /// <param name="musicPosition">The music position.</param>
-        public static void FadeInPosition(int numberOfTimes, int milliseconds, int musicPosition) {
+        public static void FadeInPosition(int numberOfTimes, int milliseconds, int musicPosition)
+        {
             SdlAudio.MusicPlayer.FadeInPosition(numberOfTimes, milliseconds, musicPosition);
         }
 
-        public static bool IsMusicPaused() {
+        public static bool IsMusicPaused()
+        {
             return SdlAudio.MusicPlayer.IsPaused;
         }
 
@@ -82,16 +87,17 @@ namespace Client.Logic.Music
         /// Fades the music out.
         /// </summary>
         /// <param name="milliseconds">The length of the fade out.</param>
-        public static void FadeOut(int milliseconds) {
+        public static void FadeOut(int milliseconds)
+        {
             if (SdlAudio.MusicPlayer.IsFading == false && SdlAudio.MusicPlayer.IsPlaying)
                 SdlAudio.MusicPlayer.Fadeout(milliseconds);
-            
         }
 
         /// <summary>
         /// Pauses the playing music.
         /// </summary>
-        public static void Pause() {
+        public static void Pause()
+        {
             if (SdlAudio.MusicPlayer.IsPlaying)
                 SdlAudio.MusicPlayer.Pause();
         }
@@ -100,7 +106,8 @@ namespace Client.Logic.Music
         /// Plays a music file continuosly.
         /// </summary>
         /// <param name="songName">The filename of the song to play. Excluding the folder path.</param>
-        public static void PlayMusic(string songName) {
+        public static void PlayMusic(string songName)
+        {
             //songName = FileNameConverter(IO.Paths.MusicPath, songName);
             //if (songName != currentSong) {
             //    if (IO.Options.Music == false) {
@@ -124,11 +131,14 @@ namespace Client.Logic.Music
         /// </summary>
         /// <param name="songName">The filename of the song to play. Excluding the folder path.</param>
         /// <param name="numberOfTimes">The number of times the song will be played.</param>
-        public static void PlayMusic(string songName, int numberOfTimes) {
+        public static void PlayMusic(string songName, int numberOfTimes)
+        {
             songName = FileNameConverter(IO.Paths.MusicPath, songName);
-            if (songName != currentSong) {
+            if (songName != currentSong)
+            {
                 StopMusic();
-                if (IO.IO.FileExists(IO.Paths.MusicPath + songName)) {
+                if (IO.IO.FileExists(IO.Paths.MusicPath + songName))
+                {
                     SdlAudio.MusicPlayer.Load(new SdlDotNet.Audio.Music(IO.Paths.MusicPath + songName));
                     SdlAudio.MusicPlayer.Play(numberOfTimes);
                     currentSong = songName;
@@ -143,34 +153,46 @@ namespace Client.Logic.Music
         /// <param name="numberOfTimes">The number of times.</param>
         /// <param name="ignoreMusicSetting">if set to <c>true</c> [ignore music setting].</param>
         /// <param name="ignoreIfPlaying">if set to <c>true</c> [ignore if playing].</param>
-        public static void PlayMusic(string songName, int numberOfTimes, bool ignoreMusicSetting, bool ignoreIfPlaying) {
-            if (!string.IsNullOrEmpty(songName)) {
+        public static void PlayMusic(string songName, int numberOfTimes, bool ignoreMusicSetting, bool ignoreIfPlaying)
+        {
+            if (!string.IsNullOrEmpty(songName))
+            {
                 PlayMusicDirect(IO.Paths.MusicPath + FileNameConverter(IO.Paths.MusicPath, songName), numberOfTimes, ignoreMusicSetting, ignoreIfPlaying);
             }
         }
 
-        public static void PlayMusicDirect(string fullPath, int numberOfTimes, bool ignoreMusicSetting, bool ignoreIfPlaying) {
-            if (ignoreMusicSetting == false) {
-                if (IO.Options.Music == false) {
+        public static void PlayMusicDirect(string fullPath, int numberOfTimes, bool ignoreMusicSetting, bool ignoreIfPlaying)
+        {
+            if (ignoreMusicSetting == false)
+            {
+                if (IO.Options.Music == false)
+                {
                     StopMusic();
                     return;
                 }
             }
-            if (string.IsNullOrEmpty(fullPath)) {
+            if (string.IsNullOrEmpty(fullPath))
+            {
                 return;
             }
-            fullPath = System.IO.Path.GetDirectoryName(fullPath) + "/" + FileNameConverter(System.IO.Path.GetDirectoryName(fullPath) + "/",  System.IO.Path.GetFileName(fullPath));
-            if (ignoreIfPlaying) {
-                if (currentSong == fullPath) {
+            fullPath = System.IO.Path.GetDirectoryName(fullPath) + "/" + FileNameConverter(System.IO.Path.GetDirectoryName(fullPath) + "/", System.IO.Path.GetFileName(fullPath));
+            if (ignoreIfPlaying)
+            {
+                if (currentSong == fullPath)
+                {
                     return;
                 }
             }
-            if (IO.IO.FileExists(fullPath)) {
+            if (IO.IO.FileExists(fullPath))
+            {
                 StopMusic();
                 SdlAudio.MusicPlayer.Load(new SdlDotNet.Audio.Music(fullPath));
-                if (numberOfTimes > -1) {
+                if (numberOfTimes > -1)
+                {
                     SdlAudio.MusicPlayer.Play(numberOfTimes);
-                } else {
+                }
+                else
+                {
                     SdlAudio.MusicPlayer.Play(true);
                 }
                 currentSong = fullPath;
@@ -181,10 +203,13 @@ namespace Client.Logic.Music
         /// Plays a sound effect.
         /// </summary>
         /// <param name="soundEffectName">Name of the sound effect.</param>
-        public static void PlaySoundEffect(string soundEffectName) {
-            if (IO.Options.Sound) {
+        public static void PlaySoundEffect(string soundEffectName)
+        {
+            if (IO.Options.Sound)
+            {
                 soundEffectName = FileNameConverter(IO.Paths.SfxPath, soundEffectName);
-                if (IO.IO.FileExists(IO.Paths.SfxPath + soundEffectName)) {
+                if (IO.IO.FileExists(IO.Paths.SfxPath + soundEffectName))
+                {
                     SdlAudio.Sound sound = new SdlDotNet.Audio.Sound(IO.Paths.SfxPath + soundEffectName);
                     sound.Play();
                 }
@@ -194,7 +219,8 @@ namespace Client.Logic.Music
         /// <summary>
         /// Resumes playback.
         /// </summary>
-        public static void Resume() {
+        public static void Resume()
+        {
             if (SdlAudio.MusicPlayer.IsPaused)
                 SdlAudio.MusicPlayer.Resume();
         }
@@ -203,48 +229,62 @@ namespace Client.Logic.Music
         /// Sets the position of the music.
         /// </summary>
         /// <param name="musicPosition">The music position.</param>
-        public static void SetPosition(double musicPosition) {
+        public static void SetPosition(double musicPosition)
+        {
             SdlAudio.MusicPlayer.Position(musicPosition);
         }
 
         /// <summary>
         /// Stops the music.
         /// </summary>
-        public static void StopMusic() {
-            if (SdlAudio.MusicPlayer.IsPlaying) {
+        public static void StopMusic()
+        {
+            if (SdlAudio.MusicPlayer.IsPlaying)
+            {
                 SdlAudio.MusicPlayer.Stop();
                 currentSong = null;
             }
         }
 
-        public static string FileNameConverter(string directory, string fileToTest) {
-            if (System.IO.File.Exists(directory + fileToTest)) {
+        public static string FileNameConverter(string directory, string fileToTest)
+        {
+            if (System.IO.File.Exists(directory + fileToTest))
+            {
                 return fileToTest;
-            } else if (System.IO.File.Exists(directory + System.IO.Path.ChangeExtension(fileToTest, ".ogg"))) {
+            }
+            else if (System.IO.File.Exists(directory + System.IO.Path.ChangeExtension(fileToTest, ".ogg")))
+            {
                 return System.IO.Path.ChangeExtension(fileToTest, ".ogg");
-            } else {
+            }
+            else
+            {
                 return fileToTest;
             }
         }
 
-        public static string FindMusicFile(string folder, string songName) {
+        public static string FindMusicFile(string folder, string songName)
+        {
             string[] extensions = new string[] { ".mp3", ".ogg", ".wav" };
-            for (int i = 0; i < extensions.Length; i++) {
-                if (System.IO.File.Exists(folder + songName + extensions[i])) {
+            for (int i = 0; i < extensions.Length; i++)
+            {
+                if (System.IO.File.Exists(folder + songName + extensions[i]))
+                {
                     return folder + songName + extensions[i];
                 }
             }
             return null;
         }
 
-        public static void RunTest() {
+        public static void RunTest()
+        {
             //SdlAudio.Sound sound1 = new SdlAudio.Sound(IO.Paths.MusicPath + "PMD2) Temporal Tower.ogg");
             //SdlAudio.Sound sound2 = new SdlAudio.Sound(IO.Paths.MusicPath + "PMD2) Spacial Distortion (Versus Palkia).ogg");
             //sound1.Play();
             //sound2.Play();
         }
 
-        public static bool IsSongDownloaded(string songName) {
+        public static bool IsSongDownloaded(string songName)
+        {
             string newSongName = FileNameConverter(IO.Paths.MusicPath, songName);
             return IO.IO.FileExists(IO.Paths.MusicPath + newSongName);
         }

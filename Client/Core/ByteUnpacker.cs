@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     public class ByteUnpacker
     {
         #region Fields
@@ -33,7 +32,8 @@ namespace Client.Logic.Core
 
         #region Constructors
 
-        public ByteUnpacker() {
+        public ByteUnpacker()
+        {
             items = new List<int>();
         }
 
@@ -41,11 +41,13 @@ namespace Client.Logic.Core
 
         #region Properties
 
-        public List<int> Items {
+        public List<int> Items
+        {
             get { return items; }
         }
 
-        public List<BytePackerItem> UnpackedItems {
+        public List<BytePackerItem> UnpackedItems
+        {
             get { return unpackedItems; }
         }
 
@@ -53,14 +55,17 @@ namespace Client.Logic.Core
 
         #region Methods
 
-        public void AddRange(int highestRangeValue) {
+        public void AddRange(int highestRangeValue)
+        {
             items.Add(highestRangeValue);
         }
 
-        public List<BytePackerItem> UnpackByte(int packedValue) {
+        public List<BytePackerItem> UnpackByte(int packedValue)
+        {
             unpackedItems = new List<BytePackerItem>();
             int baseNumber = 1;
-            for (int i = 0; i < items.Count; i++) {
+            for (int i = 0; i < items.Count; i++)
+            {
                 unpackedItems.Add(new BytePackerItem(items[i], (packedValue % (items[i] * baseNumber)) / baseNumber));
                 baseNumber *= items[i];
             }

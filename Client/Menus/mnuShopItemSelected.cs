@@ -28,7 +28,6 @@ using Client.Logic.Network;
 
 namespace Client.Logic.Menus
 {
-    
     class mnuShopItemSelected : Widgets.BorderedPanel, Core.IMenu
     {
         public bool Modal
@@ -78,10 +77,8 @@ namespace Client.Logic.Menus
                         lblMove.Text = "Sell";
                         nudAmount.Visible = false;
                     }
-
                 }
             }
-
         }
 
         public int ItemSlot
@@ -97,21 +94,23 @@ namespace Client.Logic.Menus
         {
             get { return this; }
         }
-        
-        
+
+
         public mnuShopItemSelected(string name, int itemNum, int itemSlot, Enums.InvMenuType transactionType)
             : base(name)
         {
             transaction = transactionType;
-            
-            
+
+
             base.Size = new Size(185, 125);
-            
+
             base.MenuDirection = Enums.MenuDirection.Horizontal;
-            if (transaction == Enums.InvMenuType.Buy) {
-            base.Location = new Point(435, 40);
-            } else {
-                
+            if (transaction == Enums.InvMenuType.Buy)
+            {
+                base.Location = new Point(435, 40);
+            }
+            else
+            {
                 base.Location = new Point(335, 40);
             }
 
@@ -150,9 +149,8 @@ namespace Client.Logic.Menus
 
             this.ItemSlot = itemSlot;
             this.ItemNum = itemNum;
-            
         }
-        
+
         void lblSummary_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
         {
             SelectItem(1);
@@ -215,7 +213,7 @@ namespace Client.Logic.Menus
             }
         }
 
-        
+
         private void SelectItem(int selectedItem)
         {
             switch (selectedItem)
@@ -268,7 +266,6 @@ namespace Client.Logic.Menus
                     break;
                 case 1:
                     { // View item summary
-                        
                         MenuSwitcher.ShowItemSummary(itemNum, itemSlot, transaction);
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
@@ -288,6 +285,5 @@ namespace Client.Logic.Menus
                 Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuInventory");
             }
         }
-        
     }
 }

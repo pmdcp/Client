@@ -33,26 +33,31 @@ namespace Client.Logic.Stories
         public List<FNPCs.FNPC> FNPCs { get; set; }
         public int CurrentSegment { get; set; }
 
-        public StoryState(ManualResetEvent resetEvent) {
+        public StoryState(ManualResetEvent resetEvent)
+        {
             this.resetEvent = resetEvent;
             FNPCs = new List<FNPCs.FNPC>();
         }
 
-        public void ResetWaitEvent() {
+        public void ResetWaitEvent()
+        {
             resetEvent.Reset();
         }
 
-        public void Pause() {
+        public void Pause()
+        {
             ResetWaitEvent();
             resetEvent.WaitOne();
         }
 
-        public void Pause(int milliseconds) {
-            ResetWaitEvent(); 
+        public void Pause(int milliseconds)
+        {
+            ResetWaitEvent();
             resetEvent.WaitOne(milliseconds, false);
         }
 
-        public void Unpause() {
+        public void Unpause()
+        {
             resetEvent.Set();
         }
     }

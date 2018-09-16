@@ -1,4 +1,10 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using SdlDotNet.Widgets;
+using System.Drawing;
+using Client.Logic.Graphics;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,16 +24,8 @@
 
 namespace Client.Logic.Menus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using SdlDotNet.Widgets;
-    using System.Drawing;
-    using Client.Logic.Graphics;
-
     class mnuTournamentMatchUpViewer : Client.Logic.Widgets.BorderedPanel, Core.IMenu
     {
-
         Label lblLeftArrow;
         Label lblRightArrow;
         PictureBox pbxPlayerOneMugshot;
@@ -39,11 +37,13 @@ namespace Client.Logic.Menus
 
         #region Properties
 
-        public Client.Logic.Widgets.BorderedPanel MenuPanel {
+        public Client.Logic.Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -51,8 +51,8 @@ namespace Client.Logic.Menus
         #endregion Properties
 
         public mnuTournamentMatchUpViewer(string name)
-            : base(name) {
-
+            : base(name)
+        {
             this.Size = new System.Drawing.Size(300, 400);
 
             lblLeftArrow = new Label("lblLeftArrow");
@@ -84,16 +84,16 @@ namespace Client.Logic.Menus
             pbxPlayerTwoMugshot.Location = new Point(lblVSLabel.X + lblVSLabel.Width + 5, pbxPlayerOneMugshot.Y);
 
             lblPlayerOneName = new Label("lblPlayerOneName");
-            lblPlayerOneName.Font = FontManager.LoadFont("PMDCP", 24);
+            lblPlayerOneName.Font = FontManager.LoadFont("PMDCP", 32);
             lblPlayerOneName.Location = new Point(pbxPlayerOneMugshot.X, pbxPlayerOneMugshot.Y + pbxPlayerOneMugshot.Height + 5);
 
             lblPlayerTwoName = new Label("lblPlayerTwoName");
-            lblPlayerTwoName.Font = FontManager.LoadFont("PMDCP", 24);
+            lblPlayerTwoName.Font = FontManager.LoadFont("PMDCP", 32);
             lblPlayerTwoName.Location = new Point(pbxPlayerTwoMugshot.X, pbxPlayerTwoMugshot.Y + pbxPlayerTwoMugshot.Height + 5);
-
         }
 
-        public void LoadMatchUpsFromPacket(string[] parse) {
+        public void LoadMatchUpsFromPacket(string[] parse)
+        {
             int n;
         }
     }

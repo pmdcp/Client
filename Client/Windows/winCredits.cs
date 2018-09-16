@@ -32,7 +32,8 @@ namespace Client.Logic.Windows
         Label lblPikablu;
 
         public winCredits()
-            : base("WinCredits") {
+            : base("WinCredits")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "Credits";
@@ -56,7 +57,7 @@ namespace Client.Logic.Windows
             lblBack.Location = new Point(0, 330);
             lblBack.Text = "Return to Login Screen";
             lblBack.BackColor = Color.Blue;
-            lblBack.Click +=new EventHandler<MouseButtonEventArgs>(lblBack_Click);
+            lblBack.Click += new EventHandler<MouseButtonEventArgs>(lblBack_Click);
 
             lblProgramming = new Label("lblProgramming");
             lblProgramming.Font = Graphics.FontManager.LoadFont("PMDCP", 25);
@@ -79,7 +80,8 @@ namespace Client.Logic.Windows
             this.LoadComplete();
         }
 
-        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowSwitcher.ShowMainMenu();
         }

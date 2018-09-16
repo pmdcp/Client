@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,61 +22,66 @@
 
 namespace Client.Logic.Graphics.Renderers.Screen
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
     class Camera
     {
         #region Properties
 
-        public CameraFocusObject FocusObject {
+        public CameraFocusObject FocusObject
+        {
             get;
             set;
         }
 
-        public int FocusedX {
+        public int FocusedX
+        {
             get;
             set;
         }
 
-        public int FocusedXOffset {
+        public int FocusedXOffset
+        {
             get;
             set;
         }
 
-        public int FocusedY {
+        public int FocusedY
+        {
             get;
             set;
         }
 
-        public int FocusedYOffset {
+        public int FocusedYOffset
+        {
             get;
             set;
         }
 
-        public Enums.Direction FocusedDirection {
+        public Enums.Direction FocusedDirection
+        {
             get;
             set;
         }
 
-        public int X {
+        public int X
+        {
             get;
             set;
         }
 
-        public int X2 {
+        public int X2
+        {
             get;
             set;
         }
 
-        public int Y {
+        public int Y
+        {
             get;
             set;
         }
 
-        public int Y2 {
+        public int Y2
+        {
             get;
             set;
         }
@@ -81,7 +90,8 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
         #region Methods
 
-        public void FocusOnSprite(Logic.Graphics.Renderers.Sprites.ISprite sprite) {
+        public void FocusOnSprite(Logic.Graphics.Renderers.Sprites.ISprite sprite)
+        {
             FocusedX = sprite.X;
             FocusedY = sprite.Y;
             FocusedXOffset = sprite.Offset.X;
@@ -89,7 +99,8 @@ namespace Client.Logic.Graphics.Renderers.Screen
             FocusedDirection = sprite.Direction;
         }
 
-        public void FocusOnFocusObject(CameraFocusObject focusObject) {
+        public void FocusOnFocusObject(CameraFocusObject focusObject)
+        {
             FocusedX = focusObject.FocusedX;
             FocusedY = focusObject.FocusedX;
             FocusedXOffset = focusObject.FocusedXOffset;

@@ -1,4 +1,12 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using Client.Logic.Graphics;
+
+using SdlDotNet.Widgets;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,18 +26,10 @@
 
 namespace Client.Logic.Menus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using Client.Logic.Graphics;
-
-    using SdlDotNet.Widgets;
-
     class mnuMapInfo : Logic.Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -42,7 +42,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuMapInfo(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(420, 90);
             this.MenuDirection = Enums.MenuDirection.Horizontal;
             this.Location = new Point(190, 60);
@@ -53,9 +54,12 @@ namespace Client.Logic.Menus
             //lblMapName.Location = new Point(0, 0);
             lblMapName.Centered = true;
             lblMapName.Font = FontManager.LoadFont("PMDCP", 48);
-            if (Windows.WindowSwitcher.GameWindow.MapViewer.ActiveMap != null) {
+            if (Windows.WindowSwitcher.GameWindow.MapViewer.ActiveMap != null)
+            {
                 lblMapName.Text = Windows.WindowSwitcher.GameWindow.MapViewer.ActiveMap.Name;
-            } else {
+            }
+            else
+            {
                 lblMapName.Text = "Unknown Location";
             }
             lblMapName.ForeColor = Color.WhiteSmoke;
@@ -67,7 +71,8 @@ namespace Client.Logic.Menus
 
         #region Properties
 
-        public Logic.Widgets.BorderedPanel MenuPanel {
+        public Logic.Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 

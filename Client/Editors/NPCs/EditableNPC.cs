@@ -26,7 +26,8 @@ namespace Client.Logic.Editors.NPCs
     {
         #region Constructors
 
-        public EditableNPC() {
+        public EditableNPC()
+        {
             Moves = new int[4];
             Drops = new EditableNpcDrop[MaxInfo.MAX_NPC_DROPS];
         }
@@ -35,22 +36,26 @@ namespace Client.Logic.Editors.NPCs
 
         #region Properties
 
-        public string Name {
+        public string Name
+        {
             get;
             set;
         }
 
-        public string AttackSay {
+        public string AttackSay
+        {
             get;
             set;
         }
 
-        public int Form {
+        public int Form
+        {
             get;
             set;
         }
 
-        public int Species {
+        public int Species
+        {
             get;
             set;
         }

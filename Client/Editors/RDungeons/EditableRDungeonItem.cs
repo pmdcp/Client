@@ -17,30 +17,32 @@
 
 
 using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Client.Logic.Maps;
+using System.Collections.Generic;
+using System.Text;
+using Client.Logic.Maps;
 
 namespace Client.Logic.Editors.RDungeons
 {
-	class EditableRDungeonItem
+    class EditableRDungeonItem
     {
         public int ItemNum { get; set; }
-    	public int MinAmount { get; set; }
-    	public int MaxAmount { get; set; }
-    	public int AppearanceRate { get; set; }
-    	public int StickyRate { get; set; }
-    	public string Tag { get; set; }
-    	public bool Hidden { get; set; }
-    	public bool OnGround { get; set; }
-    	public bool OnWater { get; set; }
-    	public bool OnWall { get; set; }
-    	
-    	public EditableRDungeonItem() {
-    		Tag = "";
-    	}
+        public int MinAmount { get; set; }
+        public int MaxAmount { get; set; }
+        public int AppearanceRate { get; set; }
+        public int StickyRate { get; set; }
+        public string Tag { get; set; }
+        public bool Hidden { get; set; }
+        public bool OnGround { get; set; }
+        public bool OnWater { get; set; }
+        public bool OnWall { get; set; }
 
-        public override bool Equals(object obj) {
+        public EditableRDungeonItem()
+        {
+            Tag = "";
+        }
+
+        public override bool Equals(object obj)
+        {
             if (!(obj is EditableRDungeonItem)) return false;
             EditableRDungeonItem item = obj as EditableRDungeonItem;
 
@@ -55,6 +57,6 @@ namespace Client.Logic.Editors.RDungeons
             if (OnWater != item.OnWater) return false;
             if (OnWall != item.OnWall) return false;
             return true;
-        } 
+        }
     }
 }

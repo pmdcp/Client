@@ -19,7 +19,6 @@
 /*
  * Created by SharpDevelop.
  * User: Pikachu
- * Date: 28/09/2009
  * Time: 4:06 PM
  * 
  */
@@ -37,119 +36,142 @@ namespace Client.Logic.IO
     {
         #region Properties
 
-        public static SdlInput.Key AcceptKey {
+        public static SdlInput.Key AcceptKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key AttackKey {
+        public static SdlInput.Key AttackKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key DownKey {
+        public static SdlInput.Key DownKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key HealKey {
+        public static SdlInput.Key HealKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key LeaderSwitchKey {
+        public static SdlInput.Key LeaderSwitchKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key LeftKey {
-            get;
-            set;
-        }
-        
-        public static SdlInput.Key TurnKey {
+        public static SdlInput.Key LeftKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key Move1Key {
+        public static SdlInput.Key TurnKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key Move2Key {
+        public static SdlInput.Key Move1Key
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key Move3Key {
+        public static SdlInput.Key Move2Key
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key Move4Key {
+        public static SdlInput.Key Move3Key
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key RightKey {
+        public static SdlInput.Key Move4Key
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key RunKey {
+        public static SdlInput.Key RightKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key Slot1SwitchKey {
+        public static SdlInput.Key RunKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key Slot2SwitchKey {
+        public static SdlInput.Key Slot1SwitchKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key Slot3SwitchKey {
+        public static SdlInput.Key Slot2SwitchKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key SwitchModeKey {
+        public static SdlInput.Key Slot3SwitchKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key TargetSelectAcceptKey {
+        public static SdlInput.Key SwitchModeKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key TargetSelectCancelKey {
+        public static SdlInput.Key TargetSelectAcceptKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key TargetSelectLeftKey {
+        public static SdlInput.Key TargetSelectCancelKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key TargetSelectRightKey {
+        public static SdlInput.Key TargetSelectLeftKey
+        {
             get;
             set;
         }
 
-        public static SdlInput.Key UpKey {
+        public static SdlInput.Key TargetSelectRightKey
+        {
+            get;
+            set;
+        }
+
+        public static SdlInput.Key UpKey
+        {
             get;
             set;
         }
 
         #endregion Properties
 
-        public static void InitDefaultControls() {
+        public static void InitDefaultControls()
+        {
             UpKey = SdlInput.Key.UpArrow;
             DownKey = SdlInput.Key.DownArrow;
             LeftKey = SdlInput.Key.LeftArrow;
@@ -159,51 +181,65 @@ namespace Client.Logic.IO
             AttackKey = SdlInput.Key.F;
         }
 
-        public static void LoadControls() {
+        public static void LoadControls()
+        {
             InitDefaultControls();
-            if (IO.FileExists("controls.xml") == false) {
+            if (IO.FileExists("controls.xml") == false)
+            {
                 SaveControls();
             }
-            using (XmlReader reader = XmlReader.Create(Paths.StartupPath + "controls.xml")) {
-                while (reader.Read()) {
-                    if (reader.IsStartElement()) {
-                        switch (reader.Name) {
-                            case "Up": {
+            using (XmlReader reader = XmlReader.Create(Paths.StartupPath + "controls.xml"))
+            {
+                while (reader.Read())
+                {
+                    if (reader.IsStartElement())
+                    {
+                        switch (reader.Name)
+                        {
+                            case "Up":
+                                {
                                     UpKey = (SdlInput.Key)reader.ReadString().ToInt((int)SdlInput.Key.UpArrow);
                                 }
                                 break;
-                            case "Down": {
+                            case "Down":
+                                {
                                     DownKey = (SdlInput.Key)reader.ReadString().ToInt((int)SdlInput.Key.DownArrow);
                                 }
                                 break;
-                            case "Left": {
+                            case "Left":
+                                {
                                     LeftKey = (SdlInput.Key)reader.ReadString().ToInt((int)SdlInput.Key.LeftArrow);
                                 }
                                 break;
-                            case "Right": {
+                            case "Right":
+                                {
                                     RightKey = (SdlInput.Key)reader.ReadString().ToInt((int)SdlInput.Key.RightArrow);
                                 }
                                 break;
-                            case "Turn": {
+                            case "Turn":
+                                {
                                     TurnKey = (SdlInput.Key)reader.ReadString().ToInt((int)SdlInput.Key.Home);
                                 }
                                 break;
-                            case "Run": {
+                            case "Run":
+                                {
                                     RunKey = (SdlInput.Key)reader.ReadString().ToInt((int)SdlInput.Key.LeftShift);
                                 }
                                 break;
-                            //case "StandardAttack": {
-                            //        AttackKey = (SdlInput.Key)reader.ReadString().ToInt((int)SdlInput.Key.Z);
-                            //    }
-                            //    break;
+                                //case "StandardAttack": {
+                                //        AttackKey = (SdlInput.Key)reader.ReadString().ToInt((int)SdlInput.Key.Z);
+                                //    }
+                                //    break;
                         }
                     }
                 }
             }
         }
 
-        public static void SaveControls() {
-            using (XmlWriter writer = XmlWriter.Create(Paths.StartupPath + "controls.xml", Options.XmlWriterSettings)) {
+        public static void SaveControls()
+        {
+            using (XmlWriter writer = XmlWriter.Create(Paths.StartupPath + "controls.xml", Options.XmlWriterSettings))
+            {
                 writer.WriteStartDocument();
                 writer.WriteStartElement("Controls");
 

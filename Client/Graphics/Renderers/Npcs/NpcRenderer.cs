@@ -30,12 +30,15 @@ namespace Client.Logic.Graphics.Renderers.Npcs
 {
     class NpcRenderer
     {
-        public static void DrawNpcBars(RendererDestinationData destData, Map map, Enums.MapID targetMapID, int npcSlot) {
+        public static void DrawNpcBars(RendererDestinationData destData, Map map, Enums.MapID targetMapID, int npcSlot)
+        {
             MapNpc npc = map.MapNpcs[npcSlot];
             int x, y;
 
-            if (npc != null && npc.HP > 0 && npc.Num > 0 && npc.ScreenActive) {
-                if (npc.HP != npc.MaxHP) {
+            if (npc != null && npc.HP > 0 && npc.Num > 0 && npc.ScreenActive)
+            {
+                if (npc.HP != npc.MaxHP)
+                {
                     //if (Npc.NpcHelper.Npcs[npc.Num].Big) {
                     //    x = (npc.Location.X * Constants.TILE_WIDTH - 9 + npc.Offset.X) - (Globals.NewMapX * Constants.TILE_WIDTH) - Globals.NewMapXOffset;
                     //    y = (npc.Location.Y * Constants.TILE_HEIGHT + npc.Offset.Y) - (Globals.NewMapY * Constants.TILE_HEIGHT) - Globals.NewMapYOffset;
@@ -59,9 +62,12 @@ namespace Client.Logic.Graphics.Renderers.Npcs
 
                     Box hpBox = new SdlDotNet.Graphics.Primitives.Box(new Point(destData.Location.X + x, destData.Location.Y + y + 32), new Point(destData.Location.X + x + 32, destData.Location.Y + y + 36));
                     destData.Draw(hpBox, Color.Black, false, true);
-                    if (npc.MaxHP < 1) {
+                    if (npc.MaxHP < 1)
+                    {
                         hpBox = new SdlDotNet.Graphics.Primitives.Box(new Point(destData.Location.X + x, destData.Location.Y + y + 32), new Point(destData.Location.X + x + 32, destData.Location.Y + y + 36));
-                    } else {
+                    }
+                    else
+                    {
                         hpBox = new SdlDotNet.Graphics.Primitives.Box(new Point(destData.Location.X + x + 1, destData.Location.Y + y + 33), new Point(Convert.ToInt32(destData.Location.X + x + (Logic.MathFunctions.CalculatePercent(npc.HP, npc.MaxHP) * 0.01) * 31), destData.Location.Y + y + 35));
                     }
                     destData.Draw(hpBox, Color.LightGreen, false, true);
@@ -70,19 +76,20 @@ namespace Client.Logic.Graphics.Renderers.Npcs
             }
         }
 
-        public static void DrawNpc(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, int npcSlot) {
-            
+        public static void DrawNpc(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, int npcSlot)
+        {
             MapNpc npc = activeMap.MapNpcs[npcSlot];
-            if (npc != null && npc.Num > 0 && npc.ScreenActive) {
+            if (npc != null && npc.Num > 0 && npc.ScreenActive)
+            {
                 SpriteRenderer.DrawSprite(destData, activeMap, targetMapID, npc);
             }
-
-
         }
 
-        public static void DrawMapNpcName(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, int npcSlot) {
+        public static void DrawMapNpcName(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, int npcSlot)
+        {
             Color nameColor = Color.White;
-            if (activeMap.MapNpcs[npcSlot].Enemy) {
+            if (activeMap.MapNpcs[npcSlot].Enemy)
+            {
                 nameColor = Color.Red;
             }
             Npc.Npc npc = Npc.NpcHelper.Npcs[activeMap.MapNpcs[npcSlot].Num];
@@ -96,42 +103,52 @@ namespace Client.Logic.Graphics.Renderers.Npcs
             SpriteRenderer.DrawSpriteName(destData, activeMap, targetMapID, activeMap.MapNpcs[npcSlot], nameColor, name);
         }
 
-        public static void DrawNpcStatus(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, int npcSlot, int statusNum) {
+        public static void DrawNpcStatus(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, int npcSlot, int statusNum)
+        {
             MapNpc npc = activeMap.MapNpcs[npcSlot];
-            switch (statusNum) {//Enums not used to account for confusion status
-                case 1: {//Burn
+            switch (statusNum)
+            {//Enums not used to account for confusion status
+                case 1:
+                    {//Burn
                         SpriteRenderer.DrawStatus(destData, activeMap, targetMapID, npc, 0, new Point(0, -32));
                     }
                     break;
-                case 2: {//Freeze
+                case 2:
+                    {//Freeze
                         SpriteRenderer.DrawStatus(destData, activeMap, targetMapID, npc, 1, new Point(0, 0));
                     }
                     break;
-                case 3: {//paralyze
+                case 3:
+                    {//paralyze
                         //Nothing here
                     }
                     break;
-                case 4: {//poison
+                case 4:
+                    {//poison
                         SpriteRenderer.DrawStatus(destData, activeMap, targetMapID, npc, 2, new Point(0, -32));
                     }
                     break;
-                case 5: {//sleep
+                case 5:
+                    {//sleep
                         SpriteRenderer.DrawStatus(destData, activeMap, targetMapID, npc, 3, new Point(0, -32));
                     }
                     break;
-                case 6: {//confuse
+                case 6:
+                    {//confuse
                         SpriteRenderer.DrawStatus(destData, activeMap, targetMapID, npc, 4, new Point(0, -24));
                     }
                     break;
             }
-
         }
 
-        public static void DrawNpcVolatileStatus(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, int npcSlot, List<int> extraStatus) {
+        public static void DrawNpcVolatileStatus(RendererDestinationData destData, Map activeMap, Enums.MapID targetMapID, int npcSlot, List<int> extraStatus)
+        {
             MapNpc npc = activeMap.MapNpcs[npcSlot];
             List<int> visibleStatus = new List<int>();
-            foreach (int i in extraStatus) {
-                if (i >= 0) {
+            foreach (int i in extraStatus)
+            {
+                if (i >= 0)
+                {
                     visibleStatus.Add(i);
                 }
             }
@@ -139,8 +156,6 @@ namespace Client.Logic.Graphics.Renderers.Npcs
             int statusIndex = Globals.Tick / 600 % visibleStatus.Count;
 
             SpriteRenderer.DrawStatus(destData, activeMap, targetMapID, npc, visibleStatus[statusIndex], new Point(24, -32));
-
         }
-
     }
 }

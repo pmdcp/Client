@@ -22,15 +22,17 @@ using System.Text;
 
 namespace Client.Logic.Updater.Widgets
 {
-    class PackageButtonSelectedEventArgs:EventArgs
+    class PackageButtonSelectedEventArgs : EventArgs
     {
         PackageButton packageButton;
 
-        public PackageButtonSelectedEventArgs(PackageButton packageButton) {
+        public PackageButtonSelectedEventArgs(PackageButton packageButton)
+        {
             this.packageButton = packageButton;
         }
 
-        public PackageButton PackageButton {
+        public PackageButton PackageButton
+        {
             get { return packageButton; }
         }
     }

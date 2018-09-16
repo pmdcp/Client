@@ -41,13 +41,15 @@ namespace Client.Logic.Updater
 
         UpdateEngine updateEngine;
 
-        public UpdateEngine UpdateEngine {
+        public UpdateEngine UpdateEngine
+        {
             get { return updateEngine; }
             set { updateEngine = value; }
         }
 
         public winUpdater(UpdateEngine updateEngine)
-            : base("winUpdater") {
+            : base("winUpdater")
+        {
             Windows.WindowSwitcher.UpdaterWindow = this;
             this.updateEngine = updateEngine;
             this.updateEngine.Updater.StatusUpdated += new EventHandler(Updater_StatusUpdated);
@@ -70,7 +72,8 @@ namespace Client.Logic.Updater
             packageScroller = new PackageScroller("packageScroller");
             packageScroller.Location = new Point(0, 0);
 
-            for (int i = 0; i < updateEngine.LastCheckResult.PackagesToUpdate.Count; i++) {
+            for (int i = 0; i < updateEngine.LastCheckResult.PackagesToUpdate.Count; i++)
+            {
                 packageScroller.AddPackage(updateEngine.LastCheckResult.PackagesToUpdate[i]);
             }
             packageScroller.PackageButtonSelected += new EventHandler<PackageButtonSelectedEventArgs>(packageScroller_PackageButtonSelected);
@@ -134,16 +137,21 @@ namespace Client.Logic.Updater
         }
 
         int restartCountdown;
-        void tmrRestart_Elapsed(object sender, EventArgs e) {
+        void tmrRestart_Elapsed(object sender, EventArgs e)
+        {
             restartCountdown--;
-            if (restartCountdown <= 0) {
+            if (restartCountdown <= 0)
+            {
                 RestartApplication();
-            } else {
+            }
+            else
+            {
                 UpdateStatus("Update complete! This program will restart in " + restartCountdown + "...");
             }
         }
 
-        void RestartApplication() {
+        void RestartApplication()
+        {
             // Restarting!
             // Get the parameters/arguments passed to program if any
             string arguments = string.Empty;
@@ -156,21 +164,25 @@ namespace Client.Logic.Updater
             Sdl.SdlCore.QuitApplication();
         }
 
-        void Updater_InstallationComplete(object sender, EventArgs e) {
+        void Updater_InstallationComplete(object sender, EventArgs e)
+        {
             UpdateStatus("Update complete! This program will restart in 5...");
             restartCountdown = 5;
             tmrRestart.Start();
         }
 
-        void Updater_PackageInstallationComplete(object sender, PMDCP.Updater.PackageInstallationCompleteEventArgs e) {
+        void Updater_PackageInstallationComplete(object sender, PMDCP.Updater.PackageInstallationCompleteEventArgs e)
+        {
             packageScroller.Buttons[e.PackageIndex].Installed = true;
-            if (updateEngine.LastCheckResult.PackagesToUpdate.Count != e.PackageIndex + 1) {
+            if (updateEngine.LastCheckResult.PackagesToUpdate.Count != e.PackageIndex + 1)
+            {
                 packageScroller.ScrollToButton(e.PackageIndex + 1);
                 LoadPackageInfo(packageScroller.Buttons[e.PackageIndex + 1]);
             }
         }
 
-        void Updater_PackageDownloadStart(object sender, PMDCP.Updater.PackageDownloadStartEventArgs e) {
+        void Updater_PackageDownloadStart(object sender, PMDCP.Updater.PackageDownloadStartEventArgs e)
+        {
             lblUpdateFound.Text = "Package: " + e.Package.FullID;
             lblStatus.Hide();
             pgbDownloadProgress.Show();
@@ -179,45 +191,53 @@ namespace Client.Logic.Updater
             e.Download.DownloadComplete += new EventHandler<FileDownloadingEventArgs>(Download_DownloadComplete);
         }
 
-        void Download_DownloadComplete(object sender, FileDownloadingEventArgs e) {
+        void Download_DownloadComplete(object sender, FileDownloadingEventArgs e)
+        {
             pgbDownloadProgress.Hide();
             lblStatus.Show();
             UpdateStatus("Installing...");
         }
 
-        void Download_DownloadUpdate(object sender, FileDownloadingEventArgs e) {
+        void Download_DownloadUpdate(object sender, FileDownloadingEventArgs e)
+        {
             pgbDownloadProgress.Value = e.Percent;
             //UpdateStatus("Downloading: " + PMDCP.Core.IO.Files.GetFileSize(e.Position) + "/" + PMDCP.Core.IO.Files.GetFileSize(e.FileSize) + " (" + e.Percent + "%)");
         }
 
-        void btnAccept_Click(object sender, MouseButtonEventArgs e) {
+        void btnAccept_Click(object sender, MouseButtonEventArgs e)
+        {
             btnAccept.Visible = false;
             btnDecline.Visible = false;
             lblStatus.Visible = true;
-            Thread updateThread = new Thread(new ThreadStart(delegate()
+            Thread updateThread = new Thread(new ThreadStart(delegate ()
             {
-                this.updateEngine.Updater.PerformUpdate(this.updateEngine.LastCheckResult);
+                updateEngine.Updater.PerformUpdate(updateEngine.LastCheckResult);
             }));
             updateThread.Start();
         }
 
-        void btnDecline_Click(object sender, MouseButtonEventArgs e) {
+        void btnDecline_Click(object sender, MouseButtonEventArgs e)
+        {
             Environment.Exit(0);
         }
 
-        void Updater_StatusUpdated(object sender, EventArgs e) {
-            UpdateStatus(this.updateEngine.Updater.Status);
+        void Updater_StatusUpdated(object sender, EventArgs e)
+        {
+            UpdateStatus(updateEngine.Updater.Status);
         }
 
-        void UpdateStatus(string status) {
+        void UpdateStatus(string status)
+        {
             lblStatus.Text = status;
         }
 
-        void packageScroller_PackageButtonSelected(object sender, PackageButtonSelectedEventArgs e) {
+        void packageScroller_PackageButtonSelected(object sender, PackageButtonSelectedEventArgs e)
+        {
             LoadPackageInfo(e.PackageButton);
         }
 
-        private void LoadPackageInfo(PackageButton packageButton) {
+        private void LoadPackageInfo(PackageButton packageButton)
+        {
             lblUpdateInfo.Text = "";
             CharRenderOptions renderOptions = new CharRenderOptions(Color.Black);
             renderOptions.Bold = true;

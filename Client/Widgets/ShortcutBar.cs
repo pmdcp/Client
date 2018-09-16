@@ -29,16 +29,19 @@ namespace Client.Logic.Widgets
         List<ShortcutButton> buttons;
 
         public ShortcutBar(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(400, 60);
             this.BackColor = Color.Transparent;
 
             buttons = new List<ShortcutButton>();
         }
 
-        public void AddButton(ShortcutButton button) {
+        public void AddButton(ShortcutButton button)
+        {
             int totalWidth = 5; // Padding
-            for (int i = 0; i < buttons.Count; i++) {
+            for (int i = 0; i < buttons.Count; i++)
+            {
                 totalWidth += buttons[i].Width + 5;
             }
             button.Location = new Point(this.Width - totalWidth - button.Width, 5);
@@ -46,7 +49,8 @@ namespace Client.Logic.Widgets
             this.AddWidget(button);
         }
 
-        public override void FreeResources() {
+        public override void FreeResources()
+        {
             base.FreeResources();
             buttons.Clear();
         }

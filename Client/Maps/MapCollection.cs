@@ -1,4 +1,7 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,10 +21,6 @@
 
 namespace Client.Logic.Maps
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     class MapCollection
     {
         #region Fields
@@ -52,50 +51,61 @@ namespace Client.Logic.Maps
 
         #region Constructors
 
-        internal MapCollection() {
+        internal MapCollection()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Map ActiveMap {
+        public Map ActiveMap
+        {
             get { return activeMap; }
         }
 
-        public Map MapDown {
+        public Map MapDown
+        {
             get { return mapDown; }
         }
 
-        public Map MapLeft {
+        public Map MapLeft
+        {
             get { return mapLeft; }
         }
 
-        public Map MapRight {
+        public Map MapRight
+        {
             get { return mapRight; }
         }
 
-        public Map MapUp {
+        public Map MapUp
+        {
             get { return mapUp; }
         }
 
-        public Map TempActiveMap {
+        public Map TempActiveMap
+        {
             get { return tempActiveMap; }
         }
 
-        public Map TempUpMap {
+        public Map TempUpMap
+        {
             get { return tempUpMap; }
         }
 
-        public Map TempDownMap {
+        public Map TempDownMap
+        {
             get { return tempDownMap; }
         }
 
-        public Map TempLeftMap {
+        public Map TempLeftMap
+        {
             get { return tempLeftMap; }
         }
 
-        public Map TempRightMap {
+        public Map TempRightMap
+        {
             get { return tempRightMap; }
         }
 
@@ -103,10 +113,13 @@ namespace Client.Logic.Maps
 
         #region Indexers
 
-        public Map this[Enums.MapID id] {
+        public Map this[Enums.MapID id]
+        {
             get { return GetMapFromID(id); }
-            set {
-                switch (id) {
+            set
+            {
+                switch (id)
+                {
                     case Enums.MapID.Active:
                         activeMap = value;
                         break;
@@ -172,8 +185,10 @@ namespace Client.Logic.Maps
 
         #region Methods
 
-        private Map GetMapFromID(Enums.MapID id) {
-            switch (id) {
+        private Map GetMapFromID(Enums.MapID id)
+        {
+            switch (id)
+            {
                 case Enums.MapID.Active:
                     return activeMap;
                 case Enums.MapID.Down:

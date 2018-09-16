@@ -26,7 +26,7 @@ namespace Client.Logic.Graphics
 {
     class Mugshot : ICacheable
     {
-         #region Fields
+        #region Fields
 
         int num;
         List<Surface> sheet;
@@ -51,7 +51,8 @@ namespace Client.Logic.Graphics
 
         #region Properties
 
-        public int Num {
+        public int Num
+        {
             get { return num; }
         }
 
@@ -62,7 +63,8 @@ namespace Client.Logic.Graphics
 
         #endregion Properties
 
-        public int BytesUsed {
+        public int BytesUsed
+        {
             get { return sizeInBytes; }
         }
 
@@ -85,7 +87,7 @@ namespace Client.Logic.Graphics
                 sheet.Add(emote);
             }
 
-            this.sizeInBytes = data.Length;
+            sizeInBytes = data.Length;
         }
     }
 }

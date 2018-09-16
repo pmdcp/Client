@@ -26,7 +26,8 @@ namespace Client.Logic.Security
 {
     class Admin
     {
-        static internal bool IsVistaOrHigher() {
+        static internal bool IsVistaOrHigher()
+        {
             return Environment.OSVersion.Version.Major >= 6;
         }
 
@@ -34,13 +35,15 @@ namespace Client.Logic.Security
         /// Checks if the process is elevated
         /// </summary>
         /// <returns>If is elevated</returns>
-        static internal bool IsAdmin() {
+        static internal bool IsAdmin()
+        {
             WindowsIdentity id = WindowsIdentity.GetCurrent();
             WindowsPrincipal p = new WindowsPrincipal(id);
             return p.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        static internal Process StartProcessElevated(string processPath, string arguments) {
+        static internal Process StartProcessElevated(string processPath, string arguments)
+        {
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.UseShellExecute = true;
             startInfo.WorkingDirectory = Environment.CurrentDirectory;
@@ -50,9 +53,12 @@ namespace Client.Logic.Security
 
             Process process = null;
 
-            try {
+            try
+            {
                 process = Process.Start(startInfo);
-            } catch (System.ComponentModel.Win32Exception) {
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
             }
 
             return process;

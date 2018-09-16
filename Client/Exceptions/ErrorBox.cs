@@ -1,4 +1,10 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,13 +24,6 @@
 
 namespace Client.Logic.Exceptions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Drawing;
-    using System.Text;
-    using System.Windows.Forms;
-
     /// <summary>
     /// </summary>
     public partial class ErrorBox : Form
@@ -63,20 +62,25 @@ namespace Client.Logic.Exceptions
             error.Text = caption;
             error.txtDetails.Text = details;
 
-            try {
+            try
+            {
                 Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("clienterror", details));
-            } catch { }
+            }
+            catch { }
 
             return error.ShowDialog();
         }
 
         private void btnDetails_Click(object sender, EventArgs e)
         {
-            if (errorShown == false) {
+            if (errorShown == false)
+            {
                 this.Size = new Size(499, 292);
                 btnDetails.Text = "Details ^";
                 errorShown = true;
-            } else {
+            }
+            else
+            {
                 this.Size = new Size(499, 193);
                 btnDetails.Text = "Details v";
                 errorShown = false;

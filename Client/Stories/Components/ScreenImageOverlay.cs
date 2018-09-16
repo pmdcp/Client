@@ -31,34 +31,41 @@ namespace Client.Logic.Stories.Components
         int y;
         Surface surface;
 
-        public string File {
+        public string File
+        {
             get { return file; }
         }
 
-        public string ImageID {
+        public string ImageID
+        {
             get { return imageID; }
         }
 
-        public int X {
+        public int X
+        {
             get { return x; }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return y; }
         }
 
-        public Surface Surface {
+        public Surface Surface
+        {
             get { return surface; }
         }
 
-        public ScreenImageOverlay(string file, string imageID, int x, int y) {
+        public ScreenImageOverlay(string file, string imageID, int x, int y)
+        {
             this.file = file;
             this.imageID = imageID;
             this.x = x;
             this.y = y;
         }
 
-        public void LoadImage() {
+        public void LoadImage()
+        {
             surface = Logic.Graphics.SurfaceManager.LoadSurface(IO.Paths.StoryDataPath + "Images/" + file);
         }
     }

@@ -37,6 +37,5 @@ namespace Client.Logic.Missions
         public int RewardAmount { get; set; }
         public Enums.JobStatus Accepted { get; set; }
         public bool CanSend { get; set; }
-
     }
 }

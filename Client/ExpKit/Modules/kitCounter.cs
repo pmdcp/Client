@@ -34,7 +34,8 @@ namespace Client.Logic.ExpKit.Modules
         bool enabled;
 
         public kitCounter(string name)
-            : base(name) {
+            : base(name)
+        {
             enabled = true;
 
             base.BackColor = Color.Transparent;
@@ -65,55 +66,64 @@ namespace Client.Logic.ExpKit.Modules
             this.AddWidget(lblCounter);
             this.AddWidget(btnIncrement);
             this.AddWidget(btnDecrement);
-
         }
 
-        
 
-        void btnDecrement_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+
+        void btnDecrement_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             lblCounter.Text = (lblCounter.Text.ToInt() - 1).ToString();
         }
 
-        void btnIncrement_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void btnIncrement_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             lblCounter.Text = (lblCounter.Text.ToInt() + 1).ToString();
         }
 
-        public void Created(int index) {
+        public void Created(int index)
+        {
             moduleIndex = index;
         }
 
-        public void SwitchOut() {
-
+        public void SwitchOut()
+        {
         }
 
-        public void Initialize(Size containerSize) {
+        public void Initialize(Size containerSize)
+        {
             this.containerSize = containerSize;
             RecalculatePositions();
             RequestRedraw();
         }
 
-        private void RecalculatePositions() {
+        private void RecalculatePositions()
+        {
             lblCounter.Size = new Size(containerSize.Width - 10, 30);
             btnIncrement.Location = new Point(DrawingSupport.GetCenter(containerSize, btnIncrement.Size).X - (btnIncrement.Width / 2), lblCounter.Y + lblCounter.Height + 5);
             btnDecrement.Location = new Point(DrawingSupport.GetCenter(containerSize, btnDecrement.Size).X + (btnDecrement.Width / 2), lblCounter.Y + lblCounter.Height + 5);
         }
 
-        public int ModuleIndex {
+        public int ModuleIndex
+        {
             get { return moduleIndex; }
         }
 
-        public string ModuleName {
+        public string ModuleName
+        {
             get { return "Counter"; }
         }
 
-        public Panel ModulePanel {
+        public Panel ModulePanel
+        {
             get { return this; }
         }
 
 
-        public bool Enabled {
+        public bool Enabled
+        {
             get { return enabled; }
-            set {
+            set
+            {
                 enabled = value;
                 if (EnabledChanged != null)
                     EnabledChanged(this, EventArgs.Empty);
@@ -124,7 +134,8 @@ namespace Client.Logic.ExpKit.Modules
         public event EventHandler EnabledChanged;
 
 
-        public Enums.ExpKitModules ModuleID {
+        public Enums.ExpKitModules ModuleID
+        {
             get { return Enums.ExpKitModules.Counter; }
         }
     }

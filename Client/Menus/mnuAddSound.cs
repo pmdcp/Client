@@ -26,9 +26,12 @@ using Client.Logic.Graphics;
 using SdlDotNet.Widgets;
 using Client.Logic.Network;
 
-namespace Client.Logic.Menus {
-    class mnuAddSound : Widgets.BorderedPanel, Core.IMenu {
-        public bool Modal {
+namespace Client.Logic.Menus
+{
+    class mnuAddSound : Widgets.BorderedPanel, Core.IMenu
+    {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -43,7 +46,8 @@ namespace Client.Logic.Menus {
         int price;
 
         public mnuAddSound(string name, int price)
-            : base(name) {
+            : base(name)
+        {
             this.price = price;
 
             this.Size = new Size(250, 250);
@@ -60,13 +64,14 @@ namespace Client.Logic.Menus {
             lstSound = new ListBox("lstSound");
             lstSound.Location = new Point(lblAddTile.X, lblAddTile.Y + lblAddTile.Height);
             lstSound.Size = new Size(180, 120);
-            
-                SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("PMDCP", 18);
-                string[] sfxFiles = System.IO.Directory.GetFiles(IO.Paths.SfxPath);
-                for (int i = 0; i < sfxFiles.Length; i++) {
-                    lstSound.Items.Add(new ListBoxTextItem(font, System.IO.Path.GetFileName(sfxFiles[i])));
-                }
-            lstSound.ItemSelected +=new EventHandler(lstSound_ItemSelected);
+
+            SdlDotNet.Graphics.Font font = Logic.Graphics.FontManager.LoadFont("PMDCP", 18);
+            string[] sfxFiles = System.IO.Directory.GetFiles(IO.Paths.SfxPath);
+            for (int i = 0; i < sfxFiles.Length; i++)
+            {
+                lstSound.Items.Add(new ListBoxTextItem(font, System.IO.Path.GetFileName(sfxFiles[i])));
+            }
+            lstSound.ItemSelected += new EventHandler(lstSound_ItemSelected);
 
             lblPrice = new Label("lblPrice");
             lblPrice.Location = new Point(lblAddTile.X, lstSound.Y + lstSound.Height + 10);
@@ -99,7 +104,8 @@ namespace Client.Logic.Menus {
         }
 
 
-        void btnAccept_Click(object sender, MouseButtonEventArgs e) {
+        void btnAccept_Click(object sender, MouseButtonEventArgs e)
+        {
             String sound = "";
             if (lstSound.SelectedItems.Count > 0) sound = ((ListBoxTextItem)lstSound.SelectedItems[0]).Text;
             Messenger.SendAddSoundRequest(sound);
@@ -107,16 +113,19 @@ namespace Client.Logic.Menus {
             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
         }
 
-        void btnCancel_Click(object sender, MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
-        void lstSound_ItemSelected(object sender, EventArgs e) {
+        void lstSound_ItemSelected(object sender, EventArgs e)
+        {
             Music.Music.AudioPlayer.PlaySoundEffect(((ListBoxTextItem)lstSound.SelectedItems[0]).Text);
         }
     }

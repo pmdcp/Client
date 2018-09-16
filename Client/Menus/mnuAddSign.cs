@@ -26,9 +26,12 @@ using Client.Logic.Graphics;
 using SdlDotNet.Widgets;
 using Client.Logic.Network;
 
-namespace Client.Logic.Menus {
-    class mnuAddSign : Widgets.BorderedPanel, Core.IMenu {
-        public bool Modal {
+namespace Client.Logic.Menus
+{
+    class mnuAddSign : Widgets.BorderedPanel, Core.IMenu
+    {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -43,8 +46,9 @@ namespace Client.Logic.Menus {
         int price;
 
         public mnuAddSign(string name, int price)
-            : base(name) {
-                this.price = price;
+            : base(name)
+        {
+            this.price = price;
             this.Size = new Size(250, 250);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = Client.Logic.Graphics.DrawingSupport.GetCenter(Windows.WindowSwitcher.GameWindow.MapViewer.Size, this.Size);
@@ -60,7 +64,7 @@ namespace Client.Logic.Menus {
             txtHouse1.Location = new Point(lblAddTile.X, lblAddTile.Y + lblAddTile.Height + 10);
             txtHouse1.Size = new Size(this.Width - (lblAddTile.X * 2), 16);
             Skins.SkinManager.LoadTextBoxGui(txtHouse1);
-            txtHouse1.TextChanged +=new EventHandler(txtHouse_TextChanged);
+            txtHouse1.TextChanged += new EventHandler(txtHouse_TextChanged);
 
             txtHouse2 = new TextBox("txtHouse2");
             txtHouse2.Location = new Point(txtHouse1.X, txtHouse1.Y + txtHouse1.Height + 10);
@@ -106,22 +110,26 @@ namespace Client.Logic.Menus {
             this.AddWidget(btnCancel);
         }
 
-        void txtHouse_TextChanged(object sender, EventArgs e) {
+        void txtHouse_TextChanged(object sender, EventArgs e)
+        {
             lblPrice.Text = "Placing this tile will cost " + ((txtHouse1.Text.Length + txtHouse2.Text.Length + txtHouse3.Text.Length) * price) + " " + Items.ItemHelper.Items[1].Name + ".";
         }
 
-        void btnAccept_Click(object sender, MouseButtonEventArgs e) {
+        void btnAccept_Click(object sender, MouseButtonEventArgs e)
+        {
             Messenger.SendAddSignRequest(txtHouse1.Text, txtHouse2.Text, txtHouse3.Text);
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
         }
 
-        void btnCancel_Click(object sender, MouseButtonEventArgs e) {
+        void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
             MenuSwitcher.CloseAllMenus();
             Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
     }

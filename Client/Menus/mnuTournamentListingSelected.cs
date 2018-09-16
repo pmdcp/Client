@@ -32,7 +32,8 @@ namespace Client.Logic.Menus
 {
     class mnuTournamentListingSelected : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -44,12 +45,14 @@ namespace Client.Logic.Menus
         TournamentListing selectedListing;
         Enums.TournamentListingMode mode;
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
         public mnuTournamentListingSelected(string name, TournamentListing selectedListing, Enums.TournamentListingMode mode)
-            : base(name) {
+            : base(name)
+        {
             this.selectedListing = selectedListing;
             this.mode = mode;
 
@@ -64,9 +67,12 @@ namespace Client.Logic.Menus
             lblJoin = new Label("lblJoin");
             lblJoin.Font = FontManager.LoadFont("PMDCP", 32);
             lblJoin.AutoSize = true;
-            if (mode == Enums.TournamentListingMode.Join) {
+            if (mode == Enums.TournamentListingMode.Join)
+            {
                 lblJoin.Text = "Join";
-            } else if (mode == Enums.TournamentListingMode.Spectate) {
+            }
+            else if (mode == Enums.TournamentListingMode.Spectate)
+            {
                 lblJoin.Text = "Spectate";
             }
             lblJoin.Location = new Point(30, 8);
@@ -88,46 +94,61 @@ namespace Client.Logic.Menus
             this.AddWidget(lblViewRules);
         }
 
-        void lblViewRules_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblViewRules_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(1);
         }
 
 
-        void lblJoin_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblJoin_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectItem(0);
         }
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 23 + (50 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (itemPicker.SelectedItem == MAX_ITEMS) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (itemPicker.SelectedItem == MAX_ITEMS)
+                        {
                             ChangeSelected(0);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem + 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (itemPicker.SelectedItem == 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (itemPicker.SelectedItem == 0)
+                        {
                             ChangeSelected(MAX_ITEMS);
-                        } else {
+                        }
+                        else
+                        {
                             ChangeSelected(itemPicker.SelectedItem - 1);
                         }
                         Music.Music.AudioPlayer.PlaySoundEffect("beep1.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectItem(itemPicker.SelectedItem);
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         CloseMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
                     }
@@ -136,18 +157,25 @@ namespace Client.Logic.Menus
         }
 
 
-        private void SelectItem(int selectedItem) {
-            switch (selectedItem) {
-                case 0: { // Join tournament / Spectate
-                    if (mode == Enums.TournamentListingMode.Join) {
-                        Messenger.SendJoinTournament(selectedListing.TournamentID);
-                    } else if (mode == Enums.TournamentListingMode.Spectate) {
-                        Messenger.SendSpectateTournament(selectedListing.TournamentID);
-                    }
+        private void SelectItem(int selectedItem)
+        {
+            switch (selectedItem)
+            {
+                case 0:
+                    { // Join tournament / Spectate
+                        if (mode == Enums.TournamentListingMode.Join)
+                        {
+                            Messenger.SendJoinTournament(selectedListing.TournamentID);
+                        }
+                        else if (mode == Enums.TournamentListingMode.Spectate)
+                        {
+                            Messenger.SendSpectateTournament(selectedListing.TournamentID);
+                        }
                         MenuSwitcher.CloseAllMenus();
                     }
                     break;
-                case 1: { // View tournament rules
+                case 1:
+                    { // View tournament rules
                         Messenger.SendViewTournamentRules(selectedListing.TournamentID);
                         MenuSwitcher.CloseAllMenus();
                     }
@@ -155,9 +183,9 @@ namespace Client.Logic.Menus
             }
         }
 
-        private void CloseMenu() {
+        private void CloseMenu()
+        {
             Windows.WindowSwitcher.GameWindow.MenuManager.RemoveMenu(this);
         }
-
     }
 }

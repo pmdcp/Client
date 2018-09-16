@@ -54,7 +54,8 @@ namespace Client.Logic.Windows.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="GameScreen"/> class.
         /// </summary>
-        public GameScreen() {
+        public GameScreen()
+        {
         }
 
         #endregion Constructors
@@ -75,14 +76,15 @@ namespace Client.Logic.Windows.Core
 
         #region Methods
 
-        internal void InitControls() {
+        internal void InitControls()
+        {
             // Load the debug label
             //lblInfo = new Client.Logic.Gui.Label(FontManager.MainFont);
             //lblInfo.ForeColor = Color.Black;
             //lblInfo.Backcolor = Color.Transparent;
             //lblInfo.AntiAlias = false;
 
-            //btnDebug = new Client.Logic.Gui.Button(Logic.Graphics.FontManager.LoadFont("PMDCP", 24));
+            //btnDebug = new Client.Logic.Gui.Button(Logic.Graphics.FontManager.LoadFont("PMDCP", 32));
             //btnDebug.Size = new Size(150, 40);
             //btnDebug.Location = new Point(0, 50);
             //btnDebug.Text = "Show Debug Window";
@@ -97,11 +99,13 @@ namespace Client.Logic.Windows.Core
             //tskTaskBar.Location = new Point(0, SdlVideo.Screen.Height - 20);
         }
 
-        void DebugWindow_OnWindowClosed(object sender, EventArgs e) {
+        void DebugWindow_OnWindowClosed(object sender, EventArgs e)
+        {
             //btnDebug.Text = "Show Debug Window";
         }
 
-        void SdlEvents_Tick(object sender, SdlDotNet.Core.TickEventArgs e) {
+        void SdlEvents_Tick(object sender, SdlDotNet.Core.TickEventArgs e)
+        {
             //if (SdlDotNet.Graphics.Video.IsActive == false)
             //    return;
             //if (TickStabalizer.CanUpdate(e)) {
@@ -132,18 +136,28 @@ namespace Client.Logic.Windows.Core
             //if (Globals.GameLoaded) {
             //    tskTaskBar.Update(SdlVideo.Screen, e);
             //}
-            if (isFading) {
-                if (fadeOut) {
-                    if (GraphicsManager.FadeSurface.Alpha < 255) {
+            if (isFading)
+            {
+                if (fadeOut)
+                {
+                    if (GraphicsManager.FadeSurface.Alpha < 255)
+                    {
                         GraphicsManager.FadeSurface.Alpha += (byte)fadeSpeed;
-                    } else {
+                    }
+                    else
+                    {
                         isFading = false;
                         fadeCallback();
                     }
-                } else {
-                    if (GraphicsManager.FadeSurface.Alpha > 0) {
+                }
+                else
+                {
+                    if (GraphicsManager.FadeSurface.Alpha > 0)
+                    {
                         GraphicsManager.FadeSurface.Alpha -= (byte)fadeSpeed;
-                    } else {
+                    }
+                    else
+                    {
                         isFading = false;
                         fadeCallback();
                     }
@@ -155,7 +169,8 @@ namespace Client.Logic.Windows.Core
             //}
         }
 
-        void btnDebug_OnClick(object sender, SdlDotNet.Input.MouseButtonEventArgs e) {
+        void btnDebug_OnClick(object sender, SdlDotNet.Input.MouseButtonEventArgs e)
+        {
             //if (SdlDotNet.Widgets.WindowManager.IsWindowOpen(WindowSwitcher.GetWindow(WindowSwitcher.Window.Debug)) == false) {
             //    WindowManager.AddWindow(WindowSwitcher.Window.Debug);
             //    WindowSwitcher.DebugWindow.OnWindowClosed += new EventHandler(DebugWindow_OnWindowClosed);

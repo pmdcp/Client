@@ -24,11 +24,10 @@ namespace Client.Logic.Players
 {
     class RecruitMove
     {
-        
-
         #region Constructors
 
-        public RecruitMove() {
+        public RecruitMove()
+        {
             MoveNum = -1;
             CurrentPP = -1;
             MaxPP = -1;

@@ -37,7 +37,8 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
         static ScreenRenderOptions renderOptions;
 
-        public static ScreenRenderOptions RenderOptions {
+        public static ScreenRenderOptions RenderOptions
+        {
             get { return renderOptions; }
         }
 
@@ -45,19 +46,23 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
         static System.Diagnostics.Stopwatch RenderStopwatch = new System.Diagnostics.Stopwatch();
 
-        public static Camera Camera {
+        public static Camera Camera
+        {
             get { return camera; }
         }
 
-        public static void Initialize() {
+        public static void Initialize()
+        {
             camera = new Camera();
             Moves.MoveRenderer.Initialize();
             Sprites.SpriteRenderer.Initialize();
             renderOptions = new ScreenRenderOptions();
         }
 
-        public static void RenderScreen(RendererDestinationData destData) {
-            try {
+        public static void RenderScreen(RendererDestinationData destData)
+        {
+            try
+            {
                 //System.Diagnostics.Debug.WriteLine("Elapsed " + (SdlDotNet.Core.Timer.TicksElapsed - Globals.Tick));
                 Globals.Tick = SdlDotNet.Core.Timer.TicksElapsed;
                 //dstSurf.Fill(Color.Blue);
@@ -66,11 +71,15 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
                 //Windows.WindowSwitcher.GameWindow.mInput.VerifyKeys();
 
-                if (renderOptions.Map != null && renderOptions.Map.Loaded) {
+                if (renderOptions.Map != null && renderOptions.Map.Loaded)
+                {
                     //Players.Player player = Players.PlayerHelper.Players.GetMyPlayer();
-                    if (camera.FocusObject == null) {
+                    if (camera.FocusObject == null)
+                    {
                         camera.FocusOnSprite(PlayerManager.MyPlayer);
-                    } else {
+                    }
+                    else
+                    {
                         camera.FocusObject.Process(Globals.Tick);
 
                         camera.FocusOnFocusObject(camera.FocusObject);
@@ -82,17 +91,23 @@ namespace Client.Logic.Graphics.Renderers.Screen
                     camera.X2 = GetScreenRight();
                     camera.Y2 = GetScreenBottom() + 1;
                     // Verify that the coordinates aren't outside the map bounds
-                    if (camera.X < 0 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Left)) {
+                    if (camera.X < 0 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Left))
+                    {
                         camera.X = 0;
                         camera.X2 = 20;
-                    } else if (camera.X2 > renderOptions.Map.MaxX + 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Right)) {
+                    }
+                    else if (camera.X2 > renderOptions.Map.MaxX + 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Right))
+                    {
                         camera.X = renderOptions.Map.MaxX - 19;
                         camera.X2 = renderOptions.Map.MaxX + 1;
                     }
-                    if (camera.Y < 0 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Up)) {
+                    if (camera.Y < 0 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Up))
+                    {
                         camera.Y = 0;
                         camera.Y2 = 15;
-                    } else if (camera.Y2 > renderOptions.Map.MaxY + 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Down)) {
+                    }
+                    else if (camera.Y2 > renderOptions.Map.MaxY + 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Down))
+                    {
                         camera.Y = renderOptions.Map.MaxY - 14;
                         camera.Y2 = renderOptions.Map.MaxY + 1;
                     }
@@ -100,38 +115,52 @@ namespace Client.Logic.Graphics.Renderers.Screen
                     MapXOffset = camera.FocusedXOffset;
                     MapYOffset = camera.FocusedYOffset;
 
-                    if (camera.FocusedY - 6 <= 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Up)) {
+                    if (camera.FocusedY - 6 <= 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Up))
+                    {
                         int subAmount = 6;
-                        if (camera.FocusedDirection == Enums.Direction.Up) {
+                        if (camera.FocusedDirection == Enums.Direction.Up)
+                        {
                             subAmount--;
                         }
-                        if (camera.FocusedY - subAmount <= 1 || renderOptions.Map.MaxY == 14) {
+                        if (camera.FocusedY - subAmount <= 1 || renderOptions.Map.MaxY == 14)
+                        {
                             MapYOffset = 0;
                         }
-                    } else if (camera.FocusedY + 10 > renderOptions.Map.MaxY + 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Down)) {
+                    }
+                    else if (camera.FocusedY + 10 > renderOptions.Map.MaxY + 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Down))
+                    {
                         int plusAmount = 9;
-                        if (camera.FocusedDirection == Enums.Direction.Down) {
+                        if (camera.FocusedDirection == Enums.Direction.Down)
+                        {
                             plusAmount--;
                         }
-                        if (camera.FocusedY + plusAmount > renderOptions.Map.MaxY + 1 || renderOptions.Map.MaxY == 14) {
+                        if (camera.FocusedY + plusAmount > renderOptions.Map.MaxY + 1 || renderOptions.Map.MaxY == 14)
+                        {
                             MapYOffset = 0;
                         }
                     }
 
-                    if (camera.FocusedX - 9 <= 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Left)) {
+                    if (camera.FocusedX - 9 <= 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Left))
+                    {
                         int subAmount = 9;
-                        if (camera.FocusedDirection == Enums.Direction.Left) {
+                        if (camera.FocusedDirection == Enums.Direction.Left)
+                        {
                             subAmount--;
                         }
-                        if (camera.FocusedX - subAmount <= 1 || renderOptions.Map.MaxX == 19) {
+                        if (camera.FocusedX - subAmount <= 1 || renderOptions.Map.MaxX == 19)
+                        {
                             MapXOffset = 0;
                         }
-                    } else if (camera.FocusedX + 11 > renderOptions.Map.MaxX + 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Right)) {
+                    }
+                    else if (camera.FocusedX + 11 > renderOptions.Map.MaxX + 1 && !SeamlessWorldHelper.IsMapSeamless(Enums.MapID.Right))
+                    {
                         int plusAmount = 10;
-                        if (camera.FocusedDirection == Enums.Direction.Left) {
+                        if (camera.FocusedDirection == Enums.Direction.Left)
+                        {
                             plusAmount++;
                         }
-                        if (camera.FocusedX + plusAmount > renderOptions.Map.MaxX + 1 || renderOptions.Map.MaxX == 19) {
+                        if (camera.FocusedX + plusAmount > renderOptions.Map.MaxX + 1 || renderOptions.Map.MaxX == 19)
+                        {
                             MapXOffset = 0;
                         }
                     }
@@ -139,68 +168,95 @@ namespace Client.Logic.Graphics.Renderers.Screen
                     //MapRenderer.DrawGroundTiles(destData, renderOptions.Map, renderOptions.DisplayAnimation, camera.X, camera.X2, camera.Y, camera.Y2);
                     MapRenderer.DrawGroundTilesSeamless(destData, renderOptions.Map, renderOptions.DisplayAnimation, camera.X, camera.X2, camera.Y, camera.Y2);
 
-                    
+
                     //prepare focus for relative cutoff of items
-                    if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed) {
+                    if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed)
+                    {
                         renderOptions.Darkness.Focus = new Point(ToTileX(PlayerManager.MyPlayer.X) + PlayerManager.MyPlayer.Offset.X + Constants.TILE_WIDTH / 2, ToTileY(PlayerManager.MyPlayer.Y) + PlayerManager.MyPlayer.Offset.Y + Constants.TILE_HEIGHT / 2);
                     }
 
                     #region Map Items/Npcs/Players
                     // Draw the items on the map
-                    for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+                    for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                    {
                         Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                        if (testMap != null && testMap.Loaded) {
-                            for (int i = 0; i < MaxInfo.MaxMapItems; i++) {
-                                if (testMap.MapItems[i] != null && testMap.MapItems[i].Num > 0 && CanBeSeen(testMap.MapItems[i].X, testMap.MapItems[i].Y, (Enums.MapID)mapCounter)) {
+                        if (testMap != null && testMap.Loaded)
+                        {
+                            for (int i = 0; i < MaxInfo.MaxMapItems; i++)
+                            {
+                                if (testMap.MapItems[i] != null && testMap.MapItems[i].Num > 0 && CanBeSeen(testMap.MapItems[i].X, testMap.MapItems[i].Y, (Enums.MapID)mapCounter))
+                                {
                                     ItemRenderer.DrawMapItem(destData, testMap, (Enums.MapID)mapCounter, i);
                                 }
                             }
                         }
                     }
 
-                    if (Input.InputProcessor.SelectedMove > -1) {
-                        switch (Input.InputProcessor.SelectedMove) {
-                            case 0: {
-                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.W)) {
-                                        if (PlayerManager.MyPlayer.Moves[0].MoveNum > 0) {
+                    if (Input.InputProcessor.SelectedMove > -1)
+                    {
+                        switch (Input.InputProcessor.SelectedMove)
+                        {
+                            case 0:
+                                {
+                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.W))
+                                    {
+                                        if (PlayerManager.MyPlayer.Moves[0].MoveNum > 0)
+                                        {
                                             Moves.MoveRenderer.RenderMoveTargettingDisplay(destData, PlayerManager.MyPlayer,
                                                 Logic.Moves.MoveHelper.Moves[PlayerManager.MyPlayer.Moves[0].MoveNum]);
                                         }
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         Input.InputProcessor.SelectedMove = -1;
                                     }
                                 }
                                 break;
-                            case 1: {
-                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.A)) {
-                                        if (PlayerManager.MyPlayer.Moves[1].MoveNum > 0) {
+                            case 1:
+                                {
+                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.A))
+                                    {
+                                        if (PlayerManager.MyPlayer.Moves[1].MoveNum > 0)
+                                        {
                                             Moves.MoveRenderer.RenderMoveTargettingDisplay(destData, PlayerManager.MyPlayer,
                                                 Logic.Moves.MoveHelper.Moves[PlayerManager.MyPlayer.Moves[1].MoveNum]);
                                         }
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         Input.InputProcessor.SelectedMove = -1;
                                     }
                                 }
                                 break;
-                            case 2: {
-                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.S)) {
-                                        if (PlayerManager.MyPlayer.Moves[2].MoveNum > 0) {
+                            case 2:
+                                {
+                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.S))
+                                    {
+                                        if (PlayerManager.MyPlayer.Moves[2].MoveNum > 0)
+                                        {
                                             Moves.MoveRenderer.RenderMoveTargettingDisplay(destData, PlayerManager.MyPlayer,
                                                 Logic.Moves.MoveHelper.Moves[PlayerManager.MyPlayer.Moves[2].MoveNum]);
                                         }
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         Input.InputProcessor.SelectedMove = -1;
                                     }
                                 }
                                 break;
-                            case 3: {
-                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.D)) {
-                                        if (PlayerManager.MyPlayer.Moves[3].MoveNum > 0) {
+                            case 3:
+                                {
+                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.D))
+                                    {
+                                        if (PlayerManager.MyPlayer.Moves[3].MoveNum > 0)
+                                        {
                                             Moves.MoveRenderer.RenderMoveTargettingDisplay(destData, PlayerManager.MyPlayer,
                                                 Logic.Moves.MoveHelper.Moves[PlayerManager.MyPlayer.Moves[3].MoveNum]);
                                         }
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         Input.InputProcessor.SelectedMove = -1;
                                     }
                                 }
@@ -208,68 +264,75 @@ namespace Client.Logic.Graphics.Renderers.Screen
                         }
                     }
 
-                    if (Stories.Globals.NpcsHidden == false) {
+                    if (Stories.Globals.NpcsHidden == false)
+                    {
                         // Blit out the npcs
-                        for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+                        for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                        {
                             Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                            if (testMap != null && testMap.Loaded) {
-                                for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++) {
-                                    
-                                    if ((CanBeSeen(testMap.MapNpcs[i].Location, (Enums.MapID)mapCounter) || testMap.MapNpcs[i].Leaving) && testMap.MapNpcs[i].Num > 0 && testMap.MapNpcs[i].ScreenActive) {
-
-
-                                        
-
+                            if (testMap != null && testMap.Loaded)
+                            {
+                                for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++)
+                                {
+                                    if ((CanBeSeen(testMap.MapNpcs[i].Location, (Enums.MapID)mapCounter) || testMap.MapNpcs[i].Leaving) && testMap.MapNpcs[i].Num > 0 && testMap.MapNpcs[i].ScreenActive)
+                                    {
                                         NpcRenderer.DrawNpc(destData, testMap, (Enums.MapID)mapCounter, i);
 
-                                        
 
 
 
-                                        if (testMap.MapNpcs[i].StatusAilment != Enums.StatusAilment.OK) {
+
+                                        if (testMap.MapNpcs[i].StatusAilment != Enums.StatusAilment.OK)
+                                        {
                                             NpcRenderer.DrawNpcStatus(destData, testMap, (Enums.MapID)mapCounter, i, (int)testMap.MapNpcs[i].StatusAilment);
-
                                         }
 
-                                        
+
                                         //if (testMap.MapNpcs[i].Confused) {
                                         //    NpcRenderer.DrawNpcStatus(destData, testMap, (Enums.MapID)mapCounter, i, 6);
                                         //}
-                                        if (testMap.MapNpcs[i].VolatileStatus.Count > 0) {
+                                        if (testMap.MapNpcs[i].VolatileStatus.Count > 0)
+                                        {
                                             NpcRenderer.DrawNpcVolatileStatus(destData, testMap, (Enums.MapID)mapCounter, i, testMap.MapNpcs[i].VolatileStatus);
                                         }
 
                                         // TODO: DrawNpcEmotion
                                     }
-                                    
                                 }
                             }
                         }
                     }
 
-                    if (Stories.StoryProcessor.ActiveStory != null) {
-                        if (Stories.StoryProcessor.ActiveStory.State != null) {
-
+                    if (Stories.StoryProcessor.ActiveStory != null)
+                    {
+                        if (Stories.StoryProcessor.ActiveStory.State != null)
+                        {
                             // Process MoveFNPC segment
-                            for (int i = 0; i < Stories.StoryProcessor.ActiveStory.State.FNPCs.Count; i++) {
+                            for (int i = 0; i < Stories.StoryProcessor.ActiveStory.State.FNPCs.Count; i++)
+                            {
                                 if (Stories.StoryProcessor.ActiveStory.State.FNPCs[i].MapID == renderOptions.Map.MapID ||
-                                    Stories.StoryProcessor.ActiveStory.State.FNPCs[i].MapID == "-2" && renderOptions.Map.MapID.StartsWith("i")) {
-
+                                    Stories.StoryProcessor.ActiveStory.State.FNPCs[i].MapID == "-2" && renderOptions.Map.MapID.StartsWith("i"))
+                                {
                                     Stories.FNPCs.FNPC fNPC = Stories.StoryProcessor.ActiveStory.State.FNPCs[i];
 
-                                    if (fNPC.TargetX > -1 || fNPC.TargetY > -1) {
-                                        if (fNPC.Offset.X == 0 && fNPC.Offset.Y == 0) {
-                                            if (fNPC.PathfinderResult == null) {
+                                    if (fNPC.TargetX > -1 || fNPC.TargetY > -1)
+                                    {
+                                        if (fNPC.Offset.X == 0 && fNPC.Offset.Y == 0)
+                                        {
+                                            if (fNPC.PathfinderResult == null)
+                                            {
                                                 fNPC.PathfinderResult = Logic.Maps.MapHelper.ActiveMap.Pathfinder.FindPath(fNPC.X, fNPC.Y, fNPC.TargetX, fNPC.TargetY);
                                             }
                                             PathfinderResult result = fNPC.PathfinderResult;
-                                            if (result.IsPath) {
+                                            if (result.IsPath)
+                                            {
                                                 fNPC.Direction = result.GetNextItem();
                                                 fNPC.Offset = new Point(0, 0);
                                                 fNPC.MovementSpeed = Enums.MovementSpeed.Walking;
 
-                                                switch (fNPC.Direction) {
+                                                switch (fNPC.Direction)
+                                                {
                                                     case Enums.Direction.Up:
                                                         fNPC.Y--;
                                                         fNPC.Offset = new Point(fNPC.Offset.X, Constants.TILE_HEIGHT);
@@ -290,18 +353,23 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
                                                 fNPC.LastMovement = Globals.Tick;
 
-                                                if (fNPC.X == fNPC.TargetX && fNPC.Y == fNPC.TargetY) {
+                                                if (fNPC.X == fNPC.TargetX && fNPC.Y == fNPC.TargetY)
+                                                {
                                                     fNPC.TargetX = -2;
                                                     fNPC.TargetY = -2;
                                                     fNPC.PathfinderResult = null;
                                                 }
                                             }
                                         }
-                                    } else if (fNPC.TargetX == -2 && fNPC.TargetY == -2) {
-                                        if (fNPC.Offset.X == 0 && fNPC.Offset.Y == 0) {
+                                    }
+                                    else if (fNPC.TargetX == -2 && fNPC.TargetY == -2)
+                                    {
+                                        if (fNPC.Offset.X == 0 && fNPC.Offset.Y == 0)
+                                        {
                                             fNPC.TargetX = -1;
                                             fNPC.TargetY = -1;
-                                            if (Stories.StoryProcessor.ActiveStory.State.StoryPaused) {
+                                            if (Stories.StoryProcessor.ActiveStory.State.StoryPaused)
+                                            {
                                                 Stories.StoryProcessor.ActiveStory.State.Unpause();
                                             }
                                         }
@@ -314,20 +382,25 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
                             // Process MovePlayer segment
                             MyPlayer myPlayer = PlayerManager.MyPlayer;
-                            if (myPlayer.TargetX > -1 || myPlayer.TargetY > -1) {
+                            if (myPlayer.TargetX > -1 || myPlayer.TargetY > -1)
+                            {
                                 // We still need to move the player
-                                if (myPlayer.Offset.X == 0 && myPlayer.Offset.Y == 0) {
-                                    if (myPlayer.StoryPathfinderResult == null) {
+                                if (myPlayer.Offset.X == 0 && myPlayer.Offset.Y == 0)
+                                {
+                                    if (myPlayer.StoryPathfinderResult == null)
+                                    {
                                         myPlayer.StoryPathfinderResult = Logic.Maps.MapHelper.ActiveMap.Pathfinder.FindPath(myPlayer.X, myPlayer.Y, myPlayer.TargetX, myPlayer.TargetY);
                                     }
                                     PathfinderResult result = myPlayer.StoryPathfinderResult;
-                                    if (result.IsPath) {
+                                    if (result.IsPath)
+                                    {
                                         myPlayer.Direction = result.GetNextItem();
                                         myPlayer.Offset = new Point(0, 0);
                                         myPlayer.MovementSpeed = myPlayer.StoryMovementSpeed;
 
                                         Network.Messenger.SendPlayerMove();
-                                        switch (myPlayer.Direction) {
+                                        switch (myPlayer.Direction)
+                                        {
                                             case Enums.Direction.Up:
                                                 myPlayer.Y--;
                                                 myPlayer.Offset = new Point(myPlayer.Offset.X, Constants.TILE_HEIGHT);
@@ -348,18 +421,23 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
                                         myPlayer.LastMovement = Globals.Tick;
 
-                                        if (myPlayer.X == myPlayer.TargetX && myPlayer.Y == myPlayer.TargetY) {
+                                        if (myPlayer.X == myPlayer.TargetX && myPlayer.Y == myPlayer.TargetY)
+                                        {
                                             myPlayer.TargetX = -2;
                                             myPlayer.TargetY = -2;
                                             myPlayer.StoryPathfinderResult = null;
                                         }
                                     }
                                 }
-                            } else if (myPlayer.TargetX == -2 && myPlayer.TargetY == -2) {
-                                if (myPlayer.Offset.X == 0 && myPlayer.Offset.Y == 0) {
+                            }
+                            else if (myPlayer.TargetX == -2 && myPlayer.TargetY == -2)
+                            {
+                                if (myPlayer.Offset.X == 0 && myPlayer.Offset.Y == 0)
+                                {
                                     myPlayer.TargetX = -1;
                                     myPlayer.TargetY = -1;
-                                    if (Stories.StoryProcessor.ActiveStory.State.StoryPaused) {
+                                    if (Stories.StoryProcessor.ActiveStory.State.StoryPaused)
+                                    {
                                         Stories.StoryProcessor.ActiveStory.State.Unpause();
                                     }
                                 }
@@ -368,16 +446,20 @@ namespace Client.Logic.Graphics.Renderers.Screen
                     }
 
                     // Draw the arrows and players
-                    if (Stories.Globals.PlayersHidden == false) {
-                        foreach (IPlayer player in PlayerManager.Players.GetAllPlayers()) {
-
-                            for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+                    if (Stories.Globals.PlayersHidden == false)
+                    {
+                        foreach (IPlayer player in PlayerManager.Players.GetAllPlayers())
+                        {
+                            for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                            {
                                 Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                                if (testMap != null && testMap.Loaded) {
-
-                                    if (player.MapID == testMap.MapID) {
-                                        if ((CanBeSeen(player.Location, (Enums.MapID)mapCounter) || player.Leaving) && player.ScreenActive || player == PlayerManager.MyPlayer) {
+                                if (testMap != null && testMap.Loaded)
+                                {
+                                    if (player.MapID == testMap.MapID)
+                                    {
+                                        if ((CanBeSeen(player.Location, (Enums.MapID)mapCounter) || player.Leaving) && player.ScreenActive || player == PlayerManager.MyPlayer)
+                                        {
                                             PlayerRenderer.DrawPlayer(destData, player, testMap, (Enums.MapID)mapCounter);
 #if DEBUG
                                             // TODO: Pet system is a WIP
@@ -389,45 +471,56 @@ namespace Client.Logic.Graphics.Renderers.Screen
                                             //    }
                                             //}
 #endif
-                                            if (!player.Dead) {
-                                                if (player.StatusAilment != Enums.StatusAilment.OK) {
+                                            if (!player.Dead)
+                                            {
+                                                if (player.StatusAilment != Enums.StatusAilment.OK)
+                                                {
                                                     PlayerRenderer.DrawPlayerStatus(destData, testMap, (Enums.MapID)mapCounter, player, (int)player.StatusAilment);
-
                                                 }
                                                 //if (player.Confused) {
                                                 //    PlayerRenderer.DrawPlayerStatus(destData, testMap, (Enums.MapID)mapCounter, player, 6);
                                                 //}
-                                                if (player.VolatileStatus.Count > 0 && player.CurrentEmote == null) {
+                                                if (player.VolatileStatus.Count > 0 && player.CurrentEmote == null)
+                                                {
                                                     PlayerRenderer.DrawPlayerVolatileStatus(destData, testMap, (Enums.MapID)mapCounter, player, player.VolatileStatus);
                                                 }
-                                            } else {
+                                            }
+                                            else
+                                            {
                                                 PlayerRenderer.DrawPlayerStatus(destData, testMap, (Enums.MapID)mapCounter, player, 6);
                                             }
 
-                                            if (player.CurrentEmote != null) {
+                                            if (player.CurrentEmote != null)
+                                            {
                                                 player.CurrentEmote.EmoteTime++;
-                                                if (player.CurrentEmote.EmoteTime > player.CurrentEmote.EmoteSpeed) {
+                                                if (player.CurrentEmote.EmoteTime > player.CurrentEmote.EmoteSpeed)
+                                                {
                                                     player.CurrentEmote.EmoteFrame++;
                                                     player.CurrentEmote.EmoteTime = 0;
                                                 }
 
-                                                if (player.CurrentEmote.EmoteFrame >= 12) {
+                                                if (player.CurrentEmote.EmoteFrame >= 12)
+                                                {
                                                     player.CurrentEmote.CurrentCycle++;
                                                     player.CurrentEmote.EmoteFrame = 0;
                                                 }
-                                                if (player.CurrentEmote.CurrentCycle >= player.CurrentEmote.EmoteCycles) {
+                                                if (player.CurrentEmote.CurrentCycle >= player.CurrentEmote.EmoteCycles)
+                                                {
                                                     player.CurrentEmote = null;
-                                                } else {
+                                                }
+                                                else
+                                                {
                                                     PlayerRenderer.DrawPlayerEmote(destData, testMap, (Enums.MapID)mapCounter, player);
                                                 }
                                             }
                                         }
                                     }
-
                                 }
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         PlayerRenderer.DrawPlayer(destData, PlayerManager.MyPlayer, renderOptions.Map, Enums.MapID.Active);
                     }
                     //draw confusion
@@ -446,11 +539,15 @@ namespace Client.Logic.Graphics.Renderers.Screen
                     //}
 
                     // Render all active move animations
-                    for (int i = Renderers.Moves.MoveRenderer.ActiveAnimations.Count - 1; i >= 0; i--) {
+                    for (int i = Renderers.Moves.MoveRenderer.ActiveAnimations.Count - 1; i >= 0; i--)
+                    {
                         Renderers.Moves.IMoveAnimation animation = Renderers.Moves.MoveRenderer.ActiveAnimations[i];
-                        if (animation.Active) {
+                        if (animation.Active)
+                        {
                             Renderers.Moves.MoveRenderer.RenderMoveAnimation(destData, animation, Screen.ScreenRenderer.ToTilePoint(new Point(animation.StartX, animation.StartY)));
-                        } else {
+                        }
+                        else
+                        {
                             // Remove the animation if it is finished
                             Renderers.Moves.MoveRenderer.ActiveAnimations.RemoveAt(i);
                         }
@@ -462,54 +559,70 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
                     MapRenderer.DrawFringeTilesSeamless(destData, renderOptions.Map, renderOptions.DisplayAnimation, camera.X, camera.X2, camera.Y, camera.Y2);
 
-                    if (renderOptions.DisplayMapGrid) {
+                    if (renderOptions.DisplayMapGrid)
+                    {
                         MapRenderer.DrawMapGrid(destData, renderOptions.Map, camera.X, camera.X2, camera.Y, camera.Y2);
                     }
 
-                    if (renderOptions.DisplayAttributes) {
+                    if (renderOptions.DisplayAttributes)
+                    {
                         MapRenderer.DrawAttributes(destData, renderOptions.Map, camera.X, camera.X2, camera.Y, camera.Y2);
                     }
 
-                    if (renderOptions.DisplayDungeonValues) {
+                    if (renderOptions.DisplayDungeonValues)
+                    {
                         MapRenderer.DrawDungeonValues(destData, renderOptions.Map, camera.X, camera.X2, camera.Y, camera.Y2);
                     }
 
                     #region Player/Npc Names
                     // Draw the player names
-                    if (Stories.Globals.PlayersHidden == false) {
-                        if (IO.Options.PlayerName) {
-                            foreach (IPlayer player in PlayerManager.Players.GetAllPlayers()) {
-
-                                for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+                    if (Stories.Globals.PlayersHidden == false)
+                    {
+                        if (IO.Options.PlayerName)
+                        {
+                            foreach (IPlayer player in PlayerManager.Players.GetAllPlayers())
+                            {
+                                for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                                {
                                     Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                                    if (testMap != null && testMap.Loaded) {
-
-                                        if (player.MapID == testMap.MapID && player.ScreenActive || player == PlayerManager.MyPlayer) {
-                                            if (CanBeIdentified(player.Location, (Enums.MapID)mapCounter)) {
+                                    if (testMap != null && testMap.Loaded)
+                                    {
+                                        if (player.MapID == testMap.MapID && player.ScreenActive || player == PlayerManager.MyPlayer)
+                                        {
+                                            if (CanBeIdentified(player.Location, (Enums.MapID)mapCounter))
+                                            {
                                                 PlayerRenderer.DrawPlayerGuild(destData, testMap, (Enums.MapID)mapCounter, player);
                                                 PlayerRenderer.DrawPlayerName(destData, testMap, (Enums.MapID)mapCounter, player);
                                             }
                                         }
-
                                     }
                                 }
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         PlayerRenderer.DrawPlayerName(destData, renderOptions.Map, Enums.MapID.Active, PlayerManager.MyPlayer);
                         PlayerRenderer.DrawPlayerGuild(destData, renderOptions.Map, Enums.MapID.Active, PlayerManager.MyPlayer);
                     }
-                    if (Stories.Globals.NpcsHidden == false) {
+                    if (Stories.Globals.NpcsHidden == false)
+                    {
                         // Draw npc names
-                        if (IO.Options.NpcName) {
-                            for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+                        if (IO.Options.NpcName)
+                        {
+                            for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                            {
                                 Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                                if (testMap != null && testMap.Loaded) {
-                                    for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++) {
-                                        if (testMap.MapNpcs[i].Num > 0 && testMap.MapNpcs[i].ScreenActive) {
-                                            if (CanBeIdentified(testMap.MapNpcs[i].Location, (Enums.MapID)mapCounter)) {
+                                if (testMap != null && testMap.Loaded)
+                                {
+                                    for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++)
+                                    {
+                                        if (testMap.MapNpcs[i].Num > 0 && testMap.MapNpcs[i].ScreenActive)
+                                        {
+                                            if (CanBeIdentified(testMap.MapNpcs[i].Location, (Enums.MapID)mapCounter))
+                                            {
                                                 NpcRenderer.DrawMapNpcName(destData, testMap, (Enums.MapID)mapCounter, i);
                                             }
                                         }
@@ -522,13 +635,18 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
                     #region Player/Npc bars
                     // Draw the NPC HP Bars
-                    if (IO.Options.NpcBar) {
-                        for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+                    if (IO.Options.NpcBar)
+                    {
+                        for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                        {
                             Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                            if (testMap != null && testMap.Loaded) {
-                                for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++) {
-                                    if (CanBeIdentified(renderOptions.Map.MapNpcs[i].Location, (Enums.MapID)mapCounter)) {
+                            if (testMap != null && testMap.Loaded)
+                            {
+                                for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++)
+                                {
+                                    if (CanBeIdentified(renderOptions.Map.MapNpcs[i].Location, (Enums.MapID)mapCounter))
+                                    {
                                         NpcRenderer.DrawNpcBars(destData, renderOptions.Map, (Enums.MapID)mapCounter, i);
                                     }
                                 }
@@ -537,22 +655,27 @@ namespace Client.Logic.Graphics.Renderers.Screen
                     }
 
                     // Draw the player bar
-                    if (IO.Options.PlayerBar) {
+                    if (IO.Options.PlayerBar)
+                    {
                         PlayerRenderer.DrawPlayerBar(destData);
                     }
 
                     #endregion
 
-                    if (Stories.Globals.PlayersHidden == false) {
-                        foreach (IPlayer player in PlayerManager.Players.GetAllPlayers()) {
-
-                            for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+                    if (Stories.Globals.PlayersHidden == false)
+                    {
+                        foreach (IPlayer player in PlayerManager.Players.GetAllPlayers())
+                        {
+                            for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                            {
                                 Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                                if (testMap != null && testMap.Loaded) {
-
-                                    if (player.MapID == testMap.MapID) {
-                                        if ((CanBeSeen(player.Location, (Enums.MapID)mapCounter) || player.Leaving) && player.ScreenActive || player == PlayerManager.MyPlayer) {
+                                if (testMap != null && testMap.Loaded)
+                                {
+                                    if (player.MapID == testMap.MapID)
+                                    {
+                                        if ((CanBeSeen(player.Location, (Enums.MapID)mapCounter) || player.Leaving) && player.ScreenActive || player == PlayerManager.MyPlayer)
+                                        {
                                             Sprites.SpriteRenderer.DrawSpeechBubble(destData, testMap, (Enums.MapID)mapCounter, player, Globals.Tick);
                                         }
                                     }
@@ -568,32 +691,38 @@ namespace Client.Logic.Graphics.Renderers.Screen
                     //    Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("checkcommands", "/rstart 22 2"));
                     //}
                     // Process player movements (actually move them)
-                    foreach (IPlayer player in PlayerManager.Players.GetAllPlayers()) {
-
-                        for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+                    foreach (IPlayer player in PlayerManager.Players.GetAllPlayers())
+                    {
+                        for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                        {
                             Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                            if (testMap != null && testMap.Loaded) {
-
-                                if (player.MapID == testMap.MapID) {
-                                    if ((CanBeSeen(player.Location, (Enums.MapID)mapCounter) || player.Leaving) && player.ScreenActive || player == PlayerManager.MyPlayer) {
+                            if (testMap != null && testMap.Loaded)
+                            {
+                                if (player.MapID == testMap.MapID)
+                                {
+                                    if ((CanBeSeen(player.Location, (Enums.MapID)mapCounter) || player.Leaving) && player.ScreenActive || player == PlayerManager.MyPlayer)
+                                    {
                                         GameProcessor.ProcessSpriteMovement(player);
                                         break;
                                     }
                                 }
-
                             }
                         }
                     }
 
-                    for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+                    for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                    {
                         Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                        if (testMap != null && testMap.Loaded) {
-
-                            for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++) {
-                                if (testMap.MapNpcs[i].Num > 0 && testMap.MapNpcs[i].ScreenActive) {
-                                    if (CanBeSeen(testMap.MapNpcs[i].Location, (Enums.MapID)mapCounter) || testMap.MapNpcs[i].Leaving) {
+                        if (testMap != null && testMap.Loaded)
+                        {
+                            for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++)
+                            {
+                                if (testMap.MapNpcs[i].Num > 0 && testMap.MapNpcs[i].ScreenActive)
+                                {
+                                    if (CanBeSeen(testMap.MapNpcs[i].Location, (Enums.MapID)mapCounter) || testMap.MapNpcs[i].Leaving)
+                                    {
                                         GameProcessor.ProcessSpriteMovement(testMap.MapNpcs[i]);
                                     }
                                 }
@@ -603,15 +732,18 @@ namespace Client.Logic.Graphics.Renderers.Screen
 
                     #endregion
 
-                    if (renderOptions.Weather != null && !renderOptions.Weather.Disposed) {
+                    if (renderOptions.Weather != null && !renderOptions.Weather.Disposed)
+                    {
                         renderOptions.Weather.Render(destData, Globals.Tick);
                     }
 
-                    if (renderOptions.Overlay != null && !renderOptions.Overlay.Disposed) {
+                    if (renderOptions.Overlay != null && !renderOptions.Overlay.Disposed)
+                    {
                         renderOptions.Overlay.Render(destData, Globals.Tick);
                     }
 
-                    if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed) {
+                    if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed)
+                    {
                         /*if (PlayerManager.MyPlayer.MovementSpeed != Enums.MovementSpeed.Standing) {
                             switch (PlayerManager.MyPlayer.Direction) {
                                 case Enums.Direction.Up:
@@ -671,108 +803,137 @@ namespace Client.Logic.Graphics.Renderers.Screen
                         MapRenderer.DrawMiniMap(destData, renderOptions.Map);
                     }
 
-                    if (renderOptions.DisplayLocation && Windows.WindowSwitcher.GameWindow.inMapEditor == false) {
+                    if (renderOptions.DisplayLocation && Windows.WindowSwitcher.GameWindow.inMapEditor == false)
+                    {
                         TextRenderer.DrawText(destData, "Char Loc: X: " + PlayerManager.MyPlayer.Location.X + " Y: " + PlayerManager.MyPlayer.Location.Y, Color.Yellow, Color.Black, 12, 30);
                         // TODO: Draw Cursor Location
                         TextRenderer.DrawText(destData, "Map: " + PlayerManager.MyPlayer.MapID, Color.Yellow, Color.Black, 12, 48);
                     }
 
-                    if (IO.Options.Ping && Windows.WindowSwitcher.GameWindow.inMapEditor == false) {
+                    if (IO.Options.Ping && Windows.WindowSwitcher.GameWindow.inMapEditor == false)
+                    {
                         TextRenderer.DrawText(destData, "Ping: " + renderOptions.RecentPing + "ms", Color.Yellow, Color.Black, 12, 66);
                     }
 
-                    if (IO.Options.FPS && Windows.WindowSwitcher.GameWindow.inMapEditor == false) {
+                    if (IO.Options.FPS && Windows.WindowSwitcher.GameWindow.inMapEditor == false)
+                    {
                         TextRenderer.DrawText(destData, "FPS: " + renderOptions.RecentFPS, Color.Yellow, Color.Black, 12, 84);
                     }
 
-                    if (Windows.WindowSwitcher.GameWindow.inMapEditor) {
+                    if (Windows.WindowSwitcher.GameWindow.inMapEditor)
+                    {
                         TextRenderer.DrawText(destData, "Char Loc: X: " + PlayerManager.MyPlayer.Location.X + " Y: " + PlayerManager.MyPlayer.Location.Y, Color.Yellow, Color.Black, 12, 12);
                         // TODO: Draw Cursor Location
                         TextRenderer.DrawText(destData, "Map: " + PlayerManager.MyPlayer.MapID, Color.Yellow, Color.Black, 12, 30);
                         TextRenderer.DrawText(destData, "Selected Tile: " + Windows.WindowSwitcher.GameWindow.GetSelectedTileNumber(), Color.Yellow, Color.Black, 12, 58);
                     }
 
-                    if (!Network.NetworkManager.TcpClient.Socket.Connected) {
+                    if (!Network.NetworkManager.TcpClient.Socket.Connected)
+                    {
                         Globals.ServerStatus = "You have been disconnected from the server!";
                     }
 
-                    if (!string.IsNullOrEmpty(Globals.ServerStatus)) {
+                    if (!string.IsNullOrEmpty(Globals.ServerStatus))
+                    {
                         TextRenderer.DrawText(destData, Globals.ServerStatus, Color.Red, Color.Black, 12, 48);
                     }
                     MapRenderer.DrawMapName(destData, renderOptions.Map);
 
-                    if (!Windows.WindowSwitcher.GameWindow.inMapEditor) {
+                    if (!Windows.WindowSwitcher.GameWindow.inMapEditor)
+                    {
                         PlayerRenderer.DrawMiniBars(destData);
                     }
 
-                    if (Input.InputProcessor.SelectedMove > -1) {
+                    if (Input.InputProcessor.SelectedMove > -1)
+                    {
                         bool canDisplay = false;
-                        switch (Input.InputProcessor.SelectedMove) {
-                            case 0: {
-                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.W)) {
+                        switch (Input.InputProcessor.SelectedMove)
+                        {
+                            case 0:
+                                {
+                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.W))
+                                    {
                                         canDisplay = true;
                                     }
                                 }
                                 break;
-                            case 1: {
-                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.A)) {
+                            case 1:
+                                {
+                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.A))
+                                    {
                                         canDisplay = true;
                                     }
                                 }
                                 break;
-                            case 2: {
-                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.S)) {
+                            case 2:
+                                {
+                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.S))
+                                    {
                                         canDisplay = true;
                                     }
                                 }
                                 break;
-                            case 3: {
-                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.D)) {
+                            case 3:
+                                {
+                                    if (SdlDotNet.Input.Keyboard.IsKeyPressed(SdlDotNet.Input.Key.D))
+                                    {
                                         canDisplay = true;
                                     }
                                 }
                                 break;
                         }
-                        if (canDisplay) {
+                        if (canDisplay)
+                        {
                             RecruitMove move = Logic.Players.PlayerManager.MyPlayer.Moves[Input.InputProcessor.SelectedMove];
                             string displayString = Logic.Moves.MoveHelper.Moves[move.MoveNum].Name + "   " + move.CurrentPP + "/" + move.MaxPP;
                             Color textColor;
-                            if (move.CurrentPP == 0 || move.Sealed) {
+                            if (move.CurrentPP == 0 || move.Sealed)
+                            {
                                 textColor = Color.Red;
-                            } else {
+                            }
+                            else
+                            {
                                 textColor = Color.WhiteSmoke;
                             }
                             TextRenderer.DrawText(destData, displayString, textColor, Color.Black, new Point(10, 30));
                         }
                     }
 
-                    if (Globals.GettingMap) {
+                    if (Globals.GettingMap)
+                    {
                         TextRenderer.DrawText(destData, "Loading Map...", Color.Blue, Color.Black, 5, 5);
                     }
 
-                    if (Globals.SavingMap) {
+                    if (Globals.SavingMap)
+                    {
                         TextRenderer.DrawText(destData, "Saving Map...", Color.Blue, Color.Black, 5, 5);
                     }
 
-                    if (Stories.StoryProcessor.loadingStory) {
+                    if (Stories.StoryProcessor.loadingStory)
+                    {
                         TextRenderer.DrawText(destData, "Loading story...", Color.Blue, Color.Black, 5, 5);
                     }
 
-                    if (renderOptions.ScreenVisible == false) {
+                    if (renderOptions.ScreenVisible == false)
+                    {
                         destData.Surface.Fill(Color.Black);
                     }
                 }
 
-                if (renderOptions.ScreenOverlay != null) {
+                if (renderOptions.ScreenOverlay != null)
+                {
                     renderOptions.ScreenOverlay.Render(destData, Globals.Tick);
                 }
 
-                if (renderOptions.StoryBackground != null) {
+                if (renderOptions.StoryBackground != null)
+                {
                     destData.Blit(renderOptions.StoryBackground, new Point(0, 0));
                 }
 
-                if (renderOptions.ScreenImageOverlays.Count > 0) {
-                    for (int i = 0; i < renderOptions.ScreenImageOverlays.Count; i++) {
+                if (renderOptions.ScreenImageOverlays.Count > 0)
+                {
+                    for (int i = 0; i < renderOptions.ScreenImageOverlays.Count; i++)
+                    {
                         destData.Blit(renderOptions.ScreenImageOverlays[i].Surface, new Point(renderOptions.ScreenImageOverlays[i].X, renderOptions.ScreenImageOverlays[i].Y));
                     }
                 }
@@ -781,11 +942,14 @@ namespace Client.Logic.Graphics.Renderers.Screen
                 //    mLastAnim = e.Tick;
                 //}
 
-                if (IO.Options.FPS) {
+                if (IO.Options.FPS)
+                {
                     renderOptions.RecentRenders++;
-                    if (renderOptions.RecentRenders >= 10) {
+                    if (renderOptions.RecentRenders >= 10)
+                    {
                         RenderStopwatch.Stop();
-                        if (RenderStopwatch.Elapsed.TotalSeconds > 0) {
+                        if (RenderStopwatch.Elapsed.TotalSeconds > 0)
+                        {
                             renderOptions.RecentFPS = (int)(1 / (RenderStopwatch.Elapsed.TotalSeconds / 10));
                         }
                         RenderStopwatch.Reset();
@@ -793,7 +957,8 @@ namespace Client.Logic.Graphics.Renderers.Screen
                         renderOptions.RecentRenders = 0;
                     }
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Inner Rendering:");
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
@@ -801,61 +966,72 @@ namespace Client.Logic.Graphics.Renderers.Screen
             }
         }
 
-        public static int ToScreenX(int x) {
+        public static int ToScreenX(int x)
+        {
             return x - (Camera.X * 32) - MapXOffset;
         }
 
-        public static int ToScreenY(int y) {
+        public static int ToScreenY(int y)
+        {
             return y - (Camera.Y * 32) - MapYOffset;
         }
 
-        public static int ToTileX(int x) {
+        public static int ToTileX(int x)
+        {
             return (x * Constants.TILE_WIDTH) - (Camera.X * Constants.TILE_WIDTH) - MapXOffset;
         }
 
-        public static int ToTileY(int y) {
+        public static int ToTileY(int y)
+        {
             return (y * Constants.TILE_HEIGHT) - (Camera.Y * Constants.TILE_HEIGHT) - MapYOffset;
         }
 
-        public static Point ToTilePoint(Point point) {
+        public static Point ToTilePoint(Point point)
+        {
             point.X = ToTileX(point.X);
             point.Y = ToTileY(point.Y);
             return point;
         }
 
 
-        public static bool WillBeSeen(Point location, Enums.MapID targetMapID) {//checks to see if just out of range
+        public static bool WillBeSeen(Point location, Enums.MapID targetMapID)
+        {//checks to see if just out of range
             return WillBeSeen(location.X, location.Y, targetMapID);
         }
 
-        public static bool WillBeSeen(int x, int y, Enums.MapID targetMapID) {
-
+        public static bool WillBeSeen(int x, int y, Enums.MapID targetMapID)
+        {
             int upDistance = 0, downDistance = 0, leftDistance = 0, rightDistance = 0,
                 farUp, farDown, farLeft, farRight;
 
-            switch (PlayerManager.MyPlayer.Direction) {
-                case Enums.Direction.Up: {
+            switch (PlayerManager.MyPlayer.Direction)
+            {
+                case Enums.Direction.Up:
+                    {
                         upDistance = 9;
                         downDistance = 1;
                         leftDistance = 2;
                         rightDistance = 2;
                     }
                     break;
-                case Enums.Direction.Down: {
+                case Enums.Direction.Down:
+                    {
                         upDistance = 1;
                         downDistance = 9;
                         leftDistance = 2;
                         rightDistance = 2;
                     }
                     break;
-                case Enums.Direction.Left: {
+                case Enums.Direction.Left:
+                    {
                         upDistance = 2;
                         downDistance = 2;
                         leftDistance = 9;
                         rightDistance = 1;
                     }
                     break;
-                case Enums.Direction.Right: {
+                case Enums.Direction.Right:
+                    {
                         upDistance = 2;
                         downDistance = 2;
                         leftDistance = 1;
@@ -865,13 +1041,15 @@ namespace Client.Logic.Graphics.Renderers.Screen
             }
 
 
-            if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed) {
+            if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed)
+            {
                 farUp = PlayerManager.MyPlayer.Y - renderOptions.Darkness.Range / 2;
                 farDown = PlayerManager.MyPlayer.Y + renderOptions.Darkness.Range / 2;
                 farLeft = PlayerManager.MyPlayer.X - renderOptions.Darkness.Range / 2;
                 farRight = PlayerManager.MyPlayer.X + renderOptions.Darkness.Range / 2;
-
-            } else {
+            }
+            else
+            {
                 farUp = Camera.Y;
                 farDown = Camera.Y2;
                 farLeft = Camera.X;
@@ -891,16 +1069,19 @@ namespace Client.Logic.Graphics.Renderers.Screen
             return true;
         }
 
-        public static bool CanBeSeen(Point location, Enums.MapID targetMapID) {
+        public static bool CanBeSeen(Point location, Enums.MapID targetMapID)
+        {
             return CanBeSeen(location.X, location.Y, targetMapID);
         }
 
-        public static bool CanBeSeen(int x, int y, Enums.MapID targetMapID) {
+        public static bool CanBeSeen(int x, int y, Enums.MapID targetMapID)
+        {
             SeamlessWorldHelper.ConvertCoordinatesToBorderless(renderOptions.Map, targetMapID, ref x, ref y);
 
             if (x < Camera.X || x > Camera.X2 || y < Camera.Y || y > Camera.Y2) return false;
 
-            if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed) {
+            if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed)
+            {
                 int distance = (int)System.Math.Floor(2 * System.Math.Sqrt(System.Math.Pow(PlayerManager.MyPlayer.X - x, 2) + System.Math.Pow(PlayerManager.MyPlayer.Y - y, 2)));
                 if (distance > renderOptions.Darkness.Range) return false;
             }
@@ -908,16 +1089,19 @@ namespace Client.Logic.Graphics.Renderers.Screen
             return true;
         }
 
-        public static bool CanBeIdentified(Point location, Enums.MapID targetMapID) {
+        public static bool CanBeIdentified(Point location, Enums.MapID targetMapID)
+        {
             return CanBeIdentified(location.X, location.Y, targetMapID);
         }
 
-        public static bool CanBeIdentified(int x, int y, Enums.MapID targetMapID) {
+        public static bool CanBeIdentified(int x, int y, Enums.MapID targetMapID)
+        {
             SeamlessWorldHelper.ConvertCoordinatesToBorderless(renderOptions.Map, targetMapID, ref x, ref y);
 
             if (x < Camera.X || x > Camera.X2 || y < Camera.Y || y > Camera.Y2) return false;
 
-            if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed) {
+            if (renderOptions.Darkness != null && !renderOptions.Darkness.Disposed)
+            {
                 int distance = (int)System.Math.Ceiling(2 * System.Math.Sqrt(System.Math.Pow(PlayerManager.MyPlayer.X - x, 2) + System.Math.Pow(PlayerManager.MyPlayer.Y - y, 2)));
                 if (distance > renderOptions.Darkness.Range - 1) return false;
             }
@@ -926,38 +1110,47 @@ namespace Client.Logic.Graphics.Renderers.Screen
         }
 
 
-        public static void DeactivateOffscreenSprites() {
+        public static void DeactivateOffscreenSprites()
+        {
             DeactivateOffscreenPlayers();
             DeactivateOffscreenNpcs();
         }
 
-        public static void DeactivateOffscreenPlayers() {
-            foreach (IPlayer player in PlayerManager.Players.GetAllPlayers()) {
-
-                for (int mapCounter = 0; mapCounter < 9; mapCounter++) {
+        public static void DeactivateOffscreenPlayers()
+        {
+            foreach (IPlayer player in PlayerManager.Players.GetAllPlayers())
+            {
+                for (int mapCounter = 0; mapCounter < 9; mapCounter++)
+                {
                     Logic.Maps.Map testMap = Logic.Maps.MapHelper.Maps[(Enums.MapID)mapCounter];
 
-                    if (testMap != null && testMap.Loaded) {
-
-                        if (testMap.MapID == PlayerManager.MyPlayer.MapID && mapCounter != 0) {
+                    if (testMap != null && testMap.Loaded)
+                    {
+                        if (testMap.MapID == PlayerManager.MyPlayer.MapID && mapCounter != 0)
+                        {
                             continue;
                         }
 
-                        if (player.MapID == testMap.MapID) {
-                            if (!WillBeSeen(player.Location, (Enums.MapID)mapCounter) && player != PlayerManager.MyPlayer) {
+                        if (player.MapID == testMap.MapID)
+                        {
+                            if (!WillBeSeen(player.Location, (Enums.MapID)mapCounter) && player != PlayerManager.MyPlayer)
+                            {
                                 player.ScreenActive = false;
                             }
                         }
-
                     }
                 }
             }
         }
 
-        public static void DeactivateOffscreenNpcs() {
-            for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++) {
-                if (renderOptions.Map.MapNpcs[i].ScreenActive) {
-                    if (!WillBeSeen(renderOptions.Map.MapNpcs[i].Location, Enums.MapID.Active)) {
+        public static void DeactivateOffscreenNpcs()
+        {
+            for (int i = 0; i < MaxInfo.MAX_MAP_NPCS; i++)
+            {
+                if (renderOptions.Map.MapNpcs[i].ScreenActive)
+                {
+                    if (!WillBeSeen(renderOptions.Map.MapNpcs[i].Location, Enums.MapID.Active))
+                    {
                         renderOptions.Map.MapNpcs[i].ScreenActive = false;
                     }
                 }
@@ -983,19 +1176,23 @@ namespace Client.Logic.Graphics.Renderers.Screen
             //}
         }
 
-        public static int GetScreenLeft() {
+        public static int GetScreenLeft()
+        {
             return camera.FocusedX - 9;
         }
 
-        public static int GetScreenTop() {
+        public static int GetScreenTop()
+        {
             return camera.FocusedY - 7;
         }
 
-        public static int GetScreenRight() {
+        public static int GetScreenRight()
+        {
             return camera.FocusedX + 11;
         }
 
-        public static int GetScreenBottom() {
+        public static int GetScreenBottom()
+        {
             return camera.FocusedY + 8;
         }
     }

@@ -39,7 +39,8 @@ namespace Client.Logic.Graphics
         public static Surface MenuVerticalBorder { get { return menuVerticalBorder; } }
         static Surface menuVerticalBorder;
 
-        public static void LoadCache() {
+        public static void LoadCache()
+        {
             menuHorizontal = Skins.SkinManager.LoadGuiElement("General\\Menus", "menu-horizontal.png", false);
             menuHorizontalFill = Skins.SkinManager.LoadGuiElement("General\\Menus", "menu-horizontal-fill.png", false);
             menuHorizontalBorder = Skins.SkinManager.LoadGuiElement("General\\Menus", "menu-horizontal-border.png", false);

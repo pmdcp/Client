@@ -1,4 +1,12 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using Client.Logic.Graphics;
+
+using SdlDotNet.Widgets;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -17,18 +25,10 @@
 
 namespace Client.Logic.Menus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using Client.Logic.Graphics;
-
-    using SdlDotNet.Widgets;
-
     class mnuBasicStats : Logic.Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -87,7 +87,7 @@ namespace Client.Logic.Menus
             lblMissionExp.Font = FontManager.LoadFont("PMDCP", 32);
             lblMissionExp.Text = Missions.MissionManager.RankToString(Players.PlayerManager.MyPlayer.ExplorerRank) + " Rank (" + Players.PlayerManager.MyPlayer.MissionExp + " pts.)";
             lblMissionExp.ForeColor = Color.WhiteSmoke;
-            
+
             lblExplorerRank = new Label("lblExplorerRank");
             lblExplorerRank.Location = new Point(360, 30);
             lblExplorerRank.AutoSize = true;

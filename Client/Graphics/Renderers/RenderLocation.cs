@@ -1,4 +1,10 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using SdlDotNet.Graphics;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,23 +24,18 @@
 
 namespace Client.Logic.Graphics.Renderers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using SdlDotNet.Graphics;
-
     class RenderLocation
     {
         #region Constructors
 
-        public RenderLocation(RendererDestinationData destinationData, int x, int y) {
+        public RenderLocation(RendererDestinationData destinationData, int x, int y)
+        {
             DestinationSurface = destinationData;
             DestinationPoint = new Point(x, y);
         }
 
-        public RenderLocation(RendererDestinationData destinationData, Point destinationPoint) {
+        public RenderLocation(RendererDestinationData destinationData, Point destinationPoint)
+        {
             DestinationSurface = destinationData;
             DestinationPoint = destinationPoint;
         }
@@ -43,12 +44,14 @@ namespace Client.Logic.Graphics.Renderers
 
         #region Properties
 
-        public Point DestinationPoint {
+        public Point DestinationPoint
+        {
             get;
             set;
         }
 
-        public RendererDestinationData DestinationSurface {
+        public RendererDestinationData DestinationSurface
+        {
             get;
             set;
         }

@@ -39,7 +39,8 @@ namespace Client.Logic.Windows
         TextBox txtRetypePassword;
 
         public winChangePassword()
-            : base("winChangePassword") {
+            : base("winChangePassword")
+        {
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Text = "Change Password";
@@ -49,7 +50,7 @@ namespace Client.Logic.Windows
             this.Location = new Point(DrawingSupport.GetCenter(SdlDotNet.Graphics.Video.Screen.Size, this.Size).X, 5);
 
             lblBack = new Label("lblBack");
-            lblBack.Font = Graphics.FontManager.LoadFont("PMDCP", 24);
+            lblBack.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             lblBack.Text = "Back to Account Settings";
             lblBack.Location = new Point(45, 300);
             lblBack.AutoSize = true;
@@ -122,14 +123,18 @@ namespace Client.Logic.Windows
             this.LoadComplete();
         }
 
-        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void lblBack_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             this.Close();
             WindowSwitcher.ShowAccountSettings();
         }
 
-        void lblChangePassword_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtNewPassword.Text) && !string.IsNullOrEmpty(txtRetypePassword.Text)) {
-                if (txtNewPassword.Text == txtRetypePassword.Text) {
+        void lblChangePassword_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtNewPassword.Text) && !string.IsNullOrEmpty(txtRetypePassword.Text))
+            {
+                if (txtNewPassword.Text == txtRetypePassword.Text)
+                {
                     Network.Messenger.SendPasswordChange(txtName.Text, txtPassword.Text, txtNewPassword.Text);
                 }
             }

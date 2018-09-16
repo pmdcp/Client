@@ -26,12 +26,15 @@ namespace Client.Logic.Missions
     {
         List<Job> jobs;
 
-        public JobList() {
+        public JobList()
+        {
             jobs = new List<Job>();
         }
 
-        public List<Job> Jobs {
-            get {
+        public List<Job> Jobs
+        {
+            get
+            {
                 return jobs;
             }
         }

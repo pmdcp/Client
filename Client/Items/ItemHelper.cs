@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Items
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class ItemHelper
     {
         #region Fields
@@ -56,17 +55,21 @@ namespace Client.Logic.Items
 
         public static void LoadItemsFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n, temp;
                 n = 1;
-                for (int i = 0; i < MaxInfo.MaxItems; i++) {
+                for (int i = 0; i < MaxInfo.MaxItems; i++)
+                {
                     temp = Logic.MathFunctions.CalculatePercent(i, MaxInfo.MaxItems);
-                    if (temp >= 100) {
+                    if (temp >= 100)
+                    {
                         temp = 99;
                     }
                     dataLoadPercent = temp;
                     Item item = new Item();
-                    if (parse[n + 1] != "0") {
+                    if (parse[n + 1] != "0")
+                    {
                         // Update the item
                         item.Name = parse[n + 1];
                         item.Desc = parse[n + 2];
@@ -97,7 +100,9 @@ namespace Client.Logic.Items
                         item.AttackSpeed = parse[n + 27].ToInt();
                         item.RecruitBonus = parse[n + 28].ToInt();
                         n += 29;
-                    } else {
+                    }
+                    else
+                    {
                         n += 2;
                     }
 
@@ -105,7 +110,9 @@ namespace Client.Logic.Items
                     ((Windows.winLoading)Windows.WindowSwitcher.FindWindow("winLoading")).UpdateLoadText("Recieving Data... " + DataManager.AverageLoadPercent().ToString() + "%");
                 }
                 dataLoadPercent = 100;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }

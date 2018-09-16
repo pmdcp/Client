@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic.Arrows
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using PMDCP.Core;
-
     class ArrowHelper
     {
         #region Fields
@@ -50,14 +49,16 @@ namespace Client.Logic.Arrows
 
         public static void InitArrowCollection()
         {
-            mArrows = new ArrowCollection(MaxInfo.MAX_ARROWS+2);
+            mArrows = new ArrowCollection(MaxInfo.MAX_ARROWS + 2);
         }
 
         public static void LoadArrowsFromPacket(string[] parse)
         {
-            try {
+            try
+            {
                 int n = 1;
-                for (int i = 0; i < MaxInfo.MAX_ARROWS; i++) {
+                for (int i = 0; i < MaxInfo.MAX_ARROWS; i++)
+                {
                     dataLoadPercent = System.Math.Min(99, Logic.MathFunctions.CalculatePercent(i, MaxInfo.MAX_ARROWS));
                     mArrows[i] = new Arrow();
                     mArrows[i].Name = parse[n + 1];
@@ -68,7 +69,9 @@ namespace Client.Logic.Arrows
                     ((Windows.winLoading)Windows.WindowSwitcher.FindWindow("winLoading")).UpdateLoadText("Recieving Data... " + DataManager.AverageLoadPercent().ToString() + "%");
                 }
                 dataLoadPercent = 100;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Exceptions.ExceptionHandler.OnException(ex);
             }
         }

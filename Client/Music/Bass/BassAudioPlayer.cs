@@ -1,4 +1,14 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Forms;
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,17 +28,6 @@
 
 namespace Client.Logic.Music.Bass
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Threading;
-    using System.Windows.Forms;
-    using PMDCP.Core;
-
     public class BassAudioPlayer : IDisposable, IAudioPlayer
     {
         #region Fields
@@ -64,7 +63,8 @@ namespace Client.Logic.Music.Bass
 
         #region Properties
 
-        public string CurrentSong {
+        public string CurrentSong
+        {
             get { return currentSong; }
         }
 
@@ -76,7 +76,8 @@ namespace Client.Logic.Music.Bass
 
         #region Methods
 
-        public void Dispose() {
+        public void Dispose()
+        {
             //Get rid of the Audio object.
             StopMusic();
             Bass.BASS_Free();
@@ -98,14 +99,16 @@ namespace Client.Logic.Music.Bass
         //    }
         //}
 
-        public BassAudioPlayer() {
+        public BassAudioPlayer()
+        {
             Bass.BASS_Init(-1, 44100, BASS_DEVICE_DEFAULT, IntPtr.Zero, 0);
 
             pauseResetEvent = new ManualResetEvent(false);
             stopResetEvent = new ManualResetEvent(false);
         }
 
-        public bool IsMusicPaused() {
+        public bool IsMusicPaused()
+        {
             return paused;
         }
 
@@ -136,8 +139,10 @@ namespace Client.Logic.Music.Bass
         //    musicPlayCount = 0;
         //}
 
-        public void Pause() {
-            if (!paused) {
+        public void Pause()
+        {
+            if (!paused)
+            {
                 Bass.BASS_ChannelPause(loadedStream);
                 pauseResetEvent.Reset();
                 pauseResetEvent.WaitOne();
@@ -145,16 +150,20 @@ namespace Client.Logic.Music.Bass
         }
 
 
-        public void FadeToNext(string nextSong, int milliseconds) {
-            if ((currentSong == null || !currentSong.EndsWith(nextSong)) && nextSong != NextSong) {
+        public void FadeToNext(string nextSong, int milliseconds)
+        {
+            if ((currentSong == null || !currentSong.EndsWith(nextSong)) && nextSong != NextSong)
+            {
                 Bass.BASS_ChannelSlideAttribute(loadedStream, 2, 0, (uint)milliseconds);
                 NextSong = nextSong;
                 TimeOfNextSong = Globals.Tick + milliseconds;
             }
         }
 
-        public void PlayNextMusic() {
-            if (NextSong != null) {
+        public void PlayNextMusic()
+        {
+            if (NextSong != null)
+            {
                 StopMusic();
                 PlayMusic(NextSong, -1);
                 NextSong = null;
@@ -162,21 +171,25 @@ namespace Client.Logic.Music.Bass
             }
         }
 
-        public void PlayMusic(string songName) {
+        public void PlayMusic(string songName)
+        {
             PlayMusic(songName, -1);
         }
 
-        public void PlayMusic(string songName, int numberOfTimes) {
+        public void PlayMusic(string songName, int numberOfTimes)
+        {
             PlayMusic(songName, numberOfTimes, false, true);
         }
 
-        public void PlayMusic(string songName, int numberOfTimes, bool ignoreMusicSetting, bool ignoreIfPlaying) {
+        public void PlayMusic(string songName, int numberOfTimes, bool ignoreMusicSetting, bool ignoreIfPlaying)
+        {
             Thread musicLoadThread = new Thread(new ParameterizedThreadStart(PlayMusicBackground));
             musicLoadThread.IsBackground = true;
             musicLoadThread.Start(new object[] { songName, numberOfTimes, ignoreMusicSetting, ignoreIfPlaying });
         }
 
-        private void PlayMusicBackground(Object param) {
+        private void PlayMusicBackground(Object param)
+        {
             object[] args = param as object[];
             string songName = args[0] as string;
             int numberOfTimes = (int)args[1];
@@ -184,21 +197,27 @@ namespace Client.Logic.Music.Bass
             bool ignoreIfPlaying = (bool)args[3];
 
             VerifySongName(ref songName);
-            if (ignoreMusicSetting == false) {
-                if (IO.Options.Music == false) {
+            if (ignoreMusicSetting == false)
+            {
+                if (IO.Options.Music == false)
+                {
                     StopMusic();
                     return;
                 }
             }
-            if (string.IsNullOrEmpty(songName)) {
+            if (string.IsNullOrEmpty(songName))
+            {
                 return;
             }
-            if (ignoreIfPlaying) {
-                if (currentSong == IO.Paths.MusicPath + songName) {
+            if (ignoreIfPlaying)
+            {
+                if (currentSong == IO.Paths.MusicPath + songName)
+                {
                     return;
                 }
             }
-            lock (audioUrlStreamLoaderLockObject) {
+            lock (audioUrlStreamLoaderLockObject)
+            {
                 StopMusic();
                 LoadMusic(songName);
                 playbackThread = Thread.CurrentThread;
@@ -207,18 +226,24 @@ namespace Client.Logic.Music.Bass
             PlayMusicInternal(numberOfTimes);
         }
 
-        public void StopMusic() {
-            if (playbackThread != null) {
+        public void StopMusic()
+        {
+            if (playbackThread != null)
+            {
                 //Stop the music.
                 //abortMusic = true;
                 //stopResetEvent.Reset();
                 //stopResetEvent.WaitOne();
 
-                if (loadedStream != IntPtr.Zero) {
+                if (loadedStream != IntPtr.Zero)
+                {
                     currentSong = null;
-                    lock (audioDataCache) {
-                        for (int i = 0; i < audioDataCache.Count; i++) {
-                            if (audioDataCache.ValueByIndex(i).AudioStreamPointer == loadedStream) {
+                    lock (audioDataCache)
+                    {
+                        for (int i = 0; i < audioDataCache.Count; i++)
+                        {
+                            if (audioDataCache.ValueByIndex(i).AudioStreamPointer == loadedStream)
+                            {
                                 audioDataCache.ValueByIndex(i).AudioStreamPointer = IntPtr.Zero;
                             }
                         }
@@ -227,33 +252,43 @@ namespace Client.Logic.Music.Bass
                     Bass.BASS_ChannelStop(loadedStream);
                     loadedStream = IntPtr.Zero;
                 }
-                if (playbackThread != null) {
+                if (playbackThread != null)
+                {
                     playbackThread.Abort();
                     playbackThread = null;
                 }
             }
         }
 
-        private bool IsMusicDownloaded(string songName) {
+        private bool IsMusicDownloaded(string songName)
+        {
             return IO.IO.FileExists(IO.Paths.MusicPath + songName);
         }
 
-        private void LoadMusic(string songName) {
-            if (File.Exists(songName)) {
+        private void LoadMusic(string songName)
+        {
+            if (File.Exists(songName))
+            {
                 // Support for using a full file path as the song name
                 loadedStream = Bass.BASS_StreamCreateFile(false, songName, 0, 0, 0, 0, 0);
-            } else {
-                if (IsMusicDownloaded(songName)) {
+            }
+            else
+            {
+                if (IsMusicDownloaded(songName))
+                {
                     // We already have the song cached, load from the file
                     loadedStream = Bass.BASS_StreamCreateFile(false, IO.Paths.MusicPath + songName, 0, 0, 0, 0, 0);
-                } else {
+                }
+                else
+                {
                     // We don't have the song cached, stream from the web
                     loadedStream = LoadAudioStreamFromUrl(MusicURL + songName, IO.Paths.MusicPath);
                 }
             }
         }
 
-        private void MusicThread() {
+        private void MusicThread()
+        {
             //This is the actual routine that's playing the music.  I use a background thread to play it.
             long intLength = 0;
 
@@ -261,12 +296,14 @@ namespace Client.Logic.Music.Bass
             //stream = //BASS_StreamCreateFile(false, strDirs[i], 0, 0, 0, 0, 0);
             intLength = Bass.BASS_ChannelGetLength(loadedStream, (int)BASS_POS_BYTE);
 
-            if (loadedStream != IntPtr.Zero) {
+            if (loadedStream != IntPtr.Zero)
+            {
                 //BASS_SetVolume(0.5f);
                 Bass.BASS_ChannelPlay(loadedStream, false);
 
                 //System.IO.FileStream fs = new System.IO.FileStream("SoundTest.ogg", System.IO.FileMode.Create);
-                while (!(Bass.BASS_ChannelGetPosition(loadedStream, (int)BASS_POS_BYTE) >= intLength || abortMusic)) {
+                while (!(Bass.BASS_ChannelGetPosition(loadedStream, (int)BASS_POS_BYTE) >= intLength || abortMusic))
+                {
                     //byte[] buffer = new byte[65536];
                     //int len = Un4seen.Bass.Bass.BASS_ChannelGetData(stream.ToInt32(), buffer, (int)intLength);
                     //fs.Write(buffer, 0, len);
@@ -288,9 +325,12 @@ namespace Client.Logic.Music.Bass
 
             playbackThread = null;
 
-            if (musicRepeatAmount == -1) {
+            if (musicRepeatAmount == -1)
+            {
                 PlayMusic(Path.GetFileName(currentSong), -1, false, false);
-            } else if (musicPlayCount < musicRepeatAmount) {
+            }
+            else if (musicPlayCount < musicRepeatAmount)
+            {
                 musicPlayCount++;
                 PlayMusicInternal(musicRepeatAmount);
             }
@@ -298,8 +338,10 @@ namespace Client.Logic.Music.Bass
             stopResetEvent.Set();
         }
 
-        private void PlayMusicInternal(int numberOfTimes) {
-            if (numberOfTimes != 0 && loadedStream != IntPtr.Zero) {
+        private void PlayMusicInternal(int numberOfTimes)
+        {
+            if (numberOfTimes != 0 && loadedStream != IntPtr.Zero)
+            {
                 musicRepeatAmount = numberOfTimes;
                 //Start up the music.
                 abortMusic = false;
@@ -308,8 +350,10 @@ namespace Client.Logic.Music.Bass
             }
         }
 
-        public void Resume() {
-            if (paused) {
+        public void Resume()
+        {
+            if (paused)
+            {
                 Bass.BASS_ChannelPlay(loadedStream, false);
                 GC.KeepAlive(this);
                 pauseResetEvent.Set();
@@ -317,8 +361,10 @@ namespace Client.Logic.Music.Bass
             }
         }
 
-        void RunMusicPlaybackThread() {
-            if (playbackThread == null) {
+        void RunMusicPlaybackThread()
+        {
+            if (playbackThread == null)
+            {
                 playbackThread = new System.Threading.Thread(MusicThread);
                 playbackThread.Name = "BackgroundMusic";
                 playbackThread.IsBackground = true;
@@ -326,14 +372,16 @@ namespace Client.Logic.Music.Bass
             }
         }
 
-        private List<string> Shuffle(List<string> strTempList) {
+        private List<string> Shuffle(List<string> strTempList)
+        {
             //Shuffle a list of music randomly.
             Random rand = new Random();
             List<string> strResult = new List<string>();
 
             int i = 0;
 
-            for (int j = 1; j <= strTempList.Count; j++) {
+            for (int j = 1; j <= strTempList.Count; j++)
+            {
                 i = rand.Next(0, strTempList.Count);
                 strResult.Add(strTempList[i]);
                 strTempList.RemoveAt(i);
@@ -341,20 +389,26 @@ namespace Client.Logic.Music.Bass
             return strResult;
         }
 
-        private void VerifySongName(ref string songName) {
-            if (!string.IsNullOrEmpty(songName)) {
-                if (songName.EndsWith(".ogg") == false && songName.EndsWith(".mid") == false) {
+        private void VerifySongName(ref string songName)
+        {
+            if (!string.IsNullOrEmpty(songName))
+            {
+                if (songName.EndsWith(".ogg") == false && songName.EndsWith(".mid") == false)
+                {
                     songName = Path.ChangeExtension(songName, ".ogg");
                 }
             }
         }
 
-        public void FadeOut(int milliseconds) {
+        public void FadeOut(int milliseconds)
+        {
             Bass.BASS_ChannelSlideAttribute(loadedStream, 2, 0, (uint)milliseconds);
         }
 
-        public void PlaySoundEffect(string soundEffect) {
-            if (IO.Options.Sound) {
+        public void PlaySoundEffect(string soundEffect)
+        {
+            if (IO.Options.Sound)
+            {
                 Thread soundEffectThread = new Thread(new ParameterizedThreadStart(PlaySoundEffectThread));
                 soundEffectThread.IsBackground = true;
                 soundEffectThread.Name = "SFX Playback Thread";
@@ -362,15 +416,19 @@ namespace Client.Logic.Music.Bass
             }
         }
 
-        private void PlaySoundEffectThread(Object paramenter) {
+        private void PlaySoundEffectThread(Object paramenter)
+        {
             string soundEffect = paramenter as string;
 
             IntPtr sfxStream = IntPtr.Zero;
             // Load the SFX
-            if (IsSFXDownloaded(soundEffect)) {
+            if (IsSFXDownloaded(soundEffect))
+            {
                 // We already have the song cached, load from the file
                 sfxStream = Bass.BASS_StreamCreateFile(false, IO.Paths.SfxPath + soundEffect, 0, 0, 0, 0, 0);
-            } else {
+            }
+            else
+            {
                 // We don't have the song cached, stream from the web
                 sfxStream = LoadAudioStreamFromUrl(SoundFXURL + soundEffect, IO.Paths.SfxPath);
             }
@@ -378,15 +436,18 @@ namespace Client.Logic.Music.Bass
             PlaySFXStream(sfxStream);
         }
 
-        private void PlaySFXStream(IntPtr sfxStream) {
+        private void PlaySFXStream(IntPtr sfxStream)
+        {
             //This is the actual routine that's playing the SFX.
             long intLength = 0;
 
-            if (sfxStream != IntPtr.Zero) {
+            if (sfxStream != IntPtr.Zero)
+            {
                 intLength = Bass.BASS_ChannelGetLength(sfxStream, (int)BASS_POS_BYTE);
                 Bass.BASS_ChannelPlay(sfxStream, false);
 
-                while (!(Bass.BASS_ChannelGetPosition(sfxStream, (int)BASS_POS_BYTE) >= intLength)) {
+                while (!(Bass.BASS_ChannelGetPosition(sfxStream, (int)BASS_POS_BYTE) >= intLength))
+                {
                     System.Threading.Thread.Sleep(500);
                 }
 
@@ -398,10 +459,14 @@ namespace Client.Logic.Music.Bass
         }
 
         Object audioUrlStreamLoaderLockObject = new object();
-        public IntPtr LoadAudioStreamFromUrl(string url, string cacheDirectory) {
-            lock (audioUrlStreamLoaderLockObject) {
-                lock (audioDataCache) {
-                    if (audioDataCache.ContainsKey(url)) {
+        public IntPtr LoadAudioStreamFromUrl(string url, string cacheDirectory)
+        {
+            lock (audioUrlStreamLoaderLockObject)
+            {
+                lock (audioDataCache)
+                {
+                    if (audioDataCache.ContainsKey(url))
+                    {
                         return audioDataCache[url].AudioStreamPointer;
                     }
                 }
@@ -413,12 +478,17 @@ namespace Client.Logic.Music.Bass
                 dataCache.CallbackDelegate = new DownloadCallbackDelegate(AudioDownloadCallback);
 
                 IntPtr urlPtr = Marshal.StringToHGlobalUni(url);
-                lock (audioDataCache) {
-                    if (audioDataCache.ContainsKey(url) == false) {
+                lock (audioDataCache)
+                {
+                    if (audioDataCache.ContainsKey(url) == false)
+                    {
                         audioDataCache.Add(url, dataCache);
-                    } else {
+                    }
+                    else
+                    {
                         dataCache.CallbackDelegate = null;
-                        if (urlPtr != IntPtr.Zero) {
+                        if (urlPtr != IntPtr.Zero)
+                        {
                             Marshal.FreeHGlobal(urlPtr);
                             urlPtr = IntPtr.Zero;
                         }
@@ -427,13 +497,17 @@ namespace Client.Logic.Music.Bass
 
                 dataCache.AudioStreamPointer = Bass.BASS_StreamCreateURL(url, 0, 0, dataCache.CallbackDelegate, urlPtr);
 
-                if (dataCache.AudioStreamPointer == IntPtr.Zero) {
+                if (dataCache.AudioStreamPointer == IntPtr.Zero)
+                {
                     // Uh oh! We couldn't play the sfx stream!
-                    lock (audioDataCache) {
-                        if (audioDataCache.ContainsKey(url)) {
+                    lock (audioDataCache)
+                    {
+                        if (audioDataCache.ContainsKey(url))
+                        {
                             audioDataCache.RemoveAtKey(url);
                         }
-                        if (urlPtr != IntPtr.Zero) {
+                        if (urlPtr != IntPtr.Zero)
+                        {
                             Marshal.FreeHGlobal(urlPtr);
                             urlPtr = IntPtr.Zero;
                         }
@@ -447,39 +521,53 @@ namespace Client.Logic.Music.Bass
             }
         }
 
-        private bool IsSFXDownloaded(string soundEffect) {
+        private bool IsSFXDownloaded(string soundEffect)
+        {
             return IO.IO.FileExists(IO.Paths.SfxPath + soundEffect);
         }
 
-        public void AudioDownloadCallback(IntPtr bufferPointer, int length, IntPtr user) {
-            try {
+        public void AudioDownloadCallback(IntPtr bufferPointer, int length, IntPtr user)
+        {
+            try
+            {
                 AudioDataCache dataCache = null;
                 string url = Marshal.PtrToStringUni(user);
-                lock (audioDataCache) {
-                    if (audioDataCache.ContainsKey(url)) {
+                lock (audioDataCache)
+                {
+                    if (audioDataCache.ContainsKey(url))
+                    {
                         dataCache = audioDataCache[url];
                     }
                 }
-                if (dataCache != null) {
-                    if (length > 0) {
+                if (dataCache != null)
+                {
+                    if (length > 0)
+                    {
                         byte[] buffer = new byte[length];
                         Marshal.Copy(bufferPointer, buffer, 0, length);
                         dataCache.CacheStream.Write(buffer, 0, length);
-                    } else if (length == 0) {
+                    }
+                    else if (length == 0)
+                    {
                         Marshal.FreeHGlobal(user);
                         dataCache.CacheStream.Close();
-                        lock (audioDataCache) {
-                            if (audioDataCache.ContainsKey(url)) {
+                        lock (audioDataCache)
+                        {
+                            if (audioDataCache.ContainsKey(url))
+                            {
                                 audioDataCache.RemoveAtKey(url);
                             }
                         }
-                        if (dataCache.AudioStreamPointer != IntPtr.Zero) {
+                        if (dataCache.AudioStreamPointer != IntPtr.Zero)
+                        {
                             File.Copy(dataCache.CachePath + ".tmp", dataCache.CachePath, true);
                         }
                         File.Delete(dataCache.CachePath + ".tmp");
                     }
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 throw new Exception(ex.Message + " @ Audio Download Callback");
             }
         }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{FBA83BC0-C6B7-4455-A23A-3D899E41CE57}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,7 +7,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Client.Logic</RootNamespace>
     <AssemblyName>PMDCP</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <SourceAnalysisOverrideSettingsFile>C:\Users\Pikablu\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <DocumentationFile>bin\Debug\Client.Logic.xml</DocumentationFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
@@ -68,11 +68,17 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DefineConstants>DEBUG</DefineConstants>
-    <DocumentationFile>bin\Debug\PMDCP.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>
+    </NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile />
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>Client.Logic.Program</StartupObject>
@@ -82,6 +88,10 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Puzzle.SyntaxBox.NET3.5">
       <HintPath>..\Dependencies\Puzzle.SyntaxBox.NET3.5.dll</HintPath>
     </Reference>
@@ -89,11 +99,28 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\SdlDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="SharpRaven, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpRaven.2.4.0\lib\net45\SharpRaven.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unosquare.Labs.EmbedIO, Version=1.16.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EmbedIO.1.16.0\lib\net47\Unosquare.Labs.EmbedIO.dll</HintPath>
+    </Reference>
+    <Reference Include="Unosquare.Swan.Lite, Version=0.34.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unosquare.Swan.Lite.0.33.3\lib\net452\Unosquare.Swan.Lite.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\Pathfinder\AStarPathfinder.cs" />
@@ -312,6 +339,8 @@
     <Compile Include="Music\MusicPlayer.cs" />
     <Compile Include="Music\TrackList.cs" />
     <Compile Include="Music\TrackListEntry.cs" />
+    <Compile Include="Music\YouTube\YouTubeAudioPlayer.cs" />
+    <Compile Include="Music\YouTube\YouTubeHTMLController.cs" />
     <Compile Include="Network\NetworkManager.cs" />
     <Compile Include="Network\PacketList.cs" />
     <Compile Include="Npc\Npc.cs" />
@@ -470,11 +499,18 @@
     <Compile Include="Windows\winSelectChar.cs" />
     <Compile Include="Windows\winSkinSelector.cs" />
     <Compile Include="Windows\winUpdates.cs" />
+    <Compile Include="CompileConstants.cs" Condition="Exists('CompileConstants.cs')" />
+    <Compile Include="Windows\winWelcome.cs" />
     <EmbeddedResource Include="Windows\Editors\ScriptEditor\frmScriptEditor.resx">
       <DependentUpon>frmScriptEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\pmuicon.ico" />
     <EmbeddedResource Include="Exceptions\ErrorBox.resx">
       <SubType>Designer</SubType>
@@ -541,6 +577,20 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <Target Name="BeforeBuild">
+    <ItemGroup>
+      <_Lines Include="using System%3B" />
+      <_Lines Include="namespace Client.Logic {" />
+      <_Lines Include="public class CompileConstants {" />
+      <_Lines Include="public static readonly string SentryToken = &quot;$(SentryToken)&quot;%3B" />
+      <_Lines Include="}" />
+      <_Lines Include="}" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Include="CompileConstants.cs" Condition="!Exists('CompileConstants.cs')" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(MSBuildProjectDirectory)\CompileConstants.cs" Lines="@(_Lines)" Overwrite="true" Encoding="Unicode" />
+  </Target>
   <Target Name="AfterBuild">
     <ItemGroup>
       <DllFiles Include="..\Dependencies\**\*.dll" />

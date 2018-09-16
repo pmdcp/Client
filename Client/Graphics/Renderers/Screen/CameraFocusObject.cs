@@ -23,33 +23,38 @@ namespace Client.Logic.Graphics.Renderers.Screen
 {
     class CameraFocusObject
     {
-        public int FocusedX {
+        public int FocusedX
+        {
             get;
             set;
         }
 
-        public int FocusedXOffset {
+        public int FocusedXOffset
+        {
             get;
             set;
         }
 
-        public int FocusedY {
+        public int FocusedY
+        {
             get;
             set;
         }
 
-        public int FocusedYOffset {
+        public int FocusedYOffset
+        {
             get;
             set;
         }
 
-        public Enums.Direction FocusedDirection {
+        public Enums.Direction FocusedDirection
+        {
             get;
             set;
         }
 
-        public void Process(int tick) {
-
+        public void Process(int tick)
+        {
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Client.Logic.Graphics;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,11 +22,6 @@
 
 namespace Client.Logic.Maps
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Logic.Graphics;
-
     [Serializable]
     public class Tile : ICloneable
     {
@@ -30,204 +29,244 @@ namespace Client.Logic.Maps
 
         public bool SeenBySelf { get; set; }
 
-        public TileGraphic AnimGraphic {
+        public TileGraphic AnimGraphic
+        {
             get;
             set;
         }
 
-        public int Anim {
+        public int Anim
+        {
             get;
             set;
         }
 
-        public int AnimSet {
+        public int AnimSet
+        {
             get;
             set;
         }
 
-        public int Data1 {
+        public int Data1
+        {
             get;
             set;
         }
 
-        public int Data2 {
+        public int Data2
+        {
             get;
             set;
         }
 
-        public int Data3 {
+        public int Data3
+        {
             get;
             set;
         }
 
-        public bool DoorOpen {
+        public bool DoorOpen
+        {
             get;
             set;
         }
 
-        public TileGraphic F2AnimGraphic {
+        public TileGraphic F2AnimGraphic
+        {
             get;
             set;
         }
 
-        public int F2Anim {
+        public int F2Anim
+        {
             get;
             set;
         }
 
-        public int F2AnimSet {
+        public int F2AnimSet
+        {
             get;
             set;
         }
 
-        public TileGraphic FAnimGraphic {
+        public TileGraphic FAnimGraphic
+        {
             get;
             set;
         }
 
-        public int FAnim {
+        public int FAnim
+        {
             get;
             set;
         }
 
-        public int FAnimSet {
+        public int FAnimSet
+        {
             get;
             set;
         }
 
-        public TileGraphic FringeGraphic {
+        public TileGraphic FringeGraphic
+        {
             get;
             set;
         }
 
-        public int Fringe {
+        public int Fringe
+        {
             get;
             set;
         }
 
-        public TileGraphic Fringe2Graphic {
+        public TileGraphic Fringe2Graphic
+        {
             get;
             set;
         }
 
-        public int Fringe2 {
+        public int Fringe2
+        {
             get;
             set;
         }
 
-        public int Fringe2Set {
+        public int Fringe2Set
+        {
             get;
             set;
         }
 
-        public int FringeSet {
+        public int FringeSet
+        {
             get;
             set;
         }
 
-        public TileGraphic GroundGraphic {
+        public TileGraphic GroundGraphic
+        {
             get;
             set;
         }
 
-        public int Ground {
+        public int Ground
+        {
             get;
             set;
         }
 
-        public int GroundSet {
+        public int GroundSet
+        {
             get;
             set;
         }
 
-        public TileGraphic GroundAnimGraphic {
+        public TileGraphic GroundAnimGraphic
+        {
             get;
             set;
         }
 
-        public int GroundAnim {
+        public int GroundAnim
+        {
             get;
             set;
         }
 
-        public int GroundAnimSet {
+        public int GroundAnimSet
+        {
             get;
             set;
         }
 
-        public int RDungeonMapValue {
+        public int RDungeonMapValue
+        {
             get;
             set;
         }
 
-        public TileGraphic M2AnimGraphic {
+        public TileGraphic M2AnimGraphic
+        {
             get;
             set;
         }
 
-        public int M2Anim {
+        public int M2Anim
+        {
             get;
             set;
         }
 
-        public int M2AnimSet {
+        public int M2AnimSet
+        {
             get;
             set;
         }
 
-        public TileGraphic MaskGraphic {
+        public TileGraphic MaskGraphic
+        {
             get;
             set;
         }
 
-        public int Mask {
+        public int Mask
+        {
             get;
             set;
         }
 
-        public TileGraphic Mask2Graphic {
+        public TileGraphic Mask2Graphic
+        {
             get;
             set;
         }
 
-        public int Mask2 {
+        public int Mask2
+        {
             get;
             set;
         }
 
-        public int Mask2Set {
+        public int Mask2Set
+        {
             get;
             set;
         }
 
-        public int MaskSet {
+        public int MaskSet
+        {
             get;
             set;
         }
 
-        public string String1 {
+        public string String1
+        {
             get;
             set;
         }
 
-        public string String2 {
+        public string String2
+        {
             get;
             set;
         }
 
-        public string String3 {
+        public string String3
+        {
             get;
             set;
         }
 
-        public Enums.TileType Type {
+        public Enums.TileType Type
+        {
             get;
             set;
         }
 
         #endregion Properties
 
-        public object Clone() {
+        public object Clone()
+        {
             Tile tile = new Tile();
             tile.Ground = Ground;
             tile.GroundAnim = GroundAnim;

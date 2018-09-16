@@ -29,16 +29,19 @@ namespace Client.Logic.Graphics
         Surface sheet;
         int sizeInBytes;
 
-        public int BytesUsed {
+        public int BytesUsed
+        {
             get { return sizeInBytes; }
         }
 
-        public Surface Sheet {
+        public Surface Sheet
+        {
             get { return sheet; }
         }
 
-        public SpellSheet(Surface surface, int sizeInBytes) {
-            this.sheet = surface;
+        public SpellSheet(Surface surface, int sizeInBytes)
+        {
+            sheet = surface;
             this.sizeInBytes = sizeInBytes;
         }
     }

@@ -24,10 +24,10 @@ namespace Client.Logic.Missions
 {
     static class MissionManager
     {
-
-
-        public static int DetermineMissionExpReward(Enums.JobDifficulty difficulty) {
-            switch (difficulty) {
+        public static int DetermineMissionExpReward(Enums.JobDifficulty difficulty)
+        {
+            switch (difficulty)
+            {
                 case Enums.JobDifficulty.E:
                     return 10;
                 case Enums.JobDifficulty.D:
@@ -63,8 +63,10 @@ namespace Client.Logic.Missions
             }
         }
 
-        public static int DetermineMissionExpRequirement(Enums.ExplorerRank rank) {
-            switch (rank) {
+        public static int DetermineMissionExpRequirement(Enums.ExplorerRank rank)
+        {
+            switch (rank)
+            {
                 case Enums.ExplorerRank.Normal:
                     return 0;
                 case Enums.ExplorerRank.Bronze:
@@ -97,8 +99,10 @@ namespace Client.Logic.Missions
         }
 
 
-        public static string RankToString(Enums.ExplorerRank rank) {
-            switch (rank) {
+        public static string RankToString(Enums.ExplorerRank rank)
+        {
+            switch (rank)
+            {
                 case Enums.ExplorerRank.Normal:
                 case Enums.ExplorerRank.Bronze:
                 case Enums.ExplorerRank.Silver:
@@ -121,8 +125,10 @@ namespace Client.Logic.Missions
             }
         }
 
-        public static string DifficultyToString(Enums.JobDifficulty difficulty) {
-            switch (difficulty) {
+        public static string DifficultyToString(Enums.JobDifficulty difficulty)
+        {
+            switch (difficulty)
+            {
                 case Enums.JobDifficulty.E:
                 case Enums.JobDifficulty.D:
                 case Enums.JobDifficulty.C:

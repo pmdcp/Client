@@ -29,13 +29,14 @@ namespace Client.Logic.Graphics.Renderers.Items
 {
     class ItemRenderer
     {
-        public static void DrawMapItem(RendererDestinationData destData, Map map, Enums.MapID targetMapID, int itemSlot) {
+        public static void DrawMapItem(RendererDestinationData destData, Map map, Enums.MapID targetMapID, int itemSlot)
+        {
             Item item = ItemHelper.Items[map.MapItems[itemSlot].Num];
 
             Rectangle cropRect = new Rectangle((item.Pic - (item.Pic / 6) * 6) * Constants.TILE_WIDTH,
                                                (item.Pic / 6) * Constants.TILE_HEIGHT, Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
 
-            int itemX= map.MapItems[itemSlot].X;
+            int itemX = map.MapItems[itemSlot].X;
             int itemY = map.MapItems[itemSlot].Y;
 
             Renderers.Maps.SeamlessWorldHelper.ConvertCoordinatesToBorderless(map, targetMapID, ref itemX, ref itemY);
@@ -53,7 +54,6 @@ namespace Client.Logic.Graphics.Renderers.Items
             //}
             //destData.Blit(itemSurface, dstPoint);
             destData.Blit(Graphics.GraphicsManager.Items, dstPoint, cropRect);
-
         }
     }
 }

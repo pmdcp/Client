@@ -1,4 +1,12 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+
+using SdlDotNet.Widgets;
+
+using System.Threading;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,15 +26,6 @@
 
 namespace Client.Logic.Menus.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-
-    using SdlDotNet.Widgets;
-
-    using System.Threading;
-
     class MenuManager : Panel
     {
         #region Fields
@@ -36,7 +35,8 @@ namespace Client.Logic.Menus.Core
         List<IMenu> openMenus;
         //ReaderWriterLockSlim rwLock;
 
-        public List<IMenu> OpenMenus {
+        public List<IMenu> OpenMenus
+        {
             get { return openMenus; }
         }
         bool hasModalMenu;
@@ -47,7 +47,8 @@ namespace Client.Logic.Menus.Core
         #region Constructors
 
         public MenuManager(string name, Logic.Widgets.MapViewer mapViewer)
-            : base(name) {
+            : base(name)
+        {
             this.BackColor = Color.Transparent;
             blockInput = true;
             openMenus = new List<IMenu>();
@@ -58,7 +59,7 @@ namespace Client.Logic.Menus.Core
             //lblTest = new Label("lblTest");
             //lblTest.Location = new Point(100, 100);
             //lblTest.AutoSize = true;
-            //lblTest.Font = Graphics.FontManager.LoadFont("PMDCP", 24);
+            //lblTest.Font = Graphics.FontManager.LoadFont("PMDCP", 32);
             //lblTest.Text = "Test Menu Opened";
 
             //this.AddWidget(lblTest);
@@ -68,12 +69,14 @@ namespace Client.Logic.Menus.Core
 
         #region Properties
 
-        public bool BlockInput {
+        public bool BlockInput
+        {
             get { return blockInput; }
             set { blockInput = value; }
         }
 
-        public bool HasModalMenu {
+        public bool HasModalMenu
+        {
             get { return hasModalMenu; }
         }
 
@@ -81,23 +84,30 @@ namespace Client.Logic.Menus.Core
 
         #region Methods
 
-        public void AddMenu(IMenu menu) {
+        public void AddMenu(IMenu menu)
+        {
             AddMenu(menu, false);
         }
 
-        public void AddMenu(IMenu menu, bool modal) {
-            if (openMenus.Contains(menu) == false) {
+        public void AddMenu(IMenu menu, bool modal)
+        {
+            if (openMenus.Contains(menu) == false)
+            {
                 menu.MenuPanel.Parent = null;
 
                 //rwLock.EnterWriteLock();
-                try {
+                try
+                {
                     openMenus.Add(menu);
-                } finally {
+                }
+                finally
+                {
                     //rwLock.ExitWriteLock();
                 }
 
                 menu.Modal = modal;
-                if (modal) {
+                if (modal)
+                {
                     hasModalMenu = true;
                 }
                 menu.MenuPanel.ReadyToConfigure = true;
@@ -106,216 +116,293 @@ namespace Client.Logic.Menus.Core
             }
         }
 
-        public void RemoveMenu(IMenu menu) {
+        public void RemoveMenu(IMenu menu)
+        {
             int index = -1;
             //bool localLock = false;
             //if (!rwLock.IsUpgradeableReadLockHeld) {
             //    rwLock.EnterUpgradeableReadLock();
             //    localLock = true;
             //}
-            try {
+            try
+            {
                 index = openMenus.IndexOf(menu);
-                if (index > -1) {
+                if (index > -1)
+                {
                     openMenus[index].MenuPanel.Close();
                     //this.RemoveWidget(menu.MenuPanel.Name);
-                    if (activeMenu == menu) {
+                    if (activeMenu == menu)
+                    {
                         activeMenu = null;
                     }
                     //rwLock.EnterWriteLock();
-                    try {
+                    try
+                    {
                         openMenus.RemoveAt(index);
-                    } finally {
+                    }
+                    finally
+                    {
                         //rwLock.ExitWriteLock();
                     }
                 }
-            } finally {
+            }
+            finally
+            {
                 //if (localLock) {
                 //    rwLock.ExitUpgradeableReadLock();
                 //}
             }
-            if (index > -1) {
+            if (index > -1)
+            {
                 CheckForModalMenus();
             }
         }
 
-        private void CheckForModalMenus() {
+        private void CheckForModalMenus()
+        {
             //bool localLock = false;
             //if (!rwLock.IsReadLockHeld) {
             //    rwLock.EnterReadLock();
             //    localLock = true;
             //}
-            try {
-                for (int i = 0; i < openMenus.Count; i++) {
-                    if (openMenus[i].Modal) {
+            try
+            {
+                for (int i = 0; i < openMenus.Count; i++)
+                {
+                    if (openMenus[i].Modal)
+                    {
                         hasModalMenu = true;
                         return;
                     }
                 }
                 hasModalMenu = false;
-            } finally {
+            }
+            finally
+            {
                 //if (localLock) {
                 //    rwLock.ExitReadLock();
                 //}
             }
         }
 
-        public void CloseOpenMenus() {
+        public void CloseOpenMenus()
+        {
             //rwLock.EnterWriteLock();
-            try {
-                for (int i = openMenus.Count - 1; i >= 0; i--) {
+            try
+            {
+                for (int i = openMenus.Count - 1; i >= 0; i--)
+                {
                     openMenus[i].MenuPanel.Close();
                     //this.RemoveWidget(openMenus[i].MenuPanel.Name);
                     openMenus.RemoveAt(i);
                 }
-            } finally {
+            }
+            finally
+            {
                 //rwLock.ExitWriteLock();
             }
             hasModalMenu = false;
             activeMenu = null;
         }
 
-        public IMenu FindMenu(string menuName) {
+        public IMenu FindMenu(string menuName)
+        {
             //bool localLock = false;
             //if (!rwLock.IsReadLockHeld) {
             //    rwLock.EnterReadLock();
             //    localLock = true;
             //}
-            try {
-                for (int i = 0; i < openMenus.Count; i++) {
-                    if (openMenus[i].MenuPanel.Name == menuName) {
+            try
+            {
+                for (int i = 0; i < openMenus.Count; i++)
+                {
+                    if (openMenus[i].MenuPanel.Name == menuName)
+                    {
                         return openMenus[i];
                     }
                 }
                 return null;
-            } finally {
+            }
+            finally
+            {
                 //if (localLock) {
                 //    rwLock.ExitReadLock();
                 //}
             }
         }
 
-        public void HandleKeyDown(SdlDotNet.Input.KeyboardEventArgs e) {
-            if (activeMenu != null) {
+        public void HandleKeyDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
+            if (activeMenu != null)
+            {
                 activeMenu.MenuPanel.OnKeyboardDown(e);
-            } else {
+            }
+            else
+            {
                 //rwLock.EnterUpgradeableReadLock();
-                try {
-                    if (openMenus.Count > 0) {
+                try
+                {
+                    if (openMenus.Count > 0)
+                    {
                         openMenus[0].MenuPanel.OnKeyboardDown(e);
                     }
-                } finally {
+                }
+                finally
+                {
                     //rwLock.ExitUpgradeableReadLock();
                 }
             }
         }
 
-        public void HandleKeyUp(SdlDotNet.Input.KeyboardEventArgs e) {
-            if (activeMenu != null) {
+        public void HandleKeyUp(SdlDotNet.Input.KeyboardEventArgs e)
+        {
+            if (activeMenu != null)
+            {
                 activeMenu.MenuPanel.OnKeyboardUp(e);
-            } else {
+            }
+            else
+            {
                 //rwLock.EnterUpgradeableReadLock();
-                try {
-                    if (openMenus.Count > 0) {
+                try
+                {
+                    if (openMenus.Count > 0)
+                    {
                         openMenus[0].MenuPanel.OnKeyboardUp(e);
                     }
-                } finally {
+                }
+                finally
+                {
                     //rwLock.ExitUpgradeableReadLock();
                 }
             }
         }
 
-        public void SetActiveMenu(IMenu menu) {
+        public void SetActiveMenu(IMenu menu)
+        {
             //rwLock.EnterReadLock();
-            try {
-                if (openMenus.Contains(menu)) {
+            try
+            {
+                if (openMenus.Contains(menu))
+                {
                     activeMenu = menu;
                 }
-            } finally {
+            }
+            finally
+            {
                 //rwLock.ExitReadLock();
             }
         }
 
-        public void SetActiveMenu(string menuName) {
+        public void SetActiveMenu(string menuName)
+        {
             IMenu menu = FindMenu(menuName);
-            if (menu != null) {
+            if (menu != null)
+            {
                 activeMenu = menu;
             }
         }
 
-        public override void OnMouseMotion(SdlDotNet.Input.MouseMotionEventArgs e) {
+        public override void OnMouseMotion(SdlDotNet.Input.MouseMotionEventArgs e)
+        {
             base.OnMouseMotion(e);
             //rwLock.EnterUpgradeableReadLock();
-            try {
-                foreach (IMenu menu in openMenus) {
-                    if (DrawingSupport.PointInBounds(e.Position, menu.MenuPanel.Bounds)) {
+            try
+            {
+                foreach (IMenu menu in openMenus)
+                {
+                    if (DrawingSupport.PointInBounds(e.Position, menu.MenuPanel.Bounds))
+                    {
                         menu.MenuPanel.OnMouseMotion(e);
                         break;
                     }
                 }
-            } finally {
+            }
+            finally
+            {
                 //rwLock.ExitUpgradeableReadLock();
             }
         }
 
-        public override void OnMouseDown(MouseButtonEventArgs e) {
+        public override void OnMouseDown(MouseButtonEventArgs e)
+        {
             base.OnMouseDown(e);
             //rwLock.EnterUpgradeableReadLock();
-            try {
-                foreach (IMenu menu in openMenus) {
-                    if (DrawingSupport.PointInBounds(e.ScreenPosition, menu.MenuPanel.Bounds)) {
+            try
+            {
+                foreach (IMenu menu in openMenus)
+                {
+                    if (DrawingSupport.PointInBounds(e.ScreenPosition, menu.MenuPanel.Bounds))
+                    {
                         menu.MenuPanel.OnMouseDown(new MouseButtonEventArgs(e.MouseEventArgs, new Point(e.Position.X + this.X, e.Position.Y + this.Y)));
                         break;
                     }
                 }
-            } finally {
+            }
+            finally
+            {
                 //rwLock.ExitUpgradeableReadLock();
             }
         }
 
-        public override void OnMouseUp(MouseButtonEventArgs e) {
+        public override void OnMouseUp(MouseButtonEventArgs e)
+        {
             base.OnMouseUp(e);
             //rwLock.EnterUpgradeableReadLock();
-            try {
-                foreach (IMenu menu in openMenus) {
-                    if (DrawingSupport.PointInBounds(e.ScreenPosition, menu.MenuPanel.Bounds)) {
+            try
+            {
+                foreach (IMenu menu in openMenus)
+                {
+                    if (DrawingSupport.PointInBounds(e.ScreenPosition, menu.MenuPanel.Bounds))
+                    {
                         menu.MenuPanel.OnMouseUp(new MouseButtonEventArgs(e.MouseEventArgs, new Point(e.Position.X + this.X, e.Position.Y + this.Y)));
                         break;
                     }
                 }
-            } finally {
+            }
+            finally
+            {
                 //rwLock.ExitUpgradeableReadLock();
             }
         }
 
         SdlDotNet.Graphics.Surface destSurf;
-        public override void OnTick(SdlDotNet.Core.TickEventArgs e) {
+        public override void OnTick(SdlDotNet.Core.TickEventArgs e)
+        {
             //rwLock.EnterUpgradeableReadLock();
-            try {
-                for (int i = 0; i < openMenus.Count; i++) {
+            try
+            {
+                for (int i = 0; i < openMenus.Count; i++)
+                {
                     openMenus[i].MenuPanel.OnTick(e);
                 }
-               
-            } finally {
+            }
+            finally
+            {
                 //rwLock.ExitUpgradeableReadLock();
             }
             base.OnTick(e);
         }
 
-        public override void BlitToScreen(SdlDotNet.Graphics.Surface destinationSurface) {
+        public override void BlitToScreen(SdlDotNet.Graphics.Surface destinationSurface)
+        {
             base.BlitToScreen(destinationSurface);
             //rwLock.EnterReadLock();
             destSurf = destinationSurface;
-            for (int i = 0; i < openMenus.Count; i++) {
-                if (openMenus[i].MenuPanel.ReadyToConfigure) {
+            for (int i = 0; i < openMenus.Count; i++)
+            {
+                if (openMenus[i].MenuPanel.ReadyToConfigure)
+                {
                     openMenus[i].MenuPanel.Location = new Point(this.X + openMenus[i].MenuPanel.X, this.Y + openMenus[i].MenuPanel.Y);
                     //openMenus[i].MenuPanel.RequestRedraw();
                     openMenus[i].MenuPanel.ReadyToConfigure = false;
                 }
-                if (destSurf != null) {
+                if (destSurf != null)
+                {
                     openMenus[i].MenuPanel.BlitToScreen(destSurf);
                 }
             }
-            try {
+            try
+            {
                 //for (int i = 0; i < openMenus.Count; i++) {
                 //    if (openMenus[i].MenuPanel.ReadyToConfigure) {
                 //        openMenus[i].MenuPanel.Location = new Point(this.X + openMenus[i].MenuPanel.X, this.Y + openMenus[i].MenuPanel.Y);
@@ -324,7 +411,9 @@ namespace Client.Logic.Menus.Core
                 //    }
                 //    openMenus[i].MenuPanel.BlitToScreen(destinationSurface);
                 //}
-            } finally {
+            }
+            finally
+            {
                 //rwLock.ExitReadLock();
             }
             //foreach (IMenu menu in openMenus) {
@@ -332,7 +421,8 @@ namespace Client.Logic.Menus.Core
             //}
         }
 
-        public void DrawToScreen(SdlDotNet.Graphics.Surface destinationSurface) {
+        public void DrawToScreen(SdlDotNet.Graphics.Surface destinationSurface)
+        {
             //for (int i = 0; i < openMenus.Count; i++) {
             //    if (openMenus[i].MenuPanel.ReadyToConfigure) {
             //        openMenus[i].MenuPanel.Location = new Point(this.X + openMenus[i].MenuPanel.X, this.Y + openMenus[i].MenuPanel.Y);

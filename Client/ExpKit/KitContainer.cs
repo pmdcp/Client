@@ -32,26 +32,32 @@ namespace Client.Logic.ExpKit
         Button btnLeft;
         Label lblModuleName;
 
-        public ModuleSwitcher ModuleSwitcher {
+        public ModuleSwitcher ModuleSwitcher
+        {
             get { return moduleSwitcher; }
         }
 
-        public new Size Size {
+        public new Size Size
+        {
             get { return base.Size; }
-            set {
+            set
+            {
                 base.Size = value;
                 RecalculateWidgetPositions();
             }
         }
 
-        public IKitModule ActiveModule {
-            get {
+        public IKitModule ActiveModule
+        {
+            get
+            {
                 return activeModule;
             }
         }
 
         public KitContainer(string name)
-            : base(name) {
+            : base(name)
+        {
             base.BackColor = Color.FromArgb(32, 69, 79);
 
             moduleSwitcher = new ModuleSwitcher();
@@ -81,38 +87,51 @@ namespace Client.Logic.ExpKit
             //SetActiveModule(0);
         }
 
-        void btnLeft_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (moduleSwitcher.AvailableKitModules.IndexOf(activeModule) - 1 >= 0) {
+        void btnLeft_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (moduleSwitcher.AvailableKitModules.IndexOf(activeModule) - 1 >= 0)
+            {
                 SetActiveModule(moduleSwitcher.AvailableKitModules.IndexOf(activeModule) - 1);
             }
         }
 
-        void btnRight_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
-            if (moduleSwitcher.AvailableKitModules.IndexOf(activeModule) + 1 < moduleSwitcher.AvailableKitModules.Count) {
-                try {
+        void btnRight_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
+            if (moduleSwitcher.AvailableKitModules.IndexOf(activeModule) + 1 < moduleSwitcher.AvailableKitModules.Count)
+            {
+                try
+                {
                     SetActiveModule(moduleSwitcher.AvailableKitModules.IndexOf(activeModule) + 1);
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     throw new Exception(ex.Message + " [Module: " + ((Enums.ExpKitModules)moduleSwitcher.AvailableKitModules.IndexOf(activeModule) + 1).ToString() + "]");
                 }
             }
         }
 
-        private void RecalculateWidgetPositions() {
+        private void RecalculateWidgetPositions()
+        {
             btnRight.Location = new Point(this.Width - btnRight.Width, 0);
             btnLeft.Location = new Point(this.Width - btnRight.Width - btnLeft.Width, 0);
         }
 
-        public void SetActiveModule(Enums.ExpKitModules module) {
-            for (int i = 0; i < moduleSwitcher.AvailableKitModules.Count; i++) {
-                if (moduleSwitcher.AvailableKitModules[i].ModuleID == module) {
+        public void SetActiveModule(Enums.ExpKitModules module)
+        {
+            for (int i = 0; i < moduleSwitcher.AvailableKitModules.Count; i++)
+            {
+                if (moduleSwitcher.AvailableKitModules[i].ModuleID == module)
+                {
                     SetActiveModule(i);
                     break;
                 }
             }
         }
 
-        public void SetActiveModule(int index) {
-            if (activeModule != null) {
+        public void SetActiveModule(int index)
+        {
+            if (activeModule != null)
+            {
                 activeModule.SwitchOut();
                 activeModule.ModulePanel.Hide();
                 //this.RemoveWidget(activeModule.ModulePanel.Name);
@@ -121,19 +140,24 @@ namespace Client.Logic.ExpKit
             Network.Messenger.SendPacket(PMDCP.Sockets.TcpPacket.CreatePacket("activekitmodule", ((int)(activeModule.ModuleID)).ToString()));
             activeModule.Initialize(new Size(this.Width, this.Height - btnLeft.Height));
             lblModuleName.Text = activeModule.ModuleName + " [" + (index + 1) + "/" + moduleSwitcher.AvailableKitModules.Count + "]";
-            if (this.ContainsWidget(activeModule.ModulePanel.Name) == false) {
+            if (this.ContainsWidget(activeModule.ModulePanel.Name) == false)
+            {
                 this.AddWidget(activeModule.ModulePanel);
             }
             activeModule.ModulePanel.Show();
         }
 
-        public override void OnTick(SdlDotNet.Core.TickEventArgs e) {
+        public override void OnTick(SdlDotNet.Core.TickEventArgs e)
+        {
             base.OnTick(e);
-            if (activeModule != null) {
-                if (activeModule.ModulePanel.Location.X != 0 || activeModule.ModulePanel.Location.Y != btnLeft.Height) {
+            if (activeModule != null)
+            {
+                if (activeModule.ModulePanel.Location.X != 0 || activeModule.ModulePanel.Location.Y != btnLeft.Height)
+                {
                     activeModule.ModulePanel.Location = new Point(0, btnLeft.Height);
                 }
-                if (activeModule.ModulePanel.Size.Width != this.Width || activeModule.ModulePanel.Size.Height != this.Height - btnLeft.Height) {
+                if (activeModule.ModulePanel.Size.Width != this.Width || activeModule.ModulePanel.Size.Height != this.Height - btnLeft.Height)
+                {
                     activeModule.ModulePanel.Size = new Size(this.Width, this.Height - btnLeft.Height);
                 }
                 //activeModule.ModulePanel.BlitToScreen(destinationSurface);
@@ -143,26 +167,28 @@ namespace Client.Logic.ExpKit
             //}
         }
 
-        public override void OnMouseDown(SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        public override void OnMouseDown(SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             base.OnMouseDown(e);
             //if (activeModule != null) {
             //    activeModule.ModulePanel.OnMouseDown(new MouseButtonEventArgs(e));
             //}
         }
 
-        public override void OnMouseMotion(SdlDotNet.Input.MouseMotionEventArgs e) {
+        public override void OnMouseMotion(SdlDotNet.Input.MouseMotionEventArgs e)
+        {
             base.OnMouseMotion(e);
             //if (activeModule != null) {
             //    activeModule.ModulePanel.OnMouseMotion(e);
             //}
         }
 
-        public override void OnMouseUp(SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        public override void OnMouseUp(SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             base.OnMouseUp(e);
             //if (activeModule != null) {
             //    activeModule.ModulePanel.OnMouseUp(new MouseButtonEventArgs(e));
             //}
         }
-
     }
 }

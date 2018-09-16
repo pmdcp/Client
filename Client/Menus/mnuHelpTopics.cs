@@ -29,7 +29,8 @@ namespace Client.Logic.Menus
 {
     class mnuHelpTopics : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -45,7 +46,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuHelpTopics(string name)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(185, 220);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(10, 40);
@@ -77,8 +79,10 @@ namespace Client.Logic.Menus
             LoadHelpTopics();
         }
 
-        void btnShowHelp_Click(object sender, MouseButtonEventArgs e) {
-            if (lstHelpTopics.SelectedItems.Count > 0) {
+        void btnShowHelp_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (lstHelpTopics.SelectedItems.Count > 0)
+            {
                 MenuSwitcher.ShowHelpPage(((ListBoxTextItem)lstHelpTopics.SelectedItems[0]).Text, 0);
                 Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
             }
@@ -87,10 +91,13 @@ namespace Client.Logic.Menus
         #endregion Constructors
         #region Methods
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.Backspace: {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                         // Show the others menu when the backspace key is pressed
                         MenuSwitcher.ShowOthersMenu();
                         Music.Music.AudioPlayer.PlaySoundEffect("beep3.wav");
@@ -99,16 +106,19 @@ namespace Client.Logic.Menus
             }
         }
 
-        public void LoadHelpTopics() {
+        public void LoadHelpTopics()
+        {
             string[] dirs = System.IO.Directory.GetDirectories(IO.Paths.StartupPath + "Help");
-            for (int i = 0; i < dirs.Length; i++) {
+            for (int i = 0; i < dirs.Length; i++)
+            {
                 ListBoxTextItem lbi = new ListBoxTextItem(Logic.Graphics.FontManager.LoadFont("tahoma", 10), System.IO.Path.GetFileNameWithoutExtension(dirs[i]));
                 lbi.ForeColor = Color.WhiteSmoke;
                 lstHelpTopics.Items.Add(lbi);
             }
         }
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 

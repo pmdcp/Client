@@ -1,4 +1,13 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
+using PMDCP.Core;
+
+using Client.Logic.Graphics;
+
+using SdlDotNet.Widgets;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,19 +27,10 @@
 
 namespace Client.Logic.Menus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Text;
-    using PMDCP.Core;
-
-    using Client.Logic.Graphics;
-
-    using SdlDotNet.Widgets;
-
     class mnuAssembly : Logic.Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -59,7 +59,8 @@ namespace Client.Logic.Menus
 
         #endregion Fields
 
-        public Logic.Widgets.BorderedPanel MenuPanel {
+        public Logic.Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
@@ -68,7 +69,8 @@ namespace Client.Logic.Menus
         #region Constructors
 
         public mnuAssembly(string name, string[] parse)
-            : base(name) {
+            : base(name)
+        {
             this.Size = new Size(315, 450);
             this.MenuDirection = Enums.MenuDirection.Vertical;
             this.Location = new Point(10, 20);
@@ -133,21 +135,18 @@ namespace Client.Logic.Menus
             lblLevel.Location = new Point(75, 96);
 
             lblAllRecruits = new Label[10];
-            for (int i = 0; i < 10; i++) {
-
-
+            for (int i = 0; i < 10; i++)
+            {
                 lblAllRecruits[i] = new Label("lblAllRecruits" + i);
                 //lblAllRecruits[i].AutoSize = true;
                 //lblAllRecruits[i].Centered = true;
                 lblAllRecruits[i].Width = 200;
                 lblAllRecruits[i].Font = FontManager.LoadFont("PMDCP", 32);
-                
+
                 lblAllRecruits[i].Location = new Point(35, (i * 30) + 114);
                 //lblAllRecruits[i].HoverColor = Color.Red;
                 //lblAllRecruits[i].Click += new EventHandler<SdlDotNet.Widgets.MouseButtonEventArgs>(assemblyItem_Click);
                 this.AddWidget(lblAllRecruits[i]);
-
-
             }
 
             LoadRecruitsFromPacket(parse);
@@ -169,14 +168,16 @@ namespace Client.Logic.Menus
 
         #endregion Constructors
 
-        public void LoadRecruitsFromPacket(string[] parse) {
+        public void LoadRecruitsFromPacket(string[] parse)
+        {
             int recruitCount = parse[1].ToInt();
             team[0] = parse[2].ToInt();
             team[1] = parse[3].ToInt();
             team[2] = parse[4].ToInt();
             team[3] = parse[5].ToInt();
             int n = 6;
-            for (int i = 0; i < recruitCount; i++) {
+            for (int i = 0; i < recruitCount; i++)
+            {
                 recruitIndex.Add(parse[n].ToInt());
                 Players.Recruit recruit = new Players.Recruit();
                 recruit.Num = parse[n + 1].ToInt();
@@ -188,25 +189,30 @@ namespace Client.Logic.Menus
                 recruitList.Add(recruit);
                 n += 7;
             }
-
         }
 
 
-        void btnFind_Click(object sender, MouseButtonEventArgs e) {
-            
-            if (SortedRecruits == null) {
-                if (txtFind.Text.Trim() != "") {
+        void btnFind_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (SortedRecruits == null)
+            {
+                if (txtFind.Text.Trim() != "")
+                {
                     SortedRecruits = new List<int>();
 
-                    for (int i = 0; i < recruitList.Count; i++) {
-                        if (recruitList[i].Name.ToLower().Contains(txtFind.Text.ToLower())) {
+                    for (int i = 0; i < recruitList.Count; i++)
+                    {
+                        if (recruitList[i].Name.ToLower().Contains(txtFind.Text.ToLower()))
+                        {
                             SortedRecruits.Add(i);
                         }
                     }
 
                     btnFind.Text = "Cancel";
                 }
-            } else {
+            }
+            else
+            {
                 SortedRecruits = null;
                 btnFind.Text = "Find";
             }
@@ -215,21 +221,25 @@ namespace Client.Logic.Menus
             FindMaxItems();
             DisplayRecruitList();
             UpdateSelectedRecruitInfo();
-            
         }
 
-        void assemblyItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e) {
+        void assemblyItem_Click(object sender, SdlDotNet.Widgets.MouseButtonEventArgs e)
+        {
             SelectRecruit(Array.IndexOf(lblAllRecruits, sender) + currentTen * 10);
         }
 
-        public void ChangeSelected(int itemNum) {
+        public void ChangeSelected(int itemNum)
+        {
             itemPicker.Location = new Point(18, 130 + (30 * itemNum));
             itemPicker.SelectedItem = itemNum;
         }
 
-        public void UpdateSelectedRecruitInfo() {
-            if (SortedRecruits == null) {
-                if (itemPicker.SelectedItem + currentTen * 10 >= 0 && itemPicker.SelectedItem + currentTen * 10 < recruitList.Count) {
+        public void UpdateSelectedRecruitInfo()
+        {
+            if (SortedRecruits == null)
+            {
+                if (itemPicker.SelectedItem + currentTen * 10 >= 0 && itemPicker.SelectedItem + currentTen * 10 < recruitList.Count)
+                {
                     System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
                     watch.Start();
                     Players.Recruit recruit = recruitList[itemPicker.SelectedItem + currentTen * 10];
@@ -237,17 +247,23 @@ namespace Client.Logic.Menus
                     watch.Stop();
                     lblName.Text = recruitList[itemPicker.SelectedItem + currentTen * 10].Name;
                     string levelString = "Lv. " + recruitList[itemPicker.SelectedItem + currentTen * 10].Level + "  ";
-                    if (recruitList[itemPicker.SelectedItem + currentTen * 10].Sex == Enums.Sex.Male) {
-                        levelString += "(♂)";
-                    } else if (recruitList[itemPicker.SelectedItem + currentTen * 10].Sex == Enums.Sex.Female) {
-                        levelString += "(♀)";
+                    if (recruitList[itemPicker.SelectedItem + currentTen * 10].Sex == Enums.Sex.Male)
+                    {
+                        levelString += "(\u2642)";
+                    }
+                    else if (recruitList[itemPicker.SelectedItem + currentTen * 10].Sex == Enums.Sex.Female)
+                    {
+                        levelString += "(\u2640)";
                     }
                     lblLevel.Text = (levelString);
 
                     lblRecruitNum.Text = (currentTen + 1) + "/" + ((recruitList.Count - 1) / 10 + 1);
                 }
-            } else {
-                if (itemPicker.SelectedItem + currentTen * 10 >= 0 && itemPicker.SelectedItem + currentTen * 10 < SortedRecruits.Count) {
+            }
+            else
+            {
+                if (itemPicker.SelectedItem + currentTen * 10 >= 0 && itemPicker.SelectedItem + currentTen * 10 < SortedRecruits.Count)
+                {
                     System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
                     watch.Start();
                     //picMugshot.BlitToBuffer(Logic.Graphics.GraphicsManager.Speakers, new Rectangle((recruitList[itemPicker.SelectedItem + currentTen * 10].Mugshot % 15) * 40, (recruitList[itemPicker.SelectedItem + currentTen * 10].Mugshot / 15) * 40, 40, 40));
@@ -256,15 +272,20 @@ namespace Client.Logic.Menus
                     watch.Stop();
                     lblName.Text = recruitList[SortedRecruits[itemPicker.SelectedItem + currentTen * 10]].Name;
                     string levelString = "Lv. " + recruitList[SortedRecruits[itemPicker.SelectedItem + currentTen * 10]].Level + "  ";
-                    if (recruitList[SortedRecruits[itemPicker.SelectedItem + currentTen * 10]].Sex == Enums.Sex.Male) {
-                        levelString += "(♂)";
-                    } else if (recruitList[SortedRecruits[itemPicker.SelectedItem + currentTen * 10]].Sex == Enums.Sex.Female) {
-                        levelString += "(♀)";
+                    if (recruitList[SortedRecruits[itemPicker.SelectedItem + currentTen * 10]].Sex == Enums.Sex.Male)
+                    {
+                        levelString += "(\u2642)";
+                    }
+                    else if (recruitList[SortedRecruits[itemPicker.SelectedItem + currentTen * 10]].Sex == Enums.Sex.Female)
+                    {
+                        levelString += "(\u2640)";
                     }
                     lblLevel.Text = (levelString);
 
                     lblRecruitNum.Text = (currentTen + 1) + "/" + ((SortedRecruits.Count - 1) / 10 + 1);
-                } else {
+                }
+                else
+                {
                     picMugshot.Image = Logic.Graphics.GraphicsManager.GetMugshot(0, 0, 0, 0).GetEmote(0);
                     lblName.Text = "---";
                     lblLevel.Text = "---";
@@ -273,55 +294,87 @@ namespace Client.Logic.Menus
             }
         }
 
-        public void DisplayRecruitList() {
+        public void DisplayRecruitList()
+        {
             //this.BeginUpdate();
-            for (int i = 0; i < 10; i++) {
-
-                if (SortedRecruits == null) {
-                    if ((i + currentTen * 10) < recruitList.Count) {
-                        if (recruitIndex[i + currentTen * 10] == team[0]) {
+            for (int i = 0; i < 10; i++)
+            {
+                if (SortedRecruits == null)
+                {
+                    if ((i + currentTen * 10) < recruitList.Count)
+                    {
+                        if (recruitIndex[i + currentTen * 10] == team[0])
+                        {
                             lblAllRecruits[i].ForeColor = Color.Cyan;
-                        } else if (recruitIndex[i + currentTen * 10] == team[1] || recruitIndex[i + currentTen * 10] == team[2] || recruitIndex[i + currentTen * 10] == team[3]) {
+                        }
+                        else if (recruitIndex[i + currentTen * 10] == team[1] || recruitIndex[i + currentTen * 10] == team[2] || recruitIndex[i + currentTen * 10] == team[3])
+                        {
                             lblAllRecruits[i].ForeColor = Color.Yellow;
-                        } else {
+                        }
+                        else
+                        {
                             lblAllRecruits[i].ForeColor = Color.WhiteSmoke;
                         }
-                        if (!string.IsNullOrEmpty(recruitList[i + currentTen * 10].Name)) {
+                        if (!string.IsNullOrEmpty(recruitList[i + currentTen * 10].Name))
+                        {
                             lblAllRecruits[i].Text = recruitList[i + currentTen * 10].Name;
-                        } else {
+                        }
+                        else
+                        {
                             lblAllRecruits[i].Text = "No Name";
                         }
-                        if (lblAllRecruits[i].Visible == false) {
+                        if (lblAllRecruits[i].Visible == false)
+                        {
                             lblAllRecruits[i].Visible = true;
                         }
-                    } else {
+                    }
+                    else
+                    {
                         lblAllRecruits[i].Visible = false;
                     }
-                } else {
-                    if ((i + currentTen * 10) < SortedRecruits.Count) {
-                        if (recruitIndex[SortedRecruits[i + currentTen * 10]] == team[0]) {
+                }
+                else
+                {
+                    if ((i + currentTen * 10) < SortedRecruits.Count)
+                    {
+                        if (recruitIndex[SortedRecruits[i + currentTen * 10]] == team[0])
+                        {
                             lblAllRecruits[i].ForeColor = Color.Cyan;
-                        } else if (recruitIndex[SortedRecruits[i + currentTen * 10]] == team[1] || recruitIndex[SortedRecruits[i + currentTen * 10]] == team[2] || recruitIndex[SortedRecruits[i + currentTen * 10]] == team[3]) {
+                        }
+                        else if (recruitIndex[SortedRecruits[i + currentTen * 10]] == team[1] || recruitIndex[SortedRecruits[i + currentTen * 10]] == team[2] || recruitIndex[SortedRecruits[i + currentTen * 10]] == team[3])
+                        {
                             lblAllRecruits[i].ForeColor = Color.Yellow;
-                        } else {
+                        }
+                        else
+                        {
                             lblAllRecruits[i].ForeColor = Color.WhiteSmoke;
                         }
-                        if (!string.IsNullOrEmpty(recruitList[SortedRecruits[i + currentTen * 10]].Name)) {
+                        if (!string.IsNullOrEmpty(recruitList[SortedRecruits[i + currentTen * 10]].Name))
+                        {
                             lblAllRecruits[i].Text = recruitList[SortedRecruits[i + currentTen * 10]].Name;
-                        } else {
+                        }
+                        else
+                        {
                             lblAllRecruits[i].Text = "No Name";
                         }
-                        if (lblAllRecruits[i].Visible == false) {
+                        if (lblAllRecruits[i].Visible == false)
+                        {
                             lblAllRecruits[i].Visible = true;
                         }
-                    } else {
-                        if (i == 0) {
+                    }
+                    else
+                    {
+                        if (i == 0)
+                        {
                             lblAllRecruits[i].Text = "None";
                             lblAllRecruits[i].ForeColor = Color.Gray;
-                            if (lblAllRecruits[i].Visible == false) {
+                            if (lblAllRecruits[i].Visible == false)
+                            {
                                 lblAllRecruits[i].Visible = true;
                             }
-                        } else {
+                        }
+                        else
+                        {
                             lblAllRecruits[i].Visible = false;
                         }
                     }
@@ -330,33 +383,48 @@ namespace Client.Logic.Menus
             this.RequestRedraw();
         }
 
-        public void FindMaxItems() {
-            if (SortedRecruits == null) {
-                if (recruitList.Count < (currentTen + 1) * 10) {
+        public void FindMaxItems()
+        {
+            if (SortedRecruits == null)
+            {
+                if (recruitList.Count < (currentTen + 1) * 10)
+                {
                     maxItems = recruitList.Count % 10 - 1;
-                } else {
+                }
+                else
+                {
                     maxItems = 9;
                 }
-            } else {
-                if (SortedRecruits.Count < (currentTen + 1) * 10) {
+            }
+            else
+            {
+                if (SortedRecruits.Count < (currentTen + 1) * 10)
+                {
                     maxItems = SortedRecruits.Count % 10 - 1;
-                } else {
+                }
+                else
+                {
                     maxItems = 9;
                 }
             }
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             //if (Loaded) {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.DownArrow: {
-                        if (maxItems > -1) {
-                            if (itemPicker.SelectedItem >= maxItems) {
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.DownArrow:
+                    {
+                        if (maxItems > -1)
+                        {
+                            if (itemPicker.SelectedItem >= maxItems)
+                            {
                                 ChangeSelected(0);
-
-                            } else {
-
+                            }
+                            else
+                            {
                                 ChangeSelected(itemPicker.SelectedItem + 1);
                             }
                             UpdateSelectedRecruitInfo();
@@ -364,11 +432,16 @@ namespace Client.Logic.Menus
                         }
                     }
                     break;
-                case SdlDotNet.Input.Key.UpArrow: {
-                        if (maxItems > -1) {
-                            if (itemPicker.SelectedItem <= 0) {
+                case SdlDotNet.Input.Key.UpArrow:
+                    {
+                        if (maxItems > -1)
+                        {
+                            if (itemPicker.SelectedItem <= 0)
+                            {
                                 ChangeSelected(maxItems);
-                            } else {
+                            }
+                            else
+                            {
                                 ChangeSelected(itemPicker.SelectedItem - 1);
                             }
                             UpdateSelectedRecruitInfo();
@@ -376,19 +449,28 @@ namespace Client.Logic.Menus
                         }
                     }
                     break;
-                case SdlDotNet.Input.Key.LeftArrow: {
-                        if (maxItems > -1) {
-                            if (currentTen <= 0) {
-                                if (SortedRecruits == null) {
+                case SdlDotNet.Input.Key.LeftArrow:
+                    {
+                        if (maxItems > -1)
+                        {
+                            if (currentTen <= 0)
+                            {
+                                if (SortedRecruits == null)
+                                {
                                     currentTen = ((recruitList.Count - 1) / 10);
-                                } else {
+                                }
+                                else
+                                {
                                     currentTen = ((SortedRecruits.Count - 1) / 10);
                                 }
-                            } else {
+                            }
+                            else
+                            {
                                 currentTen--;
                             }
                             FindMaxItems();
-                            if (itemPicker.SelectedItem > maxItems) {
+                            if (itemPicker.SelectedItem > maxItems)
+                            {
                                 ChangeSelected(maxItems);
                             }
                             DisplayRecruitList();
@@ -397,23 +479,35 @@ namespace Client.Logic.Menus
                         }
                     }
                     break;
-                case SdlDotNet.Input.Key.RightArrow: {
-                        if (maxItems > -1) {
-                            if (SortedRecruits == null) {
-                                if (currentTen >= ((recruitList.Count - 1) / 10)) {
+                case SdlDotNet.Input.Key.RightArrow:
+                    {
+                        if (maxItems > -1)
+                        {
+                            if (SortedRecruits == null)
+                            {
+                                if (currentTen >= ((recruitList.Count - 1) / 10))
+                                {
                                     currentTen = 0;
-                                } else {
+                                }
+                                else
+                                {
                                     currentTen++;
                                 }
-                            } else {
-                                if (currentTen >= ((SortedRecruits.Count - 1) / 10)) {
+                            }
+                            else
+                            {
+                                if (currentTen >= ((SortedRecruits.Count - 1) / 10))
+                                {
                                     currentTen = 0;
-                                } else {
+                                }
+                                else
+                                {
                                     currentTen++;
                                 }
                             }
                             FindMaxItems();
-                            if (itemPicker.SelectedItem > maxItems) {
+                            if (itemPicker.SelectedItem > maxItems)
+                            {
                                 ChangeSelected(maxItems);
                             }
                             DisplayRecruitList();
@@ -422,7 +516,8 @@ namespace Client.Logic.Menus
                         }
                     }
                     break;
-                case SdlDotNet.Input.Key.Return: {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         SelectRecruit(itemPicker.SelectedItem + currentTen * 10);
                     }
                     break;
@@ -430,33 +525,55 @@ namespace Client.Logic.Menus
             //}
         }
 
-        private void SelectRecruit(int slot) {
+        private void SelectRecruit(int slot)
+        {
             int activeTeamStatus;
-            if (SortedRecruits == null) {
-                if (recruitIndex[slot] == team[0]) {
+            if (SortedRecruits == null)
+            {
+                if (recruitIndex[slot] == team[0])
+                {
                     activeTeamStatus = 0;
-                } else if (recruitIndex[slot] == team[1]) {
+                }
+                else if (recruitIndex[slot] == team[1])
+                {
                     activeTeamStatus = 1;
-                } else if (recruitIndex[slot] == team[2]) {
+                }
+                else if (recruitIndex[slot] == team[2])
+                {
                     activeTeamStatus = 2;
-                } else if (recruitIndex[slot] == team[3]) {
+                }
+                else if (recruitIndex[slot] == team[3])
+                {
                     activeTeamStatus = 3;
-                } else {
+                }
+                else
+                {
                     activeTeamStatus = -1;
                 }
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuRecruitSelected("mnuRecruitSelected", recruitIndex[slot], activeTeamStatus));
                 Windows.WindowSwitcher.GameWindow.MenuManager.SetActiveMenu("mnuRecruitSelected");
                 Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
-            } else if (SortedRecruits.Count > slot) {
-                if (recruitIndex[SortedRecruits[slot]] == team[0]) {
+            }
+            else if (SortedRecruits.Count > slot)
+            {
+                if (recruitIndex[SortedRecruits[slot]] == team[0])
+                {
                     activeTeamStatus = 0;
-                } else if (recruitIndex[SortedRecruits[slot]] == team[1]) {
+                }
+                else if (recruitIndex[SortedRecruits[slot]] == team[1])
+                {
                     activeTeamStatus = 1;
-                } else if (recruitIndex[SortedRecruits[slot]] == team[2]) {
+                }
+                else if (recruitIndex[SortedRecruits[slot]] == team[2])
+                {
                     activeTeamStatus = 2;
-                } else if (recruitIndex[SortedRecruits[slot]] == team[3]) {
+                }
+                else if (recruitIndex[SortedRecruits[slot]] == team[3])
+                {
                     activeTeamStatus = 3;
-                } else {
+                }
+                else
+                {
                     activeTeamStatus = -1;
                 }
                 Windows.WindowSwitcher.GameWindow.MenuManager.AddMenu(new Menus.mnuRecruitSelected("mnuRecruitSelected", recruitIndex[SortedRecruits[slot]], activeTeamStatus));
@@ -464,8 +581,5 @@ namespace Client.Logic.Menus
                 Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
             }
         }
-
-
     }
-
 }

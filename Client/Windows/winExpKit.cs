@@ -27,13 +27,14 @@ namespace Client.Logic.Windows
     {
         ExpKit.KitContainer kitContainer;
 
-        public ExpKit.KitContainer KitContainer {
+        public ExpKit.KitContainer KitContainer
+        {
             get { return kitContainer; }
         }
 
         public winExpKit()
-            : base("winExpKit") {
-
+            : base("winExpKit")
+        {
             //this.Location = Graphics.DrawingSupport.GetCenter(this.Size);
             this.Windowed = true;
             this.ShowInWindowSwitcher = false;
@@ -55,6 +56,5 @@ namespace Client.Logic.Windows
 
             this.LoadComplete();
         }
-
     }
 }

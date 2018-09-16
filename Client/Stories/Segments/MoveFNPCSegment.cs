@@ -1,4 +1,9 @@
-﻿// This file is part of Mystery Dungeon eXtended.
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using PMDCP.Core;
+// This file is part of Mystery Dungeon eXtended.
 
 // Copyright (C) 2015 Pikablu, MDX Contributors, PMU Staff
 
@@ -18,12 +23,6 @@
 
 namespace Client.Logic.Stories.Segments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using PMDCP.Core;
-
     class MoveFNPCSegment : ISegment
     {
         #region Fields
@@ -40,22 +39,26 @@ namespace Client.Logic.Stories.Segments
 
         #region Constructors
 
-        public MoveFNPCSegment(string id, int x, int y, int speed, bool pause) {
+        public MoveFNPCSegment(string id, int x, int y, int speed, bool pause)
+        {
             Load(id, x, y, speed, pause);
         }
 
-        public MoveFNPCSegment() {
+        public MoveFNPCSegment()
+        {
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public Enums.StoryAction Action {
+        public Enums.StoryAction Action
+        {
             get { return Enums.StoryAction.MoveFNPC; }
         }
 
-        public string ID {
+        public string ID
+        {
             get { return id; }
             set { id = value; }
         }
@@ -65,27 +68,32 @@ namespace Client.Logic.Stories.Segments
             get { return parameters; }
         }
 
-        public bool Pause {
+        public bool Pause
+        {
             get { return pause; }
             set { pause = value; }
         }
 
-        public int X {
+        public int X
+        {
             get { return x; }
             set { x = value; }
         }
 
-        public int Y {
+        public int Y
+        {
             get { return y; }
             set { y = value; }
         }
 
-        public int Speed {
+        public int Speed
+        {
             get { return speed; }
             set { speed = value; }
         }
 
-        public bool UsesSpeechMenu {
+        public bool UsesSpeechMenu
+        {
             get { return false; }
         }
 
@@ -93,7 +101,8 @@ namespace Client.Logic.Stories.Segments
 
         #region Methods
 
-        public void Load(string id, int x, int y, int speed, bool pause) {
+        public void Load(string id, int x, int y, int speed, bool pause)
+        {
             this.id = id;
             this.x = x;
             this.y = y;
@@ -111,16 +120,20 @@ namespace Client.Logic.Stories.Segments
                 parameters.GetValue("Speed").ToInt(), parameters.GetValue("Pause").ToBool());
         }
 
-        public void Process(StoryState state) {
-            this.storyState = state;
-            for (int i = 0; i < state.FNPCs.Count; i++) {
-                if (state.FNPCs[i].ID == id) {
+        public void Process(StoryState state)
+        {
+            storyState = state;
+            for (int i = 0; i < state.FNPCs.Count; i++)
+            {
+                if (state.FNPCs[i].ID == id)
+                {
                     state.FNPCs[i].TargetX = x;
                     state.FNPCs[i].TargetY = y;
                 }
             }
 
-            if (this.pause) {
+            if (pause)
+            {
                 state.StoryPaused = true;
                 state.Pause();
                 state.StoryPaused = false;

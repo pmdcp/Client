@@ -30,12 +30,14 @@ namespace Client.Logic
     {
         #region Properties
 
-        public static bool FoolsMode {
+        public static bool FoolsMode
+        {
             get;
             set;
         }
 
-        public static PMDCP.Core.Command CommandLine {
+        public static PMDCP.Core.Command CommandLine
+        {
             get;
             set;
         }
@@ -44,7 +46,8 @@ namespace Client.Logic
         /// Gets or sets the encryption class.
         /// </summary>
         /// <value>The encryption class.</value>
-        public static Security.Encryption Encryption {
+        public static Security.Encryption Encryption
+        {
             get;
             set;
         }
@@ -53,7 +56,8 @@ namespace Client.Logic
         /// Gets or sets a value indicating whether the game is loaded.
         /// </summary>
         /// <value><c>true</c> if the game is loaded; otherwise, <c>false</c>.</value>
-        public static bool GameLoaded {
+        public static bool GameLoaded
+        {
             get;
             set;
         }
@@ -62,7 +66,8 @@ namespace Client.Logic
         /// Gets or sets the game screen.
         /// </summary>
         /// <value>The game screen.</value>
-        public static Windows.Core.GameScreen GameScreen {
+        public static Windows.Core.GameScreen GameScreen
+        {
             get;
             set;
         }
@@ -71,7 +76,8 @@ namespace Client.Logic
         /// Gets or sets a value indicating whether the game is running in debug mode.
         /// </summary>
         /// <value><c>true</c> if the game is running in debug mode; otherwise, <c>false</c>.</value>
-        public static bool InDebugMode {
+        public static bool InDebugMode
+        {
             get;
             set;
         }
@@ -89,9 +95,11 @@ namespace Client.Logic
         /// <summary>
         /// Gets or Sets the active weather that will be displayed
         /// </summary>
-        internal static Enums.Weather ActiveWeather {
+        internal static Enums.Weather ActiveWeather
+        {
             get { return activeWeather; }
-            set {
+            set
+            {
                 activeWeather = value;
                 Logic.Graphics.Renderers.Screen.ScreenRenderer.RenderOptions.SetWeather(value);
             }
@@ -100,7 +108,8 @@ namespace Client.Logic
         /// <summary>
         /// Gets or Sets the games time
         /// </summary>
-        internal static Enums.Time GameTime {
+        internal static Enums.Time GameTime
+        {
             get;
             set;
         }
@@ -108,7 +117,8 @@ namespace Client.Logic
         /// <summary>
         /// Gets or Sets the active time that will be displayed
         /// </summary>
-        internal static Enums.Time ActiveTime {
+        internal static Enums.Time ActiveTime
+        {
             get;
             set;
         }
@@ -133,78 +143,90 @@ namespace Client.Logic
         //    set;
         //}
 
-        internal static int NewPlayerX {
+        internal static int NewPlayerX
+        {
             get;
             set;
         }
 
-        internal static int NewPlayerY {
+        internal static int NewPlayerY
+        {
             get;
             set;
         }
 
-        internal static int NewXOffset {
+        internal static int NewXOffset
+        {
             get;
             set;
         }
 
-        internal static int NewYOffset {
+        internal static int NewYOffset
+        {
             get;
             set;
         }
 
-        internal static int NewMapX {
+        internal static int NewMapX
+        {
             get;
             set;
         }
 
-        internal static int NewMapY {
+        internal static int NewMapY
+        {
             get;
             set;
         }
 
-        internal static int NewMapXOffset {
+        internal static int NewMapXOffset
+        {
             get;
             set;
         }
 
-        internal static int NewMapYOffset {
+        internal static int NewMapYOffset
+        {
             get;
             set;
         }
 
-        internal static bool GettingMap {
+        internal static bool GettingMap
+        {
             get;
             set;
         }
 
-        internal static bool SavingMap {
+        internal static bool SavingMap
+        {
             get;
             set;
         }
 
-        internal static int Tick {
+        internal static int Tick
+        {
             get;
             set;
         }
 
-        internal static bool RefreshLock {
+        internal static bool RefreshLock
+        {
             get;
             set;
         }
 
-        internal static bool InGame {
+        internal static bool InGame
+        {
             get;
             set;
         }
 
-        public static string ServerStatus {
+        public static string ServerStatus
+        {
             get;
             set;
         }
 
         #endregion Properties
-
-
     }
 }

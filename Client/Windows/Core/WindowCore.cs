@@ -27,8 +27,8 @@ namespace Client.Logic.Windows.Core
     class WindowCore : Window
     {
         public WindowCore(string name)
-            : base(name) {
-
+            : base(name)
+        {
             this.ShowInWindowSwitcher = false;
             this.TitleBar.Font = Graphics.FontManager.LoadFont("tahoma", 12);
             this.TitleBar.BackColor = Color.Blue;
@@ -38,7 +38,6 @@ namespace Client.Logic.Windows.Core
             this.BorderStyle = SdlDotNet.Widgets.BorderStyle.None;
             this.BorderWidth = 2;
             this.BorderColor = Color.Black;
-
         }
     }
 }

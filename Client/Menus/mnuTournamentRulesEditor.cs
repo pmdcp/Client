@@ -28,7 +28,8 @@ namespace Client.Logic.Menus
 {
     class mnuTournamentRulesEditor : Widgets.BorderedPanel, Core.IMenu
     {
-        public bool Modal {
+        public bool Modal
+        {
             get;
             set;
         }
@@ -45,13 +46,14 @@ namespace Client.Logic.Menus
 
         Button btnSave;
 
-        public Widgets.BorderedPanel MenuPanel {
+        public Widgets.BorderedPanel MenuPanel
+        {
             get { return this; }
         }
 
         public mnuTournamentRulesEditor(string name, TournamentRules rules)
-            : base(name) {
-
+            : base(name)
+        {
             this.rules = rules;
 
             base.Size = new Size(315, 360);
@@ -135,7 +137,8 @@ namespace Client.Logic.Menus
             this.AddWidget(lblEditRules);
         }
 
-        void btnSave_Click(object sender, MouseButtonEventArgs e) {
+        void btnSave_Click(object sender, MouseButtonEventArgs e)
+        {
             TournamentRules rules = new TournamentRules();
             rules.SleepClause = chkSleepClause.Checked;
             rules.AccuracyClause = chkAccuracyClause.Checked;
@@ -149,21 +152,21 @@ namespace Client.Logic.Menus
             Menus.MenuSwitcher.CloseAllMenus();
         }
 
-        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e) {
+        public override void OnKeyboardDown(SdlDotNet.Input.KeyboardEventArgs e)
+        {
             base.OnKeyboardDown(e);
-            switch (e.Key) {
-                case SdlDotNet.Input.Key.Return: {
-
+            switch (e.Key)
+            {
+                case SdlDotNet.Input.Key.Return:
+                    {
                         Music.Music.AudioPlayer.PlaySoundEffect("beep2.wav");
                     }
                     break;
-                case SdlDotNet.Input.Key.Backspace: {
-
-
+                case SdlDotNet.Input.Key.Backspace:
+                    {
                     }
                     break;
             }
         }
-
     }
 }

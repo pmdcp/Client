@@ -26,7 +26,6 @@ namespace Client.Logic.Windows.Editors
 {
     class winGuildPanel : Core.WindowCore
     {
-        
         Label lblPlayer;
         Label lblGuild;
         Label lblCreate;
@@ -50,7 +49,7 @@ namespace Client.Logic.Windows.Editors
             lblPlayer.Location = new Point(20, 0);
             lblPlayer.Font = Graphics.FontManager.LoadFont("tahoma", 10);
             lblPlayer.AutoSize = true;
-            
+
             lblPlayer.Text = "Player Name:";
 
             txtPlayer = new TextBox("txtPlayer");
@@ -69,7 +68,7 @@ namespace Client.Logic.Windows.Editors
             txtGuild.Size = new System.Drawing.Size(120, 20);
             txtGuild.Font = Graphics.FontManager.LoadFont("PMDCP", 16);
 
-            
+
             lblCreate = new Label("lblCreate");
             lblCreate.Location = new Point(40, 140);
             lblCreate.Font = Graphics.FontManager.LoadFont("tahoma", 10);
@@ -91,6 +90,5 @@ namespace Client.Logic.Windows.Editors
         {
             //Messenger.MakeGuild(txtPlayer.Text, txtGuild.Text);
         }
-
     }
 }

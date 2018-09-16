@@ -39,20 +39,24 @@ namespace Client.Logic.Widgets
 
         byte backgroundAlpha;
 
-        public Panel WidgetPanel {
+        public Panel WidgetPanel
+        {
             get { return widgetPanel; }
         }
 
-        public byte BackgroundAlpha {
+        public byte BackgroundAlpha
+        {
             get { return backgroundAlpha; }
-            set {
+            set
+            {
                 backgroundAlpha = value;
                 border.Alpha = backgroundAlpha;
             }
         }
 
         public BorderedPanel(string name)
-            : base(name) {
+            : base(name)
+        {
             this.BackColor = Color.Transparent;
 
             backgroundAlpha = 150;
@@ -74,13 +78,17 @@ namespace Client.Logic.Widgets
             this.LocationChanged += new EventHandler(BorderedPanel_LocationChanged);
         }
 
-        void BorderedPanel_LocationChanged(object sender, EventArgs e) {
+        void BorderedPanel_LocationChanged(object sender, EventArgs e)
+        {
             border.Location = this.Location;
         }
 
-        void BorderedPanel_Resized(object sender, EventArgs e) {
-            switch (DetermineDirection()) {
-                case Enums.MenuDirection.Horizontal: {
+        void BorderedPanel_Resized(object sender, EventArgs e)
+        {
+            switch (DetermineDirection())
+            {
+                case Enums.MenuDirection.Horizontal:
+                    {
                         this.BackgroundImage = GraphicsCache.MenuHorizontalBorder.CreateStretchedSurface(this.Size);
                         border.Size = this.Size;
                         Surface imageSurf = GraphicsCache.MenuHorizontalFill.CreateStretchedSurface(this.Size);
@@ -91,7 +99,8 @@ namespace Client.Logic.Widgets
                         widgetPanel.Location = new Point(HORIZONTAL_BORDER_WIDTH, HORIZONTAL_BORDER_HEIGHT);
                     }
                     break;
-                case Enums.MenuDirection.Vertical: {
+                case Enums.MenuDirection.Vertical:
+                    {
                         this.BackgroundImage = GraphicsCache.MenuVerticalBorder.CreateStretchedSurface(this.Size);
                         border.Size = this.Size;
                         Surface imageSurf = GraphicsCache.MenuVerticalFill.CreateStretchedSurface(this.Size);
@@ -105,21 +114,28 @@ namespace Client.Logic.Widgets
             }
         }
 
-        public new Enums.MenuDirection MenuDirection {
+        public new Enums.MenuDirection MenuDirection
+        {
             get { return DetermineDirection(); }
             set { }
         }
 
-        Enums.MenuDirection DetermineDirection() {
-            if (this.Width > this.Height) {
+        Enums.MenuDirection DetermineDirection()
+        {
+            if (this.Width > this.Height)
+            {
                 return Enums.MenuDirection.Horizontal;
-            } else {
+            }
+            else
+            {
                 return Enums.MenuDirection.Vertical;
             }
         }
 
-        public override void BlitToScreen(Surface destinationSurface) {
-            if (this.Parent == null) {
+        public override void BlitToScreen(Surface destinationSurface)
+        {
+            if (this.Parent == null)
+            {
                 border.BlitToScreen(destinationSurface);
             }
             base.BlitToScreen(destinationSurface);
